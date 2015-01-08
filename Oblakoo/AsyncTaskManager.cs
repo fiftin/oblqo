@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Oblakoo.Tasks;
 
 namespace Oblakoo
 {
@@ -47,21 +48,18 @@ namespace Oblakoo
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)
         {
-            var task = (AsyncTask) sender;
-            switch (task.Type)
+            
+            if (sender is UploadFolderTask)
             {
-                case AsyncTaskType.UploadFolder:
-                    var files = (FileInfo[]) e.State;
-                    var options = (AsyncTask.UploadFolderOptions) task.Options;
-                    foreach (var f in files)
-                    {
-                        Add(new AsyncTask(AsyncTaskType.UploadFile, new AsyncTask.UploadFileOptions(
-                            options.Account, options.AccountName, f.FullName, )))
-                    }
-                    break;
+                var task = (UploadFolderTask) sender;
+                var files = (FileInfo[]) e.State;
+                foreach (var f in files)
+                {
+                    Add(new UploadFileTask(task.Account, task.AccountName, 0, null, f.FullName, null));
+                }
             }
             if (TaskProgress != null)
-                TaskProgress(this, new AsyncTaskEventArgs<AsyncTaskProgressEventArgs>(task, e));
+                TaskProgress(this, new AsyncTaskEventArgs<AsyncTaskProgressEventArgs>((AsyncTask)sender, e));
         }
 
         private void task_StateChanged(object sender, EventArgs e)

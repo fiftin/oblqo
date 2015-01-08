@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Oblakoo.Properties;
+using Oblakoo.Tasks;
 
 namespace Oblakoo
 {
@@ -277,32 +278,33 @@ namespace Oblakoo
         private void taskManager_TaskAdded(object sender, AsyncTaskEventArgs e)
         {
             var taskItem = new ListViewItem {Tag = e.Task};
-            switch (e.Task.Type)
+            if (e.Task is DownloadFileFromDriveTask)
             {
-                case AsyncTaskType.DownloadFileFromDrive:
-                    var downloadOptions = ((AsyncTask.DownloadFileOptions) e.Task.Options);
-                    taskItem.Text = downloadOptions.File.Name;
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(downloadOptions.File.DriveFile.OriginalSize)).Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-                    break;
-                case AsyncTaskType.UploadFile:
-                    var uploadOptions = ((AsyncTask.UploadFileOptions) e.Task.Options);
-                    taskItem.Text = Path.GetFileName(uploadOptions.FileName);
-                    var fileInfo = new FileInfo(uploadOptions.FileName);
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-                    break;
-                case AsyncTaskType.CreateFolder:
-                    var createDiretoryOptions = ((AsyncTask.CreateFolderOptions)e.Task.Options);
-                    taskItem.Text = Path.GetFileName(createDiretoryOptions.FolderName);
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-                    break;
-
+                var task = (DownloadFileFromDriveTask) e.Task;
+                taskItem.Text = task.File.Name;
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                    .Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
             }
+            else if (e.Task is UploadFileTask)
+            {
+                var task = (UploadFileTask)e.Task;
+                taskItem.Text = Path.GetFileName(task.FileName);
+                var fileInfo = new FileInfo(task.FileName);
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+            }
+            else if (e.Task is CreateFolderTask)
+            {
+                var task = (CreateFolderTask)e.Task;
+                taskItem.Text = Path.GetFileName(task.FolderName);
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+            }
+
             taskListView.Items.Insert(0, taskItem);
         }
 
@@ -320,15 +322,14 @@ namespace Oblakoo
                         break;
                     case AsyncTaskState.Finished:
                         item.SubItems["percent"].Text = "100";
-                        switch (e.Task.Type)
+                        if (e.Task is CreateFolderTask)
                         {
-                            case AsyncTaskType.CreateFolder:
-                                var createDiretoryOptions = ((AsyncTask.CreateFolderOptions)e.Task.Options);
-                                var parentNode = (TreeNode) createDiretoryOptions.Tag;
-                                var viewNode = parentNode.Nodes.Add("", createDiretoryOptions.FolderName, FolderImageKey);
-                                viewNode.SelectedImageKey = FolderImageKey;
-                                viewNode.Tag = new NodeInfo(createDiretoryOptions.CreatedFolder, createDiretoryOptions.AccountName);
-                                break;
+                            var task = (CreateFolderTask) e.Task;
+                            var parentNode = (TreeNode)task.Tag;
+                            var viewNode = parentNode.Nodes.Add("", task.FolderName,
+                                FolderImageKey);
+                            viewNode.SelectedImageKey = FolderImageKey;
+                            viewNode.Tag = new NodeInfo(task.CreatedFolder, task.AccountName);
                         }
                         break;
                 }
@@ -531,8 +532,8 @@ namespace Oblakoo
             if (selectedNode == null) return;
             var nodeInfo = (NodeInfo) selectedNode.Tag;
             foreach (var fileName in openFileDialog1.FileNames)
-                taskManager.Add(new AsyncTask(AsyncTaskType.UploadFile,
-                    new AsyncTask.UploadFileOptions(accounts[nodeInfo.AccountName], nodeInfo.AccountName, fileName, nodeInfo.File)));
+                taskManager.Add(new UploadFileTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName, AsyncTask.NormalPriority, null,
+                    fileName, nodeInfo.File));
         }
 
         private void listView1_Move(object sender, EventArgs e)
@@ -570,9 +571,8 @@ namespace Oblakoo
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    taskManager.Add(new AsyncTask(AsyncTaskType.CreateFolder,
-                        new AsyncTask.CreateFolderOptions(accounts[nodeInfo.AccountName], nodeInfo.AccountName, dialog.DirecotryName,
-                            nodeInfo.File){Tag=node}));
+                    taskManager.Add(new CreateFolderTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName,
+                        AsyncTask.NormalPriority, null, dialog.DirecotryName, nodeInfo.File) {Tag = node});
                 }
             }
         }
@@ -625,19 +625,17 @@ namespace Oblakoo
         private void downloadFileFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
-            foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
-                taskManager.Add(new AsyncTask(AsyncTaskType.DownloadFileFromDrive,
-                    new AsyncTask.DownloadFileOptions(accounts[info.AccountName], info.AccountName, info.File,
-                        folderBrowserDialog1.SelectedPath)));
+            foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo) item.Tag)
+                taskManager.Add(new DownloadFileFromDriveTask(accounts[info.AccountName], info.AccountName,
+                    AsyncTask.NormalPriority, null, info.File, folderBrowserDialog1.SelectedPath));
         }
 
         private void downloadFileFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
             foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
-                taskManager.Add(new AsyncTask(AsyncTaskType.DownloadFileFromStorage,
-                    new AsyncTask.DownloadFileOptions(accounts[info.AccountName], info.AccountName, info.File,
-                        folderBrowserDialog1.SelectedPath)));
+                taskManager.Add(new DownloadFileFromStorageTask(accounts[info.AccountName], info.AccountName, 0, null, info.File,
+                        folderBrowserDialog1.SelectedPath));
         }
 
         private void downloadFolderFromDriveToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,0 +1,12 @@
+*.user
+TestResults/
+packages/
+*.dll
+*.exe
+*.pdb
+*.orderedtest
+*.cache
+Oblakoo/bin/
+Oblakoo/obj/
+OblakooTest/bin/
+OblakooTest/obj/

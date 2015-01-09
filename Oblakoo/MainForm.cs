@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Oblakoo.Properties;
 using Oblakoo.Tasks;
+// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblakoo
 {
@@ -55,7 +56,7 @@ namespace Oblakoo
             }
 
             public NodeType Type { get; private set; }
-            public AccountFile File { get; private set; }
+            public AccountFile File { get; set; }
             public AccountInfo AccountInfo { get; private set; }
             public string AccountName { get; private set; }
         }
@@ -109,6 +110,8 @@ namespace Oblakoo
             accounts.Add(name, ret);
             node.ImageKey = AccountImageKey;
             node.SelectedImageKey = AccountImageKey;
+            var info = (NodeInfo) node.Tag;
+            info.File = ret.RootFolder;
         }
 
         public void HideFileInfo()
@@ -151,14 +154,12 @@ namespace Oblakoo
                     switch (info.Type)
                     {
                         case NodeType.Account:
-                            files =
-                                await accounts[info.AccountName].GetFilesAsync(updateListCancellationTokenSource.Token);
+                            files = await accounts[info.AccountName].GetFilesAsync(accounts[info.AccountName].RootFolder,
+                                updateListCancellationTokenSource.Token);
                             break;
                         case NodeType.Folder:
-                            files =
-                                await
-                                    accounts[info.AccountName].GetFilesAsync(info.File,
-                                        updateListCancellationTokenSource.Token);
+                            files = await accounts[info.AccountName].GetFilesAsync(info.File,
+                                updateListCancellationTokenSource.Token);
                             break;
                         default:
                             throw new Exception("Unsupported node type");
@@ -204,7 +205,7 @@ namespace Oblakoo
                     switch (info.Type)
                     {
                         case NodeType.Account:
-                            files = await accounts[info.AccountName].GetFilesAsync(token);
+                            files = await accounts[info.AccountName].GetFilesAsync(accounts[info.AccountName].RootFolder, token);
                             break;
                         case NodeType.Folder:
                             files = await accounts[info.AccountName].GetFilesAsync(info.File, token);
@@ -277,35 +278,54 @@ namespace Oblakoo
 
         private void taskManager_TaskAdded(object sender, AsyncTaskEventArgs e)
         {
-            var taskItem = new ListViewItem {Tag = e.Task};
-            if (e.Task is DownloadFileFromDriveTask)
+            Invoke(new MethodInvoker(() =>
             {
-                var task = (DownloadFileFromDriveTask) e.Task;
-                taskItem.Text = task.File.Name;
-                taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                    .Name = "size";
-                taskItem.SubItems.Add("0").Name = "percent";
-                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-            }
-            else if (e.Task is UploadFileTask)
-            {
-                var task = (UploadFileTask)e.Task;
-                taskItem.Text = Path.GetFileName(task.FileName);
-                var fileInfo = new FileInfo(task.FileName);
-                taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
-                taskItem.SubItems.Add("0").Name = "percent";
-                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-            }
-            else if (e.Task is CreateFolderTask)
-            {
-                var task = (CreateFolderTask)e.Task;
-                taskItem.Text = Path.GetFileName(task.FolderName);
-                taskItem.SubItems.Add("").Name = "size";
-                taskItem.SubItems.Add("0").Name = "percent";
-                taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
-            }
-
-            taskListView.Items.Insert(0, taskItem);
+                var taskItem = new ListViewItem { Tag = e.Task };
+                if (e.Task is UploadFolderTask)
+                {
+                    var task = (UploadFolderTask)e.Task;
+                    taskItem.Text = Common.GetFileOrDirectoryName(task.Path);
+                    taskItem.SubItems.Add("").Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+                }
+                else if (e.Task is DownloadFileFromStorageTask)
+                {
+                    var task = (DownloadFileFromStorageTask)e.Task;
+                    taskItem.Text = task.File.Name;
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                        .Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+                }
+                else if (e.Task is DownloadFileFromDriveTask)
+                {
+                    var task = (DownloadFileFromDriveTask)e.Task;
+                    taskItem.Text = task.File.Name;
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                        .Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+                }
+                else if (e.Task is UploadFileTask)
+                {
+                    var task = (UploadFileTask)e.Task;
+                    taskItem.Text = Path.GetFileName(task.FileName);
+                    var fileInfo = new FileInfo(task.FileName);
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+                }
+                else if (e.Task is CreateFolderTask)
+                {
+                    var task = (CreateFolderTask)e.Task;
+                    taskItem.Text = Path.GetFileName(task.FolderName);
+                    taskItem.SubItems.Add("").Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
+                }
+                taskListView.Items.Insert(0, taskItem);
+            }));
         }
 
         private void taskManager_TaskStateChanged(object sender, AsyncTaskEventArgs e)
@@ -504,10 +524,16 @@ namespace Oblakoo
 
         private void OnError(Exception exception)
         {
-            Invoke(new MethodInvoker(() =>
+            if (exception is AggregateException)
             {
-                logListView.Items.Add(exception.Message);
-            }));
+                ((AggregateException) exception).Handle(x =>
+                {
+                    OnError(x);
+                    return true;
+                });
+            }
+            else
+                Invoke(new MethodInvoker(() => logListView.Items.Add(DateTime.Now.ToShortTimeString()).SubItems.Add(exception.Message)));
         }
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -556,9 +582,13 @@ namespace Oblakoo
 
         private void uploadFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-            }
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+            var node = treeView1.SelectedNode;
+            if (node == null)
+                return;
+            var info = (NodeInfo)node.Tag;
+            taskManager.Add(new UploadFolderTask(accounts[info.AccountName], info.AccountName, 0, null,
+                folderBrowserDialog1.SelectedPath, info.File) {Tag = node});
         }
 
         private void newFolderToolStripButton_Click(object sender, EventArgs e)
@@ -593,20 +623,6 @@ namespace Oblakoo
             var size = e.Graphics.MeasureString("No image", SystemFonts.DefaultFont);
             e.Graphics.DrawString("No image", SystemFonts.DefaultFont, Brushes.Black,
                 (pictureBox1.Width - size.Width)/2, (pictureBox1.Height - size.Height)/2);
-        }
-
-        private void fileInfoPanel_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void fileNameLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void fileListView_MouseDown(object sender, MouseEventArgs e)
-        {
-
         }
 
         private void fileListView_MouseUp(object sender, MouseEventArgs e)

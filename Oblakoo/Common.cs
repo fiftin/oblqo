@@ -22,21 +22,10 @@ namespace Oblakoo
                 return string.Format("{0}GB", bytes / 1000000000);
         }
 
-        public static async Task EnumerateFilesRecursiveAsync(string path, Action<FileInfo> action, CancellationToken token)
+
+        public static string GetFileOrDirectoryName(string path)
         {
-            var folder = new DirectoryInfo(path);
-            foreach (var file in folder.EnumerateFiles(path))
-            {
-                if (token.IsCancellationRequested)
-                    return;
-                action(file);
-            }
-            foreach (var dir in folder.EnumerateDirectories())
-            {
-                if (token.IsCancellationRequested)
-                    return;
-                await EnumerateFilesRecursiveAsync(dir.FullName, action, token);
-            }
+            return Path.GetFileName(path.TrimEnd(Path.DirectorySeparatorChar));
         }
     }
 }

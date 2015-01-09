@@ -32,11 +32,15 @@ namespace Oblakoo
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
         }
 
+        /*
         public async Task<ICollection<AccountFile>> GetFilesAsync(CancellationToken token)
         {
             var driveFiles = await Drive.GetFilesAsync(Drive.RootFolder, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
         }
+         */
+
+        
 
         public async Task<Stream> ReadFileAsync(AccountFile file, CancellationToken token)
         {

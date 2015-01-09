@@ -48,14 +48,32 @@ namespace Oblakoo
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)
         {
-            
-            if (sender is UploadFolderTask)
+            var task = sender as UploadFolderTask;
+            if (task != null)
             {
-                var task = (UploadFolderTask) sender;
-                var files = (FileInfo[]) e.State;
-                foreach (var f in files)
+                var state = (UploadFolderTask.ProgressState) e.State;
+                if (state.IsFolder)
                 {
-                    Add(new UploadFileTask(task.Account, task.AccountName, 0, null, f.FullName, null));
+                    CreateFolderTask newTask;
+                    if (state.ParentTask == null)
+                        newTask = new CreateFolderTask(task.Account, task.AccountName, 0, null,
+                            state.Folder.Name, task.DestFolder) { Tag = task.Tag };
+                    else
+                        newTask = new CreateFolderTask(task.Account, task.AccountName, 0, state.ParentTask,
+                            state.Folder.Name, null) {Tag = task.Tag};
+                    Add(newTask);
+                    state.CreatedTask = newTask;
+                }
+                else
+                {
+                    UploadFileTask newTask;
+                    if (state.ParentTask == null)
+                        newTask = new UploadFileTask(task.Account, task.AccountName, 0, null,
+                            state.File.FullName, task.DestFolder) { Tag = task.Tag };
+                    else
+                        newTask = new UploadFileTask(task.Account, task.AccountName, 0, state.ParentTask,
+                            state.File.FullName, null) { Tag = task.Tag };
+                    Add(newTask);
                 }
             }
             if (TaskProgress != null)
@@ -154,6 +172,7 @@ namespace Oblakoo
                             var task = tasksNow.FirstOrDefault(x => x.State == AsyncTaskState.Waiting);
                             if (task == null)
                                 break;
+                            if (task.Parent != null && task.Parent.State != AsyncTaskState.Finished) continue;
                             var taskInfo = new TaskInfo(task, task.StartAsync());
                             lock (runningTasks)
                             {

@@ -17,7 +17,10 @@ namespace Oblakoo.Tasks
 
         protected override async Task StartAsync2()
         {
-            CreatedFolder = await Account.CreateFolderAsync(FolderName, DestFolder, CancellationTokenSource.Token);
+            var destFolder = DestFolder;
+            if (destFolder == null && Parent is CreateFolderTask)
+                destFolder = ((CreateFolderTask)Parent).CreatedFolder;
+            CreatedFolder = await Account.CreateFolderAsync(FolderName, destFolder, CancellationTokenSource.Token);
             if (State == AsyncTaskState.Running)
                 State = AsyncTaskState.Finished;
         }

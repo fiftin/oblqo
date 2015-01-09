@@ -16,7 +16,10 @@ namespace Oblakoo.Tasks
 
         protected override async Task StartAsync2()
         {
-            await Account.UploadFileAsync(FileName, DestFolder, CancellationTokenSource.Token);
+            var destFolder = DestFolder;
+            if (destFolder == null && Parent is CreateFolderTask)
+                destFolder = ((CreateFolderTask)Parent).CreatedFolder;
+            await Account.UploadFileAsync(FileName, destFolder, CancellationTokenSource.Token);
         }
     }
 }

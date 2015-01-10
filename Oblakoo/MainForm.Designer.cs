@@ -59,6 +59,8 @@
             this.propertyListView = new System.Windows.Forms.ListView();
             this.logTabPage = new System.Windows.Forms.TabPage();
             this.logListView = new System.Windows.Forms.ListView();
+            this.logDataTimeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.logMessageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.accountsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +72,7 @@
             this.uploadFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.refreshVaultToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.refreshFilesToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.accountContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,8 +91,7 @@
             this.downloadFolderFromDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadFolderFromStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logDataTimeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.logMessageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.loadingFoldersTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -131,7 +132,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2, 0, 0, 1);
             this.splitContainer1.Size = new System.Drawing.Size(803, 412);
-            this.splitContainer1.SplitterDistance = 258;
+            this.splitContainer1.SplitterDistance = 255;
             this.splitContainer1.SplitterWidth = 7;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -154,7 +155,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 258);
+            this.splitContainer2.Size = new System.Drawing.Size(803, 255);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 7;
             this.splitContainer2.TabIndex = 0;
@@ -170,7 +171,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(248, 258);
+            this.treeView1.Size = new System.Drawing.Size(248, 255);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -193,6 +194,10 @@
             this.smallImageList.Images.SetKeyName(8, "account");
             this.smallImageList.Images.SetKeyName(9, "account_disconnected");
             this.smallImageList.Images.SetKeyName(10, "delete");
+            this.smallImageList.Images.SetKeyName(11, "process");
+            this.smallImageList.Images.SetKeyName(12, "process90");
+            this.smallImageList.Images.SetKeyName(13, "process180");
+            this.smallImageList.Images.SetKeyName(14, "process270");
             // 
             // fileListView
             // 
@@ -204,7 +209,7 @@
             this.fileListView.FullRowSelect = true;
             this.fileListView.Location = new System.Drawing.Point(0, 0);
             this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(337, 258);
+            this.fileListView.Size = new System.Drawing.Size(337, 255);
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TabIndex = 1;
             this.fileListView.UseCompatibleStateImageBehavior = false;
@@ -233,7 +238,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(337, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(7, 258);
+            this.splitter1.Size = new System.Drawing.Size(7, 255);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -246,7 +251,7 @@
             this.fileInfoPanel.MinimumSize = new System.Drawing.Size(200, 0);
             this.fileInfoPanel.Name = "fileInfoPanel";
             this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.fileInfoPanel.Size = new System.Drawing.Size(200, 258);
+            this.fileInfoPanel.Size = new System.Drawing.Size(200, 255);
             this.fileInfoPanel.TabIndex = 2;
             // 
             // pictureBox1
@@ -257,7 +262,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(198, 133);
+            this.pictureBox1.Size = new System.Drawing.Size(198, 130);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -267,7 +272,7 @@
             this.filePropertiesPanel.Controls.Add(this.filePropertiesTable);
             this.filePropertiesPanel.Controls.Add(this.fileNameLabel);
             this.filePropertiesPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 133);
+            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 130);
             this.filePropertiesPanel.Name = "filePropertiesPanel";
             this.filePropertiesPanel.Size = new System.Drawing.Size(198, 125);
             this.filePropertiesPanel.TabIndex = 3;
@@ -352,7 +357,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(801, 146);
+            this.tabControl1.Size = new System.Drawing.Size(801, 149);
             this.tabControl1.TabIndex = 0;
             // 
             // tasksTabPage
@@ -361,7 +366,7 @@
             this.tasksTabPage.Location = new System.Drawing.Point(4, 22);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.tasksTabPage.Size = new System.Drawing.Size(793, 120);
+            this.tasksTabPage.Size = new System.Drawing.Size(793, 123);
             this.tasksTabPage.TabIndex = 0;
             this.tasksTabPage.Text = "Tasks";
             this.tasksTabPage.UseVisualStyleBackColor = true;
@@ -378,7 +383,7 @@
             this.taskListView.HideSelection = false;
             this.taskListView.Location = new System.Drawing.Point(0, 2);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(791, 117);
+            this.taskListView.Size = new System.Drawing.Size(791, 120);
             this.taskListView.TabIndex = 0;
             this.taskListView.UseCompatibleStateImageBehavior = false;
             this.taskListView.View = System.Windows.Forms.View.Details;
@@ -406,7 +411,7 @@
             this.propertiesTabPage.Location = new System.Drawing.Point(4, 22);
             this.propertiesTabPage.Name = "propertiesTabPage";
             this.propertiesTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.propertiesTabPage.Size = new System.Drawing.Size(793, 120);
+            this.propertiesTabPage.Size = new System.Drawing.Size(793, 123);
             this.propertiesTabPage.TabIndex = 1;
             this.propertiesTabPage.Text = "Properties";
             this.propertiesTabPage.UseVisualStyleBackColor = true;
@@ -416,7 +421,7 @@
             this.propertyListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyListView.Location = new System.Drawing.Point(0, 2);
             this.propertyListView.Name = "propertyListView";
-            this.propertyListView.Size = new System.Drawing.Size(791, 117);
+            this.propertyListView.Size = new System.Drawing.Size(791, 120);
             this.propertyListView.TabIndex = 1;
             this.propertyListView.UseCompatibleStateImageBehavior = false;
             this.propertyListView.View = System.Windows.Forms.View.Details;
@@ -427,7 +432,7 @@
             this.logTabPage.Location = new System.Drawing.Point(4, 22);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.logTabPage.Size = new System.Drawing.Size(793, 120);
+            this.logTabPage.Size = new System.Drawing.Size(793, 123);
             this.logTabPage.TabIndex = 2;
             this.logTabPage.Text = "Log";
             this.logTabPage.UseVisualStyleBackColor = true;
@@ -442,10 +447,20 @@
             this.logListView.HideSelection = false;
             this.logListView.Location = new System.Drawing.Point(0, 2);
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(791, 117);
+            this.logListView.Size = new System.Drawing.Size(791, 120);
             this.logListView.TabIndex = 2;
             this.logListView.UseCompatibleStateImageBehavior = false;
             this.logListView.View = System.Windows.Forms.View.Details;
+            // 
+            // logDataTimeColumnHeader
+            // 
+            this.logDataTimeColumnHeader.Text = "Time";
+            this.logDataTimeColumnHeader.Width = 100;
+            // 
+            // logMessageColumnHeader
+            // 
+            this.logMessageColumnHeader.Text = "Message";
+            this.logMessageColumnHeader.Width = 600;
             // 
             // accountsToolStripMenuItem
             // 
@@ -502,7 +517,7 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.newFolderToolStripButton,
-            this.refreshVaultToolStripButton});
+            this.refreshFilesToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(0, 24);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(803, 25);
@@ -523,14 +538,14 @@
             // uploadFolderToolStripMenuItem
             // 
             this.uploadFolderToolStripMenuItem.Name = "uploadFolderToolStripMenuItem";
-            this.uploadFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uploadFolderToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.uploadFolderToolStripMenuItem.Text = "Upload folder";
             this.uploadFolderToolStripMenuItem.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFileToolStripMenuItem
             // 
             this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
-            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.uploadFileToolStripMenuItem.Text = "Upload file";
             this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
@@ -543,13 +558,14 @@
             this.newFolderToolStripButton.Text = "New folder";
             this.newFolderToolStripButton.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
-            // refreshVaultToolStripButton
+            // refreshFilesToolStripButton
             // 
-            this.refreshVaultToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshVaultToolStripButton.Image")));
-            this.refreshVaultToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshVaultToolStripButton.Name = "refreshVaultToolStripButton";
-            this.refreshVaultToolStripButton.Size = new System.Drawing.Size(90, 22);
-            this.refreshVaultToolStripButton.Text = "Refresh files";
+            this.refreshFilesToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshFilesToolStripButton.Image")));
+            this.refreshFilesToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshFilesToolStripButton.Name = "refreshFilesToolStripButton";
+            this.refreshFilesToolStripButton.Size = new System.Drawing.Size(90, 22);
+            this.refreshFilesToolStripButton.Text = "Refresh files";
+            this.refreshFilesToolStripButton.Click += new System.EventHandler(this.refreshFilesToolStripButton_Click);
             // 
             // accountContextMenuStrip
             // 
@@ -676,15 +692,11 @@
             this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.deleteFolderToolStripMenuItem.Text = "Delete";
             // 
-            // logDataTimeColumnHeader
+            // loadingFoldersTimer
             // 
-            this.logDataTimeColumnHeader.Text = "Time";
-            this.logDataTimeColumnHeader.Width = 100;
-            // 
-            // logMessageColumnHeader
-            // 
-            this.logMessageColumnHeader.Text = "Message";
-            this.logMessageColumnHeader.Width = 600;
+            this.loadingFoldersTimer.Enabled = true;
+            this.loadingFoldersTimer.Interval = 150;
+            this.loadingFoldersTimer.Tick += new System.EventHandler(this.loadingFoldersTimer_Tick);
             // 
             // MainForm
             // 
@@ -750,7 +762,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton newFolderToolStripButton;
-        private System.Windows.Forms.ToolStripButton refreshVaultToolStripButton;
+        private System.Windows.Forms.ToolStripButton refreshFilesToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ListView propertyListView;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
@@ -792,6 +804,7 @@
         private System.Windows.Forms.ToolStripMenuItem downloadFolderFromStorageToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader logDataTimeColumnHeader;
         private System.Windows.Forms.ColumnHeader logMessageColumnHeader;
+        private System.Windows.Forms.Timer loadingFoldersTimer;
     }
 }
 

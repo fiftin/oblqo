@@ -9,6 +9,7 @@ namespace Oblakoo
 
         public AsyncTaskProgressEventArgs(int percentDone, object state)
         {
+            PercentDone = percentDone;
             State = state;
         }
     }

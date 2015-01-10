@@ -156,7 +156,7 @@
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="TransferDirection.cs" />
-    <Compile Include="TransferProgressEventArgs.cs" />
+    <Compile Include="TransferProgress.cs" />
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </EmbeddedResource>

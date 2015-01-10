@@ -11,5 +11,6 @@ namespace Oblakoo
         public abstract string Id { get; }
         public abstract string Name { get; }
         public abstract bool IsFolder { get; }
+        public abstract bool IsRoot { get; }
     }
 }

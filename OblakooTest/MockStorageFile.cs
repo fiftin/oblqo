@@ -23,5 +23,10 @@ namespace OblakooTest
         {
             get { throw new NotImplementedException(); }
         }
+
+        public override bool IsRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

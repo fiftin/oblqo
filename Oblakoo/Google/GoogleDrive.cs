@@ -24,13 +24,38 @@ namespace Oblakoo.Google
 
         private readonly GoogleFile rootFolder;
 
-        public GoogleDrive(ClientSecrets secrets, string rootPath) : base(rootPath)
+        public GoogleDrive(ClientSecrets secrets, string rootPath)
         {
             Secrets = secrets;
-            rootFolder = new GoogleFile(new File
+            rootFolder = GetFolderByPath(rootPath);
+        }
+
+        private File GetFolder(string parentFolderId, string folderName)
+        {
+            var request = GetServiceAsync(CancellationToken.None).Result.Files.List();
+            request.Q = string.Format("'{0}' in parents and trashed = false and title = '{1}'", parentFolderId, folderName);
+            request.Fields = "items(id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
+            var result = request.Execute();
+            if (result.Items.Count == 0)
+                return null;
+            if (result.Items.Count > 1)
+                throw new Exception("Requst returns more then one folder");
+            return result.Items[0];
+        }
+
+        private GoogleFile GetFolderByPath(string path)
+        {
+            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+            var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
+            var currentPath = "";
+            foreach (var f in folders)
             {
-                Id = RootId
-            });
+                currentPath += "/" + f;
+                file = GetFolder(file.Id, f);
+                if (file == null)
+                    throw new Exception("Path is not exists: " + currentPath);
+            }
+            return new GoogleFile(file);
         }
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
@@ -93,33 +118,9 @@ namespace Oblakoo.Google
             get { return rootFolder; }
         }
 
-        /*
-        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
-        {
-            var service = await GetServiceAsync(token);
-            var file = new File
-            {
-                Properties = new List<Property>
-                {
-                    new Property { Key=GoogleFile.StorageFileIdPropertyKey, Value=storageFileId }
-                },
-                Title = System.IO.Path.GetFileName(pathName),
-                Parents =
-                    new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
-            };
-            var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open);
-            var request = await service.Files.Insert(file, stream, "").UploadFileAsync(token);
-            
-            if (request.Status == UploadStatus.Failed)
-            {
-                //TODO: Action if upload is failed
-            }
-            return new GoogleFile(file);
-        }*/
-        
         private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, CancellationToken token)
         {
-            return await GetFilesAsync(folderId, "", token);
+            return await GetFilesAsync(folderId, string.Format("mimeType != '{0}'", GoogleMimeTypes.Folder), token);
         }
 
         private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, string q, CancellationToken token)
@@ -147,7 +148,7 @@ namespace Oblakoo.Google
             {
                 Title = folderName,
                 MimeType = GoogleMimeTypes.Folder,
-                Parents = new[] {new ParentReference {Id =destFolder==null ? RootId : destFolder.Id}}
+                Parents = new[] {new ParentReference {Id = destFolder.Id}}
             };
             var service = await GetServiceAsync(token);
             var file = await service.Files.Insert(folder).ExecuteAsync(token);
@@ -174,6 +175,12 @@ namespace Oblakoo.Google
                 ret = string.Format("{0}{1} {2}{3}", dir, fn, number, ext);
             }
             return ret;
+        }
+
+        public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
+        {
+            var service = await GetServiceAsync(token);
+            await service.Files.Delete(driveFile.Id).ExecuteAsync(token);
         }
 
         public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)

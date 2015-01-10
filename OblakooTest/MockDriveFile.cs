@@ -108,6 +108,11 @@ namespace OblakooTest
             get { throw new NotImplementedException(); }
         }
 
+        public override bool IsRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public Stream GetContentStream()
         {
             return new MemoryStream(Encoding.Unicode.GetBytes(content));

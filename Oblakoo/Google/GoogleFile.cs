@@ -128,5 +128,10 @@ namespace Oblakoo.Google
                 return 0;
             }
         }
+
+        public override bool IsRoot
+        {
+            get { return Id == GoogleDrive.RootId; }
+        }
     }
 }

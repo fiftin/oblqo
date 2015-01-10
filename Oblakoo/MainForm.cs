@@ -21,6 +21,7 @@ namespace Oblakoo
         public const string DisconnectedAccountImageKey = "account_disconnected";
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
+        public const string ProgressImageKey = "process";
 
         public static readonly SolidBrush LoadingPictureBursh =
             new SolidBrush(Color.FromArgb(150, Color.Gray.R, Color.Gray.G, Color.Gray.B));
@@ -32,7 +33,7 @@ namespace Oblakoo
         private readonly object updateListCancellationTokenSourceLocker = new object();
         private CancellationTokenSource pictureCancellationTokenSource;
         private readonly object pictureCancellationTokenSourceLoker = new object();
-
+        private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
         private enum NodeType
         {
             Account,
@@ -82,10 +83,24 @@ namespace Oblakoo
             taskManager.TaskAdded += taskManager_TaskAdded;
             taskManager.TaskRemoved += taskManager_TaskRemoved;
             taskManager.Exception += taskManager_Exception;
+            taskManager.TaskProgress += taskManager_TaskProgress;
             taskManager.Start();
             InitUI();
             splitContainer2.SplitterWidth = 7;
             
+        }
+
+        private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
+        {
+
+            var items = taskListView.Items.Cast<ListViewItem>();
+            Invoke(new MethodInvoker(() =>
+            {
+                var item = items.FirstOrDefault(x => x.Tag == e.Task);
+                if (item == null) return;
+                item.SubItems["percent"].Text = e.Args.PercentDone.ToString();
+
+            }));
         }
 
         void taskManager_Exception(object sender, ExceptionEventArgs e)
@@ -196,19 +211,21 @@ namespace Oblakoo
             var token = new CancellationToken();
             var info = (NodeInfo) node.Tag;
             node.Nodes.Clear();
+            var nodeImageKey = node.ImageKey;
+            loadingNodes.Add(node);
             Task.Run(async delegate
             {
 
-                ICollection<AccountFile> files;
+                ICollection<AccountFile> folders;
                 try
                 {
                     switch (info.Type)
                     {
                         case NodeType.Account:
-                            files = await accounts[info.AccountName].GetFilesAsync(accounts[info.AccountName].RootFolder, token);
+                            folders = await accounts[info.AccountName].GetSubfoldersAsync(accounts[info.AccountName].RootFolder, token);
                             break;
                         case NodeType.Folder:
-                            files = await accounts[info.AccountName].GetFilesAsync(info.File, token);
+                            folders = await accounts[info.AccountName].GetSubfoldersAsync(info.File, token);
                             break;
                         default:
                             throw new Exception();
@@ -222,7 +239,7 @@ namespace Oblakoo
 
                 Invoke(new MethodInvoker(delegate
                 {
-                    foreach (var file in files.Where(file => file.IsFolder))
+                    foreach (var file in folders)
                     {
                         var viewNode = node.Nodes.Add("", file.Name, FolderImageKey);
                         viewNode.SelectedImageKey = FolderImageKey;
@@ -232,7 +249,9 @@ namespace Oblakoo
                     }
                     if (extendNodeAfterUpdate)
                         node.Expand();
-
+                    loadingNodes.Remove(node);
+                    node.ImageKey = nodeImageKey;
+                    node.SelectedImageKey = nodeImageKey;
                     if (updateList)
                         UpdateList();
                 }));
@@ -393,7 +412,9 @@ namespace Oblakoo
             {
                 case MouseButtons.Right:
                     if (((NodeInfo) e.Node.Tag).Type == NodeType.Account)
+                    {
                         accountContextMenuStrip.Show(Cursor.Position);
+                    }
                     break;
             }
         }
@@ -533,7 +554,7 @@ namespace Oblakoo
                 });
             }
             else
-                Invoke(new MethodInvoker(() => logListView.Items.Add(DateTime.Now.ToShortTimeString()).SubItems.Add(exception.Message)));
+                Invoke(new MethodInvoker(() => logListView.Items.Add(DateTime.Now.ToString()).SubItems.Add(exception.Message)));
         }
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -662,6 +683,26 @@ namespace Oblakoo
         private void downloadFolderFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private int loadingFolderImageAngle;
+
+        private void loadingFoldersTimer_Tick(object sender, EventArgs e)
+        {
+            var imageKey = ProgressImageKey + (loadingFolderImageAngle == 0 ? "" : loadingFolderImageAngle.ToString());
+            foreach (var node in loadingNodes)
+            {
+                node.ImageKey = imageKey;
+                node.SelectedImageKey = imageKey;
+            }
+            loadingFolderImageAngle += 90;
+            while (loadingFolderImageAngle >= 360)
+                loadingFolderImageAngle -= 360;
+        }
+
+        private void refreshFilesToolStripButton_Click(object sender, EventArgs e)
+        {
+            UpdateList();
         }
     }
 

@@ -18,5 +18,6 @@ namespace Oblakoo
         public abstract long OriginalSize { get; }
         public abstract int ImageWidth { get; }
         public abstract int ImageHeight { get; }
+        public abstract bool IsRoot { get; }
     }
 }

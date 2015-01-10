@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Oblakoo.Amazon
+﻿namespace Oblakoo.Amazon
 {
     public class GlacierFile : StorageFile
     {
         private readonly string id;
         private readonly bool isFolder;
         private readonly string name;
+        private readonly bool isRoot;
 
-        public GlacierFile(string id, string name)
-        {
-            this.id = id;
-            this.name = name;
-        }
-
-        public GlacierFile(string id, bool isFolder, string folderPath)
+        /// <summary>
+        /// Create file (not folder) instance.
+        /// Create folder or file instance.
+        /// </summary>
+        /// <param name="id">
+        /// </param>
+        /// <param name="isFolder"></param>
+        /// <param name="pathName"></param>
+        /// <param name="isRoot"></param>
+        public GlacierFile(string id, bool isFolder, string pathName, bool isRoot = false)
         {
             this.id = id;
             this.isFolder = isFolder;
-            this.FolderPath = folderPath;
+            FolderPath = pathName;
+            var lastSlashIndex = pathName.LastIndexOf('/');
+            name = lastSlashIndex >= 0 ? pathName.Substring(lastSlashIndex + 1) : pathName;
+            this.isRoot = isRoot;
         }
 
         public override string Id
@@ -38,6 +39,11 @@ namespace Oblakoo.Amazon
         public override bool IsFolder
         {
             get { return isFolder; }
+        }
+
+        public override bool IsRoot
+        {
+            get { return isRoot; }
         }
 
         public string FolderPath { get; private set; }

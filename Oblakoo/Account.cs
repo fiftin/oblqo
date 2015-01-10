@@ -20,27 +20,12 @@ namespace Oblakoo
             RootFolder = new AccountFile(this.Storage.RootFolder, this.Drive.RootFolder);
         }
 
-        public async Task<ICollection<AccountFile>> GetSubfoldersAsync(CancellationToken token)
-        {
-            var driveFiles = await Drive.GetSubfoldersAsync(Drive.RootFolder, token);
-            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
-        }
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)
         {
             var driveFiles = await Drive.GetSubfoldersAsync(folder.DriveFile, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
         }
-
-        /*
-        public async Task<ICollection<AccountFile>> GetFilesAsync(CancellationToken token)
-        {
-            var driveFiles = await Drive.GetFilesAsync(Drive.RootFolder, token);
-            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
-        }
-         */
-
-        
 
         public async Task<Stream> ReadFileAsync(AccountFile file, CancellationToken token)
         {
@@ -85,16 +70,15 @@ namespace Oblakoo
         /// <param name="pathName"></param>
         /// <param name="destFolder"></param>
         /// <param name="token"></param>
-        public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token)
+        public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token);
+            var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);
             await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id, token);
         }
 
 
         internal void Disconnect()
         {
-            throw new NotImplementedException();
         }
 
         public virtual async Task<Image> GetImageAsync(AccountFile file, CancellationToken token)
@@ -113,8 +97,6 @@ namespace Oblakoo
                 await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, token);
             return new AccountFile(storageDir, driveDir);
         }
-
-
 
         public AccountFile RootFolder { get; private set; }
     }

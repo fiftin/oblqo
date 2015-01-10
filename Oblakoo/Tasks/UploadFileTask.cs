@@ -18,8 +18,10 @@ namespace Oblakoo.Tasks
         {
             var destFolder = DestFolder;
             if (destFolder == null && Parent is CreateFolderTask)
-                destFolder = ((CreateFolderTask)Parent).CreatedFolder;
-            await Account.UploadFileAsync(FileName, destFolder, CancellationTokenSource.Token);
+                destFolder = ((CreateFolderTask) Parent).CreatedFolder;
+            await
+                Account.UploadFileAsync(FileName, destFolder, CancellationTokenSource.Token,
+                    e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
         }
     }
 }

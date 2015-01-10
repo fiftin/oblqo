@@ -14,7 +14,7 @@ namespace Oblakoo.Amazon
     /// </summary>
     public class Glacier : Storage
     {
-        private StorageFile rootFolder;
+        private readonly StorageFile rootFolder;
         public string Vault { get; set; }
         public string RootPath { get; set; }
         public string AccessKeyId { get; set; }
@@ -28,32 +28,59 @@ namespace Oblakoo.Amazon
             AccessKeyId = accessKeyId;
             AccessSecretKey = accessSecretKey;
             Region = region;
-            rootFolder = new GlacierFile("", true, "/");
+            rootFolder = new GlacierFile("", true, "", true);
+        }
+
+        public async Task CreateVaultAsync(CancellationToken token)
+        {
+            var manager = CreateTransferManager();
+            await Task.Run(() => manager.DeleteVault(Vault), token);
+        }
+
+        public async Task DeleteVaultAsync(CancellationToken token)
+        {
+            var manager = CreateTransferManager();
+            await Task.Run(() => manager.CreateVault(Vault), token);
+        }
+
+        public override async Task DeleteFile(StorageFile file, CancellationToken token)
+        {
+            if (file.IsRoot)
+                await DeleteVaultAsync(token);
+            else
+            {
+                var manager = CreateTransferManager();
+                await Task.Run(() => manager.DeleteArchive(Vault, file.Id), token);
+            }
         }
 
         public override StorageFile GetFile(DriveFile driveFile)
         {
-            return new GlacierFile(driveFile.StorageFileId, driveFile.Name);
+            return new GlacierFile(driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
         }
 
-        public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder, CancellationToken token)
+        public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             Debug.Assert(destFolder.IsFolder);
             if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
                 throw new NotSupportedException("Uploading directories now not implemented");
             var manager = CreateTransferManager();
             var options = new UploadOptions();
-            options.StreamTransferProgress += upload_StreamTransferProgress;
+            options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
             UploadResult result = null;
             var fn = Path.GetFileName(pathName);
-            var filePathName = ((GlacierFile)destFolder).FolderPath + fn;
+            var path = ((GlacierFile) destFolder).FolderPath;
+            if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
+                path += "/";
+            
+            var filePathName = path + fn;
             await Task.Run(() =>
             {
                 result = manager.Upload(Vault, filePathName, pathName, options);
-            });
+            }, token);
             if (result == null)
                 throw new Exception("Uploading failed");
-            return new GlacierFile(result.ArchiveId, fn);
+            return new GlacierFile(result.ArchiveId, false, fn);
         }
 
         private ArchiveTransferManager CreateTransferManager()
@@ -67,21 +94,8 @@ namespace Oblakoo.Amazon
                 throw new NotSupportedException("Glacier is not supported directories");
             var manager = CreateTransferManager();
             var options = new DownloadOptions();
-            options.StreamTransferProgress += download_StreamTransferProgress;
             var filePathName = destFolder + Path.DirectorySeparatorChar + file.Name;
             await Task.Run(() => manager.Download(Vault, file.Id, filePathName));
-        }
-
-        void upload_StreamTransferProgress(object sender, StreamTransferProgressArgs args)
-        {
-            if (TransferProgress != null)
-                TransferProgress(this, new TransferProgressEventArgs(args.PercentDone, TransferDirection.Upload));
-        }
-
-        void download_StreamTransferProgress(object sender, StreamTransferProgressArgs args)
-        {
-            if (TransferProgress != null)
-                TransferProgress(this, new TransferProgressEventArgs(args.PercentDone, TransferDirection.Download));
         }
 
 #pragma warning disable 1998
@@ -98,6 +112,5 @@ namespace Oblakoo.Amazon
             get { return rootFolder; }
         }
 
-        public event EventHandler<TransferProgressEventArgs> TransferProgress;
     }
 }

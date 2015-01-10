@@ -12,7 +12,7 @@ namespace OblakooTest
     {
         readonly MockDriveFile root = new MockDriveFile();
 
-        public MockDrive(string rootPath) : base(rootPath)
+        public MockDrive(string rootPath)
         {
             root.children.Add(new MockDriveFile("test.txt", "test.txt", "Hello, World!"));
             root.children.Add(new MockDriveFile("file.txt", "file.txt", "File file file"));
@@ -24,6 +24,11 @@ namespace OblakooTest
         public override DriveFile RootFolder
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public override Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
+        {
+            throw new NotImplementedException();
         }
 
         public override Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)

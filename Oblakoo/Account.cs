@@ -99,5 +99,16 @@ namespace Oblakoo
         }
 
         public AccountFile RootFolder { get; private set; }
+
+        public async Task ClearAsync(CancellationToken token)
+        {
+            await Storage.ClearAsync(token);
+            await Drive.ClearAsync(token);
+        }
+
+        public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
+        {
+            await Drive.DeleteFolderAsync(folder.DriveFile, token);
+        }
     }
 }

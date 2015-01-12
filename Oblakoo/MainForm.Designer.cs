@@ -56,7 +56,14 @@
             this.PercentColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StatusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.propertiesTabPage = new System.Windows.Forms.TabPage();
-            this.propertyListView = new System.Windows.Forms.ListView();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.vaultSizeLabel = new System.Windows.Forms.Label();
+            this.vaultRegionLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.vaultNameLabel = new System.Windows.Forms.Label();
             this.logTabPage = new System.Windows.Forms.TabPage();
             this.logListView = new System.Windows.Forms.ListView();
             this.logDataTimeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -92,6 +99,9 @@
             this.downloadFolderFromStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadingFoldersTimer = new System.Windows.Forms.Timer(this.components);
+            this.downloadFromDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFromDriveOnlyContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFromDriveFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -107,6 +117,7 @@
             this.tabControl1.SuspendLayout();
             this.tasksTabPage.SuspendLayout();
             this.propertiesTabPage.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.logTabPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -132,7 +143,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2, 0, 0, 1);
             this.splitContainer1.Size = new System.Drawing.Size(803, 412);
-            this.splitContainer1.SplitterDistance = 255;
+            this.splitContainer1.SplitterDistance = 246;
             this.splitContainer1.SplitterWidth = 7;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -155,7 +166,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 255);
+            this.splitContainer2.Size = new System.Drawing.Size(803, 246);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 7;
             this.splitContainer2.TabIndex = 0;
@@ -171,7 +182,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(248, 255);
+            this.treeView1.Size = new System.Drawing.Size(248, 246);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -209,7 +220,7 @@
             this.fileListView.FullRowSelect = true;
             this.fileListView.Location = new System.Drawing.Point(0, 0);
             this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(337, 255);
+            this.fileListView.Size = new System.Drawing.Size(337, 246);
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TabIndex = 1;
             this.fileListView.UseCompatibleStateImageBehavior = false;
@@ -238,7 +249,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(337, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(7, 255);
+            this.splitter1.Size = new System.Drawing.Size(7, 246);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -251,7 +262,7 @@
             this.fileInfoPanel.MinimumSize = new System.Drawing.Size(200, 0);
             this.fileInfoPanel.Name = "fileInfoPanel";
             this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.fileInfoPanel.Size = new System.Drawing.Size(200, 255);
+            this.fileInfoPanel.Size = new System.Drawing.Size(200, 246);
             this.fileInfoPanel.TabIndex = 2;
             // 
             // pictureBox1
@@ -262,7 +273,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(198, 130);
+            this.pictureBox1.Size = new System.Drawing.Size(198, 121);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -272,7 +283,7 @@
             this.filePropertiesPanel.Controls.Add(this.filePropertiesTable);
             this.filePropertiesPanel.Controls.Add(this.fileNameLabel);
             this.filePropertiesPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 130);
+            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 121);
             this.filePropertiesPanel.Name = "filePropertiesPanel";
             this.filePropertiesPanel.Size = new System.Drawing.Size(198, 125);
             this.filePropertiesPanel.TabIndex = 3;
@@ -357,7 +368,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(801, 149);
+            this.tabControl1.Size = new System.Drawing.Size(801, 158);
             this.tabControl1.TabIndex = 0;
             // 
             // tasksTabPage
@@ -366,7 +377,7 @@
             this.tasksTabPage.Location = new System.Drawing.Point(4, 22);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.tasksTabPage.Size = new System.Drawing.Size(793, 123);
+            this.tasksTabPage.Size = new System.Drawing.Size(793, 132);
             this.tasksTabPage.TabIndex = 0;
             this.tasksTabPage.Text = "Tasks";
             this.tasksTabPage.UseVisualStyleBackColor = true;
@@ -383,7 +394,7 @@
             this.taskListView.HideSelection = false;
             this.taskListView.Location = new System.Drawing.Point(0, 2);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(791, 120);
+            this.taskListView.Size = new System.Drawing.Size(791, 129);
             this.taskListView.TabIndex = 0;
             this.taskListView.UseCompatibleStateImageBehavior = false;
             this.taskListView.View = System.Windows.Forms.View.Details;
@@ -407,24 +418,107 @@
             // 
             // propertiesTabPage
             // 
-            this.propertiesTabPage.Controls.Add(this.propertyListView);
+            this.propertiesTabPage.Controls.Add(this.tableLayoutPanel2);
+            this.propertiesTabPage.Controls.Add(this.tableLayoutPanel1);
             this.propertiesTabPage.Location = new System.Drawing.Point(4, 22);
             this.propertiesTabPage.Name = "propertiesTabPage";
             this.propertiesTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.propertiesTabPage.Size = new System.Drawing.Size(793, 123);
+            this.propertiesTabPage.Size = new System.Drawing.Size(793, 132);
             this.propertiesTabPage.TabIndex = 1;
             this.propertiesTabPage.Text = "Properties";
             this.propertiesTabPage.UseVisualStyleBackColor = true;
             // 
-            // propertyListView
+            // tableLayoutPanel2
             // 
-            this.propertyListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyListView.Location = new System.Drawing.Point(0, 2);
-            this.propertyListView.Name = "propertyListView";
-            this.propertyListView.Size = new System.Drawing.Size(791, 120);
-            this.propertyListView.TabIndex = 1;
-            this.propertyListView.UseCompatibleStateImageBehavior = false;
-            this.propertyListView.View = System.Windows.Forms.View.Details;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(273, 2);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(267, 129);
+            this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.vaultSizeLabel, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.vaultRegionLabel, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.vaultNameLabel, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 2);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(273, 129);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 86);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(130, 43);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Size:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vaultSizeLabel
+            // 
+            this.vaultSizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vaultSizeLabel.Location = new System.Drawing.Point(139, 86);
+            this.vaultSizeLabel.Name = "vaultSizeLabel";
+            this.vaultSizeLabel.Size = new System.Drawing.Size(131, 43);
+            this.vaultSizeLabel.TabIndex = 5;
+            this.vaultSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vaultRegionLabel
+            // 
+            this.vaultRegionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vaultRegionLabel.Location = new System.Drawing.Point(139, 43);
+            this.vaultRegionLabel.Name = "vaultRegionLabel";
+            this.vaultRegionLabel.Size = new System.Drawing.Size(131, 43);
+            this.vaultRegionLabel.TabIndex = 3;
+            this.vaultRegionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 43);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(130, 43);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Region:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(130, 43);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Vault Name:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vaultNameLabel
+            // 
+            this.vaultNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.vaultNameLabel.Location = new System.Drawing.Point(139, 0);
+            this.vaultNameLabel.Name = "vaultNameLabel";
+            this.vaultNameLabel.Size = new System.Drawing.Size(131, 40);
+            this.vaultNameLabel.TabIndex = 4;
+            this.vaultNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // logTabPage
             // 
@@ -432,7 +526,7 @@
             this.logTabPage.Location = new System.Drawing.Point(4, 22);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.logTabPage.Size = new System.Drawing.Size(793, 123);
+            this.logTabPage.Size = new System.Drawing.Size(793, 132);
             this.logTabPage.TabIndex = 2;
             this.logTabPage.Text = "Log";
             this.logTabPage.UseVisualStyleBackColor = true;
@@ -447,7 +541,7 @@
             this.logListView.HideSelection = false;
             this.logListView.Location = new System.Drawing.Point(0, 2);
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(791, 120);
+            this.logListView.Size = new System.Drawing.Size(791, 129);
             this.logListView.TabIndex = 2;
             this.logListView.UseCompatibleStateImageBehavior = false;
             this.logListView.View = System.Windows.Forms.View.Details;
@@ -573,9 +667,10 @@
             this.connectToolStripMenuItem,
             this.disconnectToolStripMenuItem,
             this.changeAccountToolStripMenuItem,
-            this.deleteAccountToolStripMenuItem});
+            this.deleteAccountToolStripMenuItem,
+            this.downloadFromDriveToolStripMenuItem});
             this.accountContextMenuStrip.Name = "accountContextMenuStrip";
-            this.accountContextMenuStrip.Size = new System.Drawing.Size(164, 92);
+            this.accountContextMenuStrip.Size = new System.Drawing.Size(187, 114);
             // 
             // connectToolStripMenuItem
             // 
@@ -589,6 +684,7 @@
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.disconnectToolStripMenuItem.Text = "Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
             // changeAccountToolStripMenuItem
             // 
@@ -691,12 +787,36 @@
             this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
             this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.deleteFolderToolStripMenuItem.Text = "Delete";
+            this.deleteFolderToolStripMenuItem.Click += new System.EventHandler(this.deleteFolderToolStripMenuItem_Click);
             // 
             // loadingFoldersTimer
             // 
             this.loadingFoldersTimer.Enabled = true;
             this.loadingFoldersTimer.Interval = 150;
             this.loadingFoldersTimer.Tick += new System.EventHandler(this.loadingFoldersTimer_Tick);
+            // 
+            // downloadFromDriveToolStripMenuItem
+            // 
+            this.downloadFromDriveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.downloadFromDriveFolderToolStripMenuItem,
+            this.downloadFromDriveOnlyContentToolStripMenuItem});
+            this.downloadFromDriveToolStripMenuItem.Name = "downloadFromDriveToolStripMenuItem";
+            this.downloadFromDriveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.downloadFromDriveToolStripMenuItem.Text = "Download from drive";
+            // 
+            // downloadFromDriveOnlyContentToolStripMenuItem
+            // 
+            this.downloadFromDriveOnlyContentToolStripMenuItem.Name = "downloadFromDriveOnlyContentToolStripMenuItem";
+            this.downloadFromDriveOnlyContentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.downloadFromDriveOnlyContentToolStripMenuItem.Text = "Content";
+            this.downloadFromDriveOnlyContentToolStripMenuItem.Click += new System.EventHandler(this.downloadFromDriveOnlyContentToolStripMenuItem_Click);
+            // 
+            // downloadFromDriveFolderToolStripMenuItem
+            // 
+            this.downloadFromDriveFolderToolStripMenuItem.Name = "downloadFromDriveFolderToolStripMenuItem";
+            this.downloadFromDriveFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.downloadFromDriveFolderToolStripMenuItem.Text = "Folder";
+            this.downloadFromDriveFolderToolStripMenuItem.Click += new System.EventHandler(this.downloadFromDriveFolderToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -728,6 +848,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tasksTabPage.ResumeLayout(false);
             this.propertiesTabPage.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.logTabPage.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -764,7 +885,6 @@
         private System.Windows.Forms.ToolStripButton newFolderToolStripButton;
         private System.Windows.Forms.ToolStripButton refreshFilesToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ListView propertyListView;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadFolderToolStripMenuItem;
@@ -805,6 +925,17 @@
         private System.Windows.Forms.ColumnHeader logDataTimeColumnHeader;
         private System.Windows.Forms.ColumnHeader logMessageColumnHeader;
         private System.Windows.Forms.Timer loadingFoldersTimer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label vaultRegionLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label vaultNameLabel;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label vaultSizeLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ToolStripMenuItem downloadFromDriveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadFromDriveOnlyContentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadFromDriveFolderToolStripMenuItem;
     }
 }
 

@@ -16,6 +16,13 @@ namespace Oblakoo
         public string AccountName { get; set; }
         public Object Tag { get; set; }
 
+        internal AsyncTaskManager Manager { get; set; }
+
+        protected void AddATask(AsyncTask task)
+        {
+            Manager.Add(task);
+        }
+
         protected AsyncTask(Account account, string accountName, int priority, AsyncTask parent)
         {
             Account = account;

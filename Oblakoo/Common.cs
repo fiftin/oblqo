@@ -27,5 +27,13 @@ namespace Oblakoo
         {
             return Path.GetFileName(path.TrimEnd(Path.DirectorySeparatorChar));
         }
+
+        public static string AppendFolderToPath(string destFolder, string folderName)
+        {
+            if (destFolder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                return destFolder + folderName;
+            else
+                return destFolder + Path.DirectorySeparatorChar + folderName;
+        }
     }
 }

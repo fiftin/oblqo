@@ -37,6 +37,8 @@
             this.secretAccessKeyTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.regionComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.glacierVaultTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -45,8 +47,10 @@
             this.yandexDriveRadioButton = new System.Windows.Forms.RadioButton();
             this.oneDriveRadioButton = new System.Windows.Forms.RadioButton();
             this.googleDriveRadioButton = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
-            this.regionComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.imageResolutionComboBox = new System.Windows.Forms.ComboBox();
+            this.createVaultCheckBox = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +59,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(361, 326);
+            this.cancelButton.Location = new System.Drawing.Point(361, 381);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 29);
             this.cancelButton.TabIndex = 0;
@@ -66,7 +70,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(280, 326);
+            this.okButton.Location = new System.Drawing.Point(280, 381);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 29);
             this.okButton.TabIndex = 1;
@@ -123,6 +127,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.createVaultCheckBox);
             this.groupBox1.Controls.Add(this.regionComboBox);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.glacierVaultTextBox);
@@ -138,11 +143,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Amazon Glacier Account";
             // 
+            // regionComboBox
+            // 
+            this.regionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.regionComboBox.FormattingEnabled = true;
+            this.regionComboBox.Location = new System.Drawing.Point(113, 100);
+            this.regionComboBox.Name = "regionComboBox";
+            this.regionComboBox.Size = new System.Drawing.Size(283, 21);
+            this.regionComboBox.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 103);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Region:";
+            // 
             // glacierVaultTextBox
             // 
             this.glacierVaultTextBox.Location = new System.Drawing.Point(113, 75);
             this.glacierVaultTextBox.Name = "glacierVaultTextBox";
-            this.glacierVaultTextBox.Size = new System.Drawing.Size(283, 20);
+            this.glacierVaultTextBox.Size = new System.Drawing.Size(220, 20);
             this.glacierVaultTextBox.TabIndex = 9;
             // 
             // label4
@@ -156,6 +179,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBox1);
+            this.groupBox2.Controls.Add(this.imageResolutionComboBox);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.driveRootPathTextBox);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.yandexDriveRadioButton);
@@ -163,7 +189,7 @@
             this.groupBox2.Controls.Add(this.googleDriveRadioButton);
             this.groupBox2.Location = new System.Drawing.Point(17, 192);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(419, 124);
+            this.groupBox2.Size = new System.Drawing.Size(419, 159);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Drive Account";
@@ -172,7 +198,7 @@
             // 
             this.driveRootPathTextBox.Location = new System.Drawing.Point(113, 91);
             this.driveRootPathTextBox.Name = "driveRootPathTextBox";
-            this.driveRootPathTextBox.Size = new System.Drawing.Size(283, 20);
+            this.driveRootPathTextBox.Size = new System.Drawing.Size(220, 20);
             this.driveRootPathTextBox.TabIndex = 13;
             // 
             // label6
@@ -187,6 +213,7 @@
             // yandexDriveRadioButton
             // 
             this.yandexDriveRadioButton.AutoSize = true;
+            this.yandexDriveRadioButton.Enabled = false;
             this.yandexDriveRadioButton.Location = new System.Drawing.Point(9, 67);
             this.yandexDriveRadioButton.Name = "yandexDriveRadioButton";
             this.yandexDriveRadioButton.Size = new System.Drawing.Size(89, 17);
@@ -197,6 +224,7 @@
             // oneDriveRadioButton
             // 
             this.oneDriveRadioButton.AutoSize = true;
+            this.oneDriveRadioButton.Enabled = false;
             this.oneDriveRadioButton.Location = new System.Drawing.Point(9, 46);
             this.oneDriveRadioButton.Name = "oneDriveRadioButton";
             this.oneDriveRadioButton.Size = new System.Drawing.Size(70, 17);
@@ -216,23 +244,43 @@
             this.googleDriveRadioButton.Text = "Google Drive";
             this.googleDriveRadioButton.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // label7
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 103);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Region:";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 124);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(87, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Image resolution:";
             // 
-            // regionComboBox
+            // imageResolutionComboBox
             // 
-            this.regionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.regionComboBox.FormattingEnabled = true;
-            this.regionComboBox.Location = new System.Drawing.Point(113, 100);
-            this.regionComboBox.Name = "regionComboBox";
-            this.regionComboBox.Size = new System.Drawing.Size(283, 21);
-            this.regionComboBox.TabIndex = 11;
+            this.imageResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imageResolutionComboBox.FormattingEnabled = true;
+            this.imageResolutionComboBox.Location = new System.Drawing.Point(113, 121);
+            this.imageResolutionComboBox.Name = "imageResolutionComboBox";
+            this.imageResolutionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.imageResolutionComboBox.TabIndex = 15;
+            // 
+            // createVaultCheckBox
+            // 
+            this.createVaultCheckBox.AutoSize = true;
+            this.createVaultCheckBox.Location = new System.Drawing.Point(339, 77);
+            this.createVaultCheckBox.Name = "createVaultCheckBox";
+            this.createVaultCheckBox.Size = new System.Drawing.Size(57, 17);
+            this.createVaultCheckBox.TabIndex = 12;
+            this.createVaultCheckBox.Text = "Create";
+            this.createVaultCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(339, 93);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(57, 17);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "Create";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // AccountForm
             // 
@@ -240,7 +288,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(448, 367);
+            this.ClientSize = new System.Drawing.Size(448, 422);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.accountNameTextBox);
@@ -284,5 +332,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox regionComboBox;
+        private System.Windows.Forms.ComboBox imageResolutionComboBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox createVaultCheckBox;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

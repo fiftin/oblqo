@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Oblakoo.Tasks;
+// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblakoo
 {
@@ -15,7 +16,7 @@ namespace Oblakoo
         {
             public DateTime StartTime { get; set; }
             public AsyncTask AsyncTask { get; set; }
-            public Task Task { get; set; }
+            public Task Task { get; private set; }
 
             public TaskInfo(AsyncTask asyncTask, Task task)
             {
@@ -33,6 +34,8 @@ namespace Oblakoo
         private int numberOfTasksRunning;
         private readonly List<TaskInfo> runningTasks = new List<TaskInfo>();
         private Task checkingTaskStatesTask;
+
+
         public void Add(AsyncTask task)
         {
             lock (SyncRoot)
@@ -40,6 +43,7 @@ namespace Oblakoo
                 tasks.Add(task);
                 task.StateChanged += task_StateChanged;
                 task.Progress += task_Progress;
+                task.Manager = this;
             }
             newTaskEvent.Set();
             if (TaskAdded != null)
@@ -48,34 +52,6 @@ namespace Oblakoo
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)
         {
-            var task = sender as UploadFolderTask;
-            if (task != null)
-            {
-                var state = (UploadFolderTask.ProgressState) e.State;
-                if (state.IsFolder)
-                {
-                    CreateFolderTask newTask;
-                    if (state.ParentTask == null)
-                        newTask = new CreateFolderTask(task.Account, task.AccountName, 0, null,
-                            state.Folder.Name, task.DestFolder) { Tag = task.Tag };
-                    else
-                        newTask = new CreateFolderTask(task.Account, task.AccountName, 0, state.ParentTask,
-                            state.Folder.Name, null) {Tag = task.Tag};
-                    Add(newTask);
-                    state.CreatedTask = newTask;
-                }
-                else
-                {
-                    UploadFileTask newTask;
-                    if (state.ParentTask == null)
-                        newTask = new UploadFileTask(task.Account, task.AccountName, 0, null,
-                            state.File.FullName, task.DestFolder) { Tag = task.Tag };
-                    else
-                        newTask = new UploadFileTask(task.Account, task.AccountName, 0, state.ParentTask,
-                            state.File.FullName, null) { Tag = task.Tag };
-                    Add(newTask);
-                }
-            }
             if (TaskProgress != null)
                 TaskProgress(this, new AsyncTaskEventArgs<AsyncTaskProgressEventArgs>((AsyncTask)sender, e));
         }
@@ -109,11 +85,6 @@ namespace Oblakoo
         {
             return GetEnumerator();
         }
-
-        public event EventHandler<AsyncTaskEventArgs> TaskStateChanged;
-        public event EventHandler<AsyncTaskEventArgs> TaskAdded;
-        public event EventHandler<AsyncTaskEventArgs> TaskRemoved;
-        public event EventHandler<AsyncTaskEventArgs<AsyncTaskProgressEventArgs>> TaskProgress;
 
         protected virtual void OnTaskStateChanged(AsyncTaskEventArgs e)
         {
@@ -225,6 +196,10 @@ namespace Oblakoo
                 Exception(this, new ExceptionEventArgs(exception));
         }
 
+        public event EventHandler<AsyncTaskEventArgs> TaskStateChanged;
+        public event EventHandler<AsyncTaskEventArgs> TaskAdded;
+        public event EventHandler<AsyncTaskEventArgs> TaskRemoved;
+        public event EventHandler<AsyncTaskEventArgs<AsyncTaskProgressEventArgs>> TaskProgress;
         public event EventHandler<ExceptionEventArgs> Exception;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Amazon;
 using Oblakoo.Properties;
@@ -17,16 +19,53 @@ namespace Oblakoo
             }
         }
 
+        private class Resolution
+        {
+            public Resolution(Size size) : this(size.Width,size.Height) { }
+            public Resolution(int w, int h)
+            {
+                Size = new Size(w, h);
+            }
+            public Size Size { get; private set; }
+            public override string ToString()
+            {
+                return string.Format("{0} x {1}", Size.Width, Size.Height);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Size.Equals(obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return Size.GetHashCode();
+            }
+        }
+
         public AccountForm(bool newAccount)
         {
             InitializeComponent();
             Text = newAccount ? Resources.AccountForm_CreateNewAccount : Resources.AccountForm_ChangeAccount;
+            createVaultCheckBox.Enabled = newAccount;
             foreach (var region in RegionEndpoint.EnumerableAllRegions)
                 regionComboBox.Items.Add(new RegionInfo
                 {
                     SystemName = region.SystemName,
                     DisplayName = region.DisplayName
                 });
+
+            regionComboBox.SelectedIndex = 0;
+
+            imageResolutionComboBox.Items.Add(new Resolution(1024, 768));
+            imageResolutionComboBox.Items.Add(new Resolution(1280, 1024));
+            imageResolutionComboBox.Items.Add(new Resolution(1600, 1200));
+            imageResolutionComboBox.Items.Add(new Resolution(2048, 1536));
+            imageResolutionComboBox.Items.Add(new Resolution(3200, 2400));
+            imageResolutionComboBox.Items.Add(new Resolution(6400, 4800));
+
+            imageResolutionComboBox.SelectedIndex = 2;
+            
         }
 
         public string StorageRegionSystemName
@@ -41,6 +80,23 @@ namespace Oblakoo
                 {
                     if (((RegionInfo) regionComboBox.Items[i]).SystemName == value)
                         regionComboBox.SelectedIndex = i;
+                }
+            }
+        }
+
+        public Size DriveImageResolution
+        {
+            get { return ((Resolution) imageResolutionComboBox.SelectedItem).Size; }
+            set
+            {
+                for (var i = 0; i < imageResolutionComboBox.Items.Count; i++)
+                {
+                    var x = (Resolution)imageResolutionComboBox.Items[i];
+                    if (x.Size.Equals(value))
+                    {
+                        imageResolutionComboBox.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
         }

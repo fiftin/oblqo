@@ -160,6 +160,29 @@ namespace Oblakoo.Google
             return await GetFilesAsync(folder.Id, string.Format("mimeType = '{0}'", GoogleMimeTypes.Folder), token);
         }
 
+        public override async Task ClearAsync(CancellationToken token)
+        {
+            Debug.Assert(RootFolder.IsFolder);
+            var service = await GetServiceAsync(token);
+            var files = await GetFilesAsync(RootFolder.Id, "", token);
+            foreach (var file in files)
+                await service.Files.Delete(file.Id).ExecuteAsync(token);
+        }
+
+        public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
+        {
+            Debug.Assert(driveFolder.IsFolder);
+            var service = await GetServiceAsync(token);
+            if (driveFolder.Id == RootId)
+            {
+                var files = await GetFilesAsync(RootId, "", token);
+                foreach (var file in files)
+                    await service.Files.Delete(file.Id).ExecuteAsync(token);
+            }
+            else
+                await service.Files.Delete(driveFolder.Id).ExecuteAsync(token);
+        }
+
         private static string GetAvailableFileName(string wishfulFileName)
         {
             if (!System.IO.File.Exists(wishfulFileName))
@@ -179,6 +202,7 @@ namespace Oblakoo.Google
 
         public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
         {
+            Debug.Assert(!driveFile.IsFolder);
             var service = await GetServiceAsync(token);
             await service.Files.Delete(driveFile.Id).ExecuteAsync(token);
         }
@@ -209,7 +233,7 @@ namespace Oblakoo.Google
             var stream = await service.HttpClient.GetStreamAsync(url);
             if (stream != null)
             {
-                var fileName = destFolder + System.IO.Path.DirectorySeparatorChar + driveFile.Name;
+                var fileName = Common.AppendFolderToPath(destFolder, driveFile.Name);
                 if (System.IO.File.Exists(fileName))
                 {
                     switch (actionIfFileExists)

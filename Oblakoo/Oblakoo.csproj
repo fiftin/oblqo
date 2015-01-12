@@ -142,16 +142,20 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StandardImageResolution.cs" />
     <Compile Include="TaskException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageFile.cs" />
     <Compile Include="Tasks\CreateFolderTask.cs" />
+    <Compile Include="Tasks\DeleteFileTask.cs" />
+    <Compile Include="Tasks\DeleteFolderTask.cs" />
     <Compile Include="Tasks\DownloadFileFromDriveTask.cs" />
     <Compile Include="Tasks\DownloadFileFromStorageTask.cs" />
     <Compile Include="Tasks\DownloadFileTask.cs" />
     <Compile Include="Tasks\DownloadFolderFromDriveTask.cs" />
+    <Compile Include="Tasks\DownloadFolderFromStorageTask.cs" />
     <Compile Include="Tasks\DownloadFolderTask.cs" />
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />

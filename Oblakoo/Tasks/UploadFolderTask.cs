@@ -9,63 +9,46 @@ namespace Oblakoo.Tasks
     public class UploadFolderTask : AsyncTask
     {
 
-        public class ProgressState
-        {
-            public ProgressState(DirectoryInfo folder, FileInfo file, CreateFolderTask parentTask)
-            {
-                Folder = folder;
-                File = file;
-                ParentTask = parentTask;
-            }
-
-            public CreateFolderTask ParentTask { get; private set; }
-            public DirectoryInfo Folder { get; private set; }
-            public FileInfo File { get; private set; }
-
-            public bool IsFolder
-            {
-                get { return File == null; }
-            }
-            public CreateFolderTask CreatedTask { get; set; }
-        }
-
         public string Path { get; private set; }
         public AccountFile DestFolder { get; private set; }
 
-        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask parent, string path, AccountFile destFolder) 
+        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask parent, 
+            string path, AccountFile destFolder) 
             : base(account, accountName, priority, parent)
         {
             Path = path;
             DestFolder = destFolder;
         }
 
-        private static void EnumerateFilesRecursiveAsync(DirectoryInfo folder, CreateFolderTask task, Action<ProgressState> action, CancellationToken token)
+        private void EnumerateFilesRecursiveAsync(DirectoryInfo folder, AsyncTask task, CancellationToken token)
         {
             foreach (var file in folder.EnumerateFiles())
             {
                 if (token.IsCancellationRequested)
                     return;
-                action(new ProgressState(folder, file, task));
+                var newTask = task == null
+                    ? new UploadFileTask(Account, AccountName, 0, null, file.FullName, DestFolder) {Tag = Tag}
+                    : new UploadFileTask(Account, AccountName, 0, task, file.FullName, null) {Tag = Tag};
+                AddATask(newTask);
             }
             foreach (var dir in folder.EnumerateDirectories())
             {
                 if (token.IsCancellationRequested)
                     return;
-                var state = new ProgressState(dir, null, task);
-                action(state);
-                EnumerateFilesRecursiveAsync(dir, state.CreatedTask, action, token);
+                var newTask = task == null
+                    ? new CreateFolderTask(Account, AccountName, 0, null, dir.Name, DestFolder) {Tag = Tag}
+                    : new CreateFolderTask(Account, AccountName, 0, task, dir.Name, null) {Tag = Tag};
+                AddATask(newTask);
+                EnumerateFilesRecursiveAsync(dir, newTask, token);
             }
+            OnProgress(new AsyncTaskProgressEventArgs(0, null));
         }
 
         protected override async Task StartAsync2()
         {
             var folder = new DirectoryInfo(Path);
-            var rootState = new ProgressState(folder, null, null);
-            OnProgress(new AsyncTaskProgressEventArgs(0, rootState));
-            await Task.Run(() => EnumerateFilesRecursiveAsync(folder, rootState.CreatedTask, x =>
-            {
-                OnProgress(new AsyncTaskProgressEventArgs(0, x));
-            }, CancellationTokenSource.Token));
+            OnProgress(new AsyncTaskProgressEventArgs(0, null));
+            await Task.Run(() => EnumerateFilesRecursiveAsync(folder, null, CancellationTokenSource.Token));
         }
     }
 }

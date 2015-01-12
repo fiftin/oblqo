@@ -94,7 +94,7 @@ namespace Oblakoo.Amazon
                 throw new NotSupportedException("Glacier is not supported directories");
             var manager = CreateTransferManager();
             var options = new DownloadOptions();
-            var filePathName = destFolder + Path.DirectorySeparatorChar + file.Name;
+            var filePathName = Common.AppendFolderToPath(destFolder, file.Name);
             await Task.Run(() => manager.Download(Vault, file.Id, filePathName));
         }
 
@@ -112,5 +112,15 @@ namespace Oblakoo.Amazon
             get { return rootFolder; }
         }
 
+        public override bool IsSupportFolders
+        {
+            get { return false; }
+        }
+
+        public override async Task ClearAsync(CancellationToken token)
+        {
+            await DeleteVaultAsync(token);
+            await CreateVaultAsync(token);
+        }
     }
 }

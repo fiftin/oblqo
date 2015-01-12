@@ -40,5 +40,15 @@ namespace Oblakoo
         {
             get { throw new NotImplementedException(); }
         }
+
+        public override bool IsSupportFolders
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override Task ClearAsync(CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

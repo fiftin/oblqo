@@ -76,6 +76,14 @@ namespace OblakooTest
             throw new NotImplementedException();
         }
 
+        public override Task ClearAsync(CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
 
+        public override Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

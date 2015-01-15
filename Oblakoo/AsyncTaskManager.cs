@@ -94,7 +94,7 @@ namespace Oblakoo
                     Interlocked.Increment(ref numberOfTasksRunning);
                     break;
                 case AsyncTaskState.Cancelled:
-                case AsyncTaskState.Finished:
+                case AsyncTaskState.Completed:
                     Interlocked.Decrement(ref numberOfTasksRunning);
                     break;
             }
@@ -143,7 +143,8 @@ namespace Oblakoo
                             var task = tasksNow.FirstOrDefault(x => x.State == AsyncTaskState.Waiting);
                             if (task == null)
                                 break;
-                            if (task.Parent != null && task.Parent.State != AsyncTaskState.Finished) continue;
+
+                            if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished) continue;
                             var taskInfo = new TaskInfo(task, task.StartAsync());
                             lock (runningTasks)
                             {

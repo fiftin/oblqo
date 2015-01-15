@@ -54,9 +54,10 @@ namespace Oblakoo
         /// </param>
         /// <param name="actionIfFileExists"></param>
         /// <param name="token"></param>
-        public async Task DownloadFileFromStorageAsync(AccountFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+        /// <param name="progressCallback"></param>
+        public async Task DownloadFileFromStorageAsync(AccountFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            await Storage.DownloadFileAsync(file.StorageFile, destFolder, actionIfFileExists, token);
+            await Storage.DownloadFileAsync(file.StorageFile, destFolder, actionIfFileExists, token, progressCallback);
         }
 
         public async Task DownloadFileFromDriveAsync(AccountFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
@@ -70,6 +71,7 @@ namespace Oblakoo
         /// <param name="pathName"></param>
         /// <param name="destFolder"></param>
         /// <param name="token"></param>
+        /// <param name="progressCallback"></param>
         public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);

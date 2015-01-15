@@ -9,7 +9,7 @@ namespace Oblakoo
 {
     public class MockStorage : Storage
     {
-        public override Task DeleteFile(StorageFile id, CancellationToken token)
+        public override Task DeleteFileAsync(StorageFile id, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -24,9 +24,8 @@ namespace Oblakoo
             throw new NotImplementedException();
         }
 
-
         public override Task DownloadFileAsync(StorageFile file, string destFolder, ActionIfFileExists actionIfFileExists,
-            CancellationToken token)
+            CancellationToken token, Action<TransferProgress> progressCallback)
         {
             throw new NotImplementedException();
         }

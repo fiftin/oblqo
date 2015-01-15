@@ -37,20 +37,20 @@
             this.secretAccessKeyTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.createVaultCheckBox = new System.Windows.Forms.CheckBox();
             this.regionComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.glacierVaultTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.imageResolutionComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.yandexDriveRadioButton = new System.Windows.Forms.RadioButton();
             this.oneDriveRadioButton = new System.Windows.Forms.RadioButton();
             this.googleDriveRadioButton = new System.Windows.Forms.RadioButton();
-            this.label7 = new System.Windows.Forms.Label();
-            this.imageResolutionComboBox = new System.Windows.Forms.ComboBox();
-            this.createVaultCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -143,6 +143,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Amazon Glacier Account";
             // 
+            // createVaultCheckBox
+            // 
+            this.createVaultCheckBox.AutoSize = true;
+            this.createVaultCheckBox.Location = new System.Drawing.Point(339, 77);
+            this.createVaultCheckBox.Name = "createVaultCheckBox";
+            this.createVaultCheckBox.Size = new System.Drawing.Size(57, 17);
+            this.createVaultCheckBox.TabIndex = 12;
+            this.createVaultCheckBox.Text = "Create";
+            this.createVaultCheckBox.UseVisualStyleBackColor = true;
+            // 
             // regionComboBox
             // 
             this.regionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -194,6 +204,36 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Drive Account";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(339, 93);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(57, 17);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "Create";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // imageResolutionComboBox
+            // 
+            this.imageResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imageResolutionComboBox.FormattingEnabled = true;
+            this.imageResolutionComboBox.Location = new System.Drawing.Point(113, 121);
+            this.imageResolutionComboBox.Name = "imageResolutionComboBox";
+            this.imageResolutionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.imageResolutionComboBox.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 124);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(87, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Image resolution:";
+            // 
             // driveRootPathTextBox
             // 
             this.driveRootPathTextBox.Location = new System.Drawing.Point(113, 91);
@@ -216,9 +256,9 @@
             this.yandexDriveRadioButton.Enabled = false;
             this.yandexDriveRadioButton.Location = new System.Drawing.Point(9, 67);
             this.yandexDriveRadioButton.Name = "yandexDriveRadioButton";
-            this.yandexDriveRadioButton.Size = new System.Drawing.Size(89, 17);
+            this.yandexDriveRadioButton.Size = new System.Drawing.Size(85, 17);
             this.yandexDriveRadioButton.TabIndex = 2;
-            this.yandexDriveRadioButton.Text = "Yandex Drive";
+            this.yandexDriveRadioButton.Text = "Yandex Disk";
             this.yandexDriveRadioButton.UseVisualStyleBackColor = true;
             // 
             // oneDriveRadioButton
@@ -243,44 +283,6 @@
             this.googleDriveRadioButton.TabStop = true;
             this.googleDriveRadioButton.Text = "Google Drive";
             this.googleDriveRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 124);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(87, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Image resolution:";
-            // 
-            // imageResolutionComboBox
-            // 
-            this.imageResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.imageResolutionComboBox.FormattingEnabled = true;
-            this.imageResolutionComboBox.Location = new System.Drawing.Point(113, 121);
-            this.imageResolutionComboBox.Name = "imageResolutionComboBox";
-            this.imageResolutionComboBox.Size = new System.Drawing.Size(121, 21);
-            this.imageResolutionComboBox.TabIndex = 15;
-            // 
-            // createVaultCheckBox
-            // 
-            this.createVaultCheckBox.AutoSize = true;
-            this.createVaultCheckBox.Location = new System.Drawing.Point(339, 77);
-            this.createVaultCheckBox.Name = "createVaultCheckBox";
-            this.createVaultCheckBox.Size = new System.Drawing.Size(57, 17);
-            this.createVaultCheckBox.TabIndex = 12;
-            this.createVaultCheckBox.Text = "Create";
-            this.createVaultCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(339, 93);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(57, 17);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.Text = "Create";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // AccountForm
             // 

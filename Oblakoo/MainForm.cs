@@ -344,7 +344,7 @@ namespace Oblakoo
                     taskItem.SubItems.Add("0").Name = "percent";
                     taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
                 }
-                else if (e.Task is DeleteFolderTask)
+                else if (e.Task is DeleteFolderTaskBase)
                 {
                     var task = (DeleteFolderTask)e.Task;
                     taskItem.Text = Path.GetFileName(task.Folder.Name);
@@ -354,10 +354,15 @@ namespace Oblakoo
                 }
                 else if (e.Task is DeleteFileTask)
                 {
+                    var task = (DeleteFileTask)e.Task;
+                    taskItem.Text = Path.GetFileName(task.File.Name);
+                    taskItem.SubItems.Add("").Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                    taskItem.SubItems.Add(e.Task.State.ToString()).Name = "state";
                 }
-                else if (e.Task is DownloadFolderFromDriveTask)
+                else if (e.Task is DownloadFolderTask)
                 {
-                    var task = (DownloadFolderFromDriveTask)e.Task;
+                    var task = (DownloadFolderFromStorageTask)e.Task;
                     taskItem.Text = Path.GetFileName(task.Folder.Name);
                     taskItem.SubItems.Add("").Name = "size";
                     taskItem.SubItems.Add("0").Name = "percent";
@@ -379,7 +384,7 @@ namespace Oblakoo
                 {
                     case AsyncTaskState.Cancelled:
                         break;
-                    case AsyncTaskState.Finished:
+                    case AsyncTaskState.Completed:
                         item.SubItems["percent"].Text = "100";
                         if (e.Task is CreateFolderTask)
                         {
@@ -817,6 +822,18 @@ namespace Oblakoo
         private void downloadFromDriveFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DownloadFolderFromDrive(false);
+        }
+
+        private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.Items)
+            {
+                var info = (NodeInfo) item.Tag;
+                var account = accounts[info.AccountName];
+                if (account == null)
+                    continue;
+                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File));
+            }
         }
 
     }

@@ -43,7 +43,7 @@ namespace Oblakoo.Amazon
             await Task.Run(() => manager.CreateVault(Vault), token);
         }
 
-        public override async Task DeleteFile(StorageFile file, CancellationToken token)
+        public override async Task DeleteFileAsync(StorageFile file, CancellationToken token)
         {
             if (file.IsRoot)
                 await DeleteVaultAsync(token);
@@ -88,15 +88,17 @@ namespace Oblakoo.Amazon
             return new ArchiveTransferManager(AccessKeyId, AccessSecretKey, Region);
         }
 
-        public override async Task DownloadFileAsync(StorageFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+        public override async Task DownloadFileAsync(StorageFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             if (file.IsFolder)
                 throw new NotSupportedException("Glacier is not supported directories");
             var manager = CreateTransferManager();
             var options = new DownloadOptions();
+            options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
             var filePathName = Common.AppendFolderToPath(destFolder, file.Name);
-            await Task.Run(() => manager.Download(Vault, file.Id, filePathName));
+            await Task.Run(() => manager.Download(Vault, file.Id, filePathName, options));
         }
+
 
 #pragma warning disable 1998
         public override async Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token)

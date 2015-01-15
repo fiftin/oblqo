@@ -4,7 +4,7 @@
     {
         Waiting,
         Running,
-        Finished,
+        Completed,
         Cancelled,
         Error
     }

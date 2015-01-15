@@ -1,12 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Oblakoo.Tasks
 {
-    class DeleteFileTask
+    public class DeleteFileTask : AsyncTask
     {
+        public AccountFile File { get; private set; }
+
+        public DeleteFileTask(Account account, string accountName, int priority, AsyncTask[] parents, AccountFile file)
+            : base(account, accountName, priority, parents)
+        {
+            File = file;
+        }
+
+        protected override async Task StartAsync2()
+        {
+            await Account.Storage.DeleteFileAsync(File.StorageFile, CancellationTokenSource.Token);
+            await Account.Drive.DeleteFileAsync(File.DriveFile, CancellationTokenSource.Token);
+        }
     }
 }

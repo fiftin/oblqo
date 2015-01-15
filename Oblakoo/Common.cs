@@ -35,5 +35,15 @@ namespace Oblakoo
             else
                 return destFolder + Path.DirectorySeparatorChar + folderName;
         }
+
+        public static bool IsSingle<T>(T[] arr)
+        {
+            return arr != null && arr.Length == 1;
+        }
+
+        public static bool IsEmptyOrNull<T>(T[] arr)
+        {
+            return arr == null || arr.Length == 0;
+        }
     }
 }

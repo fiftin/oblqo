@@ -12,7 +12,7 @@ namespace Oblakoo.Tasks
         public string Path { get; private set; }
         public AccountFile DestFolder { get; private set; }
 
-        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask parent, 
+        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent, 
             string path, AccountFile destFolder) 
             : base(account, accountName, priority, parent)
         {
@@ -28,8 +28,8 @@ namespace Oblakoo.Tasks
                     return;
                 var newTask = task == null
                     ? new UploadFileTask(Account, AccountName, 0, null, file.FullName, DestFolder) {Tag = Tag}
-                    : new UploadFileTask(Account, AccountName, 0, task, file.FullName, null) {Tag = Tag};
-                AddATask(newTask);
+                    : new UploadFileTask(Account, AccountName, 0, new[] { task }, file.FullName, null) { Tag = Tag };
+                AddTask(newTask);
             }
             foreach (var dir in folder.EnumerateDirectories())
             {
@@ -37,8 +37,8 @@ namespace Oblakoo.Tasks
                     return;
                 var newTask = task == null
                     ? new CreateFolderTask(Account, AccountName, 0, null, dir.Name, DestFolder) {Tag = Tag}
-                    : new CreateFolderTask(Account, AccountName, 0, task, dir.Name, null) {Tag = Tag};
-                AddATask(newTask);
+                    : new CreateFolderTask(Account, AccountName, 0, new[] { task }, dir.Name, null) { Tag = Tag };
+                AddTask(newTask);
                 EnumerateFilesRecursiveAsync(dir, newTask, token);
             }
             OnProgress(new AsyncTaskProgressEventArgs(0, null));

@@ -6,7 +6,7 @@ namespace Oblakoo.Tasks
     {
         public string DestFolder { get; private set; }
 
-        protected DownloadFileTask(Account account, string accountName, int priority, AsyncTask parent,
+        protected DownloadFileTask(Account account, string accountName, int priority, AsyncTask[] parent,
             string destFolder)
             : base(account, accountName, priority, parent)
         {

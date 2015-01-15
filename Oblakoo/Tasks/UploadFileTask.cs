@@ -7,7 +7,7 @@ namespace Oblakoo.Tasks
         public string FileName { get; private set; }
         public AccountFile DestFolder { get; private set; }
 
-        public UploadFileTask(Account account, string accountName, int priority, AsyncTask parent, string fileName, AccountFile destFolder)
+        public UploadFileTask(Account account, string accountName, int priority, AsyncTask[] parent, string fileName, AccountFile destFolder)
             : base(account, accountName, priority, parent)
         {
             FileName = fileName;
@@ -17,8 +17,8 @@ namespace Oblakoo.Tasks
         protected override async Task StartAsync2()
         {
             var destFolder = DestFolder;
-            if (destFolder == null && Parent is CreateFolderTask)
-                destFolder = ((CreateFolderTask) Parent).CreatedFolder;
+            if (destFolder == null && Common.IsSingle(Parents) && Parents[0] is CreateFolderTask)
+                destFolder = ((CreateFolderTask)Parents[0]).CreatedFolder;
             await
                 Account.UploadFileAsync(FileName, destFolder, CancellationTokenSource.Token,
                     e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));

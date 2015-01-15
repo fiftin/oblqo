@@ -6,7 +6,7 @@ namespace Oblakoo.Tasks
     {
         public DriveFile File { get; private set; }
 
-        public DownloadFileFromDriveTask(Account account, string accountName, int priority, AsyncTask parent, DriveFile file, string destFolder) 
+        public DownloadFileFromDriveTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFile file, string destFolder) 
             : base(account, accountName, priority, parent, destFolder)
         {
             File = file;

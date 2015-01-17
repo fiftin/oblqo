@@ -4,8 +4,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon;
+using Amazon.Glacier;
+using Amazon.Glacier.Model;
 using Amazon.Glacier.Transfer;
-using Amazon.Runtime;
+using Amazon.Runtime.Internal;
 
 namespace Oblakoo.Amazon
 {
@@ -20,6 +22,8 @@ namespace Oblakoo.Amazon
         public string AccessKeyId { get; set; }
         public string AccessSecretKey { get; set; }
         public RegionEndpoint Region { get; set; }
+        private AmazonGlacierClient client;
+
 
         public Glacier(string vault, string rootPath, string accessKeyId, string accessSecretKey, RegionEndpoint region)
         {
@@ -31,16 +35,30 @@ namespace Oblakoo.Amazon
             rootFolder = new GlacierFile("", true, "", true);
         }
 
+        private async Task TransferAsync(Action<ArchiveTransferManager> action, CancellationToken token)
+        {
+            await Task.Run(() =>
+            {
+                var manager = CreateTransferManager();
+                token.Register(() => manager.Dispose());
+                using (manager)
+                {
+                    action(manager);
+                }
+            }, token);
+        }
+
         public async Task CreateVaultAsync(CancellationToken token)
         {
-            var manager = CreateTransferManager();
-            await Task.Run(() => manager.DeleteVault(Vault), token);
+            //var request = new CreateVaultRequest() {VaultName = Vault};
+
+            //await client.CreateVaultAsync(request, token);
+            await TransferAsync(manager => manager.CreateVault(Vault), token);
         }
 
         public async Task DeleteVaultAsync(CancellationToken token)
         {
-            var manager = CreateTransferManager();
-            await Task.Run(() => manager.CreateVault(Vault), token);
+            await TransferAsync(manager => manager.DeleteVault(Vault), token);
         }
 
         public override async Task DeleteFileAsync(StorageFile file, CancellationToken token)
@@ -48,10 +66,7 @@ namespace Oblakoo.Amazon
             if (file.IsRoot)
                 await DeleteVaultAsync(token);
             else
-            {
-                var manager = CreateTransferManager();
-                await Task.Run(() => manager.DeleteArchive(Vault, file.Id), token);
-            }
+                await TransferAsync(manager => manager.DeleteArchive(Vault, file.Id), token);
         }
 
         public override StorageFile GetFile(DriveFile driveFile)
@@ -59,12 +74,12 @@ namespace Oblakoo.Amazon
             return new GlacierFile(driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
         }
 
-        public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
+        public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
+            CancellationToken token, Action<TransferProgress> progressCallback)
         {
             Debug.Assert(destFolder.IsFolder);
             if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
                 throw new NotSupportedException("Uploading directories now not implemented");
-            var manager = CreateTransferManager();
             var options = new UploadOptions();
             options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
             UploadResult result = null;
@@ -72,12 +87,8 @@ namespace Oblakoo.Amazon
             var path = ((GlacierFile) destFolder).FolderPath;
             if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
                 path += "/";
-            
             var filePathName = path + fn;
-            await Task.Run(() =>
-            {
-                result = manager.Upload(Vault, filePathName, pathName, options);
-            }, token);
+            await TransferAsync(manager => result = manager.Upload(Vault, filePathName, pathName, options), token);
             if (result == null)
                 throw new Exception("Uploading failed");
             return new GlacierFile(result.ArchiveId, false, fn);
@@ -88,22 +99,27 @@ namespace Oblakoo.Amazon
             return new ArchiveTransferManager(AccessKeyId, AccessSecretKey, Region);
         }
 
-        public override async Task DownloadFileAsync(StorageFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
+        public override async Task DownloadFileAsync(StorageFile file, string destFolder,
+            ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             if (file.IsFolder)
                 throw new NotSupportedException("Glacier is not supported directories");
-            var manager = CreateTransferManager();
             var options = new DownloadOptions();
             options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
-            var filePathName = Common.AppendFolderToPath(destFolder, file.Name);
-            await Task.Run(() => manager.Download(Vault, file.Id, filePathName, options));
+            await TransferAsync(manager =>
+            {
+                var filePathName = Common.AppendFolderToPath(destFolder, file.Name);
+                var jobId = manager.InitiateArchiveRetrievalJob(Vault, file.Id);
+                
+                manager.DownloadJob(Vault, jobId, filePathName, options);
+            }, token);
         }
 
 
 #pragma warning disable 1998
         public override async Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token)
 #pragma warning restore 1998
-        {
+        { 
             var path = destFolder == null ? "/" : ((GlacierFile) destFolder).FolderPath;
             var newFolderPath = path + folderName + "/";
             return new GlacierFile(newFolderPath, true, newFolderPath);

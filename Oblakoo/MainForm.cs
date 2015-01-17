@@ -449,11 +449,11 @@ namespace Oblakoo
                             connectToolStripMenuItem.Enabled = true;
                             disconnectToolStripMenuItem.Enabled = false;
                         }
-                        accountContextMenuStrip.Show(Cursor.Position);
+                        accountMenu.Show(Cursor.Position);
                     }
                     else if (nodeInfo.Type == NodeType.Folder)
                     {
-                        folderContextMenuStrip.Show(Cursor.Position);
+                        folderMenu.Show(Cursor.Position);
                     }
                     break;
             }
@@ -702,7 +702,7 @@ namespace Oblakoo
                 case MouseButtons.Right:
                     if (fileListView.SelectedItems.Count > 0)
                     {
-                        fileContextMenuStrip.Show(Cursor.Position);
+                        fileMenu.Show(Cursor.Position);
                     }
                     break;
             }
@@ -836,6 +836,20 @@ namespace Oblakoo
             }
         }
 
+        private void cancelTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Cancel selected tasks?", "Cancel tasks", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            foreach (var task in from ListViewItem item in taskListView.SelectedItems select (AsyncTask) item.Tag)
+                task.Cancel();
+        }
+
+        private void logListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

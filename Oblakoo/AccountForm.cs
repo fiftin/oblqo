@@ -165,5 +165,10 @@ namespace Oblakoo
             set { glacierVaultTextBox.Text = value; }
         }
 
+        private void AccountForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
     }
 }

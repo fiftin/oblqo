@@ -16,7 +16,7 @@ namespace Oblakoo.Tasks
 
         protected override async Task StartAsync2()
         {
-            var folder = OnlyContent ? DestFolder : Common.AppendFolderToPath(DestFolder, Folder.Name);
+            var folder = OnlyContent ? DestFolder : Common.AppendToPath(DestFolder, Folder.Name);
             Directory.CreateDirectory(folder);
             await EnumerateFilesRecursiveAsync(Folder, folder);
         }

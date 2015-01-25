@@ -26,7 +26,7 @@ namespace Oblakoo.Tasks
             var dirs = await Account.Drive.GetSubfoldersAsync(folder, CancellationTokenSource.Token);
             foreach (var d in dirs)
             {
-                var path = Common.AppendFolderToPath(dest, d.Name);
+                var path = Common.AppendToPath(dest, d.Name);
                 Directory.CreateDirectory(path);
                 await EnumerateFilesRecursiveAsync(d, path);
             }

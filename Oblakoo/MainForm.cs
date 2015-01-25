@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -273,7 +274,7 @@ namespace Oblakoo
                     StorageVault = accountForm.GlacierVault,
                     DriveType = accountForm.DriveType,
                     DriveRootPath = accountForm.DriveRootPath,
-                    DriveImageResolution = accountForm.DriveImageResolution,
+                    DriveImageMaxSize = accountForm.DriveImageResolution,
                     StorageRegionSystemName = accountForm.StorageRegionSystemName,
                 };
                 accountManager.Add(info);
@@ -346,7 +347,7 @@ namespace Oblakoo
                 }
                 else if (e.Task is DeleteFolderTaskBase)
                 {
-                    var task = (DeleteFolderTask)e.Task;
+                    var task = (DeleteFolderTaskBase)e.Task;
                     taskItem.Text = Path.GetFileName(task.Folder.Name);
                     taskItem.SubItems.Add("").Name = "size";
                     taskItem.SubItems.Add("0").Name = "percent";
@@ -472,7 +473,7 @@ namespace Oblakoo
                 accountForm.StorageSecretAccessKey = account.StorageSecretAccessKey;
                 accountForm.DriveType = account.DriveType;
                 accountForm.DriveRootPath = account.DriveRootPath;
-                accountForm.DriveImageResolution = account.DriveImageResolution;
+                accountForm.DriveImageResolution = account.DriveImageMaxSize;
                 accountForm.StorageRegionSystemName = account.StorageRegionSystemName;
                 accountForm.GlacierVault = account.StorageVault;
                 if (accountForm.ShowDialog() != DialogResult.OK) return;
@@ -484,7 +485,7 @@ namespace Oblakoo
                 account.DriveType = accountForm.DriveType;
                 account.DriveRootPath = accountForm.DriveRootPath;
                 account.StorageVault = accountForm.GlacierVault;
-                account.DriveImageResolution = accountForm.DriveImageResolution;
+                account.DriveImageMaxSize = accountForm.DriveImageResolution;
                 node.Text = account.AccountName;
             }
         }
@@ -603,7 +604,11 @@ namespace Oblakoo
                 });
             }
             else
-                Invoke(new MethodInvoker(() => logListView.Items.Add(DateTime.Now.ToString()).SubItems.Add(exception.Message)));
+                Invoke(new MethodInvoker(() =>
+                {
+                    logListView.Items.Add(DateTime.Now.ToString(CultureInfo.CurrentCulture))
+                        .SubItems.Add(exception.Message).Tag = exception;
+                }));
         }
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -826,7 +831,7 @@ namespace Oblakoo
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in fileListView.Items)
+            foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo) item.Tag;
                 var account = accounts[info.AccountName];
@@ -846,10 +851,11 @@ namespace Oblakoo
                 task.Cancel();
         }
 
-        private void logListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void logListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            ;
         }
+
     }
 
 }

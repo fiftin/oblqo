@@ -131,17 +131,25 @@
     <Compile Include="DriveType.cs" />
     <Compile Include="Amazon\Glacier.cs" />
     <Compile Include="ExceptionEventArgs.cs" />
+    <Compile Include="ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Google\GoogleDrive.cs" />
     <Compile Include="Google\GoogleFile.cs" />
     <Compile Include="Google\GoogleItemKinds.cs" />
     <Compile Include="Google\GoogleFileList.cs" />
     <Compile Include="Google\GoogleMimeTypes.cs" />
+    <Compile Include="ImageType.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObserverStream.cs" />
     <Compile Include="StandardImageResolution.cs" />
     <Compile Include="TaskException.cs" />
     <Compile Include="Program.cs" />
@@ -172,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

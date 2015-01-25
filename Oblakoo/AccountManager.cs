@@ -70,6 +70,7 @@ namespace Oblakoo
             {
                 case DriveType.GoogleDrive:
                     drive = new GoogleDrive(GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
+                    drive.ImageMaxSize = info.DriveImageMaxSize;
                     ((GoogleDrive) drive).GetServiceAsync(token).Wait(token);
                     break;
                 default:

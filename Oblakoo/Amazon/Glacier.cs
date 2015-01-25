@@ -7,7 +7,7 @@ using Amazon;
 using Amazon.Glacier;
 using Amazon.Glacier.Model;
 using Amazon.Glacier.Transfer;
-using Amazon.Runtime.Internal;
+using Amazon.Runtime;
 
 namespace Oblakoo.Amazon
 {
@@ -22,7 +22,7 @@ namespace Oblakoo.Amazon
         public string AccessKeyId { get; set; }
         public string AccessSecretKey { get; set; }
         public RegionEndpoint Region { get; set; }
-        private AmazonGlacierClient client;
+        private readonly AmazonGlacierClient client;
 
 
         public Glacier(string vault, string rootPath, string accessKeyId, string accessSecretKey, RegionEndpoint region)
@@ -33,40 +33,25 @@ namespace Oblakoo.Amazon
             AccessSecretKey = accessSecretKey;
             Region = region;
             rootFolder = new GlacierFile("", true, "", true);
-        }
-
-        private async Task TransferAsync(Action<ArchiveTransferManager> action, CancellationToken token)
-        {
-            await Task.Run(() =>
-            {
-                var manager = CreateTransferManager();
-                token.Register(() => manager.Dispose());
-                using (manager)
-                {
-                    action(manager);
-                }
-            }, token);
+            client = new AmazonGlacierClient(accessKeyId, accessSecretKey, region);
         }
 
         public async Task CreateVaultAsync(CancellationToken token)
         {
-            //var request = new CreateVaultRequest() {VaultName = Vault};
-
-            //await client.CreateVaultAsync(request, token);
-            await TransferAsync(manager => manager.CreateVault(Vault), token);
+            var req = new CreateVaultRequest(Vault);
+            await client.CreateVaultAsync(req, token);
         }
 
         public async Task DeleteVaultAsync(CancellationToken token)
         {
-            await TransferAsync(manager => manager.DeleteVault(Vault), token);
+            var req = new DeleteVaultRequest(Vault);
+            await client.DeleteVaultAsync(req, token);
         }
 
         public override async Task DeleteFileAsync(StorageFile file, CancellationToken token)
         {
-            if (file.IsRoot)
-                await DeleteVaultAsync(token);
-            else
-                await TransferAsync(manager => manager.DeleteArchive(Vault, file.Id), token);
+            var req = new DeleteArchiveRequest(Vault, file.Id);
+            await client.DeleteArchiveAsync(req, token);
         }
 
         public override StorageFile GetFile(DriveFile driveFile)
@@ -80,23 +65,28 @@ namespace Oblakoo.Amazon
             Debug.Assert(destFolder.IsFolder);
             if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
                 throw new NotSupportedException("Uploading directories now not implemented");
-            var options = new UploadOptions();
-            options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
-            UploadResult result = null;
             var fn = Path.GetFileName(pathName);
             var path = ((GlacierFile) destFolder).FolderPath;
             if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
                 path += "/";
             var filePathName = path + fn;
-            await TransferAsync(manager => result = manager.Upload(Vault, filePathName, pathName, options), token);
-            if (result == null)
-                throw new Exception("Uploading failed");
-            return new GlacierFile(result.ArchiveId, false, fn);
-        }
-
-        private ArchiveTransferManager CreateTransferManager()
-        {
-            return new ArchiveTransferManager(AccessKeyId, AccessSecretKey, Region);
+            using (var fileStream = File.OpenRead(pathName))
+            {
+                var fileLen = fileStream.Length;
+                var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
+                var observed = new ObserverStream(fileStream);
+                var percent = 0;
+                observed.PositionChanged += (sender, e) =>
+                {
+                    var currentPercent = (int) (100*((Stream) sender).Position/(float) fileLen);
+                    if (currentPercent == percent) return;
+                    percent = currentPercent;
+                    progressCallback(new TransferProgress(percent));
+                };
+                var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
+                var result = await client.UploadArchiveAsync(req, token);
+                return new GlacierFile(result.ArchiveId, false, fn);
+            }
         }
 
         public override async Task DownloadFileAsync(StorageFile file, string destFolder,
@@ -104,17 +94,30 @@ namespace Oblakoo.Amazon
         {
             if (file.IsFolder)
                 throw new NotSupportedException("Glacier is not supported directories");
-            var options = new DownloadOptions();
-            options.StreamTransferProgress += (sender, e) => progressCallback(new TransferProgress(e.PercentDone));
-            await TransferAsync(manager =>
+            var initReq = new InitiateJobRequest(Vault, new JobParameters { ArchiveId = file.Id, Type = "archive-retrieval" });
+            var initResult = await client.InitiateJobAsync(initReq, token);
+            var describeReq = new DescribeJobRequest(Vault, initResult.JobId);
+            var describeResult = await client.DescribeJobAsync(describeReq, token);
+            var ok = false;
+            while (!ok)
             {
-                var filePathName = Common.AppendFolderToPath(destFolder, file.Name);
-                var jobId = manager.InitiateArchiveRetrievalJob(Vault, file.Id);
-                
-                manager.DownloadJob(Vault, jobId, filePathName, options);
-            }, token);
+                if (describeResult.Completed)
+                {
+                    ok = true;
+                }
+                else
+                {
+                    await Task.Delay(60000, token);
+                    describeResult = await client.DescribeJobAsync(describeReq, token);
+                }
+            }
+            var req = new GetJobOutputRequest(Vault, initResult.JobId, null);
+            var result = await client.GetJobOutputAsync(req, token);
+            using (var output = File.OpenWrite(Common.AppendToPath(destFolder, file.Name)))
+            {
+                await Common.CopyStreamAsync(result.Body, output);
+            }
         }
-
 
 #pragma warning disable 1998
         public override async Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token)

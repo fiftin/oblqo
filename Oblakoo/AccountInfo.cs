@@ -34,6 +34,6 @@ namespace Oblakoo
 
         public string DriveRootPath { get; set; }
 
-        public Size DriveImageResolution { get; set; }
+        public Size DriveImageMaxSize { get; set; }
     }
 }

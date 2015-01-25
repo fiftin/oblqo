@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -10,7 +9,6 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 using Google.Apis.Upload;
 using Google.Apis.Drive.v2.Data;
-using Google.Apis.Http;
 
 namespace Oblakoo.Google
 {
@@ -83,12 +81,24 @@ namespace Oblakoo.Google
                 Parents =
                     new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
             };
-            var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open);
-            var request = await service.Files.Insert(file, stream, "").UploadAsync(token);
-
-            if (request.Status == UploadStatus.Failed)
+            using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
             {
-                //TODO: Action if upload is failed
+                System.IO.Stream scaled;
+                ImageType imageType;
+                if (TryGetImageType(pathName, out imageType))
+                    scaled = await ScaleImageAsync(imageType, stream);
+                else
+                    scaled = stream;
+                var observed = new ObserverStream(scaled);
+                observed.PositionChanged += (sender, e) =>
+                {
+                    ;
+                };
+                var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
+                if (request.Status == UploadStatus.Failed)
+                {
+                    //TODO: Action if upload is failed
+                }
             }
             return new GoogleFile(file);
         }
@@ -233,7 +243,7 @@ namespace Oblakoo.Google
             var stream = await service.HttpClient.GetStreamAsync(url);
             if (stream != null)
             {
-                var fileName = Common.AppendFolderToPath(destFolder, driveFile.Name);
+                var fileName = Common.AppendToPath(destFolder, driveFile.Name);
                 if (System.IO.File.Exists(fileName))
                 {
                     switch (actionIfFileExists)

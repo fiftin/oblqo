@@ -55,6 +55,8 @@
             this.sizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PercentColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StatusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.taskMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cancelTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -102,8 +104,6 @@
             this.downloadFolderFromStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadingFoldersTimer = new System.Windows.Forms.Timer(this.components);
-            this.taskMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cancelTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -118,6 +118,7 @@
             this.filePropertiesTable.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tasksTabPage.SuspendLayout();
+            this.taskMenu.SuspendLayout();
             this.propertiesTabPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.logTabPage.SuspendLayout();
@@ -126,7 +127,6 @@
             this.accountMenu.SuspendLayout();
             this.fileMenu.SuspendLayout();
             this.folderMenu.SuspendLayout();
-            this.taskMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -146,7 +146,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2, 0, 0, 1);
             this.splitContainer1.Size = new System.Drawing.Size(803, 412);
-            this.splitContainer1.SplitterDistance = 240;
+            this.splitContainer1.SplitterDistance = 237;
             this.splitContainer1.SplitterWidth = 7;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -169,7 +169,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 240);
+            this.splitContainer2.Size = new System.Drawing.Size(803, 237);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 7;
             this.splitContainer2.TabIndex = 0;
@@ -185,7 +185,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(248, 240);
+            this.treeView1.Size = new System.Drawing.Size(248, 237);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -223,7 +223,7 @@
             this.fileListView.FullRowSelect = true;
             this.fileListView.Location = new System.Drawing.Point(0, 0);
             this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(337, 240);
+            this.fileListView.Size = new System.Drawing.Size(337, 237);
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TabIndex = 1;
             this.fileListView.UseCompatibleStateImageBehavior = false;
@@ -252,7 +252,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(337, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(7, 240);
+            this.splitter1.Size = new System.Drawing.Size(7, 237);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -265,7 +265,7 @@
             this.fileInfoPanel.MinimumSize = new System.Drawing.Size(200, 0);
             this.fileInfoPanel.Name = "fileInfoPanel";
             this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.fileInfoPanel.Size = new System.Drawing.Size(200, 240);
+            this.fileInfoPanel.Size = new System.Drawing.Size(200, 237);
             this.fileInfoPanel.TabIndex = 2;
             // 
             // pictureBox1
@@ -276,7 +276,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(198, 115);
+            this.pictureBox1.Size = new System.Drawing.Size(198, 112);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -286,7 +286,7 @@
             this.filePropertiesPanel.Controls.Add(this.filePropertiesTable);
             this.filePropertiesPanel.Controls.Add(this.fileNameLabel);
             this.filePropertiesPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 115);
+            this.filePropertiesPanel.Location = new System.Drawing.Point(0, 112);
             this.filePropertiesPanel.Name = "filePropertiesPanel";
             this.filePropertiesPanel.Size = new System.Drawing.Size(198, 125);
             this.filePropertiesPanel.TabIndex = 3;
@@ -371,7 +371,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(801, 164);
+            this.tabControl1.Size = new System.Drawing.Size(801, 167);
             this.tabControl1.TabIndex = 0;
             // 
             // tasksTabPage
@@ -380,7 +380,7 @@
             this.tasksTabPage.Location = new System.Drawing.Point(4, 22);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.tasksTabPage.Size = new System.Drawing.Size(793, 138);
+            this.tasksTabPage.Size = new System.Drawing.Size(793, 141);
             this.tasksTabPage.TabIndex = 0;
             this.tasksTabPage.Text = "Tasks";
             this.tasksTabPage.UseVisualStyleBackColor = true;
@@ -398,7 +398,7 @@
             this.taskListView.HideSelection = false;
             this.taskListView.Location = new System.Drawing.Point(0, 2);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(791, 135);
+            this.taskListView.Size = new System.Drawing.Size(791, 138);
             this.taskListView.TabIndex = 0;
             this.taskListView.UseCompatibleStateImageBehavior = false;
             this.taskListView.View = System.Windows.Forms.View.Details;
@@ -420,6 +420,20 @@
             // 
             this.StatusColumnHeader.Text = "Status";
             // 
+            // taskMenu
+            // 
+            this.taskMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cancelTaskToolStripMenuItem});
+            this.taskMenu.Name = "taskMenu";
+            this.taskMenu.Size = new System.Drawing.Size(111, 26);
+            // 
+            // cancelTaskToolStripMenuItem
+            // 
+            this.cancelTaskToolStripMenuItem.Name = "cancelTaskToolStripMenuItem";
+            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.cancelTaskToolStripMenuItem.Text = "Cancel";
+            this.cancelTaskToolStripMenuItem.Click += new System.EventHandler(this.cancelTaskToolStripMenuItem_Click);
+            // 
             // propertiesTabPage
             // 
             this.propertiesTabPage.Controls.Add(this.tableLayoutPanel2);
@@ -427,7 +441,7 @@
             this.propertiesTabPage.Location = new System.Drawing.Point(4, 22);
             this.propertiesTabPage.Name = "propertiesTabPage";
             this.propertiesTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.propertiesTabPage.Size = new System.Drawing.Size(793, 138);
+            this.propertiesTabPage.Size = new System.Drawing.Size(793, 141);
             this.propertiesTabPage.TabIndex = 1;
             this.propertiesTabPage.Text = "Properties";
             this.propertiesTabPage.UseVisualStyleBackColor = true;
@@ -443,7 +457,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(267, 135);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(267, 138);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -464,15 +478,15 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(273, 135);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(273, 138);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // label7
             // 
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(3, 90);
+            this.label7.Location = new System.Drawing.Point(3, 92);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(130, 45);
+            this.label7.Size = new System.Drawing.Size(130, 46);
             this.label7.TabIndex = 6;
             this.label7.Text = "Size:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -480,27 +494,27 @@
             // vaultSizeLabel
             // 
             this.vaultSizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vaultSizeLabel.Location = new System.Drawing.Point(139, 90);
+            this.vaultSizeLabel.Location = new System.Drawing.Point(139, 92);
             this.vaultSizeLabel.Name = "vaultSizeLabel";
-            this.vaultSizeLabel.Size = new System.Drawing.Size(131, 45);
+            this.vaultSizeLabel.Size = new System.Drawing.Size(131, 46);
             this.vaultSizeLabel.TabIndex = 5;
             this.vaultSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // vaultRegionLabel
             // 
             this.vaultRegionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vaultRegionLabel.Location = new System.Drawing.Point(139, 45);
+            this.vaultRegionLabel.Location = new System.Drawing.Point(139, 46);
             this.vaultRegionLabel.Name = "vaultRegionLabel";
-            this.vaultRegionLabel.Size = new System.Drawing.Size(131, 45);
+            this.vaultRegionLabel.Size = new System.Drawing.Size(131, 46);
             this.vaultRegionLabel.TabIndex = 3;
             this.vaultRegionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 45);
+            this.label5.Location = new System.Drawing.Point(3, 46);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(130, 45);
+            this.label5.Size = new System.Drawing.Size(130, 46);
             this.label5.TabIndex = 2;
             this.label5.Text = "Region:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -510,7 +524,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(130, 45);
+            this.label2.Size = new System.Drawing.Size(130, 46);
             this.label2.TabIndex = 0;
             this.label2.Text = "Vault Name:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -530,7 +544,7 @@
             this.logTabPage.Location = new System.Drawing.Point(4, 22);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.logTabPage.Size = new System.Drawing.Size(793, 138);
+            this.logTabPage.Size = new System.Drawing.Size(793, 141);
             this.logTabPage.TabIndex = 2;
             this.logTabPage.Text = "Log";
             this.logTabPage.UseVisualStyleBackColor = true;
@@ -545,11 +559,11 @@
             this.logListView.HideSelection = false;
             this.logListView.Location = new System.Drawing.Point(0, 2);
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(791, 135);
+            this.logListView.Size = new System.Drawing.Size(791, 138);
             this.logListView.TabIndex = 2;
             this.logListView.UseCompatibleStateImageBehavior = false;
             this.logListView.View = System.Windows.Forms.View.Details;
-            this.logListView.SelectedIndexChanged += new System.EventHandler(this.logListView_SelectedIndexChanged);
+            this.logListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.logListView_MouseDoubleClick);
             // 
             // logDataTimeColumnHeader
             // 
@@ -824,20 +838,6 @@
             this.loadingFoldersTimer.Interval = 150;
             this.loadingFoldersTimer.Tick += new System.EventHandler(this.loadingFoldersTimer_Tick);
             // 
-            // taskMenu
-            // 
-            this.taskMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cancelTaskToolStripMenuItem});
-            this.taskMenu.Name = "taskMenu";
-            this.taskMenu.Size = new System.Drawing.Size(111, 26);
-            // 
-            // cancelTaskToolStripMenuItem
-            // 
-            this.cancelTaskToolStripMenuItem.Name = "cancelTaskToolStripMenuItem";
-            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cancelTaskToolStripMenuItem.Text = "Cancel";
-            this.cancelTaskToolStripMenuItem.Click += new System.EventHandler(this.cancelTaskToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -867,6 +867,7 @@
             this.filePropertiesTable.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tasksTabPage.ResumeLayout(false);
+            this.taskMenu.ResumeLayout(false);
             this.propertiesTabPage.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.logTabPage.ResumeLayout(false);
@@ -877,7 +878,6 @@
             this.accountMenu.ResumeLayout(false);
             this.fileMenu.ResumeLayout(false);
             this.folderMenu.ResumeLayout(false);
-            this.taskMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

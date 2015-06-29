@@ -8,7 +8,7 @@ The program is designed to save the photo in two copies:
 
 * A copy of the photo (with lower resolution) is stored on the Google Drive.
 
-Oblakoo creates a link between the copy photos to disk and a copy on the Amazon Glaicer. It allows you to download the original photo from Amazon Drive for photo on the Google Drive.
+The program creates a link between the copy on Google Drive and a copy on the Amazon Glaicer. It allows you to download the original photo from Amazon Drive for photo on the Google Drive.
 
 The program has an interface for viewing photos on Google Drive. Finding the right picture you can initiate the downloading of the original.
 

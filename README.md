@@ -1,8 +1,4 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### Oblakoo ###
+# Oblakoo #
 
 Программа предназначена для сохранения фотографий в двух экземплярах:
 * Оригинальная фотография сохраняется в Amazon Glacier

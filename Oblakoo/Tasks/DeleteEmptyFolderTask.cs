@@ -9,7 +9,7 @@ namespace Oblakoo.Tasks
         {
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             await Account.DeleteFolderAsync(Folder, CancellationTokenSource.Token);
         }

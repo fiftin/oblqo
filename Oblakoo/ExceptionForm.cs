@@ -12,9 +12,26 @@ namespace Oblakoo
 {
     public partial class ExceptionForm : Form
     {
+        private Exception exception;
+
         public ExceptionForm()
         {
             InitializeComponent();
+        }
+
+        public Exception Exception
+        {
+            get
+            {
+                return exception;
+            }
+            set
+            {
+                exception = value;
+                messageTextBox.Text = value.Message;
+                typeTextBox.Text = value.GetType().Name;
+                callStackTextBox.Text = value.StackTrace;
+            }
         }
     }
 }

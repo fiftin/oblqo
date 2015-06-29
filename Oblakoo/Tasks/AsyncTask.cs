@@ -53,7 +53,7 @@ namespace Oblakoo
             OnStateChanged();
             try
             {
-                await StartAsync2();
+                await OnStartAsync();
                 if (State == AsyncTaskState.Running)
                     State = AsyncTaskState.Completed;
                 OnStateChanged();
@@ -67,7 +67,7 @@ namespace Oblakoo
             }
         }
 
-        protected abstract Task StartAsync2();
+        protected abstract Task OnStartAsync();
 
         public void Cancel()
         {

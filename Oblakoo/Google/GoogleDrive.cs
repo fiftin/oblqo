@@ -17,23 +17,31 @@ namespace Oblakoo.Google
         public string AccessKeyId { get; set; }
         public string AccessSecretKey { get; set; }
         public ClientSecrets Secrets { get; set; }
-
         public const string RootId = "root";
 
-        private readonly GoogleFile rootFolder;
+        private GoogleFile rootFolder;
+        private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
-        public GoogleDrive(ClientSecrets secrets, string rootPath)
+        protected GoogleDrive(ClientSecrets secrets)
         {
             Secrets = secrets;
-            rootFolder = GetFolderByPath(rootPath);
         }
 
-        private File GetFolder(string parentFolderId, string folderName)
+        public static async Task<GoogleDrive> CreateInstance(ClientSecrets secrets, string rootPath)
         {
-            var request = GetServiceAsync(CancellationToken.None).Result.Files.List();
+            var ret = new GoogleDrive(secrets);
+            var rootFolder = await ret.GetFolderByPathAsync(rootPath);
+            ret.rootFolder = rootFolder;
+            return ret;
+        }
+
+        public async Task<File> GetFolderAsync(string parentFolderId, string folderName)
+        {
+            var service = await GetServiceAsync(CancellationToken.None);
+            var request = service.Files.List();
             request.Q = string.Format("'{0}' in parents and trashed = false and title = '{1}'", parentFolderId, folderName);
             request.Fields = "items(id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
-            var result = request.Execute();
+            var result = await request.ExecuteAsync();
             if (result.Items.Count == 0)
                 return null;
             if (result.Items.Count > 1)
@@ -41,7 +49,7 @@ namespace Oblakoo.Google
             return result.Items[0];
         }
 
-        private GoogleFile GetFolderByPath(string path)
+        public async Task<GoogleFile> GetFolderByPathAsync(string path)
         {
             var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
@@ -49,7 +57,7 @@ namespace Oblakoo.Google
             foreach (var f in folders)
             {
                 currentPath += "/" + f;
-                file = GetFolder(file.Id, f);
+                file = await GetFolderAsync(file.Id, f);
                 if (file == null)
                     throw new Exception("Path is not exists: " + currentPath);
             }
@@ -75,7 +83,8 @@ namespace Oblakoo.Google
             {
                 Properties = new List<Property>
                 {
-                    new Property { Key=GoogleFile.StorageFileIdPropertyKey, Value=storageFileId }
+                    new Property { Key=GoogleFile.StorageFileIdPropertyKey + "_1", Value=storageFileId.Substring(0, 60) },
+                    new Property { Key=GoogleFile.StorageFileIdPropertyKey + "_2", Value=storageFileId.Substring(60) }
                 },
                 Title = System.IO.Path.GetFileName(pathName),
                 Parents =
@@ -98,6 +107,7 @@ namespace Oblakoo.Google
                 if (request.Status == UploadStatus.Failed)
                 {
                     //TODO: Action if upload is failed
+                    throw new Exception(request.Exception.Message);
                 }
             }
             return new GoogleFile(file);

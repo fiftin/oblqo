@@ -23,7 +23,10 @@ namespace Oblakoo.Amazon
         public string AccessSecretKey { get; set; }
         public RegionEndpoint Region { get; set; }
         private readonly AmazonGlacierClient client;
-
+        /// <summary>
+        /// Check job state each 10 mins.
+        /// </summary>
+        const int Timeout = 1000 * 60 * 10;
 
         public Glacier(string vault, string rootPath, string accessKeyId, string accessSecretKey, RegionEndpoint region)
         {
@@ -78,7 +81,7 @@ namespace Oblakoo.Amazon
                 var percent = 0;
                 observed.PositionChanged += (sender, e) =>
                 {
-                    var currentPercent = (int) (100*((Stream) sender).Position/(float) fileLen);
+                    var currentPercent = (int) (100 * ((Stream) sender).Position/(float) fileLen);
                     if (currentPercent == percent) return;
                     percent = currentPercent;
                     progressCallback(new TransferProgress(percent));
@@ -92,14 +95,15 @@ namespace Oblakoo.Amazon
         public override async Task DownloadFileAsync(StorageFile file, string destFolder,
             ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            if (file.IsFolder)
+            if (file.IsFolder) {
                 throw new NotSupportedException("Glacier is not supported directories");
+            }
             var initReq = new InitiateJobRequest(Vault, new JobParameters { ArchiveId = file.Id, Type = "archive-retrieval" });
             var initResult = await client.InitiateJobAsync(initReq, token);
             var describeReq = new DescribeJobRequest(Vault, initResult.JobId);
             var describeResult = await client.DescribeJobAsync(describeReq, token);
             var ok = false;
-            while (!ok)
+            while (!ok) // while job incompleted
             {
                 if (describeResult.Completed)
                 {
@@ -107,7 +111,7 @@ namespace Oblakoo.Amazon
                 }
                 else
                 {
-                    await Task.Delay(60000, token);
+                    await Task.Delay(Timeout, token);
                     describeResult = await client.DescribeJobAsync(describeReq, token);
                 }
             }
@@ -115,7 +119,7 @@ namespace Oblakoo.Amazon
             var result = await client.GetJobOutputAsync(req, token);
             using (var output = File.OpenWrite(Common.AppendToPath(destFolder, file.Name)))
             {
-                await Common.CopyStreamAsync(result.Body, output);
+                await Common.CopyStreamAsync(result.Body, output, null, result.ContentLength);
             }
         }
 

@@ -19,5 +19,6 @@ namespace Oblakoo
         public abstract int ImageWidth { get; }
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
+        public abstract string MimeType { get; }
     }
 }

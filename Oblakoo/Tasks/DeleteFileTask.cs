@@ -13,9 +13,10 @@ namespace Oblakoo.Tasks
             File = file;
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
-            await Account.Storage.DeleteFileAsync(File.StorageFile, CancellationTokenSource.Token);
+            if (!string.IsNullOrEmpty(File.StorageFile.Id))
+                await Account.Storage.DeleteFileAsync(File.StorageFile, CancellationTokenSource.Token);
             await Account.Drive.DeleteFileAsync(File.DriveFile, CancellationTokenSource.Token);
         }
     }

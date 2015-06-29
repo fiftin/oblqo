@@ -4,17 +4,14 @@ namespace Oblakoo.Tasks
 {
     public class DownloadFileFromDriveTask : DownloadFileTask
     {
-        public DriveFile File { get; private set; }
-
-        public DownloadFileFromDriveTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFile file, string destFolder) 
-            : base(account, accountName, priority, parent, destFolder)
+        public DownloadFileFromDriveTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file, string destFolder) 
+            : base(account, accountName, priority, parent, destFolder, file)
         {
-            File = file;
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
-            await Account.Drive.DownloadFileAsync(File, DestFolder,
+            await Account.Drive.DownloadFileAsync(File.DriveFile, DestFolder,
                 ActionIfFileExists.Rewrite, CancellationTokenSource.Token);
         }
     }

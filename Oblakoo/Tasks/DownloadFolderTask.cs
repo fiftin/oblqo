@@ -7,13 +7,15 @@ namespace Oblakoo.Tasks
     {
         public string DestFolder { get; private set; }
         public bool OnlyContent { get; private set; }
+        public AccountFile Folder { get; set; }
 
         protected DownloadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent,
-            string destFolder, bool onlyContent)
+            string destFolder, bool onlyContent, AccountFile folder)
             : base(account, accountName, priority, parent)
         {
             DestFolder = destFolder;
             OnlyContent = onlyContent;
+            Folder = folder;
         }
 
         protected abstract DownloadFileTask CreateDownloadFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file, string destFolder);

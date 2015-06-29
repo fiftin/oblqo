@@ -10,6 +10,8 @@ namespace Oblakoo
 {
     public class Common
     {
+        const int BufferLength = 10000;
+
         public static String NumberOfBytesToString(long bytes)
         {
             if (bytes < 1000)
@@ -46,23 +48,38 @@ namespace Oblakoo
             return arr == null || arr.Length == 0;
         }
 
-        public static async Task<int> CopyStreamAsync(Stream input, Stream output, Action<TransferProgress> callback = null)
+        public static async Task<int> CopyStreamAsync(Stream input, Stream output, Action<TransferProgress> callback = null, long length = -1)
         {
-            var len = input.Length;
+            long len;
+            if (length >= 0)
+            {
+                len = length;
+            }
+            else
+            {
+                try
+                {
+                    len = input.Length;
+                }
+                catch (NotSupportedException)
+                {
+                    len = -1;
+                }
+            }
             var percent = 0;
             var totalBytesCopied = 0;
             var ok = false;
             while (!ok)
             {
-                var buffer = new byte[1000];
+                var buffer = new byte[BufferLength];
                 var n = await input.ReadAsync(buffer, 0, buffer.Length);
-                if (n < buffer.Length)
+                if (n <= 0)
                     ok = true;
                 else
                 {
                     await output.WriteAsync(buffer, 0, n);
                     totalBytesCopied += n;
-                    if (callback != null)
+                    if (len != -1 && callback != null)
                     {
                         var currentPercent = (int) (100 * totalBytesCopied/(float) len);
                         if (currentPercent != percent)
@@ -73,6 +90,8 @@ namespace Oblakoo
                     }
                 }
             }
+            if (callback != null)
+                callback(new TransferProgress(100));
             return totalBytesCopied;
         }
 

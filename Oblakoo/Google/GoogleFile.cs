@@ -50,8 +50,22 @@ namespace Oblakoo.Google
             {
                 if (file.Properties == null)
                     return "";
-                foreach (var prop in file.Properties.Where(prop => prop.Key == StorageFileIdPropertyKey))
-                    return prop.Value;
+                String fileIdPart1 = null;
+                String fileIdPart2 = null;
+                foreach (var prop in file.Properties) {
+                    if (prop.Key == StorageFileIdPropertyKey + "_1")
+                    {
+                        fileIdPart1 = prop.Value;
+                    }
+                    else if (prop.Key == StorageFileIdPropertyKey + "_2")
+                    {
+                        fileIdPart2 = prop.Value;
+                    }
+                }
+                if (fileIdPart1 != null && fileIdPart2 != null)
+                {
+                    return fileIdPart1 + fileIdPart2;
+                }
                 return "";
             }
             set
@@ -132,6 +146,11 @@ namespace Oblakoo.Google
         public override bool IsRoot
         {
             get { return Id == GoogleDrive.RootId; }
+        }
+
+        public override string MimeType
+        {
+            get { return file.MimeType; }
         }
     }
 }

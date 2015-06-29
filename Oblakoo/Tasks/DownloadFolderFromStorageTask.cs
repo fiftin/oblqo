@@ -9,16 +9,12 @@ namespace Oblakoo.Tasks
 {
     public class DownloadFolderFromStorageTask : DownloadFolderTask
     {
-
-        public AccountFile Folder;
-
-        public DownloadFolderFromStorageTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile folder, string destFolder) 
-            : base(account, accountName, priority, parent, destFolder, true)
+        public DownloadFolderFromStorageTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile folder, string destFolder)
+            : base(account, accountName, priority, parent, destFolder, true, folder)
         {
-            Folder = folder;
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             var folder = OnlyContent ? DestFolder : Common.AppendToPath(DestFolder, Folder.Name);
             Directory.CreateDirectory(folder);

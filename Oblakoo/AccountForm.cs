@@ -47,7 +47,7 @@ namespace Oblakoo
         {
             InitializeComponent();
             Text = newAccount ? Resources.AccountForm_CreateNewAccount : Resources.AccountForm_ChangeAccount;
-            createVaultCheckBox.Enabled = newAccount;
+            //createVaultCheckBox.Enabled = newAccount;
             foreach (var region in RegionEndpoint.EnumerableAllRegions)
                 regionComboBox.Items.Add(new RegionInfo
                 {
@@ -111,28 +111,7 @@ namespace Oblakoo
         {
             get
             {
-                if (googleDriveRadioButton.Checked)
-                    return DriveType.GoogleDrive;
-                if (oneDriveRadioButton.Checked)
-                    return DriveType.OneDrive;
-                if (yandexDriveRadioButton.Checked)
-                    return DriveType.YandexDrive;
-                throw new Exception();
-            }
-            set
-            {
-                switch (value)
-                {
-                    case DriveType.GoogleDrive:
-                        googleDriveRadioButton.Checked = true;
-                        break;
-                    case DriveType.OneDrive:
-                        oneDriveRadioButton.Checked = true;
-                        break;
-                    case DriveType.YandexDrive:
-                        yandexDriveRadioButton.Checked = true;
-                        break;
-                }
+                return DriveType.GoogleDrive;
             }
         }
 

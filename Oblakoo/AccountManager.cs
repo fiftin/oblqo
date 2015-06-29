@@ -62,14 +62,14 @@ namespace Oblakoo
             serializer.Serialize(writer, this);
         }
 
-        public Account CreateAccount(AccountInfo info)
+        public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
             Drive drive;
             var token = new CancellationToken();
             switch (info.DriveType)
             {
                 case DriveType.GoogleDrive:
-                    drive = new GoogleDrive(GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
+                    drive = await GoogleDrive.CreateInstance(GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
                     drive.ImageMaxSize = info.DriveImageMaxSize;
                     ((GoogleDrive) drive).GetServiceAsync(token).Wait(token);
                     break;
@@ -79,9 +79,9 @@ namespace Oblakoo
             return new Account(new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint), drive);
         }
 
-        public Account CreateAccount(string name)
+        public async Task<Account> CreateAccountAsync(string name)
         {
-            return CreateAccount(Get(name));
+            return await CreateAccountAsync(Get(name));
         }
     }
 }

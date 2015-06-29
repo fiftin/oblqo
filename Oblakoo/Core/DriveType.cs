@@ -8,8 +8,6 @@ namespace Oblakoo
 {
     public enum DriveType
     {
-        GoogleDrive,
-        YandexDrive,
-        OneDrive
+        GoogleDrive
     }
 }

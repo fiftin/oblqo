@@ -5,26 +5,23 @@ namespace Oblakoo.Tasks
 {
     public class DownloadFolderFromDriveTask : DownloadFolderTask
     {
-        public DriveFile Folder { get; set; }
-
         public DownloadFolderFromDriveTask(Account account, string accountName, int priority, AsyncTask[] parent,
-            DriveFile folder, string destFolder, bool onlyContent)
-            : base(account, accountName, priority, parent, destFolder, onlyContent)
+            AccountFile folder, string destFolder, bool onlyContent)
+            : base(account, accountName, priority, parent, destFolder, onlyContent, folder)
         {
-            Folder = folder;
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             var folder = OnlyContent ? DestFolder : Common.AppendToPath(DestFolder, Folder.Name);
             Directory.CreateDirectory(folder);
-            await EnumerateFilesRecursiveAsync(Folder, folder);
+            await EnumerateFilesRecursiveAsync(Folder.DriveFile, folder);
         }
 
         protected override DownloadFileTask CreateDownloadFileTask(Account account, string accountName, int priority, AsyncTask[] parent,
             AccountFile file, string destFolder)
         {
-            return new DownloadFileFromDriveTask(account, accountName, priority, parent, file.DriveFile, destFolder);
+            return new DownloadFileFromDriveTask(account, accountName, priority, parent, file, destFolder);
         }
     }
 }

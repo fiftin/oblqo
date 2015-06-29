@@ -44,7 +44,7 @@ namespace Oblakoo.Tasks
             OnProgress(new AsyncTaskProgressEventArgs(0, null));
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             var folder = new DirectoryInfo(Path);
             OnProgress(new AsyncTaskProgressEventArgs(0, null));

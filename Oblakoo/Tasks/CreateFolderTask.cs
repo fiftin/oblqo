@@ -15,7 +15,7 @@ namespace Oblakoo.Tasks
             DestFolder = destFolder;
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             var destFolder = DestFolder;
             if (destFolder == null && Common.IsSingle(Parents) && Parents[0] is CreateFolderTask)

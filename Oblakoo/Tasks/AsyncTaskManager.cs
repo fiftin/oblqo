@@ -140,15 +140,14 @@ namespace Oblakoo
                     {
                         try
                         {
-                            var task = tasksNow.FirstOrDefault(x => x.State == AsyncTaskState.Waiting);
-                            if (task == null)
-                                break;
-
-                            if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished) continue;
-                            var taskInfo = new TaskInfo(task, task.StartAsync());
-                            lock (runningTasks)
-                            {
-                                runningTasks.Add(taskInfo);
+                            var waitingTasks = tasks.FindAll(x => x.State == AsyncTaskState.Waiting);
+                            foreach (var task in waitingTasks) {
+                                if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished) continue;
+                                var taskInfo = new TaskInfo(task, task.StartAsync());
+                                lock (runningTasks)
+                                {
+                                    runningTasks.Add(taskInfo);
+                                }
                             }
                             OnNewRunningTask();
                         }
@@ -156,6 +155,7 @@ namespace Oblakoo
                         {
                             OnError(ex);
                         }
+                        Thread.Sleep(500);
                     }
                 }
             });
@@ -187,6 +187,7 @@ namespace Oblakoo
                         if (x.Task.Exception != null)
                             OnError(x.Task.Exception);
                     }
+                    Thread.Sleep(500);
                 }
             });
         }

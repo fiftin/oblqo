@@ -12,6 +12,7 @@ namespace Oblakoo
     {
         public Storage Storage { get; private set; }
         public Drive Drive { get; private set; }
+        public AccountFile RootFolder { get; private set; }
 
         public Account(Storage storage, Drive drive)
         {
@@ -19,7 +20,6 @@ namespace Oblakoo
             Drive = drive;
             RootFolder = new AccountFile(this.Storage.RootFolder, this.Drive.RootFolder);
         }
-
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)
         {
@@ -78,7 +78,6 @@ namespace Oblakoo
             await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id, token);
         }
 
-
         internal void Disconnect()
         {
         }
@@ -99,8 +98,6 @@ namespace Oblakoo
                 await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, token);
             return new AccountFile(storageDir, driveDir);
         }
-
-        public AccountFile RootFolder { get; private set; }
 
         public async Task ClearAsync(CancellationToken token)
         {

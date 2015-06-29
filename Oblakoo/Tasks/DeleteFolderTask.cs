@@ -12,7 +12,7 @@ namespace Oblakoo.Tasks
         {
         }
 
-        protected override async Task StartAsync2()
+        protected override async Task OnStartAsync()
         {
             var parents = new List<AsyncTask>();
             var files = await Account.GetFilesAsync(Folder, CancellationTokenSource.Token);
@@ -27,6 +27,7 @@ namespace Oblakoo.Tasks
                 parents.Add(task);
                 AddTask(task);
             }
+            
             var lastTask = new DeleteEmptyFolderTask(Account, AccountName, Priority, parents.ToArray(), Folder);
             AddTask(lastTask);
 

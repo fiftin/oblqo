@@ -117,5 +117,10 @@ namespace OblakooTest
         {
             return new MemoryStream(Encoding.Unicode.GetBytes(content));
         }
+
+        public override string MimeType
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

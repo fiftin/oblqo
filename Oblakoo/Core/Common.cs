@@ -89,7 +89,7 @@ namespace Oblakoo
                         }
                     }
                 }
-            }
+            } 
             if (callback != null)
                 callback(new TransferProgress(100));
             return totalBytesCopied;

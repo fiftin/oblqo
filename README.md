@@ -2,7 +2,7 @@
 
 ** English **
 
-The program is designed to save the photos in two copies:
+The program is designed to save the photo in two copies:
 
 * Original photo stored in Amazon Glacier
 
@@ -22,6 +22,4 @@ The program has an interface for viewing photos on Google Drive. Finding the rig
 
 Программа создает связь между копией фото на диске и копией в Amazon Glaicer. Это позволяет скачать оригинальную фотографию с Amazon Drive по уменьшенной копии на Google Drive.
 
-Программа имеет интерфейс для просмотра фотографий на Google Drive. Найдя нужную фотографию вы можете инициировать закачку оригинала. 
-
-
+Программа имеет интерфейс для просмотра фотографий на Google Drive. Найдя нужную фотографию вы можете инициировать закачку оригинала.

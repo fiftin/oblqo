@@ -149,7 +149,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ObserverStream.cs" />
+    <Compile Include="Core\ObserverStream.cs" />
     <Compile Include="Core\TaskException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -167,6 +167,7 @@
     <Compile Include="Tasks\DownloadFolderFromDriveTask.cs" />
     <Compile Include="Tasks\DownloadFolderFromStorageTask.cs" />
     <Compile Include="Tasks\DownloadFolderTask.cs" />
+    <Compile Include="Tasks\StartupSettings\TaskStartupSettings.cs" />
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="Core\TransferProgress.cs" />
@@ -213,7 +214,15 @@
   <ItemGroup>
     <None Include="Resources\gray.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\no-image-available.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\no_image.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

@@ -47,7 +47,6 @@ namespace Oblakoo
         {
             InitializeComponent();
             Text = newAccount ? Resources.AccountForm_CreateNewAccount : Resources.AccountForm_ChangeAccount;
-            //createVaultCheckBox.Enabled = newAccount;
             foreach (var region in RegionEndpoint.EnumerableAllRegions)
                 regionComboBox.Items.Add(new RegionInfo
                 {

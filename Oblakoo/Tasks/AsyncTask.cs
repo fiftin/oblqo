@@ -17,8 +17,15 @@ namespace Oblakoo
         public Account Account { get; private set; }
         public string AccountName { get; private set; }
         public Object Tag { get; set; }
-        public AsyncTaskParentsMode ParentsMode { get; private set; } 
-
+        public AsyncTaskParentsMode ParentsMode { get; private set; }
+        public int Priority { get; private set; }
+        public AsyncTask[] Parents { get; private set; }
+        public Exception Exception { get; protected set; }
+        public AsyncTaskState State { get; protected set; }
+        public event EventHandler StateChanged;
+        public event EventHandler<AsyncTaskProgressEventArgs> Progress;
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        
         internal AsyncTaskManager Manager { get; set; }
 
         protected void AddAllTasks(IEnumerable<AsyncTask> tasks)
@@ -95,15 +102,6 @@ namespace Oblakoo
             get { return Parents.All(parent => parent.State == AsyncTaskState.Completed 
                 || parent.State == AsyncTaskState.Cancelled || parent.State == AsyncTaskState.Error); }
         }
-
-        public int Priority { get; private set; }
-        //public AsyncTask Parent { get; private set; }
-        public AsyncTask[] Parents { get; private set; }
-        public Exception Exception { get; protected set; }
-        public AsyncTaskState State { get; protected set; }
-        public event EventHandler StateChanged;
-        public event EventHandler<AsyncTaskProgressEventArgs> Progress;
-        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
     }
 }

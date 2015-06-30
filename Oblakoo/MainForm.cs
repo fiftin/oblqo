@@ -23,21 +23,8 @@ namespace Oblakoo
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
-
-        public static readonly SolidBrush LoadingPictureBursh =
-            new SolidBrush(Color.FromArgb(150, Color.Gray.R, Color.Gray.G, Color.Gray.B));
-
-        private readonly SortedDictionary<string, Account> accounts = new SortedDictionary<string, Account>();
-        private readonly AccountManager accountManager;
-        private readonly AsyncTaskManager taskManager = new AsyncTaskManager();
-        private CancellationTokenSource updateListCancellationTokenSource;
-        private readonly object updateListCancellationTokenSourceLocker = new object();
-        private CancellationTokenSource pictureCancellationTokenSource;
-        private readonly object pictureCancellationTokenSourceLoker = new object();
-        private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
-        private ExceptionForm exceptionForm;
-        private int loadingFolderImageAngle;
-        private readonly Font NoImageFont = new Font("Courier New", 9);
+        public static readonly Font NoImageFont = new Font("Courier New", 12);
+        public static readonly SolidBrush LoadingPictureBursh = new SolidBrush(Color.FromArgb(150, Color.Gray.R, Color.Gray.G, Color.Gray.B));
 
         private enum NodeType
         {
@@ -67,6 +54,17 @@ namespace Oblakoo
             public string AccountName { get; private set; }
         }
 
+
+        private readonly SortedDictionary<string, Account> accounts = new SortedDictionary<string, Account>();
+        private readonly AccountManager accountManager;
+        private readonly AsyncTaskManager taskManager = new AsyncTaskManager();
+        private CancellationTokenSource updateListCancellationTokenSource;
+        private readonly object updateListCancellationTokenSourceLocker = new object();
+        private CancellationTokenSource pictureCancellationTokenSource;
+        private readonly object pictureCancellationTokenSourceLoker = new object();
+        private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
+        private ExceptionForm exceptionForm;
+        private int loadingFolderImageAngle;
 
         public MainForm()
         {
@@ -104,7 +102,6 @@ namespace Oblakoo
                 var item = items.FirstOrDefault(x => x.Tag == e.Task);
                 if (item == null) return;
                 item.SubItems["percent"].Text = e.Args.PercentDone.ToString();
-
             }));
         }
 
@@ -121,7 +118,6 @@ namespace Oblakoo
                 node.SelectedImageKey = DisconnectedAccountImageKey;
                 node.Tag = new NodeInfo(x);
             }
-
         }
 
         private async Task ConnectAccountAsync(string name, TreeNode node)
@@ -151,7 +147,7 @@ namespace Oblakoo
             }
         }
 
-        public void HideFileInfo()
+        public void HideFileInfoPanel()
         {
             if (!pictureBox1.Visible) return;
             splitter1.Hide();
@@ -159,9 +155,10 @@ namespace Oblakoo
             fileInfoPanel.Hide();
         }
 
-        public void ShowFileInfo()
+        public void ShowFileInfoPanel()
         {
             if (pictureBox1.Visible) return;
+            pictureBox1.BackgroundImage = Resources.loading;
             splitter1.Show();
             fileInfoPanel.Show();
         }
@@ -176,7 +173,7 @@ namespace Oblakoo
             }
             var node = treeView1.SelectedNode;
             if (node == null) return;
-            HideFileInfo();
+            HideFileInfoPanel();
             var info = (NodeInfo) node.Tag;
             ICollection<AccountFile> files;
             Account account;
@@ -287,7 +284,7 @@ namespace Oblakoo
             loadingNodes.Add(node);
             Task.Run(async delegate
             {
-                ICollection<AccountFile> folders;
+                ICollection<AccountFile> folders = null;
                 try
                 {
                     switch (info.Type)
@@ -298,14 +295,16 @@ namespace Oblakoo
                         case NodeType.Folder:
                             folders = await accounts[info.AccountName].GetSubfoldersAsync(info.File, token);
                             break;
-                        default:
-                            throw new Exception();
                     }
                 }
                 catch (Exception ex)
                 {
                     OnError(ex);
-                    return;
+                }
+
+                if (folders == null)
+                {
+                    folders = new List<AccountFile>();
                 }
 
                 Invoke(new MethodInvoker(delegate
@@ -328,8 +327,6 @@ namespace Oblakoo
                 }));
             });
         }
-
-
 
         private async void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -653,70 +650,84 @@ namespace Oblakoo
                 UpdateNode(e.Node);
         }
 
+        private int controlNumber = 0;
+
         private void fileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (fileListView.SelectedItems.Count == 0)
                 return;
-            ShowFileInfo();
-            var info = (NodeInfo) fileListView.SelectedItems[0].Tag;
-            fileNameLabel.Text = info.File.Name;
-            fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
 
-            if (info.File.IsImage)
-            {
-                label3.Visible = true;
-                widthAndHeightLabel.Visible = true;
-                widthAndHeightLabel.Text = string.Format("{0} x {1}", info.File.DriveFile.ImageWidth,
-                    info.File.DriveFile.ImageHeight);
-            }
-            else
-            {
-                label3.Visible = false;
-                widthAndHeightLabel.Visible = false;
-            }
-            lock (pictureCancellationTokenSourceLoker)
-            {
-                if (pictureCancellationTokenSource != null)
-                    pictureCancellationTokenSource.Cancel();
-                pictureCancellationTokenSource = new CancellationTokenSource();
-            }
+            ShowFileInfoPanel();
+
+            controlNumber++;
+            var info = (NodeInfo) fileListView.SelectedItems[0].Tag;
+
             if (!info.File.IsImage)
             {
-                pictureBox1.BackgroundImage = null;
+                lock (pictureCancellationTokenSourceLoker)
+                {
+                    if (pictureCancellationTokenSource != null)
+                        pictureCancellationTokenSource.Cancel();
+                    pictureCancellationTokenSource = new CancellationTokenSource();
+                }
+
+                loadingImageProgressBar.Visible = false;
+                fileNameLabel.Text = info.File.Name;
+                fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
+                label3.Visible = false;
+                widthAndHeightLabel.Visible = false;
+                pictureBox1.BackgroundImage = Resources.no_image;
                 return;
             }
+            
+            // Image preview async loading
             loadingImageProgressBar.Visible = true;
-            using (var g = pictureBox1.CreateGraphics())
-            {
-                g.FillRectangle(LoadingPictureBursh, pictureBox1.Bounds);
-            }
             Task.Run(async delegate
             {
                 try
                 {
+                    lock (pictureCancellationTokenSourceLoker)
+                    {
+                        if (pictureCancellationTokenSource != null)
+                            pictureCancellationTokenSource.Cancel();
+                        pictureCancellationTokenSource = new CancellationTokenSource();
+                    }
+
+                    pictureBox1.BackgroundImage = Resources.loading;
+                    int cn = controlNumber;
                     Image image;
                     try
                     {
                         image = await accounts[info.AccountName].GetImageAsync(info.File, pictureCancellationTokenSource.Token);
-                    }
-                    catch (Exception)
-                    {
+                        if (cn != controlNumber)
+                        {
+                            return;
+                        }
                         Invoke(new MethodInvoker(() =>
                         {
-                            pictureBox1.BackgroundImage = null;
+                            fileNameLabel.Text = info.File.Name;
+                            fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
+                            label3.Visible = true;
+                            widthAndHeightLabel.Visible = true;
+                            widthAndHeightLabel.Text = string.Format("{0} x {1}", info.File.DriveFile.ImageWidth, info.File.DriveFile.ImageHeight);
+
+                            pictureBox1.BackgroundImage = image;
                             pictureBox1.Image = null;
                             loadingImageProgressBar.Visible = false;
+                            if (widthAndHeightLabel.Text == "0 x 0")
+                                widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
                         }));
-                        return;
                     }
-                    Invoke(new MethodInvoker(() =>
+                    catch (System.OperationCanceledException)
                     {
-                        pictureBox1.BackgroundImage = image;
-                        pictureBox1.Image = null;
-                        loadingImageProgressBar.Visible = false;
-                        if (widthAndHeightLabel.Text == "0 x 0")
-                            widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
-                    }));
+                        //pictureCancellationTokenSource = null;
+                        //Invoke(new MethodInvoker(() =>
+                        //{
+                        //pictureBox1.BackgroundImage = null;
+                        //pictureBox1.Image = null;
+                        //loadingImageProgressBar.Visible = false;
+                        //}));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -803,8 +814,12 @@ namespace Oblakoo
             if (node == null)
                 return;
             var info = (NodeInfo)node.Tag;
-            taskManager.Add(new UploadFolderTask(accounts[info.AccountName], info.AccountName, 0, null,
-                folderBrowserDialog1.SelectedPath, info.File) {Tag = node});
+            taskManager.Add(new UploadFolderTask(accounts[info.AccountName],
+                info.AccountName,
+                0,
+                null,
+                folderBrowserDialog1.SelectedPath,
+                info.File) {Tag = node});
         }
 
         private void newFolderToolStripButton_Click(object sender, EventArgs e)
@@ -826,13 +841,13 @@ namespace Oblakoo
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (!pictureBox1.Visible) return;
-
-            if (pictureBox1.BackgroundImage != null)
-                return;
-            var size = e.Graphics.MeasureString("No image", NoImageFont);
-            e.Graphics.DrawString("No image", NoImageFont, Brushes.White,
-                (pictureBox1.Width - size.Width)/2, (pictureBox1.Height - size.Height)/2);
+            //if (!pictureBox1.Visible) return;
+            //
+            //if (pictureBox1.BackgroundImage != null)
+            //    return;
+            //var size = e.Graphics.MeasureString("No image", NoImageFont);
+            //e.Graphics.DrawString("No image", NoImageFont, Brushes.White,
+            //    (pictureBox1.Width - size.Width)/2, (pictureBox1.Height - size.Height)/2);
         }
 
         private void fileListView_MouseUp(object sender, MouseEventArgs e)

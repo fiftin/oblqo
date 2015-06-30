@@ -24,7 +24,6 @@ namespace Oblakoo
 
         public AccountManager()
         {
-            //Accounts = new ReadOnlyCollection<AccountInfo>(accounts);
         }
 
         public void Add(AccountInfo account)

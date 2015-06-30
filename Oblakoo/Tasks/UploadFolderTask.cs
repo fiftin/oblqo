@@ -12,8 +12,7 @@ namespace Oblakoo.Tasks
         public string Path { get; private set; }
         public AccountFile DestFolder { get; private set; }
 
-        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent, 
-            string path, AccountFile destFolder) 
+        public UploadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent, string path, AccountFile destFolder) 
             : base(account, accountName, priority, parent)
         {
             Path = path;

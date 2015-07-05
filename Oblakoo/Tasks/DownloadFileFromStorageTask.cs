@@ -4,6 +4,10 @@ namespace Oblakoo.Tasks
 {
     public class DownloadFileFromStorageTask : DownloadFileTask
     {
+        public DownloadFileFromStorageTask()
+        {
+
+        }
 
         public DownloadFileFromStorageTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file,
             string destFolder)

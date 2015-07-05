@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace Oblakoo
 {
@@ -9,7 +10,7 @@ namespace Oblakoo
         public abstract bool IsFolder { get; }
         public abstract string Name { get; }
         public abstract bool HasChildren { get; }
-        public abstract string StorageFileId { get; set; }
+        public abstract string StorageFileId { get; }
         public abstract long Size { get; }
         public abstract DateTime ModifiedDate { get; }
         public abstract DateTime CreatedDate { get; }
@@ -20,5 +21,21 @@ namespace Oblakoo
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
         public abstract string MimeType { get; }
+
+        public Drive Drive { get; private set; }
+
+        public DriveFile(Drive drive)
+        {
+            Drive = drive;
+        }
+
+        public virtual XElement ToXml()
+        {
+            var ret = new XElement(IsFolder ? "driveFolder" : "driveFile");
+            ret.SetAttributeValue("id", Id);
+            ret.SetAttributeValue("isFolder", IsFolder);
+            ret.SetAttributeValue("storageFileId", StorageFileId);
+            return ret;
+        }
     }
 }

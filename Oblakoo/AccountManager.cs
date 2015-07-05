@@ -35,11 +35,18 @@ namespace Oblakoo
         {
             var account = Get(name);
             if (account != null)
-                Accounts.Remove(account);
+            {
+                accounts.Remove(account);
+                using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+                {
+                    store.DeleteDirectory("accounts/" + account.AccountName);
+                }
+                
+            }
         }
 
 
-        public List<AccountInfo> Accounts
+        public IEnumerable<AccountInfo> Accounts
         {
             get { return accounts; }
         }
@@ -49,33 +56,67 @@ namespace Oblakoo
             return Accounts.FirstOrDefault(a => a.AccountName == name);
         }
 
-        public static AccountManager Load(XmlReader reader)
+        public static AccountManager Load()
         {
-            var serializer = new XmlSerializer(typeof(AccountManager));
-            return (AccountManager)serializer.Deserialize(reader);
+            var ret = new AccountManager();
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                var accountDirs = store.GetDirectoryNames("accounts/*");
+                foreach (var dir in accountDirs)
+                {
+                    try
+                    {
+                        using (var stream = store.OpenFile("accounts/" + dir + "/settings.xml", FileMode.Open, FileAccess.Read, FileShare.None))
+                        {
+                            var serializer = new XmlSerializer(typeof(AccountInfo));
+                            var account = (AccountInfo)serializer.Deserialize(stream);
+                            ret.Add(account);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            return ret;
         }
 
-        public void Save(XmlWriter writer)
+        public void Save()
         {
-            var serializer = new XmlSerializer(typeof(AccountManager));
-            serializer.Serialize(writer, this);
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                foreach (var account in accounts)
+                {
+                    var path = "accounts/" + account.AccountName;
+                    if (!store.DirectoryExists(path))
+                    {
+                        store.CreateDirectory(path);
+                    }
+                    using (var stream = store.OpenFile(path + "/settings.xml", FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        var serializer = new XmlSerializer(typeof(AccountInfo));
+                        serializer.Serialize(new StreamWriter(stream), account);
+                    }
+                }
+            }
         }
 
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
             Drive drive;
+            var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             var token = new CancellationToken();
             switch (info.DriveType)
             {
                 case DriveType.GoogleDrive:
-                    drive = await GoogleDrive.CreateInstance(GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
+                    drive = await GoogleDrive.CreateInstance(storage, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
                     drive.ImageMaxSize = info.DriveImageMaxSize;
                     ((GoogleDrive) drive).GetServiceAsync(token).Wait(token);
                     break;
                 default:
                     throw new NotSupportedException("Drive with this type is not supported");
             }
-            return new Account(new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint), drive);
+            return new Account(storage, drive);
         }
 
         public async Task<Account> CreateAccountAsync(string name)

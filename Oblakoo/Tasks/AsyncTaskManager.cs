@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Oblakoo.Tasks;
+using System.IO.IsolatedStorage;
+using System.Xml.Linq;
 // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblakoo
@@ -35,8 +37,79 @@ namespace Oblakoo
         private readonly List<TaskInfo> runningTasks = new List<TaskInfo>();
         private Task checkingTaskStatesTask;
 
+        public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
+        {
+            var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            if (!store.DirectoryExists("accounts/" + accountName + "/tasks"))
+            {
+                return;
+            }
+            var fileNames = store.GetFileNames("accounts/" + accountName + "/tasks/*");
+            foreach (var filename in fileNames)
+            {
+                try
+                {
+                    using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
+                    {
+                        var xml = System.Xml.Linq.XDocument.Load(stream).Root;
+                        var type = Type.GetType(xml.Attribute("type").Value);
+                        var ctors = type.GetConstructors();
+                        var ctor = type.GetConstructor(System.Type.EmptyTypes);
+                        var task = (AsyncTask)ctor.Invoke(new object[0]);
+                        await task.LoadAsync(account, filename, xml, token);
+                        Add(task, false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    store.DeleteFile("accounts/" + accountName + "/tasks/" + filename);
+                    OnError(ex);
+                }
+            }
+        }
 
-        public void Add(AsyncTask task)
+        public void Save()
+        {
+            foreach (var task in tasks)
+            {
+                Save(task);
+            }
+        }
+
+        public void Save(AsyncTask task)
+        {
+            var accountName = task.AccountName;
+            var tasksPath = "accounts/" + accountName + "/tasks/";
+            switch (task.State)
+            {
+                case AsyncTaskState.Cancelled:
+                case AsyncTaskState.Completed:
+                case AsyncTaskState.Error:
+                    using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+                    {
+                        if (store.FileExists(tasksPath + task.ID))
+                        {
+                            store.DeleteFile(tasksPath + task.ID);
+                        }
+                    }
+                    return;
+            }
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                if (!store.DirectoryExists(tasksPath))
+                {
+                    store.CreateDirectory(tasksPath);
+                }
+                var doc = new XDocument();
+                doc.Add(task.ToXml());
+                using (var stream = store.CreateFile(tasksPath + task.ID))
+                {
+                    doc.Save(stream);
+                }
+            }
+        }
+
+        public void Add(AsyncTask task, bool save = true)
         {
             lock (SyncRoot)
             {
@@ -44,6 +117,10 @@ namespace Oblakoo
                 task.StateChanged += task_StateChanged;
                 task.Progress += task_Progress;
                 task.Manager = this;
+                if (save)
+                {
+                    Save(task);
+                }
             }
             newTaskEvent.Set();
             if (TaskAdded != null)
@@ -58,8 +135,21 @@ namespace Oblakoo
 
         private void task_StateChanged(object sender, EventArgs e)
         {
+            var task = ((AsyncTask)sender);
             if (TaskStateChanged != null)
-                TaskStateChanged(this, new AsyncTaskEventArgs((AsyncTask) sender));
+                TaskStateChanged(this, new AsyncTaskEventArgs(task));
+            switch (task.State)
+            {
+                case AsyncTaskState.Cancelled:
+                case AsyncTaskState.Completed:
+                case AsyncTaskState.Error:
+                    using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+                    {
+                        var tasksPath = "accounts/" + task.AccountName + "/tasks/";
+                        store.DeleteFile(tasksPath + task.ID);
+                    }
+                    break;
+            }
         }
 
         public void Remove(AsyncTask task)

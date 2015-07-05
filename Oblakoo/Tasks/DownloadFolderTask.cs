@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Oblakoo.Tasks
@@ -6,15 +7,18 @@ namespace Oblakoo.Tasks
     public abstract class DownloadFolderTask : AsyncTask
     {
         public string DestFolder { get; private set; }
-        public bool OnlyContent { get; private set; }
         public AccountFile Folder { get; set; }
 
+        protected DownloadFolderTask()
+        {
+
+        }
+
         protected DownloadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent,
-            string destFolder, bool onlyContent, AccountFile folder)
+            string destFolder, AccountFile folder)
             : base(account, accountName, priority, parent)
         {
             DestFolder = destFolder;
-            OnlyContent = onlyContent;
             Folder = folder;
         }
 
@@ -34,6 +38,17 @@ namespace Oblakoo.Tasks
             }
         }
 
+        public override async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
+        {
+            await base.LoadAsync(account, id, xml, token);
+            DestFolder = xml.Element("destFolder").Value;
+            Folder = await account.GetFileAsync(xml.Element("storageFolder"), xml.Element("driveFolder"), token);
+        }
 
+        public override System.Xml.Linq.XElement ToXml()
+        {
+            var xml = base.ToXml();
+            return xml;
+        }
     }
 }

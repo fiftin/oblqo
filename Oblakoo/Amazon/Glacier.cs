@@ -35,7 +35,7 @@ namespace Oblakoo.Amazon
             AccessKeyId = accessKeyId;
             AccessSecretKey = accessSecretKey;
             Region = region;
-            rootFolder = new GlacierFile("", true, "", true);
+            rootFolder = new GlacierFile(this, "", true, "", true);
             client = new AmazonGlacierClient(accessKeyId, accessSecretKey, region);
         }
 
@@ -54,12 +54,12 @@ namespace Oblakoo.Amazon
         public override async Task DeleteFileAsync(StorageFile file, CancellationToken token)
         {
             var req = new DeleteArchiveRequest(Vault, file.Id);
-            await client.DeleteArchiveAsync(req, token);
+            var res = await client.DeleteArchiveAsync(req, token);
         }
 
         public override StorageFile GetFile(DriveFile driveFile)
         {
-            return new GlacierFile(driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
+            return new GlacierFile(this, driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
         }
 
         public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
@@ -88,9 +88,38 @@ namespace Oblakoo.Amazon
                 };
                 var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
                 var result = await client.UploadArchiveAsync(req, token);
-                return new GlacierFile(result.ArchiveId, false, fn);
+
+                return new GlacierFile(this, result.ArchiveId, false, fn);
+
             }
         }
+
+        /*s
+        public override bool IsValidFileId(string fileId)
+        {
+            GlacierFileIdentity identity;
+            if (!GlacierFileIdentity.TryParse(fileId, out identity))
+            {
+                return false;
+            }
+            return identity.Region == Region.SystemName && identity.Vault == Vault;
+        }
+
+        internal string GetArchiveId(string fileId)
+        {
+            return GlacierFileIdentity.Parse(fileId).ArchiveId;
+        }
+
+        internal GlacierFileIdentity GetFileIdentity(string archiveId)
+        {
+            return new GlacierFileIdentity(Region, Vault, archiveId);
+        }
+
+        internal string GetFileId(string archiveId)
+        {
+            return GetFileIdentity(archiveId).ToString();
+        }
+        */
 
         public override async Task DownloadFileAsync(StorageFile file, string destFolder,
             ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
@@ -98,9 +127,19 @@ namespace Oblakoo.Amazon
             if (file.IsFolder) {
                 throw new NotSupportedException("Glacier is not supported directories");
             }
-            var initReq = new InitiateJobRequest(Vault, new JobParameters { ArchiveId = file.Id, Type = "archive-retrieval" });
-            var initResult = await client.InitiateJobAsync(initReq, token);
-            var describeReq = new DescribeJobRequest(Vault, initResult.JobId);
+            string jobId;
+            if (((GlacierFile)file).JobId == null)
+            {
+                var initReq = new InitiateJobRequest(Vault, new JobParameters { ArchiveId = file.Id, Type = "archive-retrieval" });
+                var initResult = await client.InitiateJobAsync(initReq, token);
+                jobId = initResult.JobId;
+                ((GlacierFile)file).JobId = jobId;
+            }
+            else
+            {
+                jobId = ((GlacierFile)file).JobId;
+            }
+            var describeReq = new DescribeJobRequest(Vault, jobId);
             var describeResult = await client.DescribeJobAsync(describeReq, token);
             var ok = false;
             while (!ok) // while job incompleted
@@ -115,7 +154,7 @@ namespace Oblakoo.Amazon
                     describeResult = await client.DescribeJobAsync(describeReq, token);
                 }
             }
-            var req = new GetJobOutputRequest(Vault, initResult.JobId, null);
+            var req = new GetJobOutputRequest(Vault, jobId, null);
             var result = await client.GetJobOutputAsync(req, token);
             using (var output = File.OpenWrite(Common.AppendToPath(destFolder, file.Name)))
             {
@@ -129,7 +168,7 @@ namespace Oblakoo.Amazon
         { 
             var path = destFolder == null ? "/" : ((GlacierFile) destFolder).FolderPath;
             var newFolderPath = path + folderName + "/";
-            return new GlacierFile(newFolderPath, true, newFolderPath);
+            return new GlacierFile(this, "", true, newFolderPath);
         }
 
         public override StorageFile RootFolder
@@ -147,5 +186,32 @@ namespace Oblakoo.Amazon
             await DeleteVaultAsync(token);
             await CreateVaultAsync(token);
         }
+
+        public override async Task<StorageFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
+        {
+            var ret = new GlacierFile(
+                this,
+                xml.Attribute("id").Value,
+                bool.Parse(xml.Attribute("isFolder").Value),
+                xml.Attribute("folderPath").Value,
+                bool.Parse(xml.Attribute("isRoot").Value));
+
+            if (xml.Attribute("jobId") != null)
+            {
+                ret.JobId = xml.Attribute("jobId").Value;
+            }
+            return ret;
+        }
+
+        public override string Kind
+        {
+            get { return "gl"; }
+        }
+
+        public override string Id
+        {
+            get { return string.Format("{0}:{1}", Region.SystemName, Vault); }
+        }
+
     }
 }

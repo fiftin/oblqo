@@ -22,14 +22,15 @@ namespace Oblakoo.Google
         private GoogleFile rootFolder;
         private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
-        protected GoogleDrive(ClientSecrets secrets)
+        protected GoogleDrive(Storage storage, ClientSecrets secrets)
+            : base(storage)
         {
             Secrets = secrets;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(ClientSecrets secrets, string rootPath)
+        public static async Task<GoogleDrive> CreateInstance(Storage storage, ClientSecrets secrets, string rootPath)
         {
-            var ret = new GoogleDrive(secrets);
+            var ret = new GoogleDrive(storage, secrets);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath);
             ret.rootFolder = rootFolder;
             return ret;
@@ -61,7 +62,7 @@ namespace Oblakoo.Google
                 if (file == null)
                     throw new Exception("Path is not exists: " + currentPath);
             }
-            return new GoogleFile(file);
+            return new GoogleFile(this, file);
         }
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
@@ -74,18 +75,51 @@ namespace Oblakoo.Google
             });
         }
 
+        private string[] SplitBy(string s, int len)
+        {
+            int n = s.Length / len;
+            if (s.Length % len != 0)
+            {
+                n++;
+            }
+            var ret = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                if (i * len + len > s.Length)
+                {
+                    ret[i] = s.Substring(i * len);
+                }
+                else
+                {
+                    ret[i] = s.Substring(i * len, len);
+                }
+            }
+            return ret;
+        }
+
+        const int PropertyMaxLength = 124 / 2;
+
+        public static readonly string StorageFileIdFormat = "{0}.id-{1}";
+
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             Debug.Assert(System.IO.File.Exists(pathName) &&
                          !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
             var service = await GetServiceAsync(token);
+            List<Property> props = new List<Property>();
+            props.Add(new Property { Key=string.Format("{0}.sid", Storage.Kind), Value=Storage.Id, Visibility="PRIVATE" });
+            props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
+            int storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
+            int storageFileIdPropertyValueLen = PropertyMaxLength - storageFileIdPropertyKeyLen;
+            string[] storageFileIdParts = SplitBy(storageFileId, storageFileIdPropertyValueLen);
+            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
+            for (int i = 0; i < storageFileIdParts.Length; i++)
+            {
+                props.Add(new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = storageFileIdParts[i], Visibility = "PRIVATE" });
+            }
             var file = new File
             {
-                Properties = new List<Property>
-                {
-                    new Property { Key=GoogleFile.StorageFileIdPropertyKey + "_1", Value=storageFileId.Substring(0, 60) },
-                    new Property { Key=GoogleFile.StorageFileIdPropertyKey + "_2", Value=storageFileId.Substring(60) }
-                },
+                Properties = props,
                 Title = System.IO.Path.GetFileName(pathName),
                 Parents =
                     new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
@@ -110,7 +144,7 @@ namespace Oblakoo.Google
                     throw new Exception(request.Exception.Message);
                 }
             }
-            return new GoogleFile(file);
+            return new GoogleFile(this, file);
         }
 
         public override async Task<System.IO.Stream> ReadFileAsync(DriveFile file, CancellationToken token)
@@ -153,7 +187,7 @@ namespace Oblakoo.Google
             request.Q = string.Format("'{0}' in parents and trashed = false {1}", folderId, q);
             request.Fields = "items(downloadUrl,webContentLink,thumbnailLink,id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
             var files = await request.ExecuteAsync(token);
-            return await GoogleFileList.Get(files, service, token);
+            return await GoogleFileList.Get(this, files, service, token);
         }
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
@@ -172,7 +206,7 @@ namespace Oblakoo.Google
             };
             var service = await GetServiceAsync(token);
             var file = await service.Files.Insert(folder).ExecuteAsync(token);
-            return new GoogleFile(file);
+            return new GoogleFile(this, file);
         }
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
@@ -277,5 +311,14 @@ namespace Oblakoo.Google
                 }
             }
         }
+
+        public override async Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
+        {
+            var fileId = xml.Attribute("fileId").Value;
+            var service = await GetServiceAsync(token);
+            var request = service.Files.Get(fileId);
+            return null;
+        }
+
     }
 }

@@ -71,12 +71,7 @@ namespace Oblakoo
             InitializeComponent();
             try
             {
-                var file = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null,
-                    null);
-                using (var stream = new IsolatedStorageFileStream("accounts.xml", FileMode.Open, file))
-                {
-                    accountManager = AccountManager.Load(new XmlTextReader(stream));
-                }
+                accountManager = AccountManager.Load();
             }
             catch
             {
@@ -120,10 +115,10 @@ namespace Oblakoo
             }
         }
 
-        private async Task ConnectAccountAsync(string name, TreeNode node)
+        private async Task<Account> ConnectAccountAsync(string name, TreeNode node)
         {
             if (loadingNodes.Contains(node))
-                return;
+                return null;
             var nodeImageKey = node.ImageKey;
             loadingNodes.Add(node);
             try
@@ -134,6 +129,7 @@ namespace Oblakoo
                 node.SelectedImageKey = AccountImageKey;
                 var info = (NodeInfo)node.Tag;
                 info.File = ret.RootFolder;
+                return ret;
             }
             catch
             {
@@ -145,6 +141,7 @@ namespace Oblakoo
                 loadingNodes.Remove(node);
                 UpdateToolBarAndMenu();
             }
+            return null;
         }
 
         public void HideFileInfoPanel()
@@ -226,21 +223,12 @@ namespace Oblakoo
                                 {
                                     key = tmpKey;
                                 }
-                                else
-                                {
-                                    //tmpKey = string.Format("file_{0}", mimeTypeParts[0]);
-                                    //if (smallImageList.Images.ContainsKey(tmpKey))
-                                    //{
-                                    //    key = tmpKey;
-                                    //}
-                                }
                             }
                         }
                         var item = fileListView.Items.Add("", file.Name, key);
                         if (string.IsNullOrEmpty(file.DriveFile.StorageFileId))
                         {
                             item.ForeColor = Color.Red;
-                            //item.Font = new Font(item.Font, FontStyle.Strikeout);
                         }
                         item.Tag = new NodeInfo(file, info.AccountName);
                         item.SubItems.Add(file.DriveFile.ModifiedDate.ToShortDateString());
@@ -366,8 +354,10 @@ namespace Oblakoo
 
         private void taskManager_TaskAdded(object sender, AsyncTaskEventArgs e)
         {
-            if (e.Task is DeleteEmptyFolderTask)
+            if (e.Task is DeleteEmptyFolderTask || e.Task is EmptyTask)
+            {
                 return;
+            }
 
             Invoke(new MethodInvoker(() =>
             {
@@ -385,8 +375,16 @@ namespace Oblakoo
                     var task = (DownloadFileFromStorageTask)e.Task;
                     taskItem.Text = task.File.Name;
                     taskItem.SubItems.Add("Download File").Name = "type";
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                        .Name = "size";
+                    if (task.File.DriveFile != null)
+                    {
+                        taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                            .Name = "size";
+                    }
+                    else
+                    {
+                        taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
+                            .Name = "size";
+                    }
                     taskItem.SubItems.Add("0").Name = "percent";
                 }
                 else if (e.Task is DownloadFileFromDriveTask)
@@ -394,8 +392,16 @@ namespace Oblakoo
                     var task = (DownloadFileFromDriveTask)e.Task;
                     taskItem.Text = task.File.Name;
                     taskItem.SubItems.Add("Download File").Name = "type";
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                        .Name = "size";
+                    if (task.File.DriveFile != null)
+                    {
+                        taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                            .Name = "size";
+                    }
+                    else
+                    {
+                        taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
+                            .Name = "size";
+                    }
                     taskItem.SubItems.Add("0").Name = "percent";
                 }
                 else if (e.Task is UploadFileTask)
@@ -481,11 +487,52 @@ namespace Oblakoo
                         if (e.Task is CreateFolderTask)
                         {
                             var task = (CreateFolderTask) e.Task;
-                            var parentNode = (TreeNode)task.Tag;
-                            var viewNode = parentNode.Nodes.Add("", task.FolderName,
-                                FolderImageKey);
-                            viewNode.SelectedImageKey = FolderImageKey;
-                            viewNode.Tag = new NodeInfo(task.CreatedFolder, task.AccountName);
+                            var parentNode = task.Tag as TreeNode;
+                            if (parentNode != null)
+                            {
+                                var viewNode = parentNode.Nodes.Add("", task.FolderName, FolderImageKey);
+                                viewNode.SelectedImageKey = FolderImageKey;
+                                viewNode.Tag = new NodeInfo(task.CreatedFolder, task.AccountName);
+                            }
+                        }
+                        else if (e.Task is UploadFolderTask)
+                        {
+                            var task = (UploadFolderTask)e.Task;
+                            var parentNode = task.Tag as TreeNode;
+                            if (parentNode != null)
+                            {
+                                var viewNode = parentNode.Nodes.Add("", task.FolderName, FolderImageKey);
+                                viewNode.SelectedImageKey = FolderImageKey;
+                                viewNode.Tag = new NodeInfo(task.CreatedFolder, task.AccountName);
+                            }
+                        }
+                        else if (e.Task is UploadFileTask)
+                        {
+                            var task = (UploadFileTask)e.Task;
+                            var parentNode = task.Tag as TreeNode;
+                            var selectedNode = treeView1.SelectedNode;
+                            if (parentNode != null && selectedNode == parentNode)
+                            {
+                                UpdateList();
+                            }
+                        }
+                        else if (e.Task is DeleteFileTask)
+                        {
+                            var task = (DeleteFileTask)e.Task;
+                            var listItem = task.Tag as ListViewItem;
+                            if (listItem != null)
+                            {
+                                listItem.Remove();
+                            }
+                        }
+                        else if (e.Task is DeleteFolderTask)
+                        {
+                            var task = (DeleteFolderTask)e.Task;
+                            var node = task.Tag as TreeNode;
+                            if (node != null)
+                            {
+                                node.Remove();
+                            }
                         }
                         break;
                 }
@@ -503,8 +550,11 @@ namespace Oblakoo
                         // is not connected
                         if (!accounts.ContainsKey(nodeInfo.AccountInfo.AccountName))
                         {
-                            await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, e.Node);
+                            var account = await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, e.Node);
                             UpdateNode(e.Node, true, true);
+                            Task.Run(async delegate {
+                                await taskManager.RestoreAsync(account, nodeInfo.AccountInfo.AccountName, CancellationToken.None);
+                            });
                         }
                         break;
                 }
@@ -517,12 +567,8 @@ namespace Oblakoo
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            var file = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null,
-                null);
-            using (var stream = new IsolatedStorageFileStream("accounts.xml", FileMode.Create, file))
-            {
-                accountManager.Save(new XmlTextWriter(stream, Encoding.UTF8));
-            }
+            accountManager.Save();
+            taskManager.Save();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -548,7 +594,7 @@ namespace Oblakoo
             }
         }
 
-        private void changeAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void changeAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
             if (node == null)
@@ -574,6 +620,22 @@ namespace Oblakoo
                 account.StorageVault = accountForm.GlacierVault;
                 account.DriveImageMaxSize = accountForm.DriveImageResolution;
                 node.Text = account.AccountName;
+                DisconnectAccount(node);
+                await ConnectAccountAsync(node);
+            }
+        }
+
+        private async Task ConnectAccountAsync(TreeNode node)
+        {
+            var nodeInfo = (NodeInfo)node.Tag;
+            try
+            {
+                await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, node);
+                UpdateNode(node);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 
@@ -646,7 +708,7 @@ namespace Oblakoo
         {
             var info = (NodeInfo) e.Node.Tag;
             if (info.Type != NodeType.Folder) return;
-            if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Name == "")
+            if (e.Node.Nodes[0].Name == "")
                 UpdateNode(e.Node);
         }
 
@@ -662,6 +724,12 @@ namespace Oblakoo
             controlNumber++;
             var info = (NodeInfo) fileListView.SelectedItems[0].Tag;
 
+            fileNameLabel.Text = info.File.Name;
+            fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
+
+            label3.Visible = false;
+            widthAndHeightLabel.Visible = false;
+
             if (!info.File.IsImage)
             {
                 lock (pictureCancellationTokenSourceLoker)
@@ -672,10 +740,6 @@ namespace Oblakoo
                 }
 
                 loadingImageProgressBar.Visible = false;
-                fileNameLabel.Text = info.File.Name;
-                fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
-                label3.Visible = false;
-                widthAndHeightLabel.Visible = false;
                 pictureBox1.BackgroundImage = Resources.no_image;
                 return;
             }
@@ -705,12 +769,9 @@ namespace Oblakoo
                         }
                         Invoke(new MethodInvoker(() =>
                         {
-                            fileNameLabel.Text = info.File.Name;
-                            fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
                             label3.Visible = true;
                             widthAndHeightLabel.Visible = true;
                             widthAndHeightLabel.Text = string.Format("{0} x {1}", info.File.DriveFile.ImageWidth, info.File.DriveFile.ImageHeight);
-
                             pictureBox1.BackgroundImage = image;
                             pictureBox1.Image = null;
                             loadingImageProgressBar.Visible = false;
@@ -718,16 +779,7 @@ namespace Oblakoo
                                 widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
                         }));
                     }
-                    catch (System.OperationCanceledException)
-                    {
-                        //pictureCancellationTokenSource = null;
-                        //Invoke(new MethodInvoker(() =>
-                        //{
-                        //pictureBox1.BackgroundImage = null;
-                        //pictureBox1.Image = null;
-                        //loadingImageProgressBar.Visible = false;
-                        //}));
-                    }
+                    catch (System.OperationCanceledException) { }
                 }
                 catch (Exception ex)
                 {
@@ -786,7 +838,7 @@ namespace Oblakoo
             var nodeInfo = (NodeInfo) selectedNode.Tag;
             foreach (var fileName in openFileDialog1.FileNames)
                 taskManager.Add(new UploadFileTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName, AsyncTask.NormalPriority, null,
-                    fileName, nodeInfo.File));
+                    fileName, nodeInfo.File) { Tag = selectedNode });
         }
 
         private void listView1_Move(object sender, EventArgs e)
@@ -838,18 +890,6 @@ namespace Oblakoo
             }
         }
 
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            //if (!pictureBox1.Visible) return;
-            //
-            //if (pictureBox1.BackgroundImage != null)
-            //    return;
-            //var size = e.Graphics.MeasureString("No image", NoImageFont);
-            //e.Graphics.DrawString("No image", NoImageFont, Brushes.White,
-            //    (pictureBox1.Width - size.Width)/2, (pictureBox1.Height - size.Height)/2);
-        }
-
         private void fileListView_MouseUp(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -858,6 +898,10 @@ namespace Oblakoo
                     if (fileListView.SelectedItems.Count > 0)
                     {
                         fileMenu.Show(Cursor.Position);
+                    }
+                    else
+                    {
+                        fileListMenu.Show(Cursor.Position);
                     }
                     break;
             }
@@ -875,18 +919,19 @@ namespace Oblakoo
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
             foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
-                taskManager.Add(new DownloadFileFromStorageTask(accounts[info.AccountName], info.AccountName, 0, null, info.File,
-                        folderBrowserDialog1.SelectedPath));
+            {
+                var task = new DownloadFileFromStorageTask(
+                    accounts[info.AccountName],
+                    info.AccountName,
+                    0, null, info.File,
+                    folderBrowserDialog1.SelectedPath);
+                taskManager.Add(task);
+            }
         }
 
         private void downloadFolderFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DownloadFolderFromDrive(false);
-        }
-
-        private void downloadFolderFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            DownloadFolderFromDrive();
         }
 
         private void loadingFoldersTimer_Tick(object sender, EventArgs e)
@@ -948,16 +993,16 @@ namespace Oblakoo
             var account = accounts[nodeInfo.AccountName];
             if (account == null)
                 return;
-            taskManager.Add(new DeleteFolderTask(account, nodeInfo.AccountName, 0, null, nodeInfo.File));
+            taskManager.Add(new DeleteFolderTask(account, nodeInfo.AccountName, 0, null, nodeInfo.File) { Tag = node });
         }
 
         private void downloadFromDriveOnlyContentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DownloadFolderFromDrive(true);
+            DownloadFolderFromDrive();
 
         }
 
-        private void DownloadFolderFromDrive(bool onlyContent)
+        private void DownloadFolderFromDrive()
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK)
                 return;
@@ -969,13 +1014,13 @@ namespace Oblakoo
             if (account == null)
                 return;
             taskManager.Add(new DownloadFolderFromDriveTask(account, nodeInfo.AccountName, 0, null,
-                nodeInfo.File, folderBrowserDialog1.SelectedPath, onlyContent));
+                nodeInfo.File, folderBrowserDialog1.SelectedPath));
 
         }
 
         private void downloadFromDriveFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DownloadFolderFromDrive(false);
+            DownloadFolderFromDrive();
         }
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -986,23 +1031,14 @@ namespace Oblakoo
                 var account = accounts[info.AccountName];
                 if (account == null)
                     continue;
-                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File));
+                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File) { Tag = item });
             }
         }
 
         private void cancelTaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Cancel selected tasks?", "Cancel tasks", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.No)
-                return;
-
             foreach (var task in from ListViewItem item in taskListView.SelectedItems select (AsyncTask) item.Tag)
                 task.Cancel();
-        }
-
-        private void logListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ;
         }
 
         private void showDescriptionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1010,7 +1046,7 @@ namespace Oblakoo
             var selectedItem = logListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
             if (selectedItem == null)
                 return;
-            if (exceptionForm == null)
+            if (exceptionForm == null || exceptionForm.IsDisposed)
                 exceptionForm = new ExceptionForm();
             exceptionForm.Exception = (Exception)selectedItem.Tag;
             exceptionForm.Show(this);
@@ -1075,7 +1111,12 @@ namespace Oblakoo
 
         private void downloadFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DownloadFolderFromDrive(false);
+            DownloadFolderFromDrive();
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

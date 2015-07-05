@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Oblakoo
 {
@@ -41,7 +42,6 @@ namespace Oblakoo
         {
             var driveFiles = await Drive.GetFilesAsync(folder == null ? null : folder.DriveFile, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
-
         }
 
         /// <summary>
@@ -108,6 +108,13 @@ namespace Oblakoo
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
         {
             await Drive.DeleteFolderAsync(folder.DriveFile, token);
+        }
+
+        public async Task<AccountFile> GetFileAsync(XElement storageXml, XElement driveXml, CancellationToken token)
+        {
+            var storageFile = storageXml == null ? null : await Storage.GetFileAsync(storageXml, token);
+            var driveFile = driveXml == null ? null : await Drive.GetFileAsync(driveXml, token);
+            return new AccountFile(storageFile, driveFile);
         }
     }
 }

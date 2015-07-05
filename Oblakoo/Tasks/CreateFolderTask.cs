@@ -21,8 +21,6 @@ namespace Oblakoo.Tasks
             if (destFolder == null && Common.IsSingle(Parents) && Parents[0] is CreateFolderTask)
                 destFolder = ((CreateFolderTask)Parents[0]).CreatedFolder;
             CreatedFolder = await Account.CreateFolderAsync(FolderName, destFolder, CancellationTokenSource.Token);
-            if (State == AsyncTaskState.Running)
-                State = AsyncTaskState.Completed;
         }
     }
 }

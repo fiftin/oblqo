@@ -15,6 +15,12 @@ namespace Oblakoo
     {
         public abstract DriveFile RootFolder { get; }
         public Size ImageMaxSize { get; set; }
+        public Storage Storage { get; private set; }
+
+        public Drive(Storage storage)
+        {
+            Storage = storage;
+        }
 
         protected Image ScaleImage(Image image)
         {
@@ -106,5 +112,7 @@ namespace Oblakoo
         public abstract Task ClearAsync(CancellationToken token);
 
         public abstract Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token);
+
+        public abstract Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Oblakoo
 {
@@ -12,5 +13,18 @@ namespace Oblakoo
         public abstract string Name { get; }
         public abstract bool IsFolder { get; }
         public abstract bool IsRoot { get; }
+
+        public Storage Storage { get; private set; }
+
+        public StorageFile(Storage storage)
+        {
+            Storage = storage;
+        }
+
+        public virtual XElement ToXml()
+        {
+            var ret = new XElement(IsFolder ? "storageFolder" : "storageFile");
+            return ret;
+        }
     }
 }

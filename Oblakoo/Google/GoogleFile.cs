@@ -14,7 +14,8 @@ namespace Oblakoo.Google
         public const string OriginalImageHeightPropertyKey = "originalImageHeight";
         public const string OriginalSizePropertyKey = "originalSize";
 
-        public GoogleFile(File file)
+        public GoogleFile(GoogleDrive drive, File file)
+            : base(drive)
         {
             this.file = file;
         }
@@ -42,36 +43,6 @@ namespace Oblakoo.Google
         public override bool HasChildren
         {
             get { return hasChildren; }
-        }
-
-        public override string StorageFileId
-        {
-            get
-            {
-                if (file.Properties == null)
-                    return "";
-                String fileIdPart1 = null;
-                String fileIdPart2 = null;
-                foreach (var prop in file.Properties) {
-                    if (prop.Key == StorageFileIdPropertyKey + "_1")
-                    {
-                        fileIdPart1 = prop.Value;
-                    }
-                    else if (prop.Key == StorageFileIdPropertyKey + "_2")
-                    {
-                        fileIdPart2 = prop.Value;
-                    }
-                }
-                if (fileIdPart1 != null && fileIdPart2 != null)
-                {
-                    return fileIdPart1 + fileIdPart2;
-                }
-                return "";
-            }
-            set
-            {
-                file.Properties.Add(new Property { Key = StorageFileIdPropertyKey, Value = value });
-            }
         }
 
         public override long Size
@@ -151,6 +122,112 @@ namespace Oblakoo.Google
         public override string MimeType
         {
             get { return file.MimeType; }
+        }
+
+        public override System.Xml.Linq.XElement ToXml()
+        {
+            var ret = base.ToXml();
+            ret.SetAttributeValue("fileId", file.Id);
+            return ret;
+        }
+
+
+        /*
+        public override string StorageFileId
+        {
+            get
+            {
+                if (file.Properties == null)
+                    return "";
+                String fileIdPart1 = null;
+                String fileIdPart2 = null;
+                foreach (var prop in file.Properties) {
+                    if (prop.Key == StorageFileIdPropertyKey + "_1")
+                    {
+                        fileIdPart1 = prop.Value;
+                    }
+                    else if (prop.Key == StorageFileIdPropertyKey + "_2")
+                    {
+                        fileIdPart2 = prop.Value;
+                    }
+                }
+                if (fileIdPart1 != null && fileIdPart2 != null)
+                {
+                    return fileIdPart1 + fileIdPart2;
+                }
+                return "";
+            }
+            set
+            {
+                file.Properties.Add(new Property { Key = StorageFileIdPropertyKey, Value = value });
+            }
+        }
+        */
+
+        public static int GetNumericValue(char c)
+        {
+            return c - '0';
+        }
+
+        private string PropertyValue(string key)
+        {
+            if (file.Properties == null)
+            {
+                return null;
+            }
+            foreach (var prop in file.Properties)
+            {
+                if (prop.Key == key)
+                {
+                    return prop.Value;
+                }
+            }
+            return null;
+        }
+
+        public override string StorageFileId
+        {
+            get
+            {
+                var srcStr = PropertyValue("src");
+                if (srcStr == null) return null;
+                var sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind));
+                foreach (var src in sources)
+                {
+                    var sidPropertyName = string.Format("{0}.sid", src);
+                    if (Drive.Storage.Id != PropertyValue(sidPropertyName))
+                    {
+                        continue;
+                    }
+                    var fileIdKeyLen = string.Format(GoogleDrive.StorageFileIdFormat, src, 0).Length;
+                    var startsWith = string.Format(GoogleDrive.StorageFileIdFormat, src, "");
+                    string[] parts = new string[9];
+                    foreach (var prop in file.Properties)
+                    {
+                        if (prop.Key.Length == fileIdKeyLen
+                            && prop.Key.StartsWith(startsWith)
+                            && char.IsDigit(prop.Key.Last()))
+                        {
+                            parts[GetNumericValue(prop.Key.Last())] = prop.Value;
+                        }
+                    }
+                    return string.Join("", parts);
+                }
+                return null;
+                //string[] parts = new string[9];
+                //var len = string.Format(GoogleDrive.StorageFileIdFormat, StorageKind, 0).Length;
+                //var startsWith = string.Format(GoogleDrive.StorageFileIdFormat, StorageKind, "");
+                //foreach (var prop in file.Properties)
+                //{
+                //    if (prop.Key.Length == len
+                //        && prop.Key.StartsWith(startsWith)
+                //        && char.IsDigit(prop.Key.Last()))
+                //    {
+                //        parts[GetNumericValue(prop.Key.Last())] = prop.Value;
+                //    }
+                //}
+                //return string.Join("", parts);
+            }
         }
     }
 }

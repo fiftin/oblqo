@@ -14,12 +14,45 @@ namespace Oblakoo
         public const int LowPriority = int.MinValue / 2;
         public const int LowestPriority = int.MinValue;
 
+        private List<AsyncTask> parents = new List<AsyncTask>();
+        private AsyncTask[] parentsCache = new AsyncTask[0];
+
+
+        public void AddParent(AsyncTask parent)
+        {
+            lock (parents)
+            {
+                parents.Add(parent);
+                parentsCache = parents.ToArray();
+            }
+        }
+
+        public AsyncTask[] Parents
+        {
+            get
+            {
+                return parentsCache;
+            }
+            private set
+            {
+                lock (parents)
+                {
+                    parents.Clear();
+                    if (value != null)
+                    {
+                        parents.AddRange(value);
+                    }
+                    parentsCache = value;
+                }
+            }
+        }
+
+        public string ID { get; private set; }
         public Account Account { get; private set; }
         public string AccountName { get; private set; }
         public Object Tag { get; set; }
         public AsyncTaskParentsMode ParentsMode { get; private set; }
         public int Priority { get; private set; }
-        public AsyncTask[] Parents { get; private set; }
         public Exception Exception { get; protected set; }
         public AsyncTaskState State { get; protected set; }
         public event EventHandler StateChanged;
@@ -33,9 +66,14 @@ namespace Oblakoo
             foreach (var task in tasks)
                 AddTask(task);
         }
+
         protected void AddTask(AsyncTask task)
         {
             Manager.Add(task);
+        }
+
+        protected AsyncTask()
+        {
         }
 
         protected AsyncTask(Account account, string accountName, int priority, AsyncTask[] parents, AsyncTaskParentsMode parentsMode = AsyncTaskParentsMode.CancelIfAnyErrorOrCanceled)
@@ -46,6 +84,27 @@ namespace Oblakoo
             Priority = priority;
             Parents = parents;
             ParentsMode = parentsMode;
+            ID = Guid.NewGuid().ToString();
+        }
+
+        public virtual async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
+        {
+            Account = account;
+            AccountName = xml.Attribute("accountName").Value;
+            State = AsyncTaskState.Waiting;
+            Priority = int.Parse(xml.Attribute("priority").Value);
+            ParentsMode = (AsyncTaskParentsMode)Enum.Parse(typeof(AsyncTaskParentsMode), xml.Attribute("parentsMode").Value);
+            ID = id;
+        }
+
+        public virtual System.Xml.Linq.XElement ToXml()
+        {
+            var xml = new System.Xml.Linq.XElement("task");
+            xml.SetAttributeValue("type", this.GetType().FullName);
+            xml.SetAttributeValue("accountName", AccountName);
+            xml.SetAttributeValue("priority", Priority);
+            xml.SetAttributeValue("parentsMode", ParentsMode);
+            return xml;
         }
 
         protected virtual void OnProgress(AsyncTaskProgressEventArgs e)

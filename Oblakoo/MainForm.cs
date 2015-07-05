@@ -55,7 +55,7 @@ namespace Oblakoo
         }
 
 
-        private readonly SortedDictionary<string, Account> accounts = new SortedDictionary<string, Account>();
+        private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
         private readonly AsyncTaskManager taskManager = new AsyncTaskManager();
         private CancellationTokenSource updateListCancellationTokenSource;
@@ -124,6 +124,7 @@ namespace Oblakoo
             try
             {
                 var ret = await accountManager.CreateAccountAsync(name);
+                ret.Tag = node;
                 accounts.Add(name, ret);
                 node.ImageKey = AccountImageKey;
                 node.SelectedImageKey = AccountImageKey;
@@ -131,17 +132,18 @@ namespace Oblakoo
                 info.File = ret.RootFolder;
                 return ret;
             }
-            catch
+            catch(Exception)
             {
                 node.ImageKey = nodeImageKey;
                 node.SelectedImageKey = nodeImageKey;
+                throw;
             }
             finally
             {
                 loadingNodes.Remove(node);
                 UpdateToolBarAndMenu();
             }
-            return null;
+            //return null;
         }
 
         public void HideFileInfoPanel()
@@ -790,7 +792,23 @@ namespace Oblakoo
 
         private void OnError(Exception exception)
         {
-            if (exception is AggregateException)
+            if (exception is Oblakoo.Core.ConnectionException)
+            {
+                Invoke(new MethodInvoker(() =>
+                {
+                    var acc = ((Oblakoo.Core.ConnectionException)exception).Account;
+                    if (acc.Tag is TreeNode)
+                    {
+                        DisconnectAccount((TreeNode)acc.Tag);
+                    }
+                    else
+                    {
+                        acc.Disconnect();
+                    }
+                }));
+                OnError(exception.InnerException);
+            }
+            else if (exception is AggregateException)
             {
                 ((AggregateException) exception).Handle(x =>
                 {
@@ -897,6 +915,17 @@ namespace Oblakoo
                 case MouseButtons.Right:
                     if (fileListView.SelectedItems.Count > 0)
                     {
+                        synchronizeToolStripMenuItem.Enabled = false;
+                        downloadFileFromStorageToolStripMenuItem.Enabled = true;
+                        if (fileListView.SelectedItems.Count == 1)
+                        {
+                            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                            if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
+                            {
+                                downloadFileFromStorageToolStripMenuItem.Enabled = false;
+                                synchronizeToolStripMenuItem.Enabled = true;
+                            }
+                        }
                         fileMenu.Show(Cursor.Position);
                     }
                     else
@@ -962,6 +991,7 @@ namespace Oblakoo
 
         private void DisconnectAccount(TreeNode node)
         {
+            loadingNodes.Remove(node);
             node.Nodes.Clear();
             node.ImageKey = DisconnectedAccountImageKey;
             node.SelectedImageKey = DisconnectedAccountImageKey;

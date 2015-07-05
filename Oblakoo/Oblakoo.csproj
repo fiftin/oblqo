@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="Core\Account.cs" />
     <Compile Include="Core\AccountFile.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="AccountManager.cs" />
     <Compile Include="ActionIfFileExists.cs" />
     <Compile Include="Amazon\GlacierFile.cs" />
+    <Compile Include="Core\ConnectionException.cs" />
     <Compile Include="Core\StorageFileIdentity.cs" />
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />

@@ -106,17 +106,19 @@ namespace Oblakoo
             Drive drive;
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             var token = new CancellationToken();
+            var account = new Account();
             switch (info.DriveType)
             {
                 case DriveType.GoogleDrive:
-                    drive = await GoogleDrive.CreateInstance(storage, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
+                    drive = await GoogleDrive.CreateInstance(storage, account, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
                     drive.ImageMaxSize = info.DriveImageMaxSize;
-                    ((GoogleDrive) drive).GetServiceAsync(token).Wait(token);
+                    await ((GoogleDrive)drive).GetServiceAsync(token);
                     break;
                 default:
                     throw new NotSupportedException("Drive with this type is not supported");
             }
-            return new Account(storage, drive);
+            account.Init(storage, drive);
+            return account;
         }
 
         public async Task<Account> CreateAccountAsync(string name)

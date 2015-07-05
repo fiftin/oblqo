@@ -14,8 +14,12 @@ namespace Oblakoo
         public Storage Storage { get; private set; }
         public Drive Drive { get; private set; }
         public AccountFile RootFolder { get; private set; }
+        public object Tag { get; set; }
+        public Account()
+        {
+        }
 
-        public Account(Storage storage, Drive drive)
+        internal void Init(Storage storage, Drive drive)
         {
             Storage = storage;
             Drive = drive;

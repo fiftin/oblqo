@@ -16,10 +16,12 @@ namespace Oblakoo
         public abstract DriveFile RootFolder { get; }
         public Size ImageMaxSize { get; set; }
         public Storage Storage { get; private set; }
+        public Account Account { get; private set; }
 
-        public Drive(Storage storage)
+        public Drive(Storage storage, Account account)
         {
             Storage = storage;
+            Account = account;
         }
 
         protected Image ScaleImage(Image image)

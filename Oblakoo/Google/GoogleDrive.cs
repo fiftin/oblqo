@@ -9,6 +9,8 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 using Google.Apis.Upload;
 using Google.Apis.Drive.v2.Data;
+using Google.Apis.Auth.OAuth2.Responses;
+using Oblakoo.Core;
 
 namespace Oblakoo.Google
 {
@@ -22,15 +24,15 @@ namespace Oblakoo.Google
         private GoogleFile rootFolder;
         private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
-        protected GoogleDrive(Storage storage, ClientSecrets secrets)
-            : base(storage)
+        protected GoogleDrive(Storage storage, Account account, ClientSecrets secrets)
+            : base(storage, account)
         {
             Secrets = secrets;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(Storage storage, ClientSecrets secrets, string rootPath)
+        public static async Task<GoogleDrive> CreateInstance(Storage storage, Account account, ClientSecrets secrets, string rootPath)
         {
-            var ret = new GoogleDrive(storage, secrets);
+            var ret = new GoogleDrive(storage, account, secrets);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath);
             ret.rootFolder = rootFolder;
             return ret;
@@ -67,34 +69,19 @@ namespace Oblakoo.Google
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
         {
-            var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(Secrets, new[] { DriveService.Scope.Drive }, "user", token);
-            return new DriveService(new BaseClientService.Initializer()
+            try
             {
-                HttpClientInitializer = credential,
-                ApplicationName = "Oblakoo"
-            });
-        }
-
-        private string[] SplitBy(string s, int len)
-        {
-            int n = s.Length / len;
-            if (s.Length % len != 0)
-            {
-                n++;
-            }
-            var ret = new string[n];
-            for (int i = 0; i < n; i++)
-            {
-                if (i * len + len > s.Length)
+                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(Secrets, new[] { DriveService.Scope.Drive }, "user", token);
+                return new DriveService(new BaseClientService.Initializer()
                 {
-                    ret[i] = s.Substring(i * len);
-                }
-                else
-                {
-                    ret[i] = s.Substring(i * len, len);
-                }
+                    HttpClientInitializer = credential,
+                    ApplicationName = "Oblakoo"
+                });
             }
-            return ret;
+            catch (TokenResponseException ex)
+            {
+                throw new ConnectionException(Account, ex.Message, ex);
+            }
         }
 
         const int PropertyMaxLength = 124 / 2;
@@ -111,7 +98,7 @@ namespace Oblakoo.Google
             props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
             int storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
             int storageFileIdPropertyValueLen = PropertyMaxLength - storageFileIdPropertyKeyLen;
-            string[] storageFileIdParts = SplitBy(storageFileId, storageFileIdPropertyValueLen);
+            string[] storageFileIdParts = Common.SplitBy(storageFileId, storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             for (int i = 0; i < storageFileIdParts.Length; i++)
             {
@@ -179,15 +166,22 @@ namespace Oblakoo.Google
 
         private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, string q, CancellationToken token)
         {
-            var service = await GetServiceAsync(token);
-            var request = service.Files.List();
-            request.MaxResults = 1000;
-            if (!string.IsNullOrWhiteSpace(q))
-                q = string.Format("and ({0})", q);
-            request.Q = string.Format("'{0}' in parents and trashed = false {1}", folderId, q);
-            request.Fields = "items(downloadUrl,webContentLink,thumbnailLink,id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
-            var files = await request.ExecuteAsync(token);
-            return await GoogleFileList.Get(this, files, service, token);
+            try
+            {
+                var service = await GetServiceAsync(token);
+                var request = service.Files.List();
+                request.MaxResults = 1000;
+                if (!string.IsNullOrWhiteSpace(q))
+                    q = string.Format("and ({0})", q);
+                request.Q = string.Format("'{0}' in parents and trashed = false {1}", folderId, q);
+                request.Fields = "items(downloadUrl,webContentLink,thumbnailLink,id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
+                var files = await request.ExecuteAsync(token);
+                return await GoogleFileList.Get(this, files, service, token);
+            }
+            catch (TokenResponseException ex)
+            {
+                throw new ConnectionException(Account, ex.Message, ex);
+            }
         }
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
@@ -319,6 +313,5 @@ namespace Oblakoo.Google
             var request = service.Files.Get(fileId);
             return null;
         }
-
     }
 }

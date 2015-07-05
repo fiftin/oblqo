@@ -9,7 +9,6 @@ namespace Oblakoo.Google
         internal readonly File file;
         internal bool hasChildren;
 
-        public const string StorageFileIdPropertyKey = "storageFileId";
         public const string OriginalImageWidthPropertyKey = "originalImageWidth";
         public const string OriginalImageHeightPropertyKey = "originalImageHeight";
         public const string OriginalSizePropertyKey = "originalSize";
@@ -131,58 +130,9 @@ namespace Oblakoo.Google
             return ret;
         }
 
-
-        /*
-        public override string StorageFileId
-        {
-            get
-            {
-                if (file.Properties == null)
-                    return "";
-                String fileIdPart1 = null;
-                String fileIdPart2 = null;
-                foreach (var prop in file.Properties) {
-                    if (prop.Key == StorageFileIdPropertyKey + "_1")
-                    {
-                        fileIdPart1 = prop.Value;
-                    }
-                    else if (prop.Key == StorageFileIdPropertyKey + "_2")
-                    {
-                        fileIdPart2 = prop.Value;
-                    }
-                }
-                if (fileIdPart1 != null && fileIdPart2 != null)
-                {
-                    return fileIdPart1 + fileIdPart2;
-                }
-                return "";
-            }
-            set
-            {
-                file.Properties.Add(new Property { Key = StorageFileIdPropertyKey, Value = value });
-            }
-        }
-        */
-
         public static int GetNumericValue(char c)
         {
             return c - '0';
-        }
-
-        private string PropertyValue(string key)
-        {
-            if (file.Properties == null)
-            {
-                return null;
-            }
-            foreach (var prop in file.Properties)
-            {
-                if (prop.Key == key)
-                {
-                    return prop.Value;
-                }
-            }
-            return null;
         }
 
         public override string StorageFileId
@@ -214,20 +164,24 @@ namespace Oblakoo.Google
                     return string.Join("", parts);
                 }
                 return null;
-                //string[] parts = new string[9];
-                //var len = string.Format(GoogleDrive.StorageFileIdFormat, StorageKind, 0).Length;
-                //var startsWith = string.Format(GoogleDrive.StorageFileIdFormat, StorageKind, "");
-                //foreach (var prop in file.Properties)
-                //{
-                //    if (prop.Key.Length == len
-                //        && prop.Key.StartsWith(startsWith)
-                //        && char.IsDigit(prop.Key.Last()))
-                //    {
-                //        parts[GetNumericValue(prop.Key.Last())] = prop.Value;
-                //    }
-                //}
-                //return string.Join("", parts);
             }
         }
+
+        private string PropertyValue(string key)
+        {
+            if (file.Properties == null)
+            {
+                return null;
+            }
+            foreach (var prop in file.Properties)
+            {
+                if (prop.Key == key)
+                {
+                    return prop.Value;
+                }
+            }
+            return null;
+        }
+
     }
 }

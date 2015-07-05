@@ -95,5 +95,26 @@ namespace Oblakoo
             return totalBytesCopied;
         }
 
+        public static string[] SplitBy(string s, int len)
+        {
+            int n = s.Length / len;
+            if (s.Length % len != 0)
+            {
+                n++;
+            }
+            var ret = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                if (i * len + len > s.Length)
+                {
+                    ret[i] = s.Substring(i * len);
+                }
+                else
+                {
+                    ret[i] = s.Substring(i * len, len);
+                }
+            }
+            return ret;
+        }
     }
 }

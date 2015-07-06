@@ -6,7 +6,7 @@ packages/
 *.pdb
 *.orderedtest
 *.cache
-Oblakoo/bin/
-Oblakoo/obj/
+Oblqo/bin/
+Oblqo/obj/
 OblakooTest/bin/
 OblakooTest/obj/

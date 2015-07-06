@@ -172,6 +172,8 @@
     <Compile Include="Tasks\DownloadFolderFromDriveTask.cs" />
     <Compile Include="Tasks\DownloadFolderFromStorageTask.cs" />
     <Compile Include="Tasks\DownloadFolderTask.cs" />
+    <Compile Include="Tasks\SynchronizeFileTask.cs" />
+    <Compile Include="Tasks\SynchronizeFolderTask.cs" />
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="Core\TransferProgress.cs" />

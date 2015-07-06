@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Oblakoo.Tasks;
+using Oblqo.Tasks;
 using System.IO.IsolatedStorage;
 using System.Xml.Linq;
 // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
-namespace Oblakoo
+namespace Oblqo
 {
     public class AsyncTaskManager : IEnumerable<AsyncTask>
     {

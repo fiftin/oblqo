@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Tasks
+namespace Oblqo.Tasks
 {
     public class DeleteFileTask : AsyncTask
     {

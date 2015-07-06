@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public abstract class DriveFile
     {

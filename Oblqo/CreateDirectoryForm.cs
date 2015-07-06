@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public partial class CreateFolderForm : Form
     {

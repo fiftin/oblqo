@@ -1,4 +1,4 @@
-﻿namespace Oblakoo.Google
+﻿namespace Oblqo.Google
 {
     public static class GoogleItemKinds
     {

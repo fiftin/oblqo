@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Tasks
+namespace Oblqo.Tasks
 {
     public class DownloadFolderFromStorageTask : DownloadFolderTask
     {

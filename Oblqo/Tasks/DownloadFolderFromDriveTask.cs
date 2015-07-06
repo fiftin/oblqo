@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Tasks
+namespace Oblqo.Tasks
 {
     public class DownloadFolderFromDriveTask : DownloadFolderTask
     {

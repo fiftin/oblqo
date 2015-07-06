@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using Amazon;
 
-namespace Oblakoo
+namespace Oblqo
 {
     /// <summary>
     /// Represents link storage account (for long storing) with drive account (for image views).

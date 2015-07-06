@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Amazon
+namespace Oblqo.Amazon
 {
     class GlacierFileIdentity
     {

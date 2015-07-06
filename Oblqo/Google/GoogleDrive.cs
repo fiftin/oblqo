@@ -10,9 +10,9 @@ using Google.Apis.Services;
 using Google.Apis.Upload;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Auth.OAuth2.Responses;
-using Oblakoo.Core;
+using Oblqo.Core;
 
-namespace Oblakoo.Google
+namespace Oblqo.Google
 {
     public class GoogleDrive : Drive
     {
@@ -75,7 +75,7 @@ namespace Oblakoo.Google
                 return new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
-                    ApplicationName = "Oblakoo"
+                    ApplicationName = "Oblqo"
                 });
             }
             catch (TokenResponseException ex)

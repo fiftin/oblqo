@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public class StorageFileIdentity
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Core
+namespace Oblqo.Core
 {
     public class ConnectionException : Exception
     {

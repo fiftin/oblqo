@@ -10,11 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Oblakoo.Properties;
-using Oblakoo.Tasks;
+using Oblqo.Properties;
+using Oblqo.Tasks;
 // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
-namespace Oblakoo
+namespace Oblqo
 {
     public partial class MainForm : Form
     {
@@ -792,11 +792,11 @@ namespace Oblakoo
 
         private void OnError(Exception exception)
         {
-            if (exception is Oblakoo.Core.ConnectionException)
+            if (exception is Oblqo.Core.ConnectionException)
             {
                 Invoke(new MethodInvoker(() =>
                 {
-                    var acc = ((Oblakoo.Core.ConnectionException)exception).Account;
+                    var acc = ((Oblqo.Core.ConnectionException)exception).Account;
                     if (acc.Tag is TreeNode)
                     {
                         DisconnectAccount((TreeNode)acc.Tag);

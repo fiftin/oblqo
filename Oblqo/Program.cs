@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Oblakoo
+namespace Oblqo
 {
     static class Program
     {

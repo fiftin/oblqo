@@ -2,7 +2,7 @@
 using System.Linq;
 using Google.Apis.Drive.v2.Data;
 
-namespace Oblakoo.Google
+namespace Oblqo.Google
 {
     public class GoogleFile : DriveFile
     {

@@ -1,4 +1,4 @@
-﻿namespace Oblakoo
+﻿namespace Oblqo
 {
     public enum AsyncTaskParentsMode
     {

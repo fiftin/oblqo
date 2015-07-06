@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public partial class AuthenticationForm : Form
     {

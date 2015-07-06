@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-namespace Oblakoo.Amazon
+namespace Oblqo.Amazon
 {
     public class GlacierFile : StorageFile
     {

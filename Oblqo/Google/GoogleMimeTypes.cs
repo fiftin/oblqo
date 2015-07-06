@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Oblakoo.Google
+namespace Oblqo.Google
 {
     public static class GoogleMimeTypes
     {

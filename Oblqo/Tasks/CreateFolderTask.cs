@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Oblakoo.Tasks
+namespace Oblqo.Tasks
 {
     public class CreateFolderTask : AsyncTask
     {

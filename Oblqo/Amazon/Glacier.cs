@@ -9,7 +9,7 @@ using Amazon.Glacier.Model;
 using Amazon.Glacier.Transfer;
 using Amazon.Runtime;
 
-namespace Oblakoo.Amazon
+namespace Oblqo.Amazon
 {
     /// <summary>
     /// 

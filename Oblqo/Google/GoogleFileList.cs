@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 
-namespace Oblakoo.Google
+namespace Oblqo.Google
 {
     public class GoogleFileList : ICollection<DriveFile>
     {

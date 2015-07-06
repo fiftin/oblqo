@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Oblakoo.Tasks
+namespace Oblqo.Tasks
 {
     public class UploadFolderTask : AsyncTask
     {

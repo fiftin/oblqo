@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Amazon;
-using Oblakoo.Properties;
+using Oblqo.Properties;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public partial class AccountForm : Form
     {

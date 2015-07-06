@@ -1,4 +1,4 @@
-﻿namespace Oblakoo
+﻿namespace Oblqo
 {
     partial class AuthenticationForm
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public abstract class Storage
     {

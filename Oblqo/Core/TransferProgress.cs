@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public class TransferProgress
     {

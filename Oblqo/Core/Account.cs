@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Oblakoo
+namespace Oblqo
 {
     public class Account
     {

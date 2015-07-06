@@ -11,11 +11,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using Amazon.Route53Domains.Model;
 using Google.Apis.Auth.OAuth2;
-using Oblakoo.Amazon;
-using Oblakoo.Google;
-using Oblakoo.Properties;
+using Oblqo.Amazon;
+using Oblqo.Google;
+using Oblqo.Properties;
 
-namespace Oblakoo
+namespace Oblqo
 {
     [XmlRoot("root")]
     public class AccountManager
@@ -39,12 +39,25 @@ namespace Oblakoo
                 accounts.Remove(account);
                 using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
                 {
+                    DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName);
+                    DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName + "/tasks");
                     store.DeleteDirectory("accounts/" + account.AccountName);
                 }
-                
             }
         }
 
+        private void DeleteAllFilesInDirectory(IsolatedStorageFile store, string path)
+        {
+            if (!store.DirectoryExists(path))
+            {
+                return;
+            }
+            var files = store.GetFileNames(path + "/*");
+            foreach (var file in files)
+            {
+                store.DeleteFile(path + "/" + file);
+            }
+        }
 
         public IEnumerable<AccountInfo> Accounts
         {

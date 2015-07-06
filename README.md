@@ -1,6 +1,6 @@
 # Oblakoo #
 
-** English **
+## English ##
 
 The program is designed to save the photo in two copies:
 
@@ -12,7 +12,7 @@ The program creates a link between the copy on Google Drive and a copy on the Am
 
 The program has an interface for viewing photos on Google Drive. Finding the right picture you can initiate the downloading of the original.
 
-** Russian **
+## Russian ##
 
 Программа предназначена для сохранения фотографий в двух экземплярах:
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oblakoo", "Oblakoo\Oblakoo.csproj", "{FD2A30FC-CFB1-4E8B-9EE3-3D5BA077A9FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oblqo", "Oblqo\Oblqo.csproj", "{FD2A30FC-CFB1-4E8B-9EE3-3D5BA077A9FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OblakooTest", "OblakooTest\OblakooTest.csproj", "{75BBB4B2-B501-4215-875A-7F0AF8ADB127}"
 EndProject

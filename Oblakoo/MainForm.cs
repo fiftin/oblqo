@@ -1102,7 +1102,7 @@ namespace Oblakoo
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Oblakoo 1.0.0\n© Denis Gukov", "About");
+            MessageBox.Show("Oblqo 1.0.0\n© Denis Gukov", "About");
         }
 
    
@@ -1145,6 +1145,11 @@ namespace Oblakoo
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downloadFolderFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

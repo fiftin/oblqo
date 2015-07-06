@@ -7,8 +7,8 @@
     <ProjectGuid>{FD2A30FC-CFB1-4E8B-9EE3-3D5BA077A9FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Oblakoo</RootNamespace>
-    <AssemblyName>Oblakoo</AssemblyName>
+    <RootNamespace>Oblqo</RootNamespace>
+    <AssemblyName>Oblqo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

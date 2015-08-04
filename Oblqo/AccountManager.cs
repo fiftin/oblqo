@@ -123,7 +123,7 @@ namespace Oblqo
             switch (info.DriveType)
             {
                 case DriveType.GoogleDrive:
-                    drive = await GoogleDrive.CreateInstance(storage, account, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath);
+                    drive = await GoogleDrive.CreateInstance(storage, account, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath, token);
                     drive.ImageMaxSize = info.DriveImageMaxSize;
                     await ((GoogleDrive)drive).GetServiceAsync(token);
                     break;

@@ -30,21 +30,21 @@ namespace Oblqo.Google
             Secrets = secrets;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(Storage storage, Account account, ClientSecrets secrets, string rootPath)
+        public static async Task<GoogleDrive> CreateInstance(Storage storage, Account account, ClientSecrets secrets, string rootPath, CancellationToken token)
         {
             var ret = new GoogleDrive(storage, account, secrets);
-            var rootFolder = await ret.GetFolderByPathAsync(rootPath);
+            var rootFolder = await ret.GetFolderByPathAsync(rootPath, token, true);
             ret.rootFolder = rootFolder;
             return ret;
         }
 
-        public async Task<File> GetFolderAsync(string parentFolderId, string folderName)
+        public async Task<File> GetFolderAsync(string parentFolderId, string folderName, CancellationToken token)
         {
             var service = await GetServiceAsync(CancellationToken.None);
             var request = service.Files.List();
             request.Q = string.Format("'{0}' in parents and trashed = false and title = '{1}'", parentFolderId, folderName);
             request.Fields = "items(id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
-            var result = await request.ExecuteAsync();
+            var result = await request.ExecuteAsync(token);
             if (result.Items.Count == 0)
                 return null;
             if (result.Items.Count > 1)
@@ -52,7 +52,7 @@ namespace Oblqo.Google
             return result.Items[0];
         }
 
-        public async Task<GoogleFile> GetFolderByPathAsync(string path)
+        public async Task<GoogleFile> GetFolderByPathAsync(string path, CancellationToken token, bool createIfNotExists = false)
         {
             var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
@@ -60,9 +60,17 @@ namespace Oblqo.Google
             foreach (var f in folders)
             {
                 currentPath += "/" + f;
-                file = await GetFolderAsync(file.Id, f);
-                if (file == null)
+                var parent = file;
+                file = await GetFolderAsync(file.Id, f, token);
+                if (file == null && !createIfNotExists)
+                {
                     throw new Exception("Path is not exists: " + currentPath);
+                }
+                if (file == null)
+                {
+                    var newFile = await CreateFolderAsync(f, new GoogleFile(this, parent), token);
+                    file = ((GoogleFile)newFile).file;
+                }
             }
             return new GoogleFile(this, file);
         }

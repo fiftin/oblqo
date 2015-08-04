@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Oblqo.Tasks
 {
-    class SynchronizeFolderTask
+    public class SynchronizeFolderTask : AsyncTask
     {
+        protected override Task OnStartAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

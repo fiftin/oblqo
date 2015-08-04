@@ -1079,7 +1079,10 @@ namespace Oblqo
             if (exceptionForm == null || exceptionForm.IsDisposed)
                 exceptionForm = new ExceptionForm();
             exceptionForm.Exception = (Exception)selectedItem.Tag;
-            exceptionForm.Show(this);
+            if (!exceptionForm.Visible)
+            {
+                exceptionForm.Show(this);
+            }
             exceptionForm.Focus();
         }
 

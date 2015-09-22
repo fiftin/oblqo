@@ -450,6 +450,14 @@ namespace Oblqo
                     taskItem.SubItems.Add("").Name = "size";
                     taskItem.SubItems.Add("0").Name = "percent";
                 }
+                else if (e.Task is SynchronizeFileTask)
+                {
+                    var task = (SynchronizeFileTask)e.Task;
+                    taskItem.Text = Path.GetFileName(task.SourceFile.Name);
+                    taskItem.SubItems.Add("Download Folder").Name = "type";
+                    taskItem.SubItems.Add("").Name = "size";
+                    taskItem.SubItems.Add("0").Name = "percent";
+                }
                 taskListView.Items.Insert(0, taskItem);
             }));
         }
@@ -488,7 +496,7 @@ namespace Oblqo
                         item.SubItems["percent"].Text = "100";
                         if (e.Task is CreateFolderTask)
                         {
-                            var task = (CreateFolderTask) e.Task;
+                            var task = (CreateFolderTask)e.Task;
                             var parentNode = task.Tag as TreeNode;
                             if (parentNode != null)
                             {
@@ -536,6 +544,9 @@ namespace Oblqo
                                 node.Remove();
                             }
                         }
+                        else if (e.Task is SynchronizeFileTask)
+                        {
+                        }
                         break;
                 }
             }));
@@ -554,7 +565,8 @@ namespace Oblqo
                         {
                             var account = await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, e.Node);
                             UpdateNode(e.Node, true, true);
-                            Task.Run(async delegate {
+                            await Task.Run(async delegate
+                            {
                                 await taskManager.RestoreAsync(account, nodeInfo.AccountInfo.AccountName, CancellationToken.None);
                             });
                         }
@@ -611,6 +623,7 @@ namespace Oblqo
                 accountForm.DriveImageResolution = account.DriveImageMaxSize;
                 accountForm.StorageRegionSystemName = account.StorageRegionSystemName;
                 accountForm.GlacierVault = account.StorageVault;
+                accountForm.DriveType = account.DriveType;
                 if (accountForm.ShowDialog() != DialogResult.OK) return;
                 account.AccountName = accountForm.AccountName;
                 account.StorageAccessKeyId = accountForm.StorageAccessTokenId;
@@ -1157,6 +1170,16 @@ namespace Oblqo
 
         }
 
+        private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
+            var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag; 
+            if (info.File.DriveFile.StorageFileId == null)
+            {
+                taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
+                    info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+            }
+        }
     }
 
 }

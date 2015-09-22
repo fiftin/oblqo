@@ -18,6 +18,15 @@ namespace Oblqo
         public Storage Storage { get; private set; }
         public Account Account { get; private set; }
 
+        /// <summary>
+        /// Name format of property for storage file ID.
+        /// {0} - storage kind.
+        /// {1} - storage file id part index *.
+        /// * If storage file id length more then PropertyMaxLength, then
+        /// storage file id splitting by parts with length PropertyMaxLength.
+        /// </summary>
+        public static readonly string StorageFileIdFormat = "{0}.id-{1}";
+
         public Drive(Storage storage, Account account)
         {
             Storage = storage;
@@ -66,9 +75,8 @@ namespace Oblqo
             return true;
         }
 
-        protected async Task<Stream> ScaleImageAsync(ImageType type, Stream input)
+        protected async Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
         {
-            var image = Image.FromStream(input);
             var newImage = ScaleImage(image);
             ImageFormat format;
             switch (type)
@@ -83,12 +91,18 @@ namespace Oblqo
                     format = ImageFormat.Png;
                     break;
                 default:
-                    return input;
+                    return defaultStream;
             }
             var output = new MemoryStream();
             newImage.Save(output, format);
             output.Position = 0;
             return output;
+        }
+
+        protected async Task<Stream> ScaleImageAsync(ImageType type, Stream input)
+        {
+            var image = Image.FromStream(input);
+            return await ScaleImageAsync(type, image, input);
         }
         
 
@@ -115,6 +129,12 @@ namespace Oblqo
 
         public abstract Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token);
 
+        /// <summary>
+        /// Get file by information from <paramref name="xml"/>. Used for resuming tasks.
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <param name="token">CancellationToken class instance for cancellation async operation.</param>
+        /// <returns>Drive file instance.</returns>
         public abstract Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token);
     }
 }

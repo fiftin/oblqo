@@ -64,7 +64,12 @@ namespace Oblqo
             imageResolutionComboBox.Items.Add(new Resolution(6400, 4800));
 
             imageResolutionComboBox.SelectedIndex = 2;
-            
+
+            foreach (var driveType in Enum.GetValues(typeof(DriveType)))
+            {
+                driveKindComboBox.Items.Add(driveType);
+            }
+            driveKindComboBox.SelectedIndex = 0;
         }
 
         public string StorageRegionSystemName
@@ -80,6 +85,18 @@ namespace Oblqo
                     if (((RegionInfo) regionComboBox.Items[i]).SystemName == value)
                         regionComboBox.SelectedIndex = i;
                 }
+            }
+        }
+
+        public DriveType DriveType
+        {
+            get
+            {
+                return (DriveType)driveKindComboBox.SelectedItem;
+            }
+            set
+            {
+                driveKindComboBox.SelectedItem = value;
             }
         }
 
@@ -104,14 +121,6 @@ namespace Oblqo
         {
             get { return base.Text; }
             set { base.Text = value; }
-        }
-
-        public DriveType DriveType
-        {
-            get
-            {
-                return DriveType.GoogleDrive;
-            }
         }
 
         public string StorageAccessTokenId

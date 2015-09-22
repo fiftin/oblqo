@@ -11,8 +11,9 @@ namespace Oblqo
         public static string GetMimeTypeByExtension(string pathName)
         {
             var ext = Path.GetExtension(pathName);
-            switch (ext)
+            switch (ext.ToLower())
             {
+                case ".jpg":
                 case ".jpeg":
                     return JpegFile;
                 case ".png":

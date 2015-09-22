@@ -8,6 +8,7 @@ namespace Oblqo
 {
     public enum DriveType
     {
-        GoogleDrive
+        GoogleDrive,
+        LocalDrive
     }
 }

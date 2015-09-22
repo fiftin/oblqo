@@ -14,9 +14,10 @@ namespace Oblqo.Local
     {
         private DriveFile rootFolder;
 
-        public LocalDrive(Storage storage, Account account)
+        public LocalDrive(Storage storage, Account account, string rootPath)
             : base(storage, account)
         {
+            rootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
         }
 
         public override DriveFile RootFolder
@@ -37,57 +38,104 @@ namespace Oblqo.Local
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var dir = Directory.CreateDirectory(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + folderName);
-            return new LocalFile(this, dir, false);
+            return LocalFileFactory.Instance.Create(this, dir, false);
         }
 
-        public override Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
+        public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
         {
-            throw new NotImplementedException();
+            ((LocalFile)driveFile).File.Delete();
         }
 
-        public override Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
+        public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            ((LocalFile)driveFolder).Directory.Delete();
         }
 
-        public override Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+        public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
-            throw new NotImplementedException();
+            ((LocalFile)driveFile).File.CopyTo(destFolder + Path.DirectorySeparatorChar + ((LocalFile)driveFile).File.Name);
         }
 
-        public override Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
+        public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
         {
-            throw new NotImplementedException();
+            foreach (var file in ((LocalFile)driveFolder).Directory.EnumerateFiles())
+            {
+                action(LocalFileFactory.Instance.Create(this, file, false));
+            }
         }
 
-        public override Task<DriveFile> GetFileAsync(XElement xml, CancellationToken token)
+        public override async Task<DriveFile> GetFileAsync(XElement xml, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return LocalFileFactory.Instance.Create(this, new FileInfo(xml.Attribute("fileId").Value), false);
         }
 
-        public override Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
+        public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            List<DriveFile> ret = new List<DriveFile>();
+            foreach (var file in ((LocalFile)folder).Directory.EnumerateFiles())
+            {
+                ret.Add(LocalFileFactory.Instance.Create(this, file, false));
+            }
+            return ret;
         }
 
-        public override Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
+        public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            List<DriveFile> ret = new List<DriveFile>();
+            foreach (var file in ((LocalFile)folder).Directory.EnumerateDirectories())
+            {
+                ret.Add(LocalFileFactory.Instance.Create(this, file, false));
+            }
+            return ret;
         }
 
-        public override Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
+        public override async Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            if (!((LocalFile)file).IsImage)
+            {
+                return null;
+            }
+            return Image.FromStream(((LocalFile)file).File.OpenRead());
         }
 
-        public override Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
+        public override async Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return ((LocalFile)file).File.OpenRead();
         }
 
-        public override Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
-            throw new NotImplementedException();
+            using (var stream = new FileStream(pathName, System.IO.FileMode.Open))
+            {
+                Stream scaled;
+                ImageType imageType;
+                var image = Image.FromStream(stream);
+                if (TryGetImageType(pathName, out imageType))
+                {
+                    scaled = await ScaleImageAsync(imageType, image, stream);
+                }
+                else
+                {
+                    scaled = stream;
+                }
+                var observed = new ObserverStream(scaled);
+                observed.PositionChanged += (sender, e) =>
+                {
+                    ;
+                };
+                var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + Path.GetFileName(pathName));
+                using (var outStream = f.Create())
+                {
+                    await stream.CopyToAsync(outStream);
+                }
+                var localFile = (LocalFile)LocalFileFactory.Instance.Create(this, f, false);
+                var originFile = new FileInfo(pathName);
+                localFile.SetAttribute(nameof(localFile.StorageFileId), storageFileId);
+                localFile.SetAttribute(nameof(localFile.OriginalSize), originFile.Length.ToString());
+                localFile.SetAttribute(nameof(localFile.OriginalImageHeight), image.Height.ToString());
+                localFile.SetAttribute(nameof(localFile.OriginalImageWidth), image.Width.ToString());
+                return localFile;
+            }
         }
     }
 }

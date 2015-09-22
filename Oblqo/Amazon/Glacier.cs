@@ -62,6 +62,31 @@ namespace Oblqo.Amazon
             return new GlacierFile(this, driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
         }
 
+        public override async Task<StorageFile> UploadFileAsync(Stream fileStream, string fn, StorageFile destFolder,
+            CancellationToken token, Action<TransferProgress> progressCallback)
+        {
+            Debug.Assert(destFolder.IsFolder);
+            var path = ((GlacierFile)destFolder).FolderPath;
+            if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
+                path += "/";
+            var filePathName = path + fn;
+            var fileLen = fileStream.Length;
+            var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
+            var observed = new ObserverStream(fileStream);
+            var percent = 0;
+            observed.PositionChanged += (sender, e) =>
+            {
+                var currentPercent = (int)(100 * ((Stream)sender).Position / (float)fileLen);
+                if (currentPercent == percent) return;
+                percent = currentPercent;
+                progressCallback(new TransferProgress(percent));
+            };
+            var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
+            var result = await client.UploadArchiveAsync(req, token);
+
+            return new GlacierFile(this, result.ArchiveId, false, fn);
+        }
+
         public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
             CancellationToken token, Action<TransferProgress> progressCallback)
         {
@@ -93,34 +118,7 @@ namespace Oblqo.Amazon
 
             }
         }
-
-        /*s
-        public override bool IsValidFileId(string fileId)
-        {
-            GlacierFileIdentity identity;
-            if (!GlacierFileIdentity.TryParse(fileId, out identity))
-            {
-                return false;
-            }
-            return identity.Region == Region.SystemName && identity.Vault == Vault;
-        }
-
-        internal string GetArchiveId(string fileId)
-        {
-            return GlacierFileIdentity.Parse(fileId).ArchiveId;
-        }
-
-        internal GlacierFileIdentity GetFileIdentity(string archiveId)
-        {
-            return new GlacierFileIdentity(Region, Vault, archiveId);
-        }
-
-        internal string GetFileId(string archiveId)
-        {
-            return GetFileIdentity(archiveId).ToString();
-        }
-        */
-
+        
         public override async Task DownloadFileAsync(StorageFile file, string destFolder,
             ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {
@@ -202,6 +200,7 @@ namespace Oblqo.Amazon
             }
             return ret;
         }
+
 
         public override string Kind
         {

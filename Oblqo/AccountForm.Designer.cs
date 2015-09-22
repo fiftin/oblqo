@@ -239,9 +239,6 @@
             // 
             this.driveKindComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.driveKindComboBox.FormattingEnabled = true;
-            this.driveKindComboBox.Items.AddRange(new object[] {
-            "Google Drive",
-            "Local Drive"});
             this.driveKindComboBox.Location = new System.Drawing.Point(132, 27);
             this.driveKindComboBox.Name = "driveKindComboBox";
             this.driveKindComboBox.Size = new System.Drawing.Size(140, 22);

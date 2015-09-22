@@ -115,6 +115,8 @@
     <Compile Include="Core\StorageFileIdentity.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
+    <Compile Include="Local\LocalFileFactory.cs" />
+    <Compile Include="Local\NtfsLocalFile.cs" />
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />

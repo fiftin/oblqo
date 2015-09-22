@@ -21,6 +21,7 @@ namespace Oblqo.Google
         public ClientSecrets Secrets { get; set; }
         public const string RootId = "root";
 
+
         private GoogleFile rootFolder;
         private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
@@ -92,26 +93,32 @@ namespace Oblqo.Google
             }
         }
 
-        const int PropertyMaxLength = 124 / 2;
-
-        public static readonly string StorageFileIdFormat = "{0}.id-{1}";
+        public void AssociateFileWithStorageFile(GoogleFile driveFile, StorageFile storageFile)
+        {
+        }
 
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             Debug.Assert(System.IO.File.Exists(pathName) &&
                          !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
             var service = await GetServiceAsync(token);
+
+            // Initializing properties.
             List<Property> props = new List<Property>();
+            //
             props.Add(new Property { Key=string.Format("{0}.sid", Storage.Kind), Value=Storage.Id, Visibility="PRIVATE" });
+            //
             props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
+            // Storage file ID.
             int storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
-            int storageFileIdPropertyValueLen = PropertyMaxLength - storageFileIdPropertyKeyLen;
+            int storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
             string[] storageFileIdParts = Common.SplitBy(storageFileId, storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             for (int i = 0; i < storageFileIdParts.Length; i++)
             {
                 props.Add(new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = storageFileIdParts[i], Visibility = "PRIVATE" });
             }
+
             var file = new File
             {
                 Properties = props,
@@ -119,6 +126,7 @@ namespace Oblqo.Google
                 Parents =
                     new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
             };
+
             using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
             {
                 System.IO.Stream scaled;

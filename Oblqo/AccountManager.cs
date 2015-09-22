@@ -127,6 +127,10 @@ namespace Oblqo
                     drive.ImageMaxSize = info.DriveImageMaxSize;
                     await ((GoogleDrive)drive).GetServiceAsync(token);
                     break;
+                case DriveType.LocalDrive:
+                    drive = new Local.LocalDrive(storage, account, info.DriveRootPath);
+                    drive.ImageMaxSize = info.DriveImageMaxSize;
+                    break;
                 default:
                     throw new NotSupportedException("Drive with this type is not supported");
             }

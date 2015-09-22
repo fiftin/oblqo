@@ -1,4 +1,8 @@
 ﻿
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Oblqo
 {
     public class AccountFile
@@ -37,6 +41,12 @@ namespace Oblqo
         {
             StorageFile = storageFile;
             DriveFile = driveFile;
+        }
+
+        internal async Task SyncAsync(Storage storage, CancellationToken token)
+        {
+            var input = await DriveFile.Drive.ReadFileAsync(DriveFile, token);
+            var storageFile = await storage.UploadFileAsync(input, DriveFile.Name, null, token, null);
         }
     }
 }

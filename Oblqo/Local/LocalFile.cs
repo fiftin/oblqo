@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Oblqo.Local
 {
-    public class LocalFile : DriveFile
+    public abstract class LocalFile : DriveFile
     {
         internal FileSystemInfo file;
         private bool isRoot;
@@ -24,7 +24,7 @@ namespace Oblqo.Local
             : base(drive)
         {
             this.isRoot = isRoot;
-            if (File.Exists(path))
+            if (System.IO.File.Exists(path))
             {
                 this.file = new FileInfo(path);
             }
@@ -134,31 +134,7 @@ namespace Oblqo.Local
                 return file.Name;
             }
         }
-
-        public override int OriginalImageHeight
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public override int OriginalImageWidth
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public override long OriginalSize
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
+        
         public override long Size
         {
             get
@@ -167,12 +143,66 @@ namespace Oblqo.Local
             }
         }
 
-        public override string StorageFileId
+        public override int OriginalImageWidth
         {
             get
             {
-                return null;
+                int ret;
+                if (int.TryParse(GetAttribute(nameof(OriginalImageWidth)), out ret))
+                {
+                    return ret;
+                }
+                return 0;
             }
+            set
+            {
+                SetAttribute(nameof(OriginalImageWidth), value.ToString());
+            }
+        }
+
+        public override int OriginalImageHeight
+        {
+            get
+            {
+                int ret;
+                if (int.TryParse(GetAttribute(nameof(OriginalImageHeight)), out ret))
+                {
+                    return ret;
+                }
+                return 0;
+            }
+            set
+            {
+                SetAttribute(nameof(OriginalImageHeight), value.ToString());
+            }
+        }
+
+        public override long OriginalSize
+        {
+            get
+            {
+                long ret;
+                if (long.TryParse(GetAttribute(nameof(OriginalSize)), out ret))
+                {
+                    return ret;
+                }
+                return 0;
+            }
+            set
+            {
+                SetAttribute(nameof(OriginalSize), value.ToString());
+            }
+        }
+
+        public FileInfo File => (FileInfo)file;
+
+        public DirectoryInfo Directory => (DirectoryInfo)file;
+
+        public override System.Xml.Linq.XElement ToXml()
+        {
+            var ret = base.ToXml();
+            ret.SetAttributeValue("fileId", file.FullName);
+            return ret;
         }
     }
 }

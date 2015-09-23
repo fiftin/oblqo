@@ -928,7 +928,7 @@ namespace Oblqo
                 case MouseButtons.Right:
                     if (fileListView.SelectedItems.Count > 0)
                     {
-                        synchronizeToolStripMenuItem.Enabled = false;
+                        //synchronizeToolStripMenuItem.Enabled = false;
                         downloadFileFromStorageToolStripMenuItem.Enabled = true;
                         if (fileListView.SelectedItems.Count == 1)
                         {
@@ -936,7 +936,7 @@ namespace Oblqo
                             if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
                             {
                                 downloadFileFromStorageToolStripMenuItem.Enabled = false;
-                                synchronizeToolStripMenuItem.Enabled = true;
+                                //synchronizeToolStripMenuItem.Enabled = true;
                             }
                         }
                         fileMenu.Show(Cursor.Position);
@@ -1172,12 +1172,15 @@ namespace Oblqo
 
         private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-            var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag; 
-            if (info.File.DriveFile.StorageFileId == null)
+            foreach (ListViewItem item in fileListView.SelectedItems)
             {
-                taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
-                    info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+                var info = (NodeInfo)item.Tag;
+                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
+                if (info.File.DriveFile.StorageFileId == null)
+                {
+                    taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
+                        info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+                }
             }
         }
     }

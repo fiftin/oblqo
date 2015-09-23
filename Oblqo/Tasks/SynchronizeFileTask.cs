@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,9 +25,20 @@ namespace Oblqo.Tasks
 
         protected override async Task OnStartAsync()
         {
-            var storageFile = await DestFolder.Storage.UploadFileAsync(await SourceFile.Drive.ReadFileAsync(SourceFile, CancellationTokenSource.Token),
-                SourceFile.Name, DestFolder, CancellationTokenSource.Token, e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
-            SourceFile.StorageFileId = storageFile.Id;
+            var inStream = await SourceFile.Drive.ReadFileAsync(SourceFile, CancellationTokenSource.Token);
+
+            var memStream = new MemoryStream();
+
+            await Common.CopyStreamAsync(inStream, memStream);
+            memStream.Seek(0, SeekOrigin.Begin);
+
+            var storageFile = await DestFolder.Storage.UploadFileAsync(
+                memStream,
+                SourceFile.Name,
+                DestFolder,
+                CancellationTokenSource.Token,
+                e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
+            await SourceFile.SetStorageFileIdAsync(storageFile.Id, CancellationTokenSource.Token);
             SourceFile.OriginalImageHeight = SourceFile.ImageHeight;
             SourceFile.OriginalImageWidth = SourceFile.ImageWidth;
             SourceFile.OriginalSize = SourceFile.Size;

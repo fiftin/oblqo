@@ -130,10 +130,10 @@ namespace Oblqo.Local
                 }
                 var localFile = (LocalFile)LocalFileFactory.Instance.Create(this, f, false);
                 var originFile = new FileInfo(pathName);
-                localFile.SetAttribute(nameof(localFile.StorageFileId), storageFileId);
-                localFile.SetAttribute(nameof(localFile.OriginalSize), originFile.Length.ToString());
-                localFile.SetAttribute(nameof(localFile.OriginalImageHeight), image.Height.ToString());
-                localFile.SetAttribute(nameof(localFile.OriginalImageWidth), image.Width.ToString());
+                await localFile.SetAttributeAsync(nameof(localFile.StorageFileId), storageFileId, token);
+                await localFile.SetAttributeAsync(nameof(localFile.OriginalSize), originFile.Length.ToString(), token);
+                await localFile.SetAttributeAsync(nameof(localFile.OriginalImageHeight), image.Height.ToString(), token);
+                await localFile.SetAttributeAsync(nameof(localFile.OriginalImageWidth), image.Width.ToString(), token);
                 return localFile;
             }
         }

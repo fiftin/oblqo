@@ -2,6 +2,8 @@
 using System.Linq;
 using Google.Apis.Drive.v2.Data;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Oblqo.Google
 {
@@ -11,9 +13,6 @@ namespace Oblqo.Google
         internal bool hasChildren;
 
         public const int PropertyMaxLength = 124 / 2;
-        //public const string OriginalImageWidthPropertyKey = "originalImageWidth";
-        //public const string OriginalImageHeightPropertyKey = "originalImageHeight";
-        //public const string OriginalSizePropertyKey = "originalSize";
 
         public GoogleFile(GoogleDrive drive, File file)
             : base(drive)
@@ -87,6 +86,10 @@ namespace Oblqo.Google
             }
             set
             {
+                if (file.Properties == null)
+                {
+                    file.Properties = new List<Property>();
+                }
                 file.Properties.Add(new Property() { Key = nameof(OriginalImageHeight), Value = value.ToString() });
             }
         }
@@ -149,86 +152,6 @@ namespace Oblqo.Google
             return c - '0';
         }
 
-        //public override string StorageFileId
-        //{
-        //    get
-        //    {
-        //        var srcStr = PropertyValue("src");
-        //        if (srcStr == null) return null;
-        //        var sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind));
-        //        // Source - is kind of storage. For example 'gl-1'
-        //        foreach (var src in sources)
-        //        {
-        //            // SID - Storage ID.
-        //            // gl-1.sid - vault name, location and other.
-        //            var sidPropertyName = string.Format("{0}.sid", src);
-        //            if (Drive.Storage.Id != PropertyValue(sidPropertyName))
-        //            {
-        //                continue;
-        //            }
-        //            // gl-1.id-{1}
-        //            return GetAttribute(src + ".id");
-        //            /*
-        //            var fileIdKeyLen = string.Format(GoogleDrive.StorageFileIdFormat, src, 0).Length;
-        //            var startsWith = string.Format(GoogleDrive.StorageFileIdFormat, src, "");
-        //            string[] parts = new string[9];
-        //            foreach (var prop in file.Properties)
-        //            {
-        //                if (prop.Key.Length == fileIdKeyLen
-        //                    && prop.Key.StartsWith(startsWith)
-        //                    && char.IsDigit(prop.Key.Last()))
-        //                {
-        //                    parts[GetNumericValue(prop.Key.Last())] = prop.Value;
-        //                }
-        //            }
-        //            return string.Join("", parts);
-        //            */
-
-        //        }
-        //        return null;
-        //    }
-        //    //set
-        //    //{
-        //        /*
-        //        var srcStr = GetAttribute("src");
-        //        List<string> sources;
-        //        if (srcStr == null)
-        //        {
-        //            sources = new List<string>();
-        //        }
-        //        sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
-        //        foreach (var src in sources)
-        //        {
-        //            // SID - Storage ID
-        //            var sidPropertyName = string.Format("{0}.sid", src);
-        //            if (Drive.Storage.Id != GetAttribute(sidPropertyName))
-        //            {
-        //                continue;
-        //            }
-        //        }
-
-        //        *
-
-
-        //        // Initializing properties.
-        //        List<Property> props = new List<Property>();
-        //        props.Add(new Property { Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE" });
-        //        props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
-
-        //        // Storage file ID.
-        //        int storageFileIdPropertyKeyLen = string.Format(Drive.StorageFileIdFormat, Storage.Kind, 0).Length;
-        //        int storageFileIdPropertyValueLen = PropertyMaxLength - storageFileIdPropertyKeyLen;
-        //        string[] storageFileIdParts = Common.SplitBy(StorageFileId, storageFileIdPropertyValueLen);
-        //        if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
-        //        for (int i = 0; i < storageFileIdParts.Length; i++)
-        //        {
-        //            props.Add(new Property { Key = string.Format(Drive.StorageFileIdFormat, Storage.Kind, i), Value = storageFileIdParts[i], Visibility = "PRIVATE" });
-        //        }
-
-        //        */
-        //    //}
-        //}
-
         private string PropertyValue(string key)
         {
             if (file.Properties == null)
@@ -247,6 +170,11 @@ namespace Oblqo.Google
 
         public override string GetAttribute(string name)
         {
+            if (file.Properties == null)
+            {
+                return null;
+            }
+
             var ret = PropertyValue(name);
             if (ret != null)
             {
@@ -257,6 +185,7 @@ namespace Oblqo.Google
             var fileIdKeyLen = string.Format("{0}-{1}", name, 0).Length;
             var startsWith = string.Format("{0}-{1}", name, "");
             string[] parts = new string[9];
+
             foreach (var prop in file.Properties)
             {
                 if (prop.Key.Length == fileIdKeyLen
@@ -268,11 +197,64 @@ namespace Oblqo.Google
             }
             return string.Join("", parts);
         }
-
-        public override void SetAttribute(string name, string value)
+        /*
+        public override async void SetAttribute(string name, string value)
         {
 
-        }
+            // Initializing properties.
+            List<Property> props = new List<Property>();
+            props.Add(new Property { Key = string.Format("{0}.sid", Drive.Storage.Kind), Value = Drive.Storage.Id, Visibility = "PRIVATE" });
+            props.Add(new Property { Key = "src", Value = Drive.Storage.Kind, Visibility = "PRIVATE" });
 
+            // Field
+            int storageFileIdPropertyKeyLen = string.Format(Drive.StorageFileIdFormat, Drive.Storage.Kind, 0).Length;
+            int storageFileIdPropertyValueLen = PropertyMaxLength - storageFileIdPropertyKeyLen;
+            string[] storageFileIdParts = Common.SplitBy(StorageFileId, storageFileIdPropertyValueLen);
+            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
+            for (int i = 0; i < storageFileIdParts.Length; i++)
+            {
+                props.Add(new Property { Key = string.Format(Drive.StorageFileIdFormat, Drive.Storage.Kind, i), Value = storageFileIdParts[i], Visibility = "PRIVATE" });
+            }
+            var file = new File
+            {
+                Properties = props,
+            };
+
+            var service = await ((GoogleDrive)Drive).GetServiceAsync(CancellationToken.None);
+            var newFile = await service.Files.Update(file, this.file.Id).ExecuteAsync();   
+        }
+        */
+
+        public override async Task SetAttributeAsync(string name, string value, CancellationToken token)
+        {
+
+            // Initializing properties.
+            List<Property> props = new List<Property>();
+
+            // Field
+            int keyLen = string.Format(Drive.StorageFileIdFormat, Drive.Storage.Kind, 0).Length;
+            int valueLen = PropertyMaxLength - keyLen;
+            if (value.Length <= valueLen)
+            {
+                props.Add(new Property { Key = name, Value = value, Visibility = "PRIVATE" });
+            }
+            else
+            {
+                string[] storageFileIdParts = Common.SplitBy(value, valueLen);
+                if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
+                for (int i = 0; i < storageFileIdParts.Length; i++)
+                {
+                    props.Add(new Property { Key = name + "-" + i, Value = storageFileIdParts[i], Visibility = "PRIVATE" });
+                }
+            }
+
+            var file = new File
+            {
+                Properties = props,
+            };
+
+            var service = await((GoogleDrive)Drive).GetServiceAsync(token);
+            var newFile = await service.Files.Update(file, this.file.Id).ExecuteAsync(token);
+        }
     }
 }

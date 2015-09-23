@@ -43,10 +43,5 @@ namespace Oblqo
             DriveFile = driveFile;
         }
 
-        internal async Task SyncAsync(Storage storage, CancellationToken token)
-        {
-            var input = await DriveFile.Drive.ReadFileAsync(DriveFile, token);
-            var storageFile = await storage.UploadFileAsync(input, DriveFile.Name, null, token, null);
-        }
     }
 }

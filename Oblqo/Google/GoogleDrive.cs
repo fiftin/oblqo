@@ -93,10 +93,6 @@ namespace Oblqo.Google
             }
         }
 
-        public void AssociateFileWithStorageFile(GoogleFile driveFile, StorageFile storageFile)
-        {
-        }
-
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             Debug.Assert(System.IO.File.Exists(pathName) &&

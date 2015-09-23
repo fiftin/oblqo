@@ -2,12 +2,25 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Oblqo.Local
 {
     class NtfsLocalFile : LocalFile
     {
+        public override long OriginalSize
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                //throw new NotImplementedException();
+            }
+        }
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern SafeFileHandle CreateFileW(
@@ -49,7 +62,7 @@ namespace Oblqo.Local
             }
         }
 
-        public override void SetAttribute(string name, string value)
+        protected override void SetAttribute(string name, string value)
         {
             using (var handle = CreateFileW(
                 file.FullName + ":" + name,
@@ -74,5 +87,9 @@ namespace Oblqo.Local
             }
         }
 
+        public override async Task SetAttributeAsync(string name, string value, CancellationToken token)
+        {
+            SetAttribute(name, value);
+        }
     }
 }

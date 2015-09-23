@@ -204,5 +204,7 @@ namespace Oblqo.Local
             ret.SetAttributeValue("fileId", file.FullName);
             return ret;
         }
+
+        protected abstract void SetAttribute(string name, string value);
     }
 }

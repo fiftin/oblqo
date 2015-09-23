@@ -70,55 +70,69 @@ namespace Oblqo.Amazon
             if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
                 path += "/";
             var filePathName = path + fn;
-            var fileLen = fileStream.Length;
+            var fileLen = fileStream.CanSeek ? fileStream.Length : 0;
             var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
             var observed = new ObserverStream(fileStream);
             var percent = 0;
             observed.PositionChanged += (sender, e) =>
             {
-                var currentPercent = (int)(100 * ((Stream)sender).Position / (float)fileLen);
+                var currentPercent = fileLen == 0 ? 0 : (int)(100 * ((Stream)sender).Position / (float)fileLen);
                 if (currentPercent == percent) return;
                 percent = currentPercent;
                 progressCallback(new TransferProgress(percent));
             };
             var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
             var result = await client.UploadArchiveAsync(req, token);
-
             return new GlacierFile(this, result.ArchiveId, false, fn);
         }
 
         public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
             CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            Debug.Assert(destFolder.IsFolder);
             if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
                 throw new NotSupportedException("Uploading directories now not implemented");
             var fn = Path.GetFileName(pathName);
-            var path = ((GlacierFile) destFolder).FolderPath;
+            var path = ((GlacierFile)destFolder).FolderPath;
             if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
                 path += "/";
             var filePathName = path + fn;
             using (var fileStream = File.OpenRead(pathName))
             {
-                var fileLen = fileStream.Length;
-                var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
-                var observed = new ObserverStream(fileStream);
-                var percent = 0;
-                observed.PositionChanged += (sender, e) =>
-                {
-                    var currentPercent = (int) (100 * ((Stream) sender).Position/(float) fileLen);
-                    if (currentPercent == percent) return;
-                    percent = currentPercent;
-                    progressCallback(new TransferProgress(percent));
-                };
-                var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
-                var result = await client.UploadArchiveAsync(req, token);
-
-                return new GlacierFile(this, result.ArchiveId, false, fn);
-
+                return await UploadFileAsync(fileStream, fn, destFolder, token, progressCallback);
             }
+            /*
+            public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
+                CancellationToken token, Action<TransferProgress> progressCallback)
+            {
+                Debug.Assert(destFolder.IsFolder);
+                if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
+                    throw new NotSupportedException("Uploading directories now not implemented");
+                var fn = Path.GetFileName(pathName);
+                var path = ((GlacierFile) destFolder).FolderPath;
+                if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
+                    path += "/";
+                var filePathName = path + fn;
+                using (var fileStream = File.OpenRead(pathName))
+                {
+                    var fileLen = fileStream.Length;
+                    var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
+                    var observed = new ObserverStream(fileStream);
+                    var percent = 0;
+                    observed.PositionChanged += (sender, e) =>
+                    {
+                        var currentPercent = (int) (100 * ((Stream) sender).Position/(float) fileLen);
+                        if (currentPercent == percent) return;
+                        percent = currentPercent;
+                        progressCallback(new TransferProgress(percent));
+                    };
+                    var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
+                    var result = await client.UploadArchiveAsync(req, token);
+
+                    return new GlacierFile(this, result.ArchiveId, false, fn);
+
+                }*/
         }
-        
+
         public override async Task DownloadFileAsync(StorageFile file, string destFolder,
             ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
         {

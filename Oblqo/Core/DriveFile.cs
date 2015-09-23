@@ -4,6 +4,7 @@ using System.Xml.Linq;
 
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Oblqo
 {
@@ -18,7 +19,6 @@ namespace Oblqo
         public abstract DateTime ModifiedDate { get; }
         public abstract DateTime CreatedDate { get; }
 
-       // public abstract string StorageFileId { get; }
         public abstract int OriginalImageWidth { get; set; }
         public abstract int OriginalImageHeight { get; set; }
         public abstract long OriginalSize { get; set; }
@@ -48,10 +48,15 @@ namespace Oblqo
         {
         }
 
-        public abstract void SetAttribute(string name, string value);
+        //public abstract void SetAttribute(string name, string value);
         public abstract string GetAttribute(string name);
+        public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
 
-
+        /// <summary>
+        /// Generate unique ID for new source.
+        /// </summary>
+        /// <param name="sources">Existing source IDs.</param>
+        /// <returns></returns>
         private string GetNewSource(List<string> sources)
         {
             var ret = Drive.Storage.Kind;
@@ -64,6 +69,44 @@ namespace Oblqo
             var parts = last.Split('-');
             int i = int.Parse(parts[1]);
             return ret + "-" + (i + 1);
+        }
+
+        public async Task SetStorageFileIdAsync(string value, CancellationToken token)
+        {
+            var srcStr = GetAttribute("src");
+            List<string> sources;
+            if (srcStr == null)
+            {
+                sources = new List<string>();
+            }
+            else
+            {
+                sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
+            }
+            bool sourceExists = false;
+            string source = null;
+            foreach (var src in sources)
+            {
+                // SID - Storage ID
+                var sidPropertyName = string.Format("{0}.sid", src);
+                if (Drive.Storage.Id != GetAttribute(sidPropertyName))
+                {
+                    continue;
+                }
+                sourceExists = true;
+                source = src;
+            }
+
+            if (!sourceExists)
+            {
+                source = GetNewSource(sources);
+                sources.Add(source);
+            }
+
+            await SetAttributeAsync("src", string.Join(";", sources), token);
+            await SetAttributeAsync(string.Format("{0}.sid", source), Drive.Storage.Id, token);
+            await SetAttributeAsync(string.Format("{0}.id", source), value, token);
+
         }
 
         public string StorageFileId
@@ -84,10 +127,11 @@ namespace Oblqo
                         continue;
                     }
                     // gl-1.id-{1}
-                    return GetAttribute(src);
+                    return GetAttribute(string.Format("{0}.id", src));
                 }
                 return null;
             }
+            /*
             set
             {
                 var srcStr = GetAttribute("src");
@@ -96,7 +140,10 @@ namespace Oblqo
                 {
                     sources = new List<string>();
                 }
-                sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
+                else
+                {
+                    sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
+                }
                 bool sourceExists = false;
                 string source = null;
                 foreach (var src in sources)
@@ -117,11 +164,11 @@ namespace Oblqo
                     sources.Add(source);
                 }
 
-                SetAttribute("src", source);
+                SetAttribute("src", string.Join(";", sources));
                 SetAttribute(string.Format("{0}.sid", source), Drive.Storage.Id);
                 SetAttribute(string.Format("{0}.id", source), value);
 
-            }
+            }*/
         }
     }
 }

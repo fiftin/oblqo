@@ -142,7 +142,7 @@
             this.currentDirectoryInfoPanel = new System.Windows.Forms.Panel();
             this.fileListNumberOfFilesLabel = new System.Windows.Forms.Label();
             this.newAccountStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tasksToolStrip = new System.Windows.Forms.ToolStrip();
             this.activeTasksStripButton = new System.Windows.Forms.ToolStripButton();
             this.queuedTasksStripButton = new System.Windows.Forms.ToolStripButton();
             this.finishedTasksStripButton = new System.Windows.Forms.ToolStripButton();
@@ -175,7 +175,7 @@
             this.logMenu.SuspendLayout();
             this.fileListMenu.SuspendLayout();
             this.currentDirectoryInfoPanel.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.tasksToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -274,6 +274,7 @@
             this.smallImageList.Images.SetKeyName(24, "run");
             this.smallImageList.Images.SetKeyName(25, "pause");
             this.smallImageList.Images.SetKeyName(26, "cancel");
+            this.smallImageList.Images.SetKeyName(27, "queued");
             // 
             // fileListView
             // 
@@ -498,7 +499,7 @@
             // tasksTabPage
             // 
             this.tasksTabPage.Controls.Add(this.taskListView);
-            this.tasksTabPage.Controls.Add(this.toolStrip1);
+            this.tasksTabPage.Controls.Add(this.tasksToolStrip);
             this.tasksTabPage.Location = new System.Drawing.Point(4, 23);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
@@ -1287,32 +1288,32 @@
             this.newAccountStripButton.Text = "New connection";
             this.newAccountStripButton.Click += new System.EventHandler(this.addNewAccountToolStripMenuItem_Click);
             // 
-            // toolStrip1
+            // tasksToolStrip
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tasksToolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tasksToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tasksToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.activeTasksStripButton,
             this.finishedTasksStripButton,
             this.cancelledTasksStripButton,
             this.queuedTasksStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 195);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 1, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(936, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.tasksToolStrip.Location = new System.Drawing.Point(0, 195);
+            this.tasksToolStrip.Name = "tasksToolStrip";
+            this.tasksToolStrip.Padding = new System.Windows.Forms.Padding(0, 2, 1, 0);
+            this.tasksToolStrip.Size = new System.Drawing.Size(936, 25);
+            this.tasksToolStrip.TabIndex = 1;
+            this.tasksToolStrip.Text = "toolStrip1";
             // 
             // activeTasksStripButton
             // 
             this.activeTasksStripButton.Checked = true;
-            this.activeTasksStripButton.CheckOnClick = true;
             this.activeTasksStripButton.CheckState = System.Windows.Forms.CheckState.Checked;
             this.activeTasksStripButton.Image = ((System.Drawing.Image)(resources.GetObject("activeTasksStripButton.Image")));
             this.activeTasksStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.activeTasksStripButton.Name = "activeTasksStripButton";
             this.activeTasksStripButton.Size = new System.Drawing.Size(60, 20);
             this.activeTasksStripButton.Text = "Active";
+            this.activeTasksStripButton.Click += new System.EventHandler(this.activeTasksStripButton_Click);
             // 
             // queuedTasksStripButton
             // 
@@ -1323,6 +1324,7 @@
             this.queuedTasksStripButton.Size = new System.Drawing.Size(69, 20);
             this.queuedTasksStripButton.Text = "Queued";
             this.queuedTasksStripButton.ToolTipText = "Queued Tasks";
+            this.queuedTasksStripButton.Click += new System.EventHandler(this.queuedTasksStripButton_Click);
             // 
             // finishedTasksStripButton
             // 
@@ -1332,6 +1334,7 @@
             this.finishedTasksStripButton.Name = "finishedTasksStripButton";
             this.finishedTasksStripButton.Size = new System.Drawing.Size(71, 20);
             this.finishedTasksStripButton.Text = "Finished";
+            this.finishedTasksStripButton.Click += new System.EventHandler(this.finishedTasksStripButton_Click);
             // 
             // showSyncFilesOnlyCheckbox
             // 
@@ -1352,6 +1355,7 @@
             this.cancelledTasksStripButton.Name = "cancelledTasksStripButton";
             this.cancelledTasksStripButton.Size = new System.Drawing.Size(79, 20);
             this.cancelledTasksStripButton.Text = "Cancelled";
+            this.cancelledTasksStripButton.Click += new System.EventHandler(this.cancelledTasksStripButton_Click);
             // 
             // MainForm
             // 
@@ -1403,8 +1407,8 @@
             this.fileListMenu.ResumeLayout(false);
             this.currentDirectoryInfoPanel.ResumeLayout(false);
             this.currentDirectoryInfoPanel.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.tasksToolStrip.ResumeLayout(false);
+            this.tasksToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1524,7 +1528,7 @@
         private System.Windows.Forms.Panel currentDirectoryInfoPanel;
         private System.Windows.Forms.Label fileListNumberOfFilesLabel;
         private System.Windows.Forms.ToolStripButton newAccountStripButton;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip tasksToolStrip;
         private System.Windows.Forms.ToolStripButton activeTasksStripButton;
         private System.Windows.Forms.ToolStripButton queuedTasksStripButton;
         private System.Windows.Forms.ToolStripButton finishedTasksStripButton;

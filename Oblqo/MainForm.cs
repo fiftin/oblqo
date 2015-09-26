@@ -66,6 +66,7 @@ namespace Oblqo
         private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
         private ExceptionForm exceptionForm;
         private int loadingFolderImageAngle;
+        private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
 
         public MainForm()
         {
@@ -371,6 +372,140 @@ namespace Oblqo
             }
         }
 
+        private void UpdateTaskList()
+        {
+            taskListView.Items.Clear();
+            foreach (var task in taskManager)
+            {
+                if (displayingTaskListStates.Contains(task.State))
+                {
+                    AddTask(task);
+                }
+            }
+        }
+
+        private ListViewItem AddTask(AsyncTask newTask)
+        {
+            var taskItem = new ListViewItem { Tag = newTask };
+            if (newTask is UploadFolderTask)
+            {
+                var task = (UploadFolderTask)newTask;
+                taskItem.Text = Common.GetFileOrDirectoryName(task.Path);
+                taskItem.SubItems.Add("Upload Folder").Name = "type";
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is DownloadFileFromStorageTask)
+            {
+                var task = (DownloadFileFromStorageTask)newTask;
+                taskItem.Text = task.File.Name;
+                taskItem.SubItems.Add("Download File").Name = "type";
+                if (task.File.DriveFile != null)
+                {
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                        .Name = "size";
+                }
+                else
+                {
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
+                        .Name = "size";
+                }
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is DownloadFileFromDriveTask)
+            {
+                var task = (DownloadFileFromDriveTask)newTask;
+                taskItem.Text = task.File.Name;
+                taskItem.SubItems.Add("Download File").Name = "type";
+                if (task.File.DriveFile != null)
+                {
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
+                        .Name = "size";
+                }
+                else
+                {
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
+                        .Name = "size";
+                }
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is UploadFileTask)
+            {
+                var task = (UploadFileTask)newTask;
+                taskItem.Text = Path.GetFileName(task.FileName);
+                var fileInfo = new FileInfo(task.FileName);
+                taskItem.SubItems.Add("Upload File").Name = "type";
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is CreateFolderTask)
+            {
+                var task = (CreateFolderTask)newTask;
+                taskItem.Text = Path.GetFileName(task.FolderName);
+                taskItem.SubItems.Add("Create Folder").Name = "type";
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is DeleteFolderTaskBase)
+            {
+                var task = (DeleteFolderTaskBase)newTask;
+                taskItem.Text = Path.GetFileName(task.Folder.Name);
+                if (task is DeleteEmptyFolderTask)
+                    taskItem.SubItems.Add("Delete Empty Folder").Name = "type";
+                else
+                    taskItem.SubItems.Add("Delete Folder").Name = "type";
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is DeleteFileTask)
+            {
+                var task = (DeleteFileTask)newTask;
+                taskItem.Text = Path.GetFileName(task.File.Name);
+                taskItem.SubItems.Add("Delete File").Name = "type";
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is DownloadFolderTask)
+            {
+                var task = (DownloadFolderTask)newTask;
+                taskItem.Text = Path.GetFileName(task.Folder.Name);
+                taskItem.SubItems.Add("Download Folder").Name = "type";
+                taskItem.SubItems.Add("").Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+            else if (newTask is SynchronizeFileTask)
+            {
+                var task = (SynchronizeFileTask)newTask;
+                taskItem.Text = Path.GetFileName(task.SourceFile.Name);
+                taskItem.SubItems.Add("Sync File").Name = "type";
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(task.SourceFile.Size)).Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
+
+            switch (newTask.State)
+            {
+                case AsyncTaskState.Cancelled:
+                    taskItem.ImageKey = "cancel";
+                    break;
+                case AsyncTaskState.Completed:
+                    taskItem.ImageKey = "ok";
+                    break;
+                case AsyncTaskState.Error:
+                    taskItem.ImageKey = "error_red";
+                    break;
+                case AsyncTaskState.Running:
+                    taskItem.ImageKey = "run";
+                    break;
+                case AsyncTaskState.Waiting:
+                    taskItem.ImageKey = "queued";
+                    break;
+            }
+
+
+            return taskListView.Items.Add(taskItem);
+
+        }
+
         private void taskManager_TaskAdded(object sender, AsyncTaskEventArgs e)
         {
             if (e.Task is DeleteEmptyFolderTask || e.Task is EmptyTask)
@@ -378,113 +513,36 @@ namespace Oblqo
                 return;
             }
 
-            Invoke(new MethodInvoker(() =>
+            if (!displayingTaskListStates.Contains(e.Task.State))
             {
-                var taskItem = new ListViewItem { Tag = e.Task };
-                if (e.Task is UploadFolderTask)
-                {
-                    var task = (UploadFolderTask)e.Task;
-                    taskItem.Text = Common.GetFileOrDirectoryName(task.Path);
-                    taskItem.SubItems.Add("Upload Folder").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is DownloadFileFromStorageTask)
-                {
-                    var task = (DownloadFileFromStorageTask)e.Task;
-                    taskItem.Text = task.File.Name;
-                    taskItem.SubItems.Add("Download File").Name = "type";
-                    if (task.File.DriveFile != null)
-                    {
-                        taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                            .Name = "size";
-                    }
-                    else
-                    {
-                        taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
-                            .Name = "size";
-                    }
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is DownloadFileFromDriveTask)
-                {
-                    var task = (DownloadFileFromDriveTask)e.Task;
-                    taskItem.Text = task.File.Name;
-                    taskItem.SubItems.Add("Download File").Name = "type";
-                    if (task.File.DriveFile != null)
-                    {
-                        taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                            .Name = "size";
-                    }
-                    else
-                    {
-                        taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
-                            .Name = "size";
-                    }
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is UploadFileTask)
-                {
-                    var task = (UploadFileTask)e.Task;
-                    taskItem.Text = Path.GetFileName(task.FileName);
-                    var fileInfo = new FileInfo(task.FileName);
-                    taskItem.SubItems.Add("Upload File").Name = "type";
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is CreateFolderTask)
-                {
-                    var task = (CreateFolderTask)e.Task;
-                    taskItem.Text = Path.GetFileName(task.FolderName);
-                    taskItem.SubItems.Add("Create Folder").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is DeleteFolderTaskBase)
-                {
-                    var task = (DeleteFolderTaskBase)e.Task;
-                    taskItem.Text = Path.GetFileName(task.Folder.Name);
-                    if (task is DeleteEmptyFolderTask)
-                        taskItem.SubItems.Add("Delete Empty Folder").Name = "type";
-                    else
-                        taskItem.SubItems.Add("Delete Folder").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is DeleteFileTask)
-                {
-                    var task = (DeleteFileTask)e.Task;
-                    taskItem.Text = Path.GetFileName(task.File.Name);
-                    taskItem.SubItems.Add("Delete File").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is DownloadFolderTask)
-                {
-                    var task = (DownloadFolderTask)e.Task;
-                    taskItem.Text = Path.GetFileName(task.Folder.Name);
-                    taskItem.SubItems.Add("Download Folder").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                else if (e.Task is SynchronizeFileTask)
-                {
-                    var task = (SynchronizeFileTask)e.Task;
-                    taskItem.Text = Path.GetFileName(task.SourceFile.Name);
-                    taskItem.SubItems.Add("Sync File").Name = "type";
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.SourceFile.Size)).Name = "size";
-                    taskItem.SubItems.Add("0").Name = "percent";
-                }
-                taskListView.Items.Add(taskItem);
-            }));
+                return;
+            }
+
+            Invoke(new MethodInvoker(() => AddTask(e.Task)));
         }
 
         private void taskManager_TaskStateChanged(object sender, AsyncTaskEventArgs e)
         {
             var items = taskListView.Items.Cast<ListViewItem>();
+            
             Invoke(new MethodInvoker(() =>
             {
                 var item = items.FirstOrDefault(x => x.Tag == e.Task);
+                if (displayingTaskListStates.Contains(e.Task.State))
+                {
+                    if (item == null)
+                    {
+                        item = AddTask(e.Task);
+                    }
+                } else
+                {
+                    if (item != null)
+                    {
+                        item.Remove();
+                        item = null;
+                    }
+                }
+                
                 if (item == null) return;
                 switch (e.Task.State)
                 {
@@ -501,7 +559,7 @@ namespace Oblqo
                         item.ImageKey = "run";
                         break;
                     case AsyncTaskState.Waiting:
-                        item.ImageKey = "pause";
+                        item.ImageKey = "queued";
                         break;
                 }
 
@@ -844,24 +902,29 @@ namespace Oblqo
             }
             else if (exception is AggregateException)
             {
-                ((AggregateException) exception).Handle(x =>
-                {
-                    OnError(x);
-                    return true;
-                });
+                ((AggregateException)exception).Handle(x =>
+               {
+                   OnError(x);
+                   return true;
+               });
             }
             else
-                Invoke(new MethodInvoker(() =>
+            {
+                try
                 {
-                    try {
+                    Invoke(new MethodInvoker(() =>
+                    {
                         var item = logListView.Items.Insert(0, DateTime.Now.ToString(CultureInfo.CurrentCulture), "error");
                         item.SubItems.Add(exception.Message);
                         item.Tag = exception;
                         logTabPage.ImageKey = "error";
                         IndicateError();
-                    }
-                    catch { }
-                }));
+
+
+                    }));
+                }
+                catch { }
+            }
         }
 
         private void IndicateError()
@@ -1254,6 +1317,47 @@ namespace Oblqo
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             UpdateList();
+        }
+
+
+        private void CheckTasksToolStripButton(ToolStripButton button)
+        {
+            foreach (ToolStripButton item in tasksToolStrip.Items)
+            {
+                if (item != button)
+                {
+                    item.Checked = false;
+                }
+            }
+            button.Checked = true;
+        }
+
+        private void activeTasksStripButton_Click(object sender, EventArgs e)
+        {
+            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
+            UpdateTaskList();
+            CheckTasksToolStripButton((ToolStripButton)sender);
+        }
+
+        private void finishedTasksStripButton_Click(object sender, EventArgs e)
+        {
+            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Completed, AsyncTaskState.Cancelled, AsyncTaskState.Error };
+            UpdateTaskList();
+            CheckTasksToolStripButton((ToolStripButton)sender);
+        }
+
+        private void cancelledTasksStripButton_Click(object sender, EventArgs e)
+        {
+            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Cancelled, AsyncTaskState.Error };
+            UpdateTaskList();
+            CheckTasksToolStripButton((ToolStripButton)sender);
+        }
+
+        private void queuedTasksStripButton_Click(object sender, EventArgs e)
+        {
+            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Waiting };
+            UpdateTaskList();
+            CheckTasksToolStripButton((ToolStripButton)sender);
         }
     }
 

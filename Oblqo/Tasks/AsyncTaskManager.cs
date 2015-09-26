@@ -226,50 +226,56 @@ namespace Oblqo
             {
                 while (running)
                 {
-                    newTaskEvent.WaitOne();
                     AsyncTask[] tasksNow;
                     lock (SyncRoot)
                     {
                         tasksNow = tasks.ToArray();
                     }
-                    while (numberOfTasksRunning < Math.Min(MaxNumberOfTasksRunning, tasksNow.Length))
+                    try
                     {
-                        try
+                        var waitingTasks = tasks.FindAll(x => x.State == AsyncTaskState.Waiting);
+                        int runningTasksCount;
+                        lock (runningTasks)
                         {
-                            var waitingTasks = tasks.FindAll(x => x.State == AsyncTaskState.Waiting);
-                            int i = MaxNumberOfTasksRunning - numberOfTasksRunning;
-                            if (i > 0)
+                            runningTasksCount = runningTasks.Count;
+                        }
+                        int i = MaxNumberOfTasksRunning - runningTasksCount;
+                        if (i > 0)
+                        {
+                            foreach (var task in waitingTasks)
                             {
-                                foreach (var task in waitingTasks)
+                                if (i == 0)
                                 {
-                                    if (i == 0)
-                                    {
-                                        break;
-                                    }
-                                    if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished)
-                                    {
-                                        continue;
-                                    }
-                                    var taskInfo = new TaskInfo(task, task.StartAsync());
-                                    lock (runningTasks)
-                                    {
-                                        runningTasks.Add(taskInfo);
-                                    }
-                                    i--;
+                                    break;
                                 }
-                                OnNewRunningTask();
+                                if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished)
+                                {
+                                    continue;
+                                }
+                                Task t = new Task(task.StartAsync);
+                                t.Start();
+                                var taskInfo = new TaskInfo(task, t);
+                                lock (runningTasks)
+                                {
+                                    runningTasks.Add(taskInfo);
+                                }
+                                i--;
                             }
+                            OnNewRunningTask();
                         }
-                        catch (Exception ex)
-                        {
-                            OnError(ex);
-                        }
-                        Thread.Sleep(500);
                     }
+                    catch (Exception ex)
+                    {
+                        OnError(ex);
+                    }
+                    Thread.Sleep(500);
                 }
             });
         }
 
+        /// <summary>
+        /// Start a task (if not already running) for checking running tasks states.
+        /// </summary>
         private void OnNewRunningTask()
         {
             if (checkingTaskStatesTask != null)

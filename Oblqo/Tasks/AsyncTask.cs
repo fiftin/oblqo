@@ -113,7 +113,7 @@ namespace Oblqo
                 Progress(this, e);
         }
 
-        public async Task StartAsync()
+        public async void StartAsync()
         {
             State = AsyncTaskState.Running;
             OnStateChanged();
@@ -128,8 +128,13 @@ namespace Oblqo
             {
                 State = AsyncTaskState.Error;
                 Exception = ex;
-                OnStateChanged();
-                throw;
+                try {
+                    OnStateChanged();
+                }
+                catch
+                {
+
+                }
             }
         }
 

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Oblqo.Properties;
 using Oblqo.Tasks;
+using System.Collections;
 // ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblqo
@@ -90,14 +91,18 @@ namespace Oblqo
 
         private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
         {
-
-            var items = taskListView.Items.Cast<ListViewItem>();
-            Invoke(new MethodInvoker(() =>
+            try {
+                var items = taskListView.Items.Cast<ListViewItem>();
+                Invoke(new MethodInvoker(() =>
+                {
+                    var item = items.FirstOrDefault(x => x.Tag == e.Task);
+                    if (item == null) return;
+                    item.SubItems["percent"].Text = e.Args.PercentDone.ToString();
+                }));
+            } catch (Exception ex)
             {
-                var item = items.FirstOrDefault(x => x.Tag == e.Task);
-                if (item == null) return;
-                item.SubItems["percent"].Text = e.Args.PercentDone.ToString();
-            }));
+                OnError(ex);
+            }
         }
 
         void taskManager_Exception(object sender, ExceptionEventArgs e)
@@ -211,8 +216,19 @@ namespace Oblqo
                 Invoke(new MethodInvoker(delegate
                 {
                     fileListView.Items.Clear();
+                    int numberOfFiles = 0;
+                    int numberOfUnsyncFiles = 0;
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
+                        numberOfFiles++;
+                        if (file.StorageFile == null || string.IsNullOrEmpty(file.StorageFile.Id))
+                        {
+                            numberOfUnsyncFiles++;
+                        }
+                        else if (showSyncFilesOnlyCheckbox.Checked)
+                        {
+                            continue;
+                        }
                         string mimeType = file.DriveFile.MimeType;
                         string key = "file";
                         if (!string.IsNullOrWhiteSpace(mimeType))
@@ -236,6 +252,7 @@ namespace Oblqo
                         item.SubItems.Add(file.DriveFile.ModifiedDate.ToShortDateString());
                         item.SubItems.Add(Common.NumberOfBytesToString(file.DriveFile.Size));
                     }
+                    fileListNumberOfFilesLabel.Text = string.Format("{0} files, {1} unsync", numberOfFiles, numberOfUnsyncFiles);
                     fileListView.Enabled = true;
                     loadingFileListProgressBar.Visible = false;
                 }));
@@ -256,7 +273,7 @@ namespace Oblqo
                 case NodeType.Account:
                     vaultNameLabel.Text = nodeInfo.AccountInfo.StorageVault;
                     vaultRegionLabel.Text = nodeInfo.AccountInfo.StorageRegionSystemName;
-                    driveTypeLabel.Text = nodeInfo.AccountInfo.DriveType.ToString();
+                    driveTypeLabel.Text = Common.CamelcaseToHumanReadable(nodeInfo.AccountInfo.DriveType.ToString());
                     driveRootLabel.Text = nodeInfo.AccountInfo.DriveRootPath.Length == 0 ? "/" : nodeInfo.AccountInfo.DriveRootPath;
                     imageMaxSizeLabel.Text = string.Format("{0} x {1}", nodeInfo.AccountInfo.DriveImageMaxSize.Width, nodeInfo.AccountInfo.DriveImageMaxSize.Height);
                     break;
@@ -454,11 +471,11 @@ namespace Oblqo
                 {
                     var task = (SynchronizeFileTask)e.Task;
                     taskItem.Text = Path.GetFileName(task.SourceFile.Name);
-                    taskItem.SubItems.Add("Download Folder").Name = "type";
-                    taskItem.SubItems.Add("").Name = "size";
+                    taskItem.SubItems.Add("Sync File").Name = "type";
+                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.SourceFile.Size)).Name = "size";
                     taskItem.SubItems.Add("0").Name = "percent";
                 }
-                taskListView.Items.Insert(0, taskItem);
+                taskListView.Items.Add(taskItem);
             }));
         }
 
@@ -733,6 +750,8 @@ namespace Oblqo
         {
             if (fileListView.SelectedItems.Count == 0)
                 return;
+            if (fileListView.SelectedItems.Count > 1)
+                return;
 
             ShowFileInfoPanel();
 
@@ -741,6 +760,8 @@ namespace Oblqo
 
             fileNameLabel.Text = info.File.Name;
             fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
+            fileStorageIdLabel.Text = string.IsNullOrEmpty(info.File.StorageFile.Id) ? "none" : info.File.StorageFile.Id;
+            storageIdLabel.Text = info.File.StorageFile.Storage.Id;
 
             label3.Visible = false;
             widthAndHeightLabel.Visible = false;
@@ -832,11 +853,14 @@ namespace Oblqo
             else
                 Invoke(new MethodInvoker(() =>
                 {
-                    var item = logListView.Items.Insert(0, DateTime.Now.ToString(CultureInfo.CurrentCulture), "error");
-                    item.SubItems.Add(exception.Message);
-                    item.Tag = exception;
-                    logTabPage.ImageKey = "error";
-                    IndicateError();
+                    try {
+                        var item = logListView.Items.Insert(0, DateTime.Now.ToString(CultureInfo.CurrentCulture), "error");
+                        item.SubItems.Add(exception.Message);
+                        item.Tag = exception;
+                        logTabPage.ImageKey = "error";
+                        IndicateError();
+                    }
+                    catch { }
                 }));
         }
 
@@ -874,17 +898,26 @@ namespace Oblqo
 
         private void listView1_Move(object sender, EventArgs e)
         {
-            loadingFileListProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
-            loadingFileListProgressBar.Width = fileListView.Width;
+            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
+            foreach (var bar in bars)
+            {
+                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
+                bar.Width = fileListView.Width;
+            }
             loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
             loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
         }
 
         private void listView1_Resize(object sender, EventArgs e)
         {
-            loadingFileListProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
-            loadingFileListProgressBar.Width = fileListView.Width;
-            loadingFileListProgressBar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 3;
+            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
+            foreach (var bar in bars)
+            {
+                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
+                bar.Width = fileListView.Width;
+                bar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 3;
+            }
+
             loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
             loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
             loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
@@ -1011,6 +1044,7 @@ namespace Oblqo
             accounts.Remove(node.Text);
             fileListView.Items.Clear();
             UpdateToolBarAndMenu();
+            // TODO: Break unfinished tasks
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1182,6 +1216,44 @@ namespace Oblqo
                         info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
                 }
             }
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.Items)
+            {
+                item.Selected = true;
+            }
+        }
+
+        private void fileListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            fileListView.ListViewItemSorter = new FileListSorder(fileListView);
+        }
+
+        class FileListSorder : IComparer
+        {
+
+            public FileListSorder(ListView listView)
+            {
+            }
+
+            public int Compare(object x, object y)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            var newMargin = uploadToolStripDropDownButton.Margin;
+            newMargin.Left = e.X + 2 - newAccountStripButton.Width;
+            uploadToolStripDropDownButton.Margin = newMargin;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateList();
         }
     }
 

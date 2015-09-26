@@ -203,7 +203,7 @@ namespace Oblqo.Amazon
         {
             var ret = new GlacierFile(
                 this,
-                xml.Attribute("id").Value,
+                xml.Attribute("id") == null ? null : xml.Attribute("id").Value,
                 bool.Parse(xml.Attribute("isFolder").Value),
                 xml.Attribute("folderPath").Value,
                 bool.Parse(xml.Attribute("isRoot").Value));

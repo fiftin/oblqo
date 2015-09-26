@@ -13,11 +13,13 @@ namespace Oblqo.Local
         {
             get
             {
-                throw new NotImplementedException();
+                // TODO:
+                return 0;
             }
 
             set
             {
+                // TODO:
                 //throw new NotImplementedException();
             }
         }

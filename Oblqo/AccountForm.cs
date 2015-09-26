@@ -43,6 +43,22 @@ namespace Oblqo
             }
         }
 
+        private class CamelcaseWrapper
+        {
+            public object OriginalObject { get; private set; }
+            public string ReadableString { get; private set; }
+            public CamelcaseWrapper(object obj)
+            {
+                OriginalObject = obj;
+                ReadableString = Common.CamelcaseToHumanReadable(obj.ToString());
+            }
+
+            public override string ToString()
+            {
+                return ReadableString;
+            }
+        }
+
         public AccountForm(bool newAccount)
         {
             InitializeComponent();
@@ -59,15 +75,12 @@ namespace Oblqo
             imageResolutionComboBox.Items.Add(new Resolution(1024, 768));
             imageResolutionComboBox.Items.Add(new Resolution(1280, 1024));
             imageResolutionComboBox.Items.Add(new Resolution(1600, 1200));
-            imageResolutionComboBox.Items.Add(new Resolution(2048, 1536));
-            imageResolutionComboBox.Items.Add(new Resolution(3200, 2400));
-            imageResolutionComboBox.Items.Add(new Resolution(6400, 4800));
 
             imageResolutionComboBox.SelectedIndex = 2;
 
             foreach (var driveType in Enum.GetValues(typeof(DriveType)))
             {
-                driveKindComboBox.Items.Add(driveType);
+                driveKindComboBox.Items.Add(new CamelcaseWrapper(driveType));
             }
             driveKindComboBox.SelectedIndex = 0;
         }
@@ -92,11 +105,17 @@ namespace Oblqo
         {
             get
             {
-                return (DriveType)driveKindComboBox.SelectedItem;
+                return (DriveType)((CamelcaseWrapper)driveKindComboBox.SelectedItem).OriginalObject;
             }
             set
             {
-                driveKindComboBox.SelectedItem = value;
+                foreach (CamelcaseWrapper item in driveKindComboBox.Items)
+                {
+                    if ((DriveType)item.OriginalObject == value)
+                    {
+                        driveKindComboBox.SelectedItem = item;
+                    }
+                }
             }
         }
 
@@ -157,5 +176,23 @@ namespace Oblqo
             
         }
 
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void driveRootPathBrowseButton_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.SelectedPath = DriveRootPath;
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                DriveRootPath = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void driveKindComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            driveRootPathBrowseButton.Enabled = DriveType == DriveType.LocalDrive;
+        }
     }
 }

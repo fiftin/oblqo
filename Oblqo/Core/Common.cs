@@ -95,6 +95,27 @@ namespace Oblqo
             return totalBytesCopied;
         }
 
+        public static string CamelcaseToHumanReadable(string camelecaseString)
+        {
+            StringBuilder ret = new StringBuilder();
+            foreach (char c in camelecaseString)
+            {
+                if (ret.Length == 0)
+                {
+                    ret.Append(char.ToUpper(c));
+                }
+                else
+                {
+                    if (char.IsUpper(c))
+                    {
+                        ret.Append(" ");
+                    }
+                    ret.Append(c);
+                }
+            }
+            return ret.ToString();
+        }
+
         public static string[] SplitBy(string s, int len)
         {
             int n = s.Length / len;

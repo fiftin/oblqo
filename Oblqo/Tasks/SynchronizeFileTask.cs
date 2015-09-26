@@ -10,12 +10,13 @@ namespace Oblqo.Tasks
 {
     public class SynchronizeFileTask : AsyncTask
     {
-        public DriveFile SourceFile
-        {
-            get; private set;
-        }
+        public DriveFile SourceFile {  get; private set; }
         public StorageFile DestFolder { get; private set; }
 
+        public SynchronizeFileTask()
+        {
+
+        }
         public SynchronizeFileTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFile sourceFile, StorageFile destFolder)
             : base(account, accountName, priority, parent)
         {
@@ -25,15 +26,20 @@ namespace Oblqo.Tasks
 
         protected override async Task OnStartAsync()
         {
-            var inStream = await SourceFile.Drive.ReadFileAsync(SourceFile, CancellationTokenSource.Token);
-
-            var memStream = new MemoryStream();
-
-            await Common.CopyStreamAsync(inStream, memStream);
-            memStream.Seek(0, SeekOrigin.Begin);
-
+            if (SourceFile.StorageFileId != null)
+            {
+                return;
+            }
+            Stream inStream = await SourceFile.Drive.ReadFileAsync(SourceFile, CancellationTokenSource.Token);
+            if (!inStream.CanSeek) // Amazon Glicer required SetPosition. Read file to memory, if inStream is not support it.
+            {
+                var memStream = new MemoryStream();
+                await Common.CopyStreamAsync(inStream, memStream);
+                memStream.Seek(0, SeekOrigin.Begin);
+                inStream = memStream;
+            }
             var storageFile = await DestFolder.Storage.UploadFileAsync(
-                memStream,
+                inStream,
                 SourceFile.Name,
                 DestFolder,
                 CancellationTokenSource.Token,
@@ -46,6 +52,23 @@ namespace Oblqo.Tasks
             {
                 await SourceFile.ScaleImageAsync();
             }
+        }
+
+
+
+        public override async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
+        {
+            await base.LoadAsync(account, id, xml, token);
+            DestFolder = await account.Storage.GetFileAsync(xml.Element("storageFolder"), token);
+            SourceFile = await account.Drive.GetFileAsync(xml.Element("driveFile"), token);
+        }
+
+        public override System.Xml.Linq.XElement ToXml()
+        {
+            var xml = base.ToXml();
+            xml.Add(SourceFile.ToXml());
+            xml.Add(DestFolder.ToXml());
+            return xml;
         }
     }
 }

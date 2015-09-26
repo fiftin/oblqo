@@ -67,6 +67,10 @@ namespace Oblqo
             sources.Sort();
             var last = sources[sources.Count - 1];
             var parts = last.Split('-');
+            if (parts.Length == 1)
+            {
+                return ret + "-0";
+            }
             int i = int.Parse(parts[1]);
             return ret + "-" + (i + 1);
         }

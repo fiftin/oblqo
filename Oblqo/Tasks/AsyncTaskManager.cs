@@ -55,6 +55,10 @@ namespace Oblqo
                         var type = Type.GetType(xml.Attribute("type").Value);
                         var ctors = type.GetConstructors();
                         var ctor = type.GetConstructor(System.Type.EmptyTypes);
+                        if (ctor == null)
+                        {
+                            throw new Exception("Task has no empty constructor: " + type.Name);
+                        }
                         var task = (AsyncTask)ctor.Invoke(new object[0]);
                         await task.LoadAsync(account, filename, xml, token);
                         Add(task, false);
@@ -121,7 +125,7 @@ namespace Oblqo
                 {
                     Save(task);
                 }
-            }
+            }   
             newTaskEvent.Set();
             if (TaskAdded != null)
                 TaskAdded(this, new AsyncTaskEventArgs(task));
@@ -225,21 +229,36 @@ namespace Oblqo
                     newTaskEvent.WaitOne();
                     AsyncTask[] tasksNow;
                     lock (SyncRoot)
+                    {
                         tasksNow = tasks.ToArray();
+                    }
                     while (numberOfTasksRunning < Math.Min(MaxNumberOfTasksRunning, tasksNow.Length))
                     {
                         try
                         {
                             var waitingTasks = tasks.FindAll(x => x.State == AsyncTaskState.Waiting);
-                            foreach (var task in waitingTasks) {
-                                if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished) continue;
-                                var taskInfo = new TaskInfo(task, task.StartAsync());
-                                lock (runningTasks)
+                            int i = MaxNumberOfTasksRunning - numberOfTasksRunning;
+                            if (i > 0)
+                            {
+                                foreach (var task in waitingTasks)
                                 {
-                                    runningTasks.Add(taskInfo);
+                                    if (i == 0)
+                                    {
+                                        break;
+                                    }
+                                    if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished)
+                                    {
+                                        continue;
+                                    }
+                                    var taskInfo = new TaskInfo(task, task.StartAsync());
+                                    lock (runningTasks)
+                                    {
+                                        runningTasks.Add(taskInfo);
+                                    }
+                                    i--;
                                 }
+                                OnNewRunningTask();
                             }
-                            OnNewRunningTask();
                         }
                         catch (Exception ex)
                         {

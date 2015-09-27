@@ -1,4 +1,4 @@
-# Oblqo #
+![Image of Oblaqo](https://github.com/fiftin/oblqo/blob/master/Oblqo/oblqo.png)
 
 ## English ##
 

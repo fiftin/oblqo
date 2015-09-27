@@ -24,15 +24,31 @@ namespace Oblqo
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
-        public static readonly Font NoImageFont = new Font("Courier New", 12);
-        public static readonly SolidBrush LoadingPictureBursh = new SolidBrush(Color.FromArgb(150, Color.Gray.R, Color.Gray.G, Color.Gray.B));
 
+        /// <summary>
+        /// Type of node in left side tree view.
+        /// </summary>
         private enum NodeType
         {
             Account,
             Folder
         }
 
+        class FileListSorder : IComparer
+        {
+
+            public FileListSorder(ListView listView)
+            {
+            }
+
+            public int Compare(object x, object y)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         private class NodeInfo
         {
             public NodeInfo(AccountInfo accountInfo)
@@ -67,6 +83,9 @@ namespace Oblqo
         private ExceptionForm exceptionForm;
         private int loadingFolderImageAngle;
         private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
+        private int controlNumber = 0;
+        private int indicateErrorNo;
+
 
         public MainForm()
         {
@@ -149,7 +168,21 @@ namespace Oblqo
                 loadingNodes.Remove(node);
                 UpdateToolBarAndMenu();
             }
-            //return null;
+        }
+
+
+        private async Task ConnectAccountAsync(TreeNode node)
+        {
+            var nodeInfo = (NodeInfo)node.Tag;
+            try
+            {
+                await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, node);
+                UpdateNode(node);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         public void HideFileInfoPanel()
@@ -168,7 +201,7 @@ namespace Oblqo
             fileInfoPanel.Show();
         }
 
-        private void UpdateList()
+        private void UpdateFileList()
         {
             lock (updateListCancellationTokenSourceLocker)
             {
@@ -331,7 +364,7 @@ namespace Oblqo
                     node.ImageKey = nodeImageKey;
                     node.SelectedImageKey = nodeImageKey;
                     if (updateList)
-                        UpdateList();
+                        UpdateFileList();
                 }));
             });
         }
@@ -500,8 +533,6 @@ namespace Oblqo
                     taskItem.ImageKey = "queued";
                     break;
             }
-
-
             return taskListView.Items.Add(taskItem);
 
         }
@@ -598,7 +629,7 @@ namespace Oblqo
                             var selectedNode = treeView1.SelectedNode;
                             if (parentNode != null && selectedNode == parentNode)
                             {
-                                UpdateList();
+                                UpdateFileList();
                             }
                         }
                         else if (e.Task is DeleteFileTask)
@@ -660,11 +691,9 @@ namespace Oblqo
             taskManager.Save();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
+        /// <summary>
+        /// Show content menu for Left Side Tree View.
+        /// </summary>
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var nodeInfo = (NodeInfo) e.Node.Tag; 
@@ -683,6 +712,9 @@ namespace Oblqo
             }
         }
 
+        /// <summary>
+        /// Change Account menu item.
+        /// </summary>
         private async void changeAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
@@ -715,19 +747,6 @@ namespace Oblqo
             }
         }
 
-        private async Task ConnectAccountAsync(TreeNode node)
-        {
-            var nodeInfo = (NodeInfo)node.Tag;
-            try
-            {
-                await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, node);
-                UpdateNode(node);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
 
         private async void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -744,7 +763,7 @@ namespace Oblqo
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            UpdateList();
+            UpdateFileList();
             UpdateProperties();
             UpdateToolBarAndMenu();
         }
@@ -801,8 +820,6 @@ namespace Oblqo
             if (e.Node.Nodes[0].Name == "")
                 UpdateNode(e.Node);
         }
-
-        private int controlNumber = 0;
 
         private void fileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -959,33 +976,6 @@ namespace Oblqo
                     fileName, nodeInfo.File) { Tag = selectedNode });
         }
 
-        private void listView1_Move(object sender, EventArgs e)
-        {
-            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
-            foreach (var bar in bars)
-            {
-                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
-                bar.Width = fileListView.Width;
-            }
-            loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
-            loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
-        }
-
-        private void listView1_Resize(object sender, EventArgs e)
-        {
-            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
-            foreach (var bar in bars)
-            {
-                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
-                bar.Width = fileListView.Width;
-                bar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 3;
-            }
-
-            loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
-            loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
-            loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
-        }
-
         private void uploadFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
@@ -1017,6 +1007,42 @@ namespace Oblqo
             }
         }
 
+        /// <summary>
+        /// Resize File List View Progress Bar.
+        /// </summary>
+        private void listView1_Move(object sender, EventArgs e)
+        {
+            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
+            foreach (var bar in bars)
+            {
+                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
+                bar.Width = fileListView.Width;
+            }
+            loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
+            loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
+        }
+
+        /// <summary>
+        /// Resize File List View Progress Bar.
+        /// </summary>
+        private void listView1_Resize(object sender, EventArgs e)
+        {
+            var bars = new Control[] { loadingFileListProgressBar, currentDirectoryInfoPanel };
+            foreach (var bar in bars)
+            {
+                bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
+                bar.Width = fileListView.Width;
+                bar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 3;
+            }
+
+            loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
+            loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
+            loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
+        }
+
+        /// <summary>
+        /// Show context menu for File List View.
+        /// </summary>
         private void fileListView_MouseUp(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -1024,7 +1050,6 @@ namespace Oblqo
                 case MouseButtons.Right:
                     if (fileListView.SelectedItems.Count > 0)
                     {
-                        //synchronizeToolStripMenuItem.Enabled = false;
                         downloadFileFromStorageToolStripMenuItem.Enabled = true;
                         if (fileListView.SelectedItems.Count == 1)
                         {
@@ -1032,7 +1057,6 @@ namespace Oblqo
                             if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
                             {
                                 downloadFileFromStorageToolStripMenuItem.Enabled = false;
-                                //synchronizeToolStripMenuItem.Enabled = true;
                             }
                         }
                         fileMenu.Show(Cursor.Position);
@@ -1072,6 +1096,19 @@ namespace Oblqo
             DownloadFolderFromDrive();
         }
 
+        private void refreshFilesToolStripButton_Click(object sender, EventArgs e)
+        {
+            UpdateFileList();
+        }
+
+        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedNode = treeView1.SelectedNode;
+            if (selectedNode == null)
+                return;
+            DisconnectAccount(selectedNode);
+        }
+
         private void loadingFoldersTimer_Tick(object sender, EventArgs e)
         {
             var imageKey = ProgressImageKey + (loadingFolderImageAngle == 0 ? "" : loadingFolderImageAngle.ToString());
@@ -1085,19 +1122,6 @@ namespace Oblqo
                 loadingFolderImageAngle -= 360;
         }
 
-        private void refreshFilesToolStripButton_Click(object sender, EventArgs e)
-        {
-            UpdateList();
-        }
-
-        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var selectedNode = treeView1.SelectedNode;
-            if (selectedNode == null)
-                return;
-            DisconnectAccount(selectedNode);
-        }
-
         private void DisconnectAccount(TreeNode node)
         {
             loadingNodes.Remove(node);
@@ -1109,21 +1133,7 @@ namespace Oblqo
             UpdateToolBarAndMenu();
             // TODO: Break unfinished tasks
         }
-
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var node = treeView1.SelectedNode;
-            if (node == null)
-                return;
-            var nodeInfo = (NodeInfo) node.Tag;
-            var account = accounts[nodeInfo.AccountName];
-            if (account == null)
-                return;
-#pragma warning disable 4014
-            account.ClearAsync(CancellationToken.None);
-#pragma warning restore 4014
-        }
-
+        
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
@@ -1139,7 +1149,16 @@ namespace Oblqo
         private void downloadFromDriveOnlyContentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DownloadFolderFromDrive();
+        }
 
+        private void downloadFromDriveFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DownloadFolderFromDrive();
+        }
+
+        private void downloadFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DownloadFolderFromDrive();
         }
 
         private void DownloadFolderFromDrive()
@@ -1158,10 +1177,6 @@ namespace Oblqo
 
         }
 
-        private void downloadFromDriveFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DownloadFolderFromDrive();
-        }
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1213,19 +1228,12 @@ namespace Oblqo
             exceptionForm.Exception = (Exception)selectedItem.Tag;
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Oblqo 1.0.0\n© Denis Gukov", "About");
-        }
-
-   
         private void tabControl1_Deselecting(object sender, TabControlCancelEventArgs e)
         {
             if (e.TabPage == logTabPage)
                 logTabPage.ImageKey = null;
         }
 
-        private int indicateErrorNo;
         private void indicateErrorTimer_Tick(object sender, EventArgs e)
         {
             if (indicateErrorNo < 12)
@@ -1250,21 +1258,6 @@ namespace Oblqo
                 e.Graphics.DrawLine(Pens.Black, e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2,
                     e.Bounds.Right, e.Bounds.Y + e.Bounds.Height / 2);
             }
-        }
-
-        private void downloadFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DownloadFolderFromDrive();
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void downloadFolderFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1294,19 +1287,6 @@ namespace Oblqo
             fileListView.ListViewItemSorter = new FileListSorder(fileListView);
         }
 
-        class FileListSorder : IComparer
-        {
-
-            public FileListSorder(ListView listView)
-            {
-            }
-
-            public int Compare(object x, object y)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
         {
             var newMargin = uploadToolStripDropDownButton.Margin;
@@ -1316,9 +1296,10 @@ namespace Oblqo
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateList();
+            UpdateFileList();
         }
 
+        #region Task State Buttons
 
         private void CheckTasksToolStripButton(ToolStripButton button)
         {
@@ -1359,6 +1340,8 @@ namespace Oblqo
             UpdateTaskList();
             CheckTasksToolStripButton((ToolStripButton)sender);
         }
+
+        #endregion
     }
 
 }

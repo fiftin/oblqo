@@ -375,7 +375,7 @@ namespace Oblqo
         private void UpdateTaskList()
         {
             taskListView.Items.Clear();
-            foreach (var task in taskManager)
+            foreach (var task in taskManager.ToArray())
             {
                 if (displayingTaskListStates.Contains(task.State))
                 {
@@ -1341,7 +1341,7 @@ namespace Oblqo
 
         private void finishedTasksStripButton_Click(object sender, EventArgs e)
         {
-            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Completed, AsyncTaskState.Cancelled, AsyncTaskState.Error };
+            displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Completed };
             UpdateTaskList();
             CheckTasksToolStripButton((ToolStripButton)sender);
         }

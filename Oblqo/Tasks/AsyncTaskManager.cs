@@ -30,12 +30,12 @@ namespace Oblqo
 
         private readonly List<AsyncTask> tasks = new List<AsyncTask>();
         private int maxNumberOfTasksRunning = 5;
-        private readonly AutoResetEvent newTaskEvent = new AutoResetEvent(true);
+        //private readonly AutoResetEvent newTaskEvent = new AutoResetEvent(true);
         public readonly object SyncRoot = new object();
         private bool running;
-        private int numberOfTasksRunning;
-        private readonly List<TaskInfo> runningTasks = new List<TaskInfo>();
-        private Task checkingTaskStatesTask;
+        //private int numberOfTasksRunning;
+        //private readonly List<TaskInfo> runningTasks = new List<TaskInfo>();
+        //private Task checkingTaskStatesTask;
 
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
@@ -126,7 +126,7 @@ namespace Oblqo
                     Save(task);
                 }
             }   
-            newTaskEvent.Set();
+            //newTaskEvent.Set();
             if (TaskAdded != null)
                 TaskAdded(this, new AsyncTaskEventArgs(task));
         }
@@ -185,14 +185,14 @@ namespace Oblqo
             switch (e.Task.State)
             {
                 case AsyncTaskState.Running:
-                    Interlocked.Increment(ref numberOfTasksRunning);
+                    //Interlocked.Increment(ref numberOfTasksRunning);
                     break;
                 case AsyncTaskState.Cancelled:
                 case AsyncTaskState.Completed:
-                    Interlocked.Decrement(ref numberOfTasksRunning);
+                    //Interlocked.Decrement(ref numberOfTasksRunning);
                     break;
             }
-            newTaskEvent.Set();
+            //newTaskEvent.Set();
             if (TaskStateChanged != null)
                 TaskStateChanged(this, e);
 
@@ -204,7 +204,7 @@ namespace Oblqo
             set
             {
                 maxNumberOfTasksRunning = value;
-                newTaskEvent.Set();
+                //newTaskEvent.Set();
             }
         }
 
@@ -226,21 +226,17 @@ namespace Oblqo
             {
                 while (running)
                 {
-                    AsyncTask[] tasksNow;
+                    List<AsyncTask> tasksNow;
                     lock (SyncRoot)
                     {
-                        tasksNow = tasks.ToArray();
+                        tasksNow = new List<AsyncTask>(tasks);
                     }
                     try
                     {
-                        var waitingTasks = tasks.FindAll(x => x.State == AsyncTaskState.Waiting);
-                        int runningTasksCount;
-                        lock (runningTasks)
-                        {
-                            runningTasksCount = runningTasks.Count;
-                        }
-                        int i = MaxNumberOfTasksRunning - runningTasksCount;
-                        if (i > 0)
+                        var waitingTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Waiting);
+                        var runningTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Running);
+                        int i = MaxNumberOfTasksRunning - runningTasks.Count;
+                        if (i > 0 && waitingTasks.Count > 0)
                         {
                             foreach (var task in waitingTasks)
                             {
@@ -255,58 +251,20 @@ namespace Oblqo
                                 Task t = new Task(task.StartAsync);
                                 t.Start();
                                 var taskInfo = new TaskInfo(task, t);
-                                lock (runningTasks)
-                                {
-                                    runningTasks.Add(taskInfo);
-                                }
                                 i--;
                             }
-                            OnNewRunningTask();
                         }
                     }
                     catch (Exception ex)
                     {
                         OnError(ex);
                     }
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                 }
             });
         }
 
-        /// <summary>
-        /// Start a task (if not already running) for checking running tasks states.
-        /// </summary>
-        private void OnNewRunningTask()
-        {
-            if (checkingTaskStatesTask != null)
-                return;
-
-            checkingTaskStatesTask = Task.Run(() =>
-            {
-                while (running)
-                {
-                    TaskInfo[] taskInfos;
-                    lock (runningTasks)
-                    {
-                        taskInfos = runningTasks.ToArray();
-                    }
-                    foreach (var x in taskInfos)
-                    {
-                        if (x.Task.IsFaulted || x.Task.IsCompleted || x.Task.IsCanceled)
-                        {
-                            lock (runningTasks)
-                            {
-                                runningTasks.Remove(x);
-                            }
-                        }
-                        if (x.Task.Exception != null)
-                            OnError(x.Task.Exception);
-                    }
-                    Thread.Sleep(500);
-                }
-            });
-        }
-
+        
         private void OnError(Exception exception)
         {
             if (Exception != null)

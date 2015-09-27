@@ -47,8 +47,7 @@ namespace Oblqo
         public async Task ScaleImageAsync()
         {
         }
-
-        //public abstract void SetAttribute(string name, string value);
+        
         public abstract string GetAttribute(string name);
         public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
 
@@ -135,44 +134,6 @@ namespace Oblqo
                 }
                 return null;
             }
-            /*
-            set
-            {
-                var srcStr = GetAttribute("src");
-                List<string> sources;
-                if (srcStr == null)
-                {
-                    sources = new List<string>();
-                }
-                else
-                {
-                    sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
-                }
-                bool sourceExists = false;
-                string source = null;
-                foreach (var src in sources)
-                {
-                    // SID - Storage ID
-                    var sidPropertyName = string.Format("{0}.sid", src);
-                    if (Drive.Storage.Id != GetAttribute(sidPropertyName))
-                    {
-                        continue;
-                    }
-                    sourceExists = true;
-                    source = src;
-                }
-
-                if (!sourceExists)
-                {
-                    source = GetNewSource(sources);
-                    sources.Add(source);
-                }
-
-                SetAttribute("src", string.Join(";", sources));
-                SetAttribute(string.Format("{0}.sid", source), Drive.Storage.Id);
-                SetAttribute(string.Format("{0}.id", source), value);
-
-            }*/
         }
     }
 }

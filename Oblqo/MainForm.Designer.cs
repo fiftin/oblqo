@@ -794,7 +794,6 @@
             this.label10.TabIndex = 7;
             this.label10.Text = "Type:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // vaultRegionLabel
             // 
@@ -1166,7 +1165,7 @@
             this.downloadFolderFromStorageToolStripMenuItem.Name = "downloadFolderFromStorageToolStripMenuItem";
             this.downloadFolderFromStorageToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.downloadFolderFromStorageToolStripMenuItem.Text = "Download from archive";
-            this.downloadFolderFromStorageToolStripMenuItem.Click += new System.EventHandler(this.downloadFolderFromStorageToolStripMenuItem_Click);
+            //this.downloadFolderFromStorageToolStripMenuItem.Click += new System.EventHandler(this.downloadFolderFromStorageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 

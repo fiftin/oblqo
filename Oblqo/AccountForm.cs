@@ -193,6 +193,7 @@ namespace Oblqo
         private void driveKindComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             driveRootPathBrowseButton.Enabled = DriveType == DriveType.LocalDrive;
+            localDriveTabPage.Text = driveKindComboBox.Text;
         }
     }
 }

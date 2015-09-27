@@ -263,6 +263,15 @@ namespace Oblqo
                         {
                             continue;
                         }
+
+                        if (fileListFilterTextBox.Tag != null)
+                        {
+                            if (!file.Name.Contains(fileListFilterTextBox.Text))
+                            {
+                                continue;
+                            }
+                        }
+
                         string mimeType = file.DriveFile.MimeType;
                         string key = "file";
                         if (!string.IsNullOrWhiteSpace(mimeType))
@@ -1342,6 +1351,42 @@ namespace Oblqo
         }
 
         #endregion
+
+        private void fileListFilterTextBox_Enter(object sender, EventArgs e)
+        {
+            if (fileListFilterTextBox.Tag == null)
+            {
+                fileListFilterTextBox.Text = "";
+                fileListFilterTextBox.ForeColor = SystemColors.ControlText;
+            }
+        }
+
+        private void fileListFilterTextBox_Leave(object sender, EventArgs e)
+        {
+            if (fileListFilterTextBox.Text == "")
+            {
+                fileListFilterTextBox.Text = "Filter";
+                fileListFilterTextBox.ForeColor = Color.DarkGray;
+                fileListFilterTextBox.Tag = null;
+            } else
+            {
+                fileListFilterTextBox.Tag = new object();
+            }
+        }
+
+        private void fileListFilterTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void fileListFilterTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                fileListView.Focus();
+                UpdateFileList();
+            }
+        }
     }
 
 }

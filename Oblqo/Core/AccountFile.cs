@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Oblqo
     public class AccountFile
     {
         public DriveFile DriveFile { get; set; }
+        public List<DriveFile> DriveFiles = new List<DriveFile>();
         public StorageFile StorageFile { get; set; }
         public string Name
         {

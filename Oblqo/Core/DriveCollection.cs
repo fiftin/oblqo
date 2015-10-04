@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -10,17 +11,15 @@ namespace Oblqo
 {
     public class DriveCollection
     {
-        private List<Drive> drives = new List<Drive>();
+        private readonly List<Drive> drives = new List<Drive>();
 
-        public void Add(Drive drive)
+
+        public DriveCollection()
         {
-            drives.Add(drive);
+            RootFolder = new DriveFileCollection();
         }
 
-        public DriveFileCollection RootFolder
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public DriveFileCollection RootFolder { get; }
 
         public Size ImageMaxSize
         {
@@ -28,58 +27,52 @@ namespace Oblqo
             set { throw new NotImplementedException(); }
         }
 
-        public Storage Storage
+        public Storage Storage { get; private set; }
+        public Account Account { get; private set; }
+
+        public void Add(Drive drive)
         {
-            get { throw new NotImplementedException(); }
+            Account = drive.Account;
+            Storage = drive.Storage;
+            RootFolder.Add(drive.RootFolder);
+            drives.Add(drive);
         }
 
-        public Account Account
+
+        public async Task<Image> GetImageAsync(DriveFileCollection file, CancellationToken token)
         {
-            get { throw new NotImplementedException(); }
+            foreach (var drive in drives)
+            {
+                var image = await drive.GetImageAsync(file.GetFile(drive), token);
+                if (image != null)
+                {
+                    return image;
+                }
+            }
+            return null;
         }
 
-        public Image ScaleImage(Image image)
+        public async Task DeleteFileAsync(DriveFileCollection driveFile, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var tasks = drives.Select(drive => drive.DeleteFileAsync(driveFile.GetFile(drive), token));
+            await Task.WhenAll(tasks);
         }
 
-        public bool TryGetImageType(string pathName, out ImageType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Stream> ScaleImageAsync(ImageType type, Stream input)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Image> GetImageAsync(DriveFileCollection file, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteFileAsync(DriveFileCollection driveFile, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task EnumerateFilesRecursive(DriveFileCollection driveFolder, Action<DriveFileCollection> action, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DownloadFileAsync(DriveFileCollection driveFile, string destFolder, ActionIfFileExists actionIfFileExists,
+        public async Task EnumerateFilesRecursive(DriveFileCollection driveFolder, Action<DriveFileCollection> action,
             CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DriveFile> UploadFileAsync(string pathName, DriveFileCollection destFolder, string storageFileId, CancellationToken token)
+        public Task DownloadFileAsync(DriveFileCollection driveFile, string destFolder,
+            ActionIfFileExists actionIfFileExists,
+            CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DriveFile> UploadFileAsync(string pathName, DriveFileCollection destFolder, string storageFileId,
+            CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -99,12 +92,14 @@ namespace Oblqo
             throw new NotImplementedException();
         }
 
-        public Task<DriveFileCollection> CreateFolderAsync(string folderName, DriveFileCollection destFolder, CancellationToken token)
+        public Task<DriveFileCollection> CreateFolderAsync(string folderName, DriveFileCollection destFolder,
+            CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder, CancellationToken token)
+        public Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
+            CancellationToken token)
         {
             throw new NotImplementedException();
         }

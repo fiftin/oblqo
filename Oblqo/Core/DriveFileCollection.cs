@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Oblqo
 {
-    public class DriveFileCollection
+    public class DriveFileCollection : IEnumerable<DriveFile>
     {
+        private readonly List<DriveFile> files = new List<DriveFile>();
+
+        public DriveFile GetFile(Drive drive)
+        {
+            return files.Single(file => file.Drive == drive);
+        }
+
+        public void Add(DriveFile file)
+        {
+            files.Add(file);
+        }
+
         public string Id
         {
             get { throw new NotImplementedException(); }
@@ -106,24 +120,19 @@ namespace Oblqo
             throw new NotImplementedException();
         }
 
-        public string GetAttribute(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetAttributeAsync(string name, string value, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetNewSource(List<string> sources)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task SetStorageFileIdAsync(string value, CancellationToken token)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerator<DriveFile> GetEnumerator()
+        {
+            return files.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

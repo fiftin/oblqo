@@ -22,10 +22,6 @@ namespace Oblqo
             files.Add(file);
         }
 
-        public string Id
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         public bool IsImage
         {

@@ -27,7 +27,7 @@ namespace Oblqo
         /// </summary>
         public static readonly string StorageFileIdFormat = "{0}.id-{1}";
 
-        public Drive(Storage storage, Account account)
+        protected Drive(Storage storage, Account account)
         {
             Storage = storage;
             Account = account;
@@ -55,7 +55,7 @@ namespace Oblqo
 
         public bool TryGetImageType(string pathName, out ImageType type)
         {
-            string ext = Path.GetExtension(pathName).ToLower();
+            var ext = Path.GetExtension(pathName)?.ToLower();
             switch (ext)
             {
                 case ".jpg":
@@ -75,7 +75,9 @@ namespace Oblqo
             return true;
         }
 
+#pragma warning disable 1998
         public async Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
+#pragma warning restore 1998
         {
             var newImage = ScaleImage(image);
             ImageFormat format;

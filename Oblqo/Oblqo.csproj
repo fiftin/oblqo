@@ -114,6 +114,8 @@
     <Compile Include="ActionIfFileExists.cs" />
     <Compile Include="Amazon\GlacierFile.cs" />
     <Compile Include="Core\ConnectionException.cs" />
+    <Compile Include="Core\DriveFileCollection.cs" />
+    <Compile Include="Core\IDriveFile.cs" />
     <Compile Include="Core\MimeTypes.cs" />
     <Compile Include="Core\StorageFileIdentity.cs" />
     <Compile Include="Local\LocalDrive.cs" />

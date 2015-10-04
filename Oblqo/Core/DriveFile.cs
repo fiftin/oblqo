@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Oblqo
 {
-    public abstract class DriveFile
+    public abstract class DriveFile : IDriveFile
     {
         public abstract string Id { get; }
         public abstract bool IsImage { get; }
@@ -56,7 +56,7 @@ namespace Oblqo
         /// </summary>
         /// <param name="sources">Existing source IDs.</param>
         /// <returns></returns>
-        private string GetNewSource(List<string> sources)
+        public string GetNewSource(List<string> sources)
         {
             var ret = Drive.Storage.Kind;
             if (sources.Count == 0)

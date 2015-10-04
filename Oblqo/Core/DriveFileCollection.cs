@@ -12,6 +12,21 @@ namespace Oblqo
     {
         private readonly List<DriveFile> files = new List<DriveFile>();
 
+        public DriveCollection Drive { get; private set; }
+
+        public DriveFileCollection(DriveCollection drive)
+        {
+            Drive = drive;
+        }
+
+        public DriveFileCollection(DriveCollection drive, IEnumerable<DriveFile> f)
+        {
+            Drive = drive;
+            files.AddRange(f);
+        }
+
+        private DriveFile First => files[0];
+
         public DriveFile GetFile(Drive drive)
         {
             return files.Single(file => file.Drive == drive);
@@ -23,40 +38,19 @@ namespace Oblqo
         }
 
 
-        public bool IsImage
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsImage => First.IsImage;
 
-        public bool IsFolder
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsFolder => First.IsFolder;
 
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Name => First.Name;
 
-        public bool HasChildren
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool HasChildren => First.HasChildren;
 
-        public long Size
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public long Size => First.Size;
 
-        public DateTime ModifiedDate
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public DateTime ModifiedDate => First.ModifiedDate;
 
-        public DateTime CreatedDate
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public DateTime CreatedDate => First.CreatedDate;
 
         public int OriginalImageWidth
         {
@@ -76,49 +70,31 @@ namespace Oblqo
             set { throw new NotImplementedException(); }
         }
 
-        public int ImageWidth
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int ImageWidth => First.ImageWidth;
+        public int ImageHeight => First.ImageHeight;
 
-        public int ImageHeight
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsRoot => First.IsRoot;
 
-        public bool IsRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string MimeType => First.MimeType;
 
-        public string MimeType
-        {
-            get { throw new NotImplementedException(); }
-        }
 
-        public DriveCollection Drive
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string StorageFileId
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string StorageFileId => First.StorageFileId;
 
         public XElement ToXml()
         {
             throw new NotImplementedException();
         }
 
-        public Task ScaleImageAsync()
+        public async Task ScaleImageAsync()
         {
-            throw new NotImplementedException();
+            var tasks = files.Select(drive => drive.ScaleImageAsync());
+            await Task.WhenAll(tasks);
         }
 
-        public Task SetStorageFileIdAsync(string value, CancellationToken token)
+        public async Task SetStorageFileIdAsync(string value, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var tasks = files.Select(drive => drive.SetStorageFileIdAsync(value, token));
+            await Task.WhenAll(tasks);
         }
 
         public IEnumerator<DriveFile> GetEnumerator()

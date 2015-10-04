@@ -16,7 +16,7 @@ namespace Oblqo
 
         public DriveCollection()
         {
-            RootFolder = new DriveFileCollection();
+            RootFolder = new DriveFileCollection(this);
         }
 
         public DriveFileCollection RootFolder { get; }
@@ -58,44 +58,75 @@ namespace Oblqo
             await Task.WhenAll(tasks);
         }
 
-        public async Task EnumerateFilesRecursive(DriveFileCollection driveFolder, Action<DriveFileCollection> action,
-            CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DownloadFileAsync(DriveFileCollection driveFile, string destFolder,
+        public async Task DownloadFileAsync(DriveFileCollection driveFile, string destFolder,
             ActionIfFileExists actionIfFileExists,
             CancellationToken token)
         {
-            throw new NotImplementedException();
+            foreach (var drive in drives)
+            {
+                try
+                {
+                    await drive.DownloadFileAsync(driveFile.GetFile(drive), destFolder, actionIfFileExists, token);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+            throw new Exception("Can't download this file");
         }
 
-        public Task<DriveFile> UploadFileAsync(string pathName, DriveFileCollection destFolder, string storageFileId,
+        public async Task<DriveFileCollection> UploadFileAsync(string pathName, DriveFileCollection destFolder, string storageFileId,
             CancellationToken token)
         {
-            throw new NotImplementedException();
+            var tasks = drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), storageFileId, token));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks));
         }
 
-        public Task<Stream> ReadFileAsync(DriveFileCollection file, CancellationToken token)
+        public async Task<Stream> ReadFileAsync(DriveFileCollection file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            foreach (var drive in drives)
+            {
+                try
+                {
+                    return await drive.ReadFileAsync(file.GetFile(drive),  token);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+            throw new Exception("Can't download this file");
         }
 
-        public Task<Image> GetThumbnailAsync(DriveFileCollection file, CancellationToken token)
+        public async Task<Image> GetThumbnailAsync(DriveFileCollection file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            foreach (var drive in drives)
+            {
+                try
+                {
+                    return await drive.GetThumbnailAsync(file.GetFile(drive), token);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+            throw new Exception("Can't download this file");
         }
 
-        public Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DriveFileCollection> CreateFolderAsync(string folderName, DriveFileCollection destFolder,
+        public async Task<DriveFileCollection> CreateFolderAsync(string folderName, DriveFileCollection destFolder,
             CancellationToken token)
         {
-            throw new NotImplementedException();
+            var tasks = drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetFile(drive), token));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks));
+        }
+
+
+        public async Task DeleteFolderAsync(DriveFileCollection driveFolder, CancellationToken token)
+        {
+            var tasks = drives.Select(drive => drive.DeleteFolderAsync(driveFolder.GetFile(drive), token));
+            await Task.WhenAll(tasks);
         }
 
         public Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
@@ -104,12 +135,7 @@ namespace Oblqo
             throw new NotImplementedException();
         }
 
-        public Task ClearAsync(CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteFolderAsync(DriveFileCollection driveFolder, CancellationToken token)
+        public Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
         {
             throw new NotImplementedException();
         }

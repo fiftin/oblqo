@@ -102,12 +102,7 @@ namespace Oblqo
                 await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, token);
             return new AccountFile(storageDir, driveDir);
         }
-
-        public async Task ClearAsync(CancellationToken token)
-        {
-            await Storage.ClearAsync(token);
-            await Drive.ClearAsync(token);
-        }
+        
 
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
         {

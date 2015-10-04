@@ -11,7 +11,7 @@ namespace Oblqo
     /// <summary>
     /// 
     /// </summary>
-    public abstract class Drive : IDrive
+    public abstract class Drive
     {
         public abstract DriveFile RootFolder { get; }
         public Size ImageMaxSize { get; set; }

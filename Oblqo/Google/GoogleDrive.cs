@@ -291,29 +291,30 @@ namespace Oblqo.Google
                 throw new TaskException("Can't download this file");
             var service = await GetServiceAsync(token);
             var stream = await service.HttpClient.GetStreamAsync(url);
-            if (stream != null)
+            if (stream == null)
             {
-                var fileName = Common.AppendToPath(destFolder, driveFile.Name);
-                if (System.IO.File.Exists(fileName))
+                throw new Exception("Can't download this file");
+            }
+            var fileName = Common.AppendToPath(destFolder, driveFile.Name);
+            if (System.IO.File.Exists(fileName))
+            {
+                switch (actionIfFileExists)
                 {
-                    switch (actionIfFileExists)
-                    {
-                        case ActionIfFileExists.Skip:
-                            return;
-                        case ActionIfFileExists.Rewrite:
-                            fileName = GetAvailableFileName(fileName);
-                            break;
-                    }
+                    case ActionIfFileExists.Skip:
+                        return;
+                    case ActionIfFileExists.Rewrite:
+                        fileName = GetAvailableFileName(fileName);
+                        break;
                 }
-                using (var fileStream = System.IO.File.Create(fileName))
+            }
+            using (var fileStream = System.IO.File.Create(fileName))
+            {
+                var buffer = new byte[1000];
+                var n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
+                while (n > 0)
                 {
-                    var buffer = new byte[1000];
-                    var n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                    while (n > 0)
-                    {
-                        await fileStream.WriteAsync(buffer, 0, n, token);
-                        n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                    }
+                    await fileStream.WriteAsync(buffer, 0, n, token);
+                    n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
                 }
             }
         }

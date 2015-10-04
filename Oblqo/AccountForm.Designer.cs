@@ -39,30 +39,30 @@
             this.secretAccessKeyTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.storageTabControl = new System.Windows.Forms.TabControl();
+            this.glacierTabPage = new System.Windows.Forms.TabPage();
             this.regionComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.glacierVaultTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.driveRootPathBrowseButton = new System.Windows.Forms.Button();
-            this.imageResolutionComboBox = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.driveKindComboBox = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.driveTabControl = new System.Windows.Forms.TabControl();
             this.localDriveTabPage = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.driveRootPathBrowseButton = new System.Windows.Forms.Button();
+            this.driveKindComboBox = new System.Windows.Forms.ComboBox();
+            this.imageResolutionComboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.storageTabControl = new System.Windows.Forms.TabControl();
-            this.glacierTabPage = new System.Windows.Forms.TabPage();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
+            this.storageTabControl.SuspendLayout();
+            this.glacierTabPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.driveTabControl.SuspendLayout();
             this.localDriveTabPage.SuspendLayout();
-            this.storageTabControl.SuspendLayout();
-            this.glacierTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -100,7 +100,7 @@
             // 
             this.accountNameTextBox.Location = new System.Drawing.Point(163, 19);
             this.accountNameTextBox.Name = "accountNameTextBox";
-            this.accountNameTextBox.Size = new System.Drawing.Size(318, 20);
+            this.accountNameTextBox.Size = new System.Drawing.Size(336, 20);
             this.accountNameTextBox.TabIndex = 0;
             // 
             // storageAccessKeyIdTextBox
@@ -144,6 +144,33 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Archive Account";
+            // 
+            // storageTabControl
+            // 
+            this.storageTabControl.Controls.Add(this.glacierTabPage);
+            this.storageTabControl.Location = new System.Drawing.Point(6, 19);
+            this.storageTabControl.Name = "storageTabControl";
+            this.storageTabControl.SelectedIndex = 0;
+            this.storageTabControl.Size = new System.Drawing.Size(477, 157);
+            this.storageTabControl.TabIndex = 11;
+            // 
+            // glacierTabPage
+            // 
+            this.glacierTabPage.Controls.Add(this.label2);
+            this.glacierTabPage.Controls.Add(this.regionComboBox);
+            this.glacierTabPage.Controls.Add(this.label3);
+            this.glacierTabPage.Controls.Add(this.label5);
+            this.glacierTabPage.Controls.Add(this.storageAccessKeyIdTextBox);
+            this.glacierTabPage.Controls.Add(this.glacierVaultTextBox);
+            this.glacierTabPage.Controls.Add(this.secretAccessKeyTextBox);
+            this.glacierTabPage.Controls.Add(this.label4);
+            this.glacierTabPage.Location = new System.Drawing.Point(4, 23);
+            this.glacierTabPage.Name = "glacierTabPage";
+            this.glacierTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.glacierTabPage.Size = new System.Drawing.Size(469, 130);
+            this.glacierTabPage.TabIndex = 0;
+            this.glacierTabPage.Text = "Amazon Glacier";
+            this.glacierTabPage.UseVisualStyleBackColor = true;
             // 
             // regionComboBox
             // 
@@ -190,70 +217,6 @@
             this.groupBox2.Text = "Drive Account";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // driveRootPathBrowseButton
-            // 
-            this.driveRootPathBrowseButton.Enabled = false;
-            this.driveRootPathBrowseButton.Location = new System.Drawing.Point(362, 88);
-            this.driveRootPathBrowseButton.Name = "driveRootPathBrowseButton";
-            this.driveRootPathBrowseButton.Size = new System.Drawing.Size(101, 31);
-            this.driveRootPathBrowseButton.TabIndex = 8;
-            this.driveRootPathBrowseButton.Text = "Browse...";
-            this.driveRootPathBrowseButton.UseVisualStyleBackColor = true;
-            this.driveRootPathBrowseButton.Click += new System.EventHandler(this.driveRootPathBrowseButton_Click);
-            // 
-            // imageResolutionComboBox
-            // 
-            this.imageResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.imageResolutionComboBox.FormattingEnabled = true;
-            this.imageResolutionComboBox.Location = new System.Drawing.Point(133, 34);
-            this.imageResolutionComboBox.Name = "imageResolutionComboBox";
-            this.imageResolutionComboBox.Size = new System.Drawing.Size(330, 22);
-            this.imageResolutionComboBox.TabIndex = 6;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(84, 14);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Image Size:";
-            // 
-            // driveRootPathTextBox
-            // 
-            this.driveRootPathTextBox.Location = new System.Drawing.Point(133, 62);
-            this.driveRootPathTextBox.Name = "driveRootPathTextBox";
-            this.driveRootPathTextBox.Size = new System.Drawing.Size(330, 20);
-            this.driveRootPathTextBox.TabIndex = 7;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 14);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Root Path:";
-            // 
-            // driveKindComboBox
-            // 
-            this.driveKindComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.driveKindComboBox.FormattingEnabled = true;
-            this.driveKindComboBox.Location = new System.Drawing.Point(133, 6);
-            this.driveKindComboBox.Name = "driveKindComboBox";
-            this.driveKindComboBox.Size = new System.Drawing.Size(330, 22);
-            this.driveKindComboBox.TabIndex = 5;
-            this.driveKindComboBox.SelectedIndexChanged += new System.EventHandler(this.driveKindComboBox_SelectedIndexChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 14);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Drive Type:";
-            // 
             // driveTabControl
             // 
             this.driveTabControl.Controls.Add(this.localDriveTabPage);
@@ -281,38 +244,75 @@
             this.localDriveTabPage.Text = "Local Drive";
             this.localDriveTabPage.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(84, 14);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Drive Type:";
+            // 
+            // driveRootPathBrowseButton
+            // 
+            this.driveRootPathBrowseButton.Enabled = false;
+            this.driveRootPathBrowseButton.Location = new System.Drawing.Point(362, 88);
+            this.driveRootPathBrowseButton.Name = "driveRootPathBrowseButton";
+            this.driveRootPathBrowseButton.Size = new System.Drawing.Size(101, 31);
+            this.driveRootPathBrowseButton.TabIndex = 8;
+            this.driveRootPathBrowseButton.Text = "Browse...";
+            this.driveRootPathBrowseButton.UseVisualStyleBackColor = true;
+            this.driveRootPathBrowseButton.Click += new System.EventHandler(this.driveRootPathBrowseButton_Click);
+            // 
+            // driveKindComboBox
+            // 
+            this.driveKindComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.driveKindComboBox.FormattingEnabled = true;
+            this.driveKindComboBox.Location = new System.Drawing.Point(133, 6);
+            this.driveKindComboBox.Name = "driveKindComboBox";
+            this.driveKindComboBox.Size = new System.Drawing.Size(330, 22);
+            this.driveKindComboBox.TabIndex = 5;
+            this.driveKindComboBox.SelectedIndexChanged += new System.EventHandler(this.driveKindComboBox_SelectedIndexChanged);
+            // 
+            // imageResolutionComboBox
+            // 
+            this.imageResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imageResolutionComboBox.FormattingEnabled = true;
+            this.imageResolutionComboBox.Location = new System.Drawing.Point(133, 34);
+            this.imageResolutionComboBox.Name = "imageResolutionComboBox";
+            this.imageResolutionComboBox.Size = new System.Drawing.Size(330, 22);
+            this.imageResolutionComboBox.TabIndex = 6;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 65);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 14);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Root Path:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 37);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 14);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Image Size:";
+            // 
+            // driveRootPathTextBox
+            // 
+            this.driveRootPathTextBox.Location = new System.Drawing.Point(133, 62);
+            this.driveRootPathTextBox.Name = "driveRootPathTextBox";
+            this.driveRootPathTextBox.Size = new System.Drawing.Size(330, 20);
+            this.driveRootPathTextBox.TabIndex = 7;
+            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "021.png");
-            // 
-            // storageTabControl
-            // 
-            this.storageTabControl.Controls.Add(this.glacierTabPage);
-            this.storageTabControl.Location = new System.Drawing.Point(6, 19);
-            this.storageTabControl.Name = "storageTabControl";
-            this.storageTabControl.SelectedIndex = 0;
-            this.storageTabControl.Size = new System.Drawing.Size(477, 157);
-            this.storageTabControl.TabIndex = 11;
-            // 
-            // glacierTabPage
-            // 
-            this.glacierTabPage.Controls.Add(this.label2);
-            this.glacierTabPage.Controls.Add(this.regionComboBox);
-            this.glacierTabPage.Controls.Add(this.label3);
-            this.glacierTabPage.Controls.Add(this.label5);
-            this.glacierTabPage.Controls.Add(this.storageAccessKeyIdTextBox);
-            this.glacierTabPage.Controls.Add(this.glacierVaultTextBox);
-            this.glacierTabPage.Controls.Add(this.secretAccessKeyTextBox);
-            this.glacierTabPage.Controls.Add(this.label4);
-            this.glacierTabPage.Location = new System.Drawing.Point(4, 23);
-            this.glacierTabPage.Name = "glacierTabPage";
-            this.glacierTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.glacierTabPage.Size = new System.Drawing.Size(469, 130);
-            this.glacierTabPage.TabIndex = 0;
-            this.glacierTabPage.Text = "Amazon Glacier";
-            this.glacierTabPage.UseVisualStyleBackColor = true;
             // 
             // AccountForm
             // 
@@ -335,15 +335,16 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Connection";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AccountForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AccountForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
+            this.storageTabControl.ResumeLayout(false);
+            this.glacierTabPage.ResumeLayout(false);
+            this.glacierTabPage.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.driveTabControl.ResumeLayout(false);
             this.localDriveTabPage.ResumeLayout(false);
             this.localDriveTabPage.PerformLayout();
-            this.storageTabControl.ResumeLayout(false);
-            this.glacierTabPage.ResumeLayout(false);
-            this.glacierTabPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

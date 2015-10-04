@@ -195,5 +195,31 @@ namespace Oblqo
             driveRootPathBrowseButton.Enabled = DriveType == DriveType.LocalDrive;
             localDriveTabPage.Text = driveKindComboBox.Text;
         }
+
+        private void AccountForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.ApplicationExitCall)
+            {
+                return;
+            }
+            if (DialogResult == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(accountNameTextBox.Text))
+            {
+                MessageBox.Show("Connection Name can't be empty", "Illegal configuration", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+                accountNameTextBox.Focus();
+            } else if (string.IsNullOrWhiteSpace(storageAccessKeyIdTextBox.Text)
+                || string.IsNullOrWhiteSpace(secretAccessKeyTextBox.Text)
+                || string.IsNullOrWhiteSpace(glacierVaultTextBox.Text))
+            {
+                MessageBox.Show("Invalid Archive configuration", "Illegal configuration", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+                storageAccessKeyIdTextBox.Focus();
+            }
+        }
     }
 }

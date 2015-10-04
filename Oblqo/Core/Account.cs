@@ -12,14 +12,14 @@ namespace Oblqo
     public class Account
     {
         public Storage Storage { get; private set; }
-        public Drive Drive { get; private set; }
+        public DriveCollection Drive { get; private set; }
         public AccountFile RootFolder { get; private set; }
         public object Tag { get; set; }
         public Account()
         {
         }
 
-        internal void Init(Storage storage, Drive drive)
+        internal void Init(Storage storage, DriveCollection drive)
         {
             Storage = storage;
             Drive = drive;

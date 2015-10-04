@@ -24,7 +24,7 @@ namespace Oblqo.Tasks
 
         protected abstract DownloadFileTask CreateDownloadFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file, string destFolder);
 
-        protected async Task EnumerateFilesRecursiveAsync(DriveFile folder, string dest)
+        protected async Task EnumerateFilesRecursiveAsync(DriveFileCollection folder, string dest)
         {
             var files = await Account.Drive.GetFilesAsync(folder, CancellationTokenSource.Token);
             foreach (var f in files)

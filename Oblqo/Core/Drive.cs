@@ -11,7 +11,7 @@ namespace Oblqo
     /// <summary>
     /// 
     /// </summary>
-    public abstract class Drive
+    public abstract class Drive : IDrive
     {
         public abstract DriveFile RootFolder { get; }
         public Size ImageMaxSize { get; set; }
@@ -33,7 +33,7 @@ namespace Oblqo
             Account = account;
         }
 
-        protected Image ScaleImage(Image image)
+        public Image ScaleImage(Image image)
         {
             var xScale = 1f;
             var yScale = 1f;
@@ -53,7 +53,7 @@ namespace Oblqo
             return ret;
         }
 
-        protected bool TryGetImageType(string pathName, out ImageType type)
+        public bool TryGetImageType(string pathName, out ImageType type)
         {
             string ext = Path.GetExtension(pathName).ToLower();
             switch (ext)
@@ -75,7 +75,7 @@ namespace Oblqo
             return true;
         }
 
-        protected async Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
+        public async Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
         {
             var newImage = ScaleImage(image);
             ImageFormat format;
@@ -99,7 +99,7 @@ namespace Oblqo
             return output;
         }
 
-        protected async Task<Stream> ScaleImageAsync(ImageType type, Stream input)
+        public async Task<Stream> ScaleImageAsync(ImageType type, Stream input)
         {
             var image = Image.FromStream(input);
             return await ScaleImageAsync(type, image, input);

@@ -8,7 +8,7 @@ namespace Oblqo
 {
     public class AccountFile
     {
-        public DriveFile DriveFile { get; set; }
+        public DriveFileCollection DriveFile { get; set; }
         public StorageFile StorageFile { get; set; }
         public string Name
         {
@@ -38,7 +38,7 @@ namespace Oblqo
             get { return DriveFile != null && DriveFile.HasChildren; }
         }
 
-        public AccountFile(StorageFile storageFile, DriveFile driveFile)
+        public AccountFile(StorageFile storageFile, DriveFileCollection driveFile)
         {
             StorageFile = storageFile;
             DriveFile = driveFile;

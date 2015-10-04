@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Oblqo
 {
-    public class DriveFileCollection : IDriveFile
+    public class DriveFileCollection
     {
         public string Id
         {
@@ -86,7 +86,7 @@ namespace Oblqo
             get { throw new NotImplementedException(); }
         }
 
-        public Drive Drive
+        public DriveCollection Drive
         {
             get { throw new NotImplementedException(); }
         }

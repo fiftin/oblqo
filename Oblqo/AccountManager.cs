@@ -116,25 +116,33 @@ namespace Oblqo
 
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
-            Drive drive;
+            var drives = new DriveCollection();
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             var token = new CancellationToken();
             var account = new Account();
             switch (info.DriveType)
             {
                 case DriveType.GoogleDrive:
-                    drive = await GoogleDrive.CreateInstance(storage, account, GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets, info.DriveRootPath, token);
+                    var drive =
+                        await
+                            GoogleDrive.CreateInstance(storage, account,
+                                GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
+                                info.DriveRootPath, token);
                     drive.ImageMaxSize = info.DriveImageMaxSize;
                     await ((GoogleDrive)drive).GetServiceAsync(token);
+                    drives.Add(drive);
                     break;
                 case DriveType.LocalDrive:
-                    drive = new Local.LocalDrive(storage, account, info.DriveRootPath);
-                    drive.ImageMaxSize = info.DriveImageMaxSize;
+                    var localDrive = new Local.LocalDrive(storage, account, info.DriveRootPath)
+                    {
+                        ImageMaxSize = info.DriveImageMaxSize
+                    };
+                    drives.Add(localDrive);
                     break;
                 default:
                     throw new NotSupportedException("Drive with this type is not supported");
             }
-            account.Init(storage, drive);
+            account.Init(storage, drives);
             return account;
         }
 

@@ -57,7 +57,7 @@ namespace Oblqo.Amazon
             var res = await client.DeleteArchiveAsync(req, token);
         }
 
-        public override StorageFile GetFile(DriveFile driveFile)
+        public override StorageFile GetFile(DriveFileCollection driveFile)
         {
             return new GlacierFile(this, driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
         }

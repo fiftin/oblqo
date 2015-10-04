@@ -10,14 +10,14 @@ namespace Oblqo.Tasks
 {
     public class SynchronizeFileTask : AsyncTask
     {
-        public DriveFile SourceFile {  get; private set; }
+        public DriveFileCollection SourceFile {  get; private set; }
         public StorageFile DestFolder { get; private set; }
 
         public SynchronizeFileTask()
         {
 
         }
-        public SynchronizeFileTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFile sourceFile, StorageFile destFolder)
+        public SynchronizeFileTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFileCollection sourceFile, StorageFile destFolder)
             : base(account, accountName, priority, parent)
         {
             SourceFile = sourceFile;

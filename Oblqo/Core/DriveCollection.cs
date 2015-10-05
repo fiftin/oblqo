@@ -12,6 +12,8 @@ namespace Oblqo
     public class DriveCollection
     {
         private readonly List<Drive> drives = new List<Drive>();
+        public Storage Storage { get; private set; }
+        public Account Account { get; private set; }
 
 
         public DriveCollection()
@@ -26,9 +28,6 @@ namespace Oblqo
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
-
-        public Storage Storage { get; private set; }
-        public Account Account { get; private set; }
 
         public void Add(Drive drive)
         {
@@ -140,9 +139,11 @@ namespace Oblqo
             throw new NotImplementedException();
         }
 
-        public Task<DriveFileCollection> GetFileAsync(XElement xml, CancellationToken token)
+        public async Task<DriveFileCollection> GetFileAsync(XElement xml, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var elements = xml.Elements();
+            var tasks = drives.Select(drive => drive.GetFileAsync(elements.Single(x => x.Attribute("").Value == drive.Id), token));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks));
         }
     }
 }

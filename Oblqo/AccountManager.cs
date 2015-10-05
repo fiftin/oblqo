@@ -117,30 +117,33 @@ namespace Oblqo
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
             var drives = new DriveCollection();
-            var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             var token = new CancellationToken();
             var account = new Account();
-            switch (info.DriveType)
+            var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
+            foreach (var d in info.Drives)
             {
-                case DriveType.GoogleDrive:
-                    var drive =
-                        await
-                            GoogleDrive.CreateInstance(storage, account,
-                                GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
-                                info.DriveRootPath, token);
-                    drive.ImageMaxSize = info.DriveImageMaxSize;
-                    await ((GoogleDrive)drive).GetServiceAsync(token);
-                    drives.Add(drive);
-                    break;
-                case DriveType.LocalDrive:
-                    var localDrive = new Local.LocalDrive(storage, account, info.DriveRootPath)
-                    {
-                        ImageMaxSize = info.DriveImageMaxSize
-                    };
-                    drives.Add(localDrive);
-                    break;
-                default:
-                    throw new NotSupportedException("Drive with this type is not supported");
+                switch (d.DriveType)
+                {
+                    case DriveType.GoogleDrive:
+                        var drive =
+                            await
+                                GoogleDrive.CreateInstance(storage, account,
+                                    GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
+                                    d.DriveRootPath, token);
+                        drive.ImageMaxSize = d.DriveImageMaxSize;
+                        await drive.GetServiceAsync(token);
+                        drives.Add(drive);
+                        break;
+                    case DriveType.LocalDrive:
+                        var localDrive = new Local.LocalDrive(storage, account, d.DriveRootPath)
+                        {
+                            ImageMaxSize = d.DriveImageMaxSize
+                        };
+                        drives.Add(localDrive);
+                        break;
+                    default:
+                        throw new NotSupportedException("Drive with this type is not supported");
+                }
             }
             account.Init(storage, drives);
             return account;

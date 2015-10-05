@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
+    <Compile Include="CamelcaseWrapper.cs" />
     <Compile Include="Core\Account.cs" />
     <Compile Include="Core\AccountFile.cs" />
     <Compile Include="AccountInfo.cs" />
@@ -120,10 +121,24 @@
     <Compile Include="Core\IDriveFile.cs" />
     <Compile Include="Core\MimeTypes.cs" />
     <Compile Include="Core\StorageFileIdentity.cs" />
+    <Compile Include="DriveAccountControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DriveAccountControl.Designer.cs">
+      <DependentUpon>DriveAccountControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DriveInfo.cs" />
+    <Compile Include="DriveAccountTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DriveAccountTabPage.Designer.cs">
+      <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
     <Compile Include="Local\LocalFileFactory.cs" />
     <Compile Include="Local\NtfsLocalFile.cs" />
+    <Compile Include="Resolution.cs" />
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />
@@ -198,6 +213,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DriveAccountControl.resx">
+      <DependentUpon>DriveAccountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DriveAccountTabPage.resx">
+      <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>

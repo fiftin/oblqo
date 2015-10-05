@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Serialization;
 using Amazon;
 
@@ -20,20 +21,11 @@ namespace Oblqo
         public string StorageRegionSystemName { get; set; }
 
         [XmlIgnore]
-        public RegionEndpoint StorageRegionEndpoint {
-            get { return RegionEndpoint.GetBySystemName(StorageRegionSystemName); } 
-        }
+        public RegionEndpoint StorageRegionEndpoint => RegionEndpoint.GetBySystemName(StorageRegionSystemName);
 
         public string StorageRootPath { get; set; }
 
-        public DriveType DriveType { get; set; }
-
-        public string DriveLogin { get; set; }
-
-        public string DriveAppPassword { get; set; }
-
-        public string DriveRootPath { get; set; }
-
-        public Size DriveImageMaxSize { get; set; }
+        [XmlArray]
+        public List<DriveInfo> Drives { get; set; } = new List<DriveInfo>();
     }
 }

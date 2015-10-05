@@ -18,6 +18,8 @@ namespace Oblqo
         public Storage Storage { get; private set; }
         public Account Account { get; private set; }
 
+        public string Id { get; set; }
+
         /// <summary>
         /// Name format of property for storage file ID.
         /// {0} - storage kind.

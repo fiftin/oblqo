@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,45 +20,7 @@ namespace Oblqo
             }
         }
 
-        private class Resolution
-        {
-            public Resolution(Size size) : this(size.Width,size.Height) { }
-            public Resolution(int w, int h)
-            {
-                Size = new Size(w, h);
-            }
-            public Size Size { get; private set; }
-            public override string ToString()
-            {
-                return string.Format("{0} x {1}", Size.Width, Size.Height);
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Size.Equals(obj);
-            }
-
-            public override int GetHashCode()
-            {
-                return Size.GetHashCode();
-            }
-        }
-
-        private class CamelcaseWrapper
-        {
-            public object OriginalObject { get; private set; }
-            public string ReadableString { get; private set; }
-            public CamelcaseWrapper(object obj)
-            {
-                OriginalObject = obj;
-                ReadableString = Common.CamelcaseToHumanReadable(obj.ToString());
-            }
-
-            public override string ToString()
-            {
-                return ReadableString;
-            }
-        }
+        private readonly List<DriveInfo> drives = new List<DriveInfo>();
 
         public AccountForm(bool newAccount)
         {
@@ -72,17 +35,28 @@ namespace Oblqo
 
             regionComboBox.SelectedIndex = 0;
 
-            imageResolutionComboBox.Items.Add(new Resolution(1024, 768));
-            imageResolutionComboBox.Items.Add(new Resolution(1280, 1024));
-            imageResolutionComboBox.Items.Add(new Resolution(1600, 1200));
-
-            imageResolutionComboBox.SelectedIndex = 2;
-
-            foreach (var driveType in Enum.GetValues(typeof(DriveType)))
+            if (newAccount)
             {
-                driveKindComboBox.Items.Add(new CamelcaseWrapper(driveType));
+                driveTabControl.TabPages.Add(new DriveAccountTabPage());
             }
-            driveKindComboBox.SelectedIndex = 0;
+
+        }
+
+        public void AddDrives(IEnumerable<DriveInfo> d)
+        {
+            var driveInfos = d as DriveInfo[] ?? d.ToArray();
+            this.drives.AddRange(driveInfos);
+            foreach (var page in driveInfos.Select(drive => new DriveAccountTabPage(drive)))
+            {
+                driveTabControl.TabPages.Add(page);
+            }
+            driveTabControl.TabPages.Remove(addDriveTabPage);
+            driveTabControl.TabPages.Add(addDriveTabPage);
+        }
+
+        public IEnumerable<DriveInfo> GetDrives()
+        {
+            return drives;
         }
 
         public string StorageRegionSystemName
@@ -100,42 +74,7 @@ namespace Oblqo
                 }
             }
         }
-
-        public DriveType DriveType
-        {
-            get
-            {
-                return (DriveType)((CamelcaseWrapper)driveKindComboBox.SelectedItem).OriginalObject;
-            }
-            set
-            {
-                foreach (CamelcaseWrapper item in driveKindComboBox.Items)
-                {
-                    if ((DriveType)item.OriginalObject == value)
-                    {
-                        driveKindComboBox.SelectedItem = item;
-                    }
-                }
-            }
-        }
-
-        public Size DriveImageResolution
-        {
-            get { return ((Resolution) imageResolutionComboBox.SelectedItem).Size; }
-            set
-            {
-                for (var i = 0; i < imageResolutionComboBox.Items.Count; i++)
-                {
-                    var x = (Resolution)imageResolutionComboBox.Items[i];
-                    if (x.Size.Equals(value))
-                    {
-                        imageResolutionComboBox.SelectedIndex = i;
-                        break;
-                    }
-                }
-            }
-        }
-
+        
         public override sealed string Text
         {
             get { return base.Text; }
@@ -160,17 +99,12 @@ namespace Oblqo
             set { accountNameTextBox.Text = value; }
         }
 
-        public string DriveRootPath
-        {
-            get { return driveRootPathTextBox.Text; }
-            set { driveRootPathTextBox.Text = value; }
-        }
         public string GlacierVault
         {
             get { return glacierVaultTextBox.Text; }
             set { glacierVaultTextBox.Text = value; }
         }
-
+        
         private void AccountForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             
@@ -181,19 +115,8 @@ namespace Oblqo
 
         }
 
-        private void driveRootPathBrowseButton_Click(object sender, EventArgs e)
-        {
-            folderBrowserDialog1.SelectedPath = DriveRootPath;
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                DriveRootPath = folderBrowserDialog1.SelectedPath;
-            }
-        }
-
         private void driveKindComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            driveRootPathBrowseButton.Enabled = DriveType == DriveType.LocalDrive;
-            localDriveTabPage.Text = driveKindComboBox.Text;
         }
 
         private void AccountForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -221,5 +144,18 @@ namespace Oblqo
                 storageAccessKeyIdTextBox.Focus();
             }
         }
+
+        private void driveTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage != addDriveTabPage)
+            {
+                return;
+            }
+            var tab = new DriveAccountTabPage();
+            driveTabControl.TabPages.Insert(driveTabControl.TabPages.Count - 1, tab);
+            driveTabControl.SelectedTab = tab;
+        }
+
+        
     }
 }

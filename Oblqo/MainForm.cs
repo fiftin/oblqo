@@ -316,9 +316,9 @@ namespace Oblqo
                 case NodeType.Account:
                     vaultNameLabel.Text = nodeInfo.AccountInfo.StorageVault;
                     vaultRegionLabel.Text = nodeInfo.AccountInfo.StorageRegionSystemName;
-                    driveTypeLabel.Text = Common.CamelcaseToHumanReadable(nodeInfo.AccountInfo.DriveType.ToString());
-                    driveRootLabel.Text = nodeInfo.AccountInfo.DriveRootPath.Length == 0 ? "/" : nodeInfo.AccountInfo.DriveRootPath;
-                    imageMaxSizeLabel.Text = string.Format("{0} x {1}", nodeInfo.AccountInfo.DriveImageMaxSize.Width, nodeInfo.AccountInfo.DriveImageMaxSize.Height);
+                    //driveTypeLabel.Text = Common.CamelcaseToHumanReadable(nodeInfo.AccountInfo.DriveType.ToString());
+                    //driveRootLabel.Text = nodeInfo.AccountInfo.DriveRootPath.Length == 0 ? "/" : nodeInfo.AccountInfo.DriveRootPath;
+                    //imageMaxSizeLabel.Text = string.Format("{0} x {1}", nodeInfo.AccountInfo.DriveImageMaxSize.Width, nodeInfo.AccountInfo.DriveImageMaxSize.Height);
                     break;
                 case NodeType.Folder:
                     break;
@@ -389,11 +389,10 @@ namespace Oblqo
                     StorageAccessKeyId = accountForm.StorageAccessTokenId,
                     StorageSecretAccessKey = accountForm.StorageSecretAccessKey,
                     StorageVault = accountForm.GlacierVault,
-                    DriveType = accountForm.DriveType,
-                    DriveRootPath = accountForm.DriveRootPath,
-                    DriveImageMaxSize = accountForm.DriveImageResolution,
                     StorageRegionSystemName = accountForm.StorageRegionSystemName,
                 };
+                info.Drives.Clear();
+                info.Drives.AddRange(accountForm.GetDrives());
                 accountManager.Add(info);
                 var node = treeView1.Nodes.Add("", info.AccountName, AccountImageKey);
                 node.SelectedImageKey = AccountImageKey;
@@ -417,12 +416,9 @@ namespace Oblqo
         private void UpdateTaskList()
         {
             taskListView.Items.Clear();
-            foreach (var task in taskManager.ToArray())
+            foreach (var task in taskManager.ToArray().Where(task => displayingTaskListStates.Contains(task.State)))
             {
-                if (displayingTaskListStates.Contains(task.State))
-                {
-                    AddTask(task);
-                }
+                AddTask(task);
             }
         }
 
@@ -735,22 +731,30 @@ namespace Oblqo
                 accountForm.AccountName = account.AccountName;
                 accountForm.StorageAccessTokenId = account.StorageAccessKeyId;
                 accountForm.StorageSecretAccessKey = account.StorageSecretAccessKey;
-                accountForm.DriveRootPath = account.DriveRootPath;
-                accountForm.DriveImageResolution = account.DriveImageMaxSize;
                 accountForm.StorageRegionSystemName = account.StorageRegionSystemName;
                 accountForm.GlacierVault = account.StorageVault;
-                accountForm.DriveType = account.DriveType;
+                accountForm.AddDrives(account.Drives);
+
+                //accountForm.DriveRootPath = account.DriveRootPath;
+                //accountForm.DriveImageResolution = account.DriveImageMaxSize;
+                //accountForm.DriveType = account.DriveType;
+
                 if (accountForm.ShowDialog() != DialogResult.OK) return;
                 account.AccountName = accountForm.AccountName;
                 account.StorageAccessKeyId = accountForm.StorageAccessTokenId;
                 account.StorageSecretAccessKey = accountForm.StorageSecretAccessKey;
                 account.StorageRegionSystemName = accountForm.StorageRegionSystemName;
                 account.StorageVault = accountForm.GlacierVault;
-                account.DriveType = accountForm.DriveType;
-                account.DriveRootPath = accountForm.DriveRootPath;
-                account.StorageVault = accountForm.GlacierVault;
-                account.DriveImageMaxSize = accountForm.DriveImageResolution;
                 node.Text = account.AccountName;
+
+                account.Drives.Clear();
+                account.Drives.AddRange(accountForm.GetDrives());
+
+
+                //account.DriveImageMaxSize = accountForm.DriveImageResolution;
+                //account.DriveType = accountForm.DriveType;
+                //account.DriveRootPath = accountForm.DriveRootPath;
+
                 DisconnectAccount(node);
                 await ConnectAccountAsync(node);
             }

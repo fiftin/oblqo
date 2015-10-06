@@ -31,7 +31,7 @@ namespace Oblqo
 
         public DriveFile GetFile(Drive drive)
         {
-            return files.Single(file => file.Drive == drive);
+            return files.SingleOrDefault(file => file.Drive == drive);
         }
 
         public void Add(DriveFile file)

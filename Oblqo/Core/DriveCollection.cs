@@ -131,26 +131,26 @@ namespace Oblqo
         public async Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
             CancellationToken token)
         {
-            var ret = new List<DriveFileCollection>();
+            var dic = new SortedDictionary<string, DriveFileCollection>();
             foreach (var f in folder.Files)
             {
-                AddFiles(await f.Drive.GetSubfoldersAsync(f, token), ret);
+                AddFiles(await f.Drive.GetSubfoldersAsync(f, token), dic);
             }
-            return ret;
+            return dic.Values;
         }
 
-        private void AddFiles(DriveFile file, ICollection<DriveFileCollection> fileCollections)
+        private void AddFiles(DriveFile file, IDictionary<string, DriveFileCollection> fileCollections)
         {
-            var collection = file.StorageFileId == null ? null : fileCollections.FirstOrDefault(x => x.StorageFileId == file.StorageFileId);
-            if (collection == null)
+            DriveFileCollection collection;
+            if (file.StorageFileId == null || !fileCollections.TryGetValue(file.StorageFileId, out collection))
             {
                 collection = new DriveFileCollection(this);
-                fileCollections.Add(collection);
+                fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
             }
             collection.Add(file);
         }
 
-        private void AddFiles(IEnumerable<DriveFile> files, ICollection<DriveFileCollection> fileCollections)
+        private void AddFiles(IEnumerable<DriveFile> files, SortedDictionary<string, DriveFileCollection> fileCollections)
         {
             foreach (var file in files)
             {
@@ -160,12 +160,12 @@ namespace Oblqo
 
         public async Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
         {
-            var ret = new List<DriveFileCollection>();
+            var dic = new SortedDictionary<string, DriveFileCollection>();
             foreach (var f in folder.Files)
             {
-                AddFiles(await f.Drive.GetFilesAsync(f, token), ret);
+                AddFiles(await f.Drive.GetFilesAsync(f, token), dic);
             }
-            return ret;
+            return dic.Values;
         }
 
         public async Task<DriveFileCollection> GetFileAsync(XElement xml, CancellationToken token)

@@ -42,7 +42,12 @@ namespace Oblqo
         {
             foreach (var drive in drives)
             {
-                var image = await drive.GetImageAsync(file.GetFile(drive), token);
+                var f = file.GetFile(drive);
+                if (f == null)
+                {
+                    continue;
+                }
+                var image = await drive.GetImageAsync(f, token);
                 if (image != null)
                 {
                     return image;

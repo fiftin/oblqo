@@ -47,9 +47,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.driveTabControl = new System.Windows.Forms.TabControl();
+            this.addDriveTabPage = new System.Windows.Forms.TabPage();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.addDriveTabPage = new System.Windows.Forms.TabPage();
             this.groupBox1.SuspendLayout();
             this.storageTabControl.SuspendLayout();
             this.glacierTabPage.SuspendLayout();
@@ -61,7 +61,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(421, 455);
+            this.cancelButton.Location = new System.Drawing.Point(424, 455);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(87, 31);
             this.cancelButton.TabIndex = 10;
@@ -72,7 +72,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(327, 455);
+            this.okButton.Location = new System.Drawing.Point(331, 455);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(87, 31);
             this.okButton.TabIndex = 9;
@@ -90,9 +90,9 @@
             // 
             // accountNameTextBox
             // 
-            this.accountNameTextBox.Location = new System.Drawing.Point(163, 19);
+            this.accountNameTextBox.Location = new System.Drawing.Point(155, 19);
             this.accountNameTextBox.Name = "accountNameTextBox";
-            this.accountNameTextBox.Size = new System.Drawing.Size(336, 20);
+            this.accountNameTextBox.Size = new System.Drawing.Size(330, 20);
             this.accountNameTextBox.TabIndex = 0;
             // 
             // storageAccessKeyIdTextBox
@@ -130,9 +130,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.storageTabControl);
-            this.groupBox1.Location = new System.Drawing.Point(20, 54);
+            this.groupBox1.Location = new System.Drawing.Point(12, 54);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(489, 182);
+            this.groupBox1.Size = new System.Drawing.Size(499, 182);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Archive Account";
@@ -143,7 +143,7 @@
             this.storageTabControl.Location = new System.Drawing.Point(6, 19);
             this.storageTabControl.Name = "storageTabControl";
             this.storageTabControl.SelectedIndex = 0;
-            this.storageTabControl.Size = new System.Drawing.Size(477, 157);
+            this.storageTabControl.Size = new System.Drawing.Size(487, 157);
             this.storageTabControl.TabIndex = 11;
             // 
             // glacierTabPage
@@ -159,7 +159,7 @@
             this.glacierTabPage.Location = new System.Drawing.Point(4, 23);
             this.glacierTabPage.Name = "glacierTabPage";
             this.glacierTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.glacierTabPage.Size = new System.Drawing.Size(469, 130);
+            this.glacierTabPage.Size = new System.Drawing.Size(479, 130);
             this.glacierTabPage.TabIndex = 0;
             this.glacierTabPage.Text = "Amazon Glacier";
             this.glacierTabPage.UseVisualStyleBackColor = true;
@@ -201,9 +201,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.driveTabControl);
-            this.groupBox2.Location = new System.Drawing.Point(20, 251);
+            this.groupBox2.Location = new System.Drawing.Point(12, 251);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(489, 198);
+            this.groupBox2.Size = new System.Drawing.Size(499, 198);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Drive Account";
@@ -216,15 +216,9 @@
             this.driveTabControl.Location = new System.Drawing.Point(6, 19);
             this.driveTabControl.Name = "driveTabControl";
             this.driveTabControl.SelectedIndex = 0;
-            this.driveTabControl.Size = new System.Drawing.Size(477, 173);
+            this.driveTabControl.Size = new System.Drawing.Size(487, 173);
             this.driveTabControl.TabIndex = 19;
             this.driveTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.driveTabControl_Selecting);
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "021.png");
             // 
             // addDriveTabPage
             // 
@@ -232,10 +226,16 @@
             this.addDriveTabPage.Location = new System.Drawing.Point(4, 23);
             this.addDriveTabPage.Name = "addDriveTabPage";
             this.addDriveTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.addDriveTabPage.Size = new System.Drawing.Size(469, 146);
+            this.addDriveTabPage.Size = new System.Drawing.Size(479, 146);
             this.addDriveTabPage.TabIndex = 0;
             this.addDriveTabPage.Text = "Add";
             this.addDriveTabPage.UseVisualStyleBackColor = true;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "021.png");
             // 
             // AccountForm
             // 

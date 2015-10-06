@@ -20,7 +20,7 @@ namespace Oblqo
             }
         }
 
-        private readonly List<DriveInfo> drives = new List<DriveInfo>();
+        //private readonly List<DriveInfo> drives = new List<DriveInfo>();
 
         public AccountForm(bool newAccount)
         {
@@ -38,6 +38,8 @@ namespace Oblqo
             if (newAccount)
             {
                 driveTabControl.TabPages.Add(new DriveAccountTabPage());
+                driveTabControl.TabPages.Remove(addDriveTabPage);
+                driveTabControl.TabPages.Add(addDriveTabPage);
             }
 
         }
@@ -45,7 +47,7 @@ namespace Oblqo
         public void AddDrives(IEnumerable<DriveInfo> d)
         {
             var driveInfos = d as DriveInfo[] ?? d.ToArray();
-            this.drives.AddRange(driveInfos);
+            //this.drives.AddRange(driveInfos);
             foreach (var page in driveInfos.Select(drive => new DriveAccountTabPage(drive)))
             {
                 driveTabControl.TabPages.Add(page);
@@ -56,7 +58,12 @@ namespace Oblqo
 
         public IEnumerable<DriveInfo> GetDrives()
         {
-            return drives;
+            return driveTabControl.TabPages.OfType<DriveAccountTabPage>().Select(page => new DriveInfo
+            {
+                DriveType = page.DriveControl.DriveType,
+                DriveRootPath = page.DriveControl.DriveRootPath,
+                DriveImageMaxSize = page.DriveControl.DriveImageResolution
+            }).ToList();
         }
 
         public string StorageRegionSystemName

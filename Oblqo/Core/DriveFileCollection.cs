@@ -14,6 +14,8 @@ namespace Oblqo
 
         public DriveCollection Drive { get; private set; }
 
+        public IEnumerable<DriveFile> Files => files;
+
         public DriveFileCollection(DriveCollection drive)
         {
             Drive = drive;

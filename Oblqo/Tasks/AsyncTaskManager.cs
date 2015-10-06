@@ -235,7 +235,7 @@ namespace Oblqo
                     {
                         var waitingTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Waiting);
                         var runningTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Running);
-                        int i = MaxNumberOfTasksRunning - runningTasks.Count;
+                        var i = MaxNumberOfTasksRunning - runningTasks.Count;
                         if (i > 0 && waitingTasks.Count > 0)
                         {
                             foreach (var task in waitingTasks)
@@ -248,7 +248,7 @@ namespace Oblqo
                                 {
                                     continue;
                                 }
-                                Task t = new Task(task.StartAsync);
+                                var t = new Task(task.StartAsync);
                                 t.Start();
                                 var taskInfo = new TaskInfo(task, t);
                                 i--;
@@ -267,8 +267,7 @@ namespace Oblqo
         
         private void OnError(Exception exception)
         {
-            if (Exception != null)
-                Exception(this, new ExceptionEventArgs(exception));
+            Exception?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         public event EventHandler<AsyncTaskEventArgs> TaskStateChanged;

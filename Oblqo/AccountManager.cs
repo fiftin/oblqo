@@ -34,15 +34,13 @@ namespace Oblqo
         public void Remove(string name)
         {
             var account = Get(name);
-            if (account != null)
+            if (account == null) return;
+            accounts.Remove(account);
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
             {
-                accounts.Remove(account);
-                using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-                {
-                    DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName);
-                    DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName + "/tasks");
-                    store.DeleteDirectory("accounts/" + account.AccountName);
-                }
+                DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName);
+                DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName + "/tasks");
+                store.DeleteDirectory("accounts/" + account.AccountName);
             }
         }
 
@@ -59,10 +57,7 @@ namespace Oblqo
             }
         }
 
-        public IEnumerable<AccountInfo> Accounts
-        {
-            get { return accounts; }
-        }
+        public IEnumerable<AccountInfo> Accounts => accounts;
 
         public AccountInfo Get(string name)
         {
@@ -88,6 +83,7 @@ namespace Oblqo
                     }
                     catch (Exception)
                     {
+                        // ignored
                     }
                 }
             }
@@ -100,6 +96,12 @@ namespace Oblqo
             {
                 foreach (var account in accounts)
                 {
+                    if (account.OldAccountName != null)
+                    {
+                        var oldPath = "accounts/" + account.OldAccountName;
+                        DeleteAllFilesInDirectory(store, oldPath);
+                        store.DeleteDirectory(oldPath);
+                    }
                     var path = "accounts/" + account.AccountName;
                     if (!store.DirectoryExists(path))
                     {

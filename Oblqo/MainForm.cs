@@ -641,19 +641,13 @@ namespace Oblqo
                         {
                             var task = (DeleteFileTask)e.Task;
                             var listItem = task.Tag as ListViewItem;
-                            if (listItem != null)
-                            {
-                                listItem.Remove();
-                            }
+                            listItem?.Remove();
                         }
                         else if (e.Task is DeleteFolderTask)
                         {
                             var task = (DeleteFolderTask)e.Task;
                             var node = task.Tag as TreeNode;
-                            if (node != null)
-                            {
-                                node.Remove();
-                            }
+                            node?.Remove();
                         }
                         else if (e.Task is SynchronizeFileTask)
                         {
@@ -705,13 +699,14 @@ namespace Oblqo
             switch (e.Button)
             {
                 case MouseButtons.Right:
-                    if (nodeInfo.Type == NodeType.Account)
+                    switch (nodeInfo.Type)
                     {
-                        accountMenu.Show(Cursor.Position);
-                    }
-                    else if (nodeInfo.Type == NodeType.Folder)
-                    {
-                        folderMenu.Show(Cursor.Position);
+                        case NodeType.Account:
+                            accountMenu.Show(Cursor.Position);
+                            break;
+                        case NodeType.Folder:
+                            folderMenu.Show(Cursor.Position);
+                            break;
                     }
                     break;
             }
@@ -735,11 +730,8 @@ namespace Oblqo
                 accountForm.GlacierVault = account.StorageVault;
                 accountForm.AddDrives(account.Drives);
 
-                //accountForm.DriveRootPath = account.DriveRootPath;
-                //accountForm.DriveImageResolution = account.DriveImageMaxSize;
-                //accountForm.DriveType = account.DriveType;
-
                 if (accountForm.ShowDialog() != DialogResult.OK) return;
+                account.OldAccountName = accountForm.AccountName == account.AccountName ? null : account.AccountName;
                 account.AccountName = accountForm.AccountName;
                 account.StorageAccessKeyId = accountForm.StorageAccessTokenId;
                 account.StorageSecretAccessKey = accountForm.StorageSecretAccessKey;
@@ -749,11 +741,6 @@ namespace Oblqo
 
                 account.Drives.Clear();
                 account.Drives.AddRange(accountForm.GetDrives());
-
-
-                //account.DriveImageMaxSize = accountForm.DriveImageResolution;
-                //account.DriveType = accountForm.DriveType;
-                //account.DriveRootPath = accountForm.DriveRootPath;
 
                 DisconnectAccount(node);
                 await ConnectAccountAsync(node);
@@ -858,8 +845,7 @@ namespace Oblqo
             {
                 lock (pictureCancellationTokenSourceLoker)
                 {
-                    if (pictureCancellationTokenSource != null)
-                        pictureCancellationTokenSource.Cancel();
+                    pictureCancellationTokenSource?.Cancel();
                     pictureCancellationTokenSource = new CancellationTokenSource();
                 }
 

@@ -10,6 +10,11 @@ namespace Oblqo
     /// </summary>
     public class AccountInfo
     {
+        public string oldAccountName;
+
+        [XmlIgnore]
+        public string OldAccountName { get; set; }
+
         public string AccountName { get; set; }
 
         public string StorageAccessKeyId { get; set; }

@@ -44,7 +44,7 @@ namespace Oblqo
 
         public async Task<ICollection<AccountFile>> GetFilesAsync(AccountFile folder, CancellationToken token)
         {
-            var driveFiles = await Drive.GetFilesAsync(folder == null ? null : folder.DriveFile, token);
+            var driveFiles = await Drive.GetFilesAsync(folder?.DriveFile, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
         }
 
@@ -103,7 +103,6 @@ namespace Oblqo
             return new AccountFile(storageDir, driveDir);
         }
         
-
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
         {
             await Drive.DeleteFolderAsync(folder.DriveFile, token);

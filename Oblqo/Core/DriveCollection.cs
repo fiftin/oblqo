@@ -128,15 +128,44 @@ namespace Oblqo
             await Task.WhenAll(tasks);
         }
 
-        public Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
+        public async Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
             CancellationToken token)
         {
-            throw new NotImplementedException();
+            var ret = new List<DriveFileCollection>();
+            foreach (var f in folder.Files)
+            {
+                AddFiles(await f.Drive.GetSubfoldersAsync(f, token), ret);
+            }
+            return ret;
         }
 
-        public Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
+        private void AddFiles(DriveFile file, ICollection<DriveFileCollection> fileCollections)
         {
-            throw new NotImplementedException();
+            var collection = file.StorageFileId == null ? null : fileCollections.FirstOrDefault(x => x.StorageFileId == file.StorageFileId);
+            if (collection == null)
+            {
+                collection = new DriveFileCollection(this);
+                fileCollections.Add(collection);
+            }
+            collection.Add(file);
+        }
+
+        private void AddFiles(IEnumerable<DriveFile> files, ICollection<DriveFileCollection> fileCollections)
+        {
+            foreach (var file in files)
+            {
+                AddFiles(file, fileCollections);
+            }
+        }
+
+        public async Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
+        {
+            var ret = new List<DriveFileCollection>();
+            foreach (var f in folder.Files)
+            {
+                AddFiles(await f.Drive.GetFilesAsync(f, token), ret);
+            }
+            return ret;
         }
 
         public async Task<DriveFileCollection> GetFileAsync(XElement xml, CancellationToken token)

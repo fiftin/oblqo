@@ -33,6 +33,8 @@ namespace Oblqo
             Text = Common.CamelcaseToHumanReadable(driveAccountControl1.DriveType.ToString());
         }
 
+        public DriveAccountControl DriveControl => driveAccountControl1;
+
         public override sealed string Text
         {
             get { return base.Text; }

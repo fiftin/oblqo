@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -71,31 +72,21 @@ namespace Oblqo.Local
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
         {
-            List<DriveFile> ret = new List<DriveFile>();
-            foreach (var file in ((LocalFile)folder).Directory.EnumerateFiles())
-            {
-                ret.Add(LocalFileFactory.Instance.Create(this, file, false));
-            }
-            return ret;
+            return ((LocalFile) folder).Directory.EnumerateFiles()
+                .Select(file => LocalFileFactory.Instance.Create(this, file, false))
+                .Cast<DriveFile>().ToList();
         }
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            List<DriveFile> ret = new List<DriveFile>();
-            foreach (var file in ((LocalFile)folder).Directory.EnumerateDirectories())
-            {
-                ret.Add(LocalFileFactory.Instance.Create(this, file, false));
-            }
-            return ret;
+            return ((LocalFile) folder).Directory.EnumerateDirectories()
+                .Select(file => LocalFileFactory.Instance.Create(this, file, false))
+                .Cast<DriveFile>().ToList();
         }
 
         public override async Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
         {
-            if (!((LocalFile)file).IsImage)
-            {
-                return null;
-            }
-            return Image.FromStream(((LocalFile)file).File.OpenRead());
+            return !((LocalFile)file).IsImage ? null : Image.FromStream(((LocalFile)file).File.OpenRead());
         }
 
         public override async Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
@@ -105,22 +96,21 @@ namespace Oblqo.Local
 
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
+            ImageFormat imageType;
             Stream scaled;
-            ImageType imageType;
-            var image = Image.FromStream(stream);
+            Image image;
             if (TryGetImageType(fileName, out imageType))
             {
-                scaled = await ScaleImageAsync(imageType, image, stream);
+                image = Image.FromStream(stream);
+                scaled = await ScaleImageAsync(image, imageType);
             }
             else
             {
+                image = null;
                 scaled = stream;
             }
             var observed = new ObserverStream(scaled);
-            observed.PositionChanged += (sender, e) =>
-            {
-                ;
-            };
+            observed.PositionChanged += (sender, e) => { };
             var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + fileName);
             using (var outStream = f.Create())
             {
@@ -128,10 +118,10 @@ namespace Oblqo.Local
             }
             var localFile = LocalFileFactory.Instance.Create(this, f, false);
             //var originFile = new FileInfo(pathName);
-            await localFile.SetAttributeAsync(nameof(localFile.StorageFileId), storageFileId, token);
+            await localFile.SetAttributeAsync("StorageFileId", storageFileId, token);
             //await localFile.SetAttributeAsync(nameof(localFile.OriginalSize), originFile.Length.ToString(), token);
-            await localFile.SetAttributeAsync(nameof(localFile.OriginalImageHeight), image.Height.ToString(), token);
-            await localFile.SetAttributeAsync(nameof(localFile.OriginalImageWidth), image.Width.ToString(), token);
+            await localFile.SetAttributeAsync("OriginalImageHeight", image?.Height.ToString(), token);
+            await localFile.SetAttributeAsync("OriginalImageWidth", image?.Width.ToString(), token);
             return localFile;
 
         }

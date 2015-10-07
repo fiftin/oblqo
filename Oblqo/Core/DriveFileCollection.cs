@@ -56,19 +56,19 @@ namespace Oblqo
 
         public int OriginalImageWidth
         {
-            get { throw new NotImplementedException(); }
+            get { return First.OriginalImageWidth; }
             set { throw new NotImplementedException(); }
         }
 
         public int OriginalImageHeight
         {
-            get { throw new NotImplementedException(); }
+            get { return First.OriginalImageHeight; }
             set { throw new NotImplementedException(); }
         }
 
         public long OriginalSize
         {
-            get { throw new NotImplementedException(); }
+            get { return First.OriginalSize; }
             set { throw new NotImplementedException(); }
         }
 
@@ -91,10 +91,10 @@ namespace Oblqo
             return root;
         }
 
-        //public async Task ScaleImageAsync()
-        //{
-        //    await Task.WhenAll(files.Select(drive => drive.ScaleImageAsync()));
-        //}
+        public async Task ScaleImageAsync()
+        {
+            await Task.WhenAll(files.Select(drive => drive.ScaleImageAsync()));
+        }
 
         public async Task SetStorageFileIdAsync(string value, CancellationToken token)
         {

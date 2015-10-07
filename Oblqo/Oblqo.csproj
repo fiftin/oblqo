@@ -174,7 +174,6 @@
     <Compile Include="Google\GoogleItemKinds.cs" />
     <Compile Include="Google\GoogleFileList.cs" />
     <Compile Include="Google\GoogleMimeTypes.cs" />
-    <Compile Include="Core\ImageType.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

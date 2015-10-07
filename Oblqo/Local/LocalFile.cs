@@ -10,20 +10,19 @@ namespace Oblqo.Local
     public abstract class LocalFile : DriveFile
     {
         internal FileSystemInfo file;
-        private bool isRoot;
 
 
-        public LocalFile(LocalDrive drive, FileSystemInfo file, bool isRoot)
+        protected LocalFile(LocalDrive drive, FileSystemInfo file, bool isRoot)
             : base(drive)
         {
-            this.isRoot = isRoot;
+            this.IsRoot = isRoot;
             this.file = file;
         }
 
-        public LocalFile(LocalDrive drive, string path, bool isRoot)
+        protected LocalFile(LocalDrive drive, string path, bool isRoot)
             : base(drive)
         {
-            this.isRoot = isRoot;
+            this.IsRoot = isRoot;
             if (System.IO.File.Exists(path))
             {
                 this.file = new FileInfo(path);
@@ -34,13 +33,7 @@ namespace Oblqo.Local
             }
         }
 
-        public override DateTime CreatedDate
-        {
-            get
-            {
-                return file.CreationTime;
-            }
-        }
+        public override DateTime CreatedDate => file.CreationTime;
 
         public override bool HasChildren
         {
@@ -55,13 +48,7 @@ namespace Oblqo.Local
             }
         }
 
-        public override string Id
-        {
-            get
-            {
-                return file.FullName;
-            }
-        }
+        public override string Id => file.FullName;
 
         public override int ImageHeight
         {
@@ -87,76 +74,30 @@ namespace Oblqo.Local
             }
         }
 
-        public override bool IsFolder
-        {
-            get
-            {
-                return file is DirectoryInfo;
-            }
-        }
+        public override bool IsFolder => file is DirectoryInfo;
 
-        public override bool IsImage
-        {
-            get
-            {
-                return MimeType.StartsWith("image/");
-            }
-        }
+        public override bool IsImage => MimeType.StartsWith("image/");
 
-        public override bool IsRoot
-        {
-            get
-            {
-                return isRoot;
-            }
-        }
+        public override bool IsRoot { get; }
 
-        public override string MimeType
-        {
-            get
-            {
-                return MimeTypes.GetMimeTypeByExtension(file.Name);
-            }
-        }
+        public override string MimeType => MimeTypes.GetMimeTypeByExtension(file.Name);
 
-        public override DateTime ModifiedDate
-        {
-            get
-            {
-                return file.LastWriteTime;
-            }
-        }
+        public override DateTime ModifiedDate => file.LastWriteTime;
 
-        public override string Name
-        {
-            get
-            {
-                return file.Name;
-            }
-        }
-        
-        public override long Size
-        {
-            get
-            {
-                return ((FileInfo)file).Length;
-            }
-        }
+        public override string Name => file.Name;
+
+        public override long Size => ((FileInfo)file).Length;
 
         public override int OriginalImageWidth
         {
             get
             {
                 int ret;
-                if (int.TryParse(GetAttribute(nameof(OriginalImageWidth)), out ret))
-                {
-                    return ret;
-                }
-                return 0;
+                return int.TryParse(GetAttribute("OriginalImageWidth"), out ret) ? ret : 0;
             }
             set
             {
-                SetAttribute(nameof(OriginalImageWidth), value.ToString());
+                SetAttribute("OriginalImageWidth", value.ToString());
             }
         }
 
@@ -165,15 +106,11 @@ namespace Oblqo.Local
             get
             {
                 int ret;
-                if (int.TryParse(GetAttribute(nameof(OriginalImageHeight)), out ret))
-                {
-                    return ret;
-                }
-                return 0;
+                return int.TryParse(GetAttribute("OriginalImageHeight"), out ret) ? ret : 0;
             }
             set
             {
-                SetAttribute(nameof(OriginalImageHeight), value.ToString());
+                SetAttribute("OriginalImageHeight", value.ToString());
             }
         }
 
@@ -182,15 +119,11 @@ namespace Oblqo.Local
             get
             {
                 long ret;
-                if (long.TryParse(GetAttribute(nameof(OriginalSize)), out ret))
-                {
-                    return ret;
-                }
-                return 0;
+                return long.TryParse(GetAttribute("OriginalSize"), out ret) ? ret : 0;
             }
             set
             {
-                SetAttribute(nameof(OriginalSize), value.ToString());
+                SetAttribute("OriginalSize", value.ToString());
             }
         }
 

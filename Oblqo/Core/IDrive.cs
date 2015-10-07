@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,9 +15,9 @@ namespace Oblqo
         Storage Storage { get; }
         Account Account { get; }
         Image ScaleImage(Image image);
-        bool TryGetImageType(string pathName, out ImageType type);
-        Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream);
-        Task<Stream> ScaleImageAsync(ImageType type, Stream input);
+        //bool TryGetImageType(string pathName, out ImageFormat type);
+        Task<Stream> ScaleImageAsync(Image image, ImageFormat type, Stream defaultStream);
+        Task<Stream> ScaleImageAsync(Stream input, ImageFormat type);
         Task<Image> GetImageAsync(DriveFile file, CancellationToken token);
         Task DeleteFileAsync(DriveFile driveFile, CancellationToken token);
         Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token);

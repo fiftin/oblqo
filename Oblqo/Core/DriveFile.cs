@@ -30,7 +30,7 @@ namespace Oblqo
 
         public Drive Drive { get; private set; }
 
-        public DriveFile(Drive drive)
+        protected DriveFile(Drive drive)
         {
             Drive = drive;
         }

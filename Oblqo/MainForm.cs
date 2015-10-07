@@ -256,7 +256,7 @@ namespace Oblqo
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
                         numberOfFiles++;
-                        if (file.StorageFile == null || string.IsNullOrEmpty(file.StorageFile.Id))
+                        if (string.IsNullOrEmpty(file.StorageFile?.Id))
                         {
                             numberOfUnsyncFiles++;
                         }
@@ -272,15 +272,14 @@ namespace Oblqo
                                 continue;
                             }
                         }
-
-                        string mimeType = file.DriveFile.MimeType;
-                        string key = "file";
-                        if (!string.IsNullOrWhiteSpace(mimeType))
+                        
+                        var key = "file";
+                        if (!string.IsNullOrWhiteSpace(file.DriveFile.MimeType))
                         {
-                            string[] mimeTypeParts = mimeType.Split('/');
+                            var mimeTypeParts = file.DriveFile.MimeType.Split('/');
                             if (mimeTypeParts.Length == 2)
                             {
-                                string tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
+                                var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
                                 if (smallImageList.Images.ContainsKey(tmpKey))
                                 {
                                     key = tmpKey;

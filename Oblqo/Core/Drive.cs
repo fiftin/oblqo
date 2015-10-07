@@ -55,58 +55,47 @@ namespace Oblqo
             return ret;
         }
 
-        public bool TryGetImageType(string pathName, out ImageType type)
+        public bool TryGetImageType(string pathName, out ImageFormat type)
         {
             var ext = Path.GetExtension(pathName)?.ToLower();
             switch (ext)
             {
                 case ".jpg":
                 case ".jpeg":
-                    type = ImageType.Jpeg;
+                    type = ImageFormat.Jpeg;
                     break;
                 case ".png":
-                    type = ImageType.Png;
+                    type = ImageFormat.Png;
                     break;
                 case ".bmp":
-                    type = ImageType.Bmp;
+                    type = ImageFormat.Bmp;
                     break;
                 default:
-                    type = ImageType.Bmp;
+                    type = null;
                     return false;
             }
             return true;
         }
 
+        public async Task<Stream> ScaleImageAsync(Image image)
+        {
+            return await ScaleImageAsync(image, image.RawFormat);
+        }
 #pragma warning disable 1998
-        public async Task<Stream> ScaleImageAsync(ImageType type, Image image, Stream defaultStream)
+        public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type)
 #pragma warning restore 1998
         {
             var newImage = ScaleImage(image);
-            ImageFormat format;
-            switch (type)
-            {
-                case ImageType.Bmp:
-                    format = ImageFormat.Bmp;
-                    break;
-                case ImageType.Jpeg:
-                    format = ImageFormat.Jpeg;
-                    break;
-                case ImageType.Png:
-                    format = ImageFormat.Png;
-                    break;
-                default:
-                    return defaultStream;
-            }
             var output = new MemoryStream();
-            newImage.Save(output, format);
+            newImage.Save(output, type);
             output.Position = 0;
             return output;
         }
 
-        public async Task<Stream> ScaleImageAsync(ImageType type, Stream input)
+        public async Task<Stream> ScaleImageAsync(Stream input, ImageFormat type)
         {
             var image = Image.FromStream(input);
-            return await ScaleImageAsync(type, image, input);
+            return await ScaleImageAsync(image, type);
         }
         
 

@@ -12,6 +12,7 @@ using Google.Apis.Upload;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Auth.OAuth2.Responses;
 using Oblqo.Core;
+using System.Drawing.Imaging;
 
 namespace Oblqo.Google
 {
@@ -121,18 +122,12 @@ namespace Oblqo.Google
                 Parents =
                     new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
             };
-
-            System.IO.Stream scaled;
-            ImageType imageType;
-            if (TryGetImageType(fileName, out imageType))
-                scaled = await ScaleImageAsync(imageType, stream);
-            else
-                scaled = stream;
+            ImageFormat imageType;
+            var scaled = TryGetImageType(fileName, out imageType) 
+                ? await ScaleImageAsync(stream, imageType) 
+                : stream;
             var observed = new ObserverStream(scaled);
-            observed.PositionChanged += (sender, e) =>
-            {
-                ;
-            };
+            observed.PositionChanged += (sender, e) => { };
             var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
             if (request.Status == UploadStatus.Failed)
             {

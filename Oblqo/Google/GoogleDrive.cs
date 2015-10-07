@@ -326,5 +326,10 @@ namespace Oblqo.Google
             var request = service.Files.Get(fileId);
             return null;
         }
+
+        public override Task<DriveFile> UploadFileAsync(System.IO.Stream fileStream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -103,38 +103,44 @@ namespace Oblqo.Local
             return ((LocalFile)file).File.OpenRead();
         }
 
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        {
+            Stream scaled;
+            ImageType imageType;
+            var image = Image.FromStream(stream);
+            if (TryGetImageType(fileName, out imageType))
+            {
+                scaled = await ScaleImageAsync(imageType, image, stream);
+            }
+            else
+            {
+                scaled = stream;
+            }
+            var observed = new ObserverStream(scaled);
+            observed.PositionChanged += (sender, e) =>
+            {
+                ;
+            };
+            var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + fileName);
+            using (var outStream = f.Create())
+            {
+                await scaled.CopyToAsync(outStream);
+            }
+            var localFile = LocalFileFactory.Instance.Create(this, f, false);
+            //var originFile = new FileInfo(pathName);
+            await localFile.SetAttributeAsync(nameof(localFile.StorageFileId), storageFileId, token);
+            //await localFile.SetAttributeAsync(nameof(localFile.OriginalSize), originFile.Length.ToString(), token);
+            await localFile.SetAttributeAsync(nameof(localFile.OriginalImageHeight), image.Height.ToString(), token);
+            await localFile.SetAttributeAsync(nameof(localFile.OriginalImageWidth), image.Width.ToString(), token);
+            return localFile;
+
+        }
+
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             using (var stream = new FileStream(pathName, System.IO.FileMode.Open))
             {
-                Stream scaled;
-                ImageType imageType;
-                var image = Image.FromStream(stream);
-                if (TryGetImageType(pathName, out imageType))
-                {
-                    scaled = await ScaleImageAsync(imageType, image, stream);
-                }
-                else
-                {
-                    scaled = stream;
-                }
-                var observed = new ObserverStream(scaled);
-                observed.PositionChanged += (sender, e) =>
-                {
-                    ;
-                };
-                var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + Path.GetFileName(pathName));
-                using (var outStream = f.Create())
-                {
-                    await stream.CopyToAsync(outStream);
-                }
-                var localFile = (LocalFile)LocalFileFactory.Instance.Create(this, f, false);
-                var originFile = new FileInfo(pathName);
-                await localFile.SetAttributeAsync(nameof(localFile.StorageFileId), storageFileId, token);
-                await localFile.SetAttributeAsync(nameof(localFile.OriginalSize), originFile.Length.ToString(), token);
-                await localFile.SetAttributeAsync(nameof(localFile.OriginalImageHeight), image.Height.ToString(), token);
-                await localFile.SetAttributeAsync(nameof(localFile.OriginalImageWidth), image.Width.ToString(), token);
-                return localFile;
+                return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, storageFileId, token);
             }
         }
     }

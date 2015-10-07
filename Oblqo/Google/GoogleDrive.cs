@@ -93,22 +93,21 @@ namespace Oblqo.Google
             }
         }
 
-        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
+
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
-            Debug.Assert(System.IO.File.Exists(pathName) &&
-                         !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
             var service = await GetServiceAsync(token);
 
             // Initializing properties.
             List<Property> props = new List<Property>();
             //
-            props.Add(new Property { Key=string.Format("{0}.sid", Storage.Kind), Value=Storage.Id, Visibility="PRIVATE" });
+            props.Add(new Property { Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE" });
             //
             props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
             // Storage file ID.
             int storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
             int storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
-            string[] storageFileIdParts = Common.SplitBy(storageFileId, storageFileIdPropertyValueLen);
+            string[] storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             for (int i = 0; i < storageFileIdParts.Length; i++)
             {
@@ -118,32 +117,39 @@ namespace Oblqo.Google
             var file = new File
             {
                 Properties = props,
-                Title = System.IO.Path.GetFileName(pathName),
+                Title = fileName,
                 Parents =
                     new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
             };
 
-            using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
+            System.IO.Stream scaled;
+            ImageType imageType;
+            if (TryGetImageType(fileName, out imageType))
+                scaled = await ScaleImageAsync(imageType, stream);
+            else
+                scaled = stream;
+            var observed = new ObserverStream(scaled);
+            observed.PositionChanged += (sender, e) =>
             {
-                System.IO.Stream scaled;
-                ImageType imageType;
-                if (TryGetImageType(pathName, out imageType))
-                    scaled = await ScaleImageAsync(imageType, stream);
-                else
-                    scaled = stream;
-                var observed = new ObserverStream(scaled);
-                observed.PositionChanged += (sender, e) =>
-                {
-                    ;
-                };
-                var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
-                if (request.Status == UploadStatus.Failed)
-                {
-                    //TODO: Action if upload is failed
-                    throw new Exception(request.Exception.Message);
-                }
+                ;
+            };
+            var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
+            if (request.Status == UploadStatus.Failed)
+            {
+                //TODO: Action if upload is failed
+                throw new Exception(request.Exception.Message);
             }
             return new GoogleFile(this, file);
+        }
+
+        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        {
+            Debug.Assert(System.IO.File.Exists(pathName) &&
+                         !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
+            using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
+            {
+                return await UploadFileAsync(stream, System.IO.Path.GetFileName(pathName), destFolder, storageFileId, token);
+            }
         }
 
         public override async Task<System.IO.Stream> ReadFileAsync(DriveFile file, CancellationToken token)
@@ -325,11 +331,6 @@ namespace Oblqo.Google
             var service = await GetServiceAsync(token);
             var request = service.Files.Get(fileId);
             return null;
-        }
-
-        public override Task<DriveFile> UploadFileAsync(System.IO.Stream fileStream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
-        {
-            throw new NotImplementedException();
         }
     }
 }

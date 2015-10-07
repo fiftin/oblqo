@@ -18,6 +18,7 @@ namespace Oblqo
             imageResolutionComboBox.Items.Add(new Resolution(1024, 768));
             imageResolutionComboBox.Items.Add(new Resolution(1280, 1024));
             imageResolutionComboBox.Items.Add(new Resolution(1600, 1200));
+            imageResolutionComboBox.Items.Add(new Resolution(Size.Empty));
 
             imageResolutionComboBox.SelectedIndex = 2;
 

@@ -85,6 +85,7 @@ namespace Oblqo
         private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
         private int controlNumber = 0;
         private int indicateErrorNo;
+        private Font unsyncFileFont;
 
 
         public MainForm()
@@ -106,7 +107,7 @@ namespace Oblqo
             taskManager.Start();
             InitUI();
             splitContainer2.SplitterWidth = 7;
-            
+            unsyncFileFont = new Font(Font, FontStyle.Strikeout);
         }
 
         private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
@@ -286,11 +287,19 @@ namespace Oblqo
                                 }
                             }
                         }
+
                         var item = fileListView.Items.Add("", file.Name, key);
-                        if (string.IsNullOrEmpty(file.DriveFile.StorageFileId))
+
+                        if (file.DriveFile.Files.Count != account.Drive.Drives.Count)
                         {
                             item.ForeColor = Color.Red;
                         }
+
+                        if (string.IsNullOrEmpty(file.DriveFile.StorageFileId))
+                        {
+                            item.Font = unsyncFileFont;
+                        }
+
                         item.Tag = new NodeInfo(file, info.AccountName);
                         item.SubItems.Add(file.DriveFile.ModifiedDate.ToShortDateString());
                         item.SubItems.Add(Common.NumberOfBytesToString(file.DriveFile.Size));

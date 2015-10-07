@@ -8,9 +8,9 @@ namespace Oblqo.Tasks
 {
     public class SynchronizeFolderTask : AsyncTask
     {
-        protected override Task OnStartAsync()
+        protected async override Task OnStartAsync()
         {
-            throw new NotImplementedException();
+            //TODO: Implement Sync Folder
         }
     }
 }

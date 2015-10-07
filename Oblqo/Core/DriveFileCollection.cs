@@ -57,19 +57,28 @@ namespace Oblqo
         public int OriginalImageWidth
         {
             get { return First.OriginalImageWidth; }
-            set { throw new NotImplementedException(); }
+            set
+            {
+                //TODO: OriginalImageWidth setter
+            }
         }
 
         public int OriginalImageHeight
         {
             get { return First.OriginalImageHeight; }
-            set { throw new NotImplementedException(); }
+            set
+            {
+                //TODO: OriginalImageHeight setter
+            }
         }
 
         public long OriginalSize
         {
             get { return First.OriginalSize; }
-            set { throw new NotImplementedException(); }
+            set
+            {
+                //TODO: OriginalSize setter
+            }
         }
 
         public int ImageWidth => First.ImageWidth;

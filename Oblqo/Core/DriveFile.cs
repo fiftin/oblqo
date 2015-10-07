@@ -54,7 +54,9 @@ namespace Oblqo
 
         public ImageFormat GetImageType()
         {
-            return null;
+            ImageFormat ret;
+            Drive.TryGetImageType(Name, out ret);
+            return ret;
         }
 
         public abstract Task WriteAsync(byte[] bytes, CancellationToken token);

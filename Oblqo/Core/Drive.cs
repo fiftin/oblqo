@@ -119,8 +119,6 @@ namespace Oblqo
         public abstract Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder, CancellationToken token);
         public abstract Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token);
 
-        public abstract Task ClearAsync(CancellationToken token);
-
         public abstract Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token);
 
         /// <summary>

@@ -72,7 +72,7 @@ namespace Oblqo.Google
                 if (file == null)
                 {
                     var newFile = await CreateFolderAsync(f, new GoogleFile(this, parent), token);
-                    file = ((GoogleFile)newFile).file;
+                    file = ((GoogleFile)newFile).File;
                 }
             }
             return new GoogleFile(this, file);
@@ -123,8 +123,6 @@ namespace Oblqo.Google
         internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, IList<ParentReference> parents,
             string storageFileId, CancellationToken token)
         {
-            var service = await GetServiceAsync(token);
-            // Initializing properties.
             var props = new List<Property>
             {
                 new Property {Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE"},
@@ -138,24 +136,8 @@ namespace Oblqo.Google
             var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
-            var file = new File
-            {
-                Properties = props,
-                Title = fileName,
-                Parents = parents
-            };
-            ImageFormat imageType;
-            var scaled = TryGetImageType(fileName, out imageType)
-                ? await ScaleImageAsync(stream, imageType, token)
-                : stream;
-            var observed = new ObserverStream(scaled);
-            observed.PositionChanged += (sender, e) => { };
-            var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
-            if (request.Status == UploadStatus.Failed)
-            {
-                throw new Exception(request.Exception.Message);
-            }
-            return new GoogleFile(this, file);
+
+            return await UploadFileAsync(stream, fileName, parents, props, token);
         }
 
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
@@ -193,7 +175,7 @@ namespace Oblqo.Google
         public override async Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
 #pragma warning restore 1998
         {
-            var gFile = ((GoogleFile) file).file;
+            var gFile = ((GoogleFile) file).File;
             if (gFile.Thumbnail == null)
                 throw new Exception("File has no thumbnail");
             var bytes = Convert.FromBase64String(gFile.Thumbnail.Image);
@@ -251,14 +233,14 @@ namespace Oblqo.Google
             return await GetFilesAsync(folder.Id, string.Format("mimeType = '{0}'", GoogleMimeTypes.Folder), token);
         }
 
-        public override async Task ClearAsync(CancellationToken token)
-        {
-            Debug.Assert(RootFolder.IsFolder);
-            var service = await GetServiceAsync(token);
-            var files = await GetFilesAsync(RootFolder.Id, "", token);
-            foreach (var file in files)
-                await service.Files.Delete(file.Id).ExecuteAsync(token);
-        }
+//        public override async Task ClearAsync(CancellationToken token)
+//        {
+//            Debug.Assert(RootFolder.IsFolder);
+//            var service = await GetServiceAsync(token);
+//            var files = await GetFilesAsync(RootFolder.Id, "", token);
+//            foreach (var file in files)
+//                await service.Files.Delete(file.Id).ExecuteAsync(token);
+//        }
 
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
@@ -317,7 +299,7 @@ namespace Oblqo.Google
         public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
             Debug.Assert(!driveFile.IsFolder);
-            var url = ((GoogleFile) driveFile).file.DownloadUrl;
+            var url = ((GoogleFile) driveFile).File.DownloadUrl;
             if (url == null)
                 throw new TaskException("Can't download this file");
             var service = await GetServiceAsync(token);

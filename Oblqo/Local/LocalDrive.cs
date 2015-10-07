@@ -21,10 +21,6 @@ namespace Oblqo.Local
 
         public override DriveFile RootFolder { get; }
 
-        public override Task ClearAsync(CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public override async Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder, CancellationToken token)

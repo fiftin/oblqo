@@ -43,7 +43,8 @@ namespace Oblqo
 
             public int Compare(object x, object y)
             {
-                throw new NotImplementedException();
+                // TODO: Implement
+                return -1;
             }
         }
         /// <summary>

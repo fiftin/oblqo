@@ -65,12 +65,12 @@ namespace Oblqo.Google
 
         public void Add(DriveFile item)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public bool Contains(DriveFile item)
@@ -80,22 +80,16 @@ namespace Oblqo.Google
 
         public void CopyTo(DriveFile[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public bool Remove(DriveFile item)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        public int Count
-        {
-            get { return files.Count; }
-        }
+        public int Count => files.Count;
 
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
+        public bool IsReadOnly => true;
     }
 }

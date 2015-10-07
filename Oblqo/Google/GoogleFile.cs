@@ -9,15 +9,18 @@ namespace Oblqo.Google
 {
     public class GoogleFile : DriveFile
     {
-        internal readonly File file;
-        internal bool hasChildren;
         public const int PropertyMaxLength = 124 / 2;
+
+        private File file;
+        internal bool hasChildren;
 
         public GoogleFile(GoogleDrive drive, File file)
             : base(drive)
         {
             this.file = file;
         }
+
+        public File File => file;
 
         public override string Id => file.Id;
 
@@ -177,15 +180,14 @@ namespace Oblqo.Google
             }
 
             var service = await((GoogleDrive)Drive).GetServiceAsync(token);
-            var newFile = await service.Files.Update(new File { Properties = props }, file.Id).ExecuteAsync(token);
+            await service.Files.Update(new File { Properties = props }, file.Id).ExecuteAsync(token);
         }
 
         public override async Task WriteAsync(byte[] bytes, CancellationToken token)
         {
             var stream = new System.IO.MemoryStream(bytes, false);
-
-            var newFile = await ((GoogleDrive)Drive).UploadFileAsync(stream, Name, file.Parents, StorageFileId, token);
-            
+            var service = await ((GoogleDrive)Drive).GetServiceAsync(token);
+            await service.Files.Update(file, file.Id, stream, file.MimeType).UploadAsync(token);
         }
     }
 }

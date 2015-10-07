@@ -19,8 +19,7 @@ namespace Oblqo.Local
 
             set
             {
-                // TODO:
-                //throw new NotImplementedException();
+                // TODO: Implement OriginalSize setter
             }
         }
 

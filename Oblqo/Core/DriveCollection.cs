@@ -25,12 +25,6 @@ namespace Oblqo
 
         public DriveFileCollection RootFolder { get; }
 
-        public Size ImageMaxSize
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         public void Add(Drive drive)
         {
             Account = drive.Account;

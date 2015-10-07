@@ -51,7 +51,7 @@ namespace Oblqo.Tasks
             if (SourceFile.IsImage)
             {
                 //TODO: Uncomment
-                //await SourceFile.ScaleImageAsync();
+                await SourceFile.ScaleImageAsync(CancellationTokenSource.Token);
             }
         }
 

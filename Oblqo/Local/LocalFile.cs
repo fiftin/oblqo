@@ -140,6 +140,12 @@ namespace Oblqo.Local
 
         protected abstract void SetAttribute(string name, string value);
 
-        public override async Task WriteAsync(byte[] bytes) { }
+        public override async Task WriteAsync(byte[] bytes)
+        {
+            using (var stream = File.OpenWrite())
+            {
+                stream.Write(bytes, 0, bytes.Length);
+            }
+        }
     }
 }

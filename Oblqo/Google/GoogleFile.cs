@@ -181,7 +181,6 @@ namespace Oblqo.Google
             var newFile = await service.Files.Update(new File { Properties = props }, file.Id).ExecuteAsync(token);
         }
 
-
         public override async Task WriteAsync(byte[] bytes) { }
     }
 }

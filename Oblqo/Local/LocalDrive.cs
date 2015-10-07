@@ -13,21 +13,13 @@ namespace Oblqo.Local
 {
     public class LocalDrive : Drive
     {
-        private DriveFile rootFolder;
-
         public LocalDrive(Storage storage, Account account, string rootPath)
             : base(storage, account)
         {
-            rootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
+            RootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
         }
 
-        public override DriveFile RootFolder
-        {
-            get
-            {
-                return rootFolder;
-            }
-        }
+        public override DriveFile RootFolder { get; }
 
         public override Task ClearAsync(CancellationToken token)
         {
@@ -133,7 +125,6 @@ namespace Oblqo.Local
                 return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, storageFileId, token);
             }
         }
-
-        public async Task WriteAsync(byte[] bytes) { }
+        
     }
 }

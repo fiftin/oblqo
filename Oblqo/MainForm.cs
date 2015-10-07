@@ -290,7 +290,7 @@ namespace Oblqo
 
                         var item = fileListView.Items.Add("", file.Name, key);
 
-                        if (file.DriveFile.Files.Count != account.Drive.Drives.Count)
+                        if (file.DriveFile.Files.Count != account.Drive.Count)
                         {
                             item.ForeColor = Color.Red;
                         }
@@ -528,6 +528,14 @@ namespace Oblqo
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(task.SourceFile.Size)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
+            else if (newTask is SynchronizeDriveFileTask)
+            {
+                var task = (SynchronizeDriveFileTask)newTask;
+                taskItem.Text = Path.GetFileName(task.File.Name);
+                taskItem.SubItems.Add("Sync File on Drive").Name = "type";
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(0)).Name = "size";
+                taskItem.SubItems.Add("0").Name = "percent";
+            }
 
             switch (newTask.State)
             {
@@ -659,6 +667,9 @@ namespace Oblqo
                             node?.Remove();
                         }
                         else if (e.Task is SynchronizeFileTask)
+                        {
+                        }
+                        else if (e.Task is SynchronizeDriveFileTask)
                         {
                         }
                         break;
@@ -1384,6 +1395,20 @@ namespace Oblqo
             {
                 fileListView.Focus();
                 UpdateFileList();
+            }
+        }
+
+        private void synchronizeOnDrivesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
+                var account = accounts[info.AccountName];
+                if (info.File.DriveFile.Files.Count < account.Drive.Count)
+                {
+                    taskManager.Add(new SynchronizeDriveFileTask(info.File.DriveFile, folderInfo.File.DriveFile));
+                }
             }
         }
     }

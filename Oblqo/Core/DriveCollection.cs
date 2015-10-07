@@ -146,10 +146,32 @@ namespace Oblqo
             return dic.Values;
         }
 
-        private void AddFiles(DriveFile file, IDictionary<string, DriveFileCollection> fileCollections)
+        private bool TryFindFileByName(string fileName, IEnumerable<DriveFileCollection> fileCollections, out DriveFileCollection collection)
+        {
+            foreach (var item in fileCollections)
+            {
+                if (item.Name == fileName)
+                {
+                    collection = item;
+                    return true;
+                }
+            }
+            collection = null;
+            return false;
+        }
+
+        private void AddFile(DriveFile file, IDictionary<string, DriveFileCollection> fileCollections)
         {
             DriveFileCollection collection;
-            if (file.StorageFileId == null || !fileCollections.TryGetValue(file.StorageFileId, out collection))
+            if (file.StorageFileId == null)
+            {
+                if (!TryFindFileByName(file.Name, fileCollections.Values, out collection))
+                {
+                    collection = new DriveFileCollection(this);
+                    fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
+                }
+            }
+            else if (!fileCollections.TryGetValue(file.StorageFileId, out collection))
             {
                 collection = new DriveFileCollection(this);
                 fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
@@ -161,7 +183,7 @@ namespace Oblqo
         {
             foreach (var file in files)
             {
-                AddFiles(file, fileCollections);
+                AddFile(file, fileCollections);
             }
         }
 

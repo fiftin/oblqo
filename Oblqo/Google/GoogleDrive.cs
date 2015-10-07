@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -99,20 +100,19 @@ namespace Oblqo.Google
             var service = await GetServiceAsync(token);
 
             // Initializing properties.
-            List<Property> props = new List<Property>();
-            //
-            props.Add(new Property { Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE" });
-            //
-            props.Add(new Property { Key = "src", Value = Storage.Kind, Visibility = "PRIVATE" });
-            // Storage file ID.
-            int storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
-            int storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
-            string[] storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
-            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
-            for (int i = 0; i < storageFileIdParts.Length; i++)
+            var props = new List<Property>
             {
-                props.Add(new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = storageFileIdParts[i], Visibility = "PRIVATE" });
-            }
+                new Property {Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE"},
+                new Property {Key = "src", Value = Storage.Kind, Visibility = "PRIVATE"}
+            };
+            //
+            //
+            // Storage file ID.
+            var storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
+            var storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
+            var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
+            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
+            props.AddRange(storageFileIdParts.Select((t, i) => new Property {Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE"}));
 
             var file = new File
             {

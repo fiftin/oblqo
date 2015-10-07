@@ -46,6 +46,7 @@ namespace Oblqo
 
         public async Task ScaleImageAsync()
         {
+            //var stream = await Drive.ScaleImageAsync(Typ);
         }
         
         public abstract string GetAttribute(string name);
@@ -70,32 +71,18 @@ namespace Oblqo
             {
                 return ret + "-0";
             }
-            int i = int.Parse(parts[1]);
+            var i = int.Parse(parts[1]);
             return ret + "-" + (i + 1);
         }
 
         public async Task SetStorageFileIdAsync(string value, CancellationToken token)
         {
             var srcStr = GetAttribute("src");
-            List<string> sources;
-            if (srcStr == null)
-            {
-                sources = new List<string>();
-            }
-            else
-            {
-                sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList();
-            }
-            bool sourceExists = false;
+            var sources = srcStr?.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind)).ToList() ?? new List<string>();
+            var sourceExists = false;
             string source = null;
-            foreach (var src in sources)
+            foreach (var src in sources.Where(src => Drive.Storage.Id == GetAttribute(string.Format("{0}.sid", src))))
             {
-                // SID - Storage ID
-                var sidPropertyName = string.Format("{0}.sid", src);
-                if (Drive.Storage.Id != GetAttribute(sidPropertyName))
-                {
-                    continue;
-                }
                 sourceExists = true;
                 source = src;
             }
@@ -120,19 +107,9 @@ namespace Oblqo
                 if (srcStr == null) return null;
                 var sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind));
                 // Source - is kind of storage. For example 'gl-1'
-                foreach (var src in sources)
-                {
-                    // SID - Storage ID.
-                    // gl-1.sid - vault name, location and other.
-                    var sidPropertyName = string.Format("{0}.sid", src);
-                    if (Drive.Storage.Id != GetAttribute(sidPropertyName))
-                    {
-                        continue;
-                    }
-                    // gl-1.id-{1}
-                    return GetAttribute(string.Format("{0}.id", src));
-                }
-                return null;
+                return (from src in sources
+                        where Drive.Storage.Id == GetAttribute(string.Format("{0}.sid", src))
+                        select GetAttribute(string.Format("{0}.id", src))).FirstOrDefault();
             }
         }
     }

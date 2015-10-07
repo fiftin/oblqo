@@ -79,7 +79,6 @@ namespace Oblqo
 
         public string MimeType => First.MimeType;
 
-
         public string StorageFileId => First.StorageFileId;
 
         public XElement ToXml()
@@ -92,26 +91,18 @@ namespace Oblqo
             return root;
         }
 
-        public async Task ScaleImageAsync()
-        {
-            var tasks = files.Select(drive => drive.ScaleImageAsync());
-            await Task.WhenAll(tasks);
-        }
+        //public async Task ScaleImageAsync()
+        //{
+        //    await Task.WhenAll(files.Select(drive => drive.ScaleImageAsync()));
+        //}
 
         public async Task SetStorageFileIdAsync(string value, CancellationToken token)
         {
-            var tasks = files.Select(drive => drive.SetStorageFileIdAsync(value, token));
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(files.Select(drive => drive.SetStorageFileIdAsync(value, token)));
         }
 
-        public IEnumerator<DriveFile> GetEnumerator()
-        {
-            return files.GetEnumerator();
-        }
+        public IEnumerator<DriveFile> GetEnumerator() => files.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

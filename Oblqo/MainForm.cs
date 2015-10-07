@@ -406,6 +406,7 @@ namespace Oblqo
                 var node = treeView1.Nodes.Add("", info.AccountName, AccountImageKey);
                 node.SelectedImageKey = AccountImageKey;
                 node.Tag = new NodeInfo(info);
+                accountManager.Save();
                 await ConnectAccountAsync(info.AccountName, node);
             }
         }
@@ -762,6 +763,8 @@ namespace Oblqo
                 account.Drives.Clear();
                 account.Drives.AddRange(accountForm.GetDrives());
 
+                accountManager.Save();
+
                 DisconnectAccount(node);
                 await ConnectAccountAsync(node);
             }
@@ -981,6 +984,7 @@ namespace Oblqo
                 accounts[nodeInfo.AccountName].Disconnect();
                 accounts.Remove(nodeInfo.AccountName);
             }
+            accountManager.Save();
             treeView1.Nodes.Remove(node);
         }
 

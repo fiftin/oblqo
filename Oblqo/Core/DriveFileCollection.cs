@@ -84,7 +84,12 @@ namespace Oblqo
 
         public XElement ToXml()
         {
-            throw new NotImplementedException();
+            var root = new XElement("file");
+            foreach (var file in Files)
+            {
+                root.Add(file.ToXml());
+            }
+            return root;
         }
 
         public async Task ScaleImageAsync()

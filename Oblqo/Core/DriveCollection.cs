@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -9,12 +10,13 @@ using System.Xml.Linq;
 
 namespace Oblqo
 {
-    public class DriveCollection
+    public class DriveCollection : IEnumerable<Drive>
     {
         private readonly List<Drive> drives = new List<Drive>();
         public Storage Storage { get; private set; }
         public Account Account { get; private set; }
 
+        public int Count => drives.Count;
 
         public DriveCollection()
         {
@@ -178,6 +180,16 @@ namespace Oblqo
             var elements = xml.Elements();
             var tasks = drives.Select(drive => drive.GetFileAsync(elements.Single(x => x.Attribute("").Value == drive.Id), token));
             return new DriveFileCollection(this, await Task.WhenAll(tasks));
+        }
+
+        public IEnumerator<Drive> GetEnumerator()
+        {
+            return drives.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -59,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Oblakoo\Oblakoo.csproj">
+    <ProjectReference Include="..\Oblqo\Oblqo.csproj">
       <Project>{fd2a30fc-cfb1-4e8b-9ee3-3d5ba077a9fe}</Project>
       <Name>Oblakoo</Name>
     </ProjectReference>

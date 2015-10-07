@@ -57,7 +57,7 @@ namespace Oblqo
             return null;
         }
 
-        public abstract Task WriteAsync(byte[] bytes);
+        public abstract Task WriteAsync(byte[] bytes, CancellationToken token);
 
         public async Task ScaleImageAsync(CancellationToken token)
         {
@@ -69,7 +69,7 @@ namespace Oblqo
             var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token);
             var memStream = new MemoryStream();
             await stream.CopyToAsync(memStream);
-            await WriteAsync(memStream.ToArray());
+            await WriteAsync(memStream.ToArray(), token);
         }
         
         public abstract string GetAttribute(string name);

@@ -95,11 +95,35 @@ namespace Oblqo.Google
             }
         }
 
-
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName,
+            IList<ParentReference> parents,
+            IList<Property> props, CancellationToken token)
         {
             var service = await GetServiceAsync(token);
+            var file = new File
+            {
+                Properties = props,
+                Title = fileName,
+                Parents = parents
+            };
+            ImageFormat imageType;
+            var scaled = TryGetImageType(fileName, out imageType)
+                ? await ScaleImageAsync(stream, imageType, token)
+                : stream;
+            var observed = new ObserverStream(scaled);
+            observed.PositionChanged += (sender, e) => { };
+            var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
+            if (request.Status == UploadStatus.Failed)
+            {
+                throw new Exception(request.Exception.Message);
+            }
+            return new GoogleFile(this, file);
+        }
 
+        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, IList<ParentReference> parents,
+            string storageFileId, CancellationToken token)
+        {
+            var service = await GetServiceAsync(token);
             // Initializing properties.
             var props = new List<Property>
             {
@@ -113,28 +137,37 @@ namespace Oblqo.Google
             var storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
             var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
-            props.AddRange(storageFileIdParts.Select((t, i) => new Property {Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE"}));
-
+            props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
             var file = new File
             {
                 Properties = props,
                 Title = fileName,
-                Parents =
-                    new List<ParentReference> { new ParentReference { Id = destFolder == null ? RootId : destFolder.Id } }
+                Parents = parents
             };
             ImageFormat imageType;
-            var scaled = TryGetImageType(fileName, out imageType) 
-                ? await ScaleImageAsync(stream, imageType, token) 
+            var scaled = TryGetImageType(fileName, out imageType)
+                ? await ScaleImageAsync(stream, imageType, token)
                 : stream;
             var observed = new ObserverStream(scaled);
             observed.PositionChanged += (sender, e) => { };
             var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
             if (request.Status == UploadStatus.Failed)
             {
-                //TODO: Action if upload is failed
                 throw new Exception(request.Exception.Message);
             }
             return new GoogleFile(this, file);
+        }
+
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        {
+            return
+                await
+                    UploadFileAsync(stream, fileName,
+                        new List<ParentReference>
+                        {
+                            new ParentReference {Id = destFolder == null ? RootId : destFolder.Id}
+                        }, storageFileId,
+                        token);
         }
 
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)

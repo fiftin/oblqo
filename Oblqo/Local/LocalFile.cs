@@ -140,11 +140,11 @@ namespace Oblqo.Local
 
         protected abstract void SetAttribute(string name, string value);
 
-        public override async Task WriteAsync(byte[] bytes)
+        public override async Task WriteAsync(byte[] bytes, System.Threading.CancellationToken token)
         {
             using (var stream = File.OpenWrite())
             {
-                stream.Write(bytes, 0, bytes.Length);
+                await stream.WriteAsync(bytes, 0, bytes.Length, token);
             }
         }
     }

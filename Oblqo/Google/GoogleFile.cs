@@ -11,7 +11,6 @@ namespace Oblqo.Google
     {
         internal readonly File file;
         internal bool hasChildren;
-
         public const int PropertyMaxLength = 124 / 2;
 
         public GoogleFile(GoogleDrive drive, File file)
@@ -181,6 +180,12 @@ namespace Oblqo.Google
             var newFile = await service.Files.Update(new File { Properties = props }, file.Id).ExecuteAsync(token);
         }
 
-        public override async Task WriteAsync(byte[] bytes) { }
+        public override async Task WriteAsync(byte[] bytes, CancellationToken token)
+        {
+            var stream = new System.IO.MemoryStream(bytes, false);
+
+            var newFile = await ((GoogleDrive)Drive).UploadFileAsync(stream, Name, file.Parents, StorageFileId, token);
+            
+        }
     }
 }

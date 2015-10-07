@@ -100,7 +100,14 @@ namespace Oblqo
                     {
                         var oldPath = "accounts/" + account.OldAccountName;
                         DeleteAllFilesInDirectory(store, oldPath);
-                        store.DeleteDirectory(oldPath);
+                        try
+                        {
+                            store.DeleteDirectory(oldPath);
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
                     }
                     var path = "accounts/" + account.AccountName;
                     if (!store.DirectoryExists(path))

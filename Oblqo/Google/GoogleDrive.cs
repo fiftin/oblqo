@@ -124,7 +124,7 @@ namespace Oblqo.Google
             };
             ImageFormat imageType;
             var scaled = TryGetImageType(fileName, out imageType) 
-                ? await ScaleImageAsync(stream, imageType) 
+                ? await ScaleImageAsync(stream, imageType, token) 
                 : stream;
             var observed = new ObserverStream(scaled);
             observed.PositionChanged += (sender, e) => { };
@@ -167,10 +167,7 @@ namespace Oblqo.Google
             return new Bitmap(new System.IO.MemoryStream(bytes));
         }
 
-        public override DriveFile RootFolder
-        {
-            get { return rootFolder; }
-        }
+        public override DriveFile RootFolder => rootFolder;
 
         private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, CancellationToken token)
         {
@@ -327,5 +324,8 @@ namespace Oblqo.Google
             var request = service.Files.Get(fileId);
             return null;
         }
+
+
+        public async Task WriteAsync(byte[] bytes) { }
     }
 }

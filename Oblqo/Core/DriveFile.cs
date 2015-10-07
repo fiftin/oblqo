@@ -4,11 +4,13 @@ using System.Xml.Linq;
 
 using System.Linq;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Threading;
 
 namespace Oblqo
 {
-    public abstract class DriveFile : IDriveFile
+    public abstract class DriveFile //: IDriveFile
     {
         public abstract string Id { get; }
         public abstract bool IsImage { get; }
@@ -44,9 +46,30 @@ namespace Oblqo
             return ret;
         }
 
-        public async Task ScaleImageAsync()
+
+        public async Task<Stream> ReadAsync(CancellationToken token)
         {
-            //var stream = await Drive.ScaleImageAsync(Typ);
+            return await Drive.ReadFileAsync(this, token);
+        }
+
+        public ImageFormat GetImageType()
+        {
+            return null;
+        }
+
+        public abstract Task WriteAsync(byte[] bytes);
+
+        public async Task ScaleImageAsync(CancellationToken token)
+        {
+            var type = GetImageType();
+            if (type == null)
+            {
+                return;
+            }
+            var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token);
+            var memStream = new MemoryStream();
+            await stream.CopyToAsync(memStream);
+            await WriteAsync(memStream.ToArray());
         }
         
         public abstract string GetAttribute(string name);

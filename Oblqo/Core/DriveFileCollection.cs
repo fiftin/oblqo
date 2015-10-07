@@ -91,9 +91,9 @@ namespace Oblqo
             return root;
         }
 
-        public async Task ScaleImageAsync()
+        public async Task ScaleImageAsync(CancellationToken token)
         {
-            await Task.WhenAll(files.Select(drive => drive.ScaleImageAsync()));
+            await Task.WhenAll(files.Select(file => file.ScaleImageAsync(token)));
         }
 
         public async Task SetStorageFileIdAsync(string value, CancellationToken token)

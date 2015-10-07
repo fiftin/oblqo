@@ -102,7 +102,7 @@ namespace Oblqo.Local
             if (TryGetImageType(fileName, out imageType))
             {
                 image = Image.FromStream(stream);
-                scaled = await ScaleImageAsync(image, imageType);
+                scaled = await ScaleImageAsync(image, imageType, token);
             }
             else
             {
@@ -133,5 +133,7 @@ namespace Oblqo.Local
                 return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, storageFileId, token);
             }
         }
+
+        public async Task WriteAsync(byte[] bytes) { }
     }
 }

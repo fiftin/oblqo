@@ -77,12 +77,12 @@ namespace Oblqo
             return true;
         }
 
-        public async Task<Stream> ScaleImageAsync(Image image)
+        public async Task<Stream> ScaleImageAsync(Image image, CancellationToken token)
         {
-            return await ScaleImageAsync(image, image.RawFormat);
+            return await ScaleImageAsync(image, image.RawFormat, token);
         }
 #pragma warning disable 1998
-        public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type)
+        public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type, CancellationToken token)
 #pragma warning restore 1998
         {
             var newImage = ScaleImage(image);
@@ -92,10 +92,10 @@ namespace Oblqo
             return output;
         }
 
-        public async Task<Stream> ScaleImageAsync(Stream input, ImageFormat type)
+        public async Task<Stream> ScaleImageAsync(Stream input, ImageFormat type, CancellationToken token)
         {
             var image = Image.FromStream(input);
-            return await ScaleImageAsync(image, type);
+            return await ScaleImageAsync(image, type, token);
         }
         
 
@@ -130,5 +130,6 @@ namespace Oblqo
         /// <param name="token">CancellationToken class instance for cancellation async operation.</param>
         /// <returns>Drive file instance.</returns>
         public abstract Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token);
+
     }
 }

@@ -139,5 +139,7 @@ namespace Oblqo.Local
         }
 
         protected abstract void SetAttribute(string name, string value);
+
+        public override async Task WriteAsync(byte[] bytes) { }
     }
 }

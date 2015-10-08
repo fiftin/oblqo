@@ -74,12 +74,13 @@ namespace Oblqo
         /// </summary>
         /// <param name="pathName"></param>
         /// <param name="destFolder"></param>
+        /// <param name="scaleRequired">Need scale image to account settings size.</param>
         /// <param name="token"></param>
         /// <param name="progressCallback"></param>
         public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);
-            await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id, token);
+            await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id != null, uploadedFile.Id, token);
         }
 
         internal void Disconnect()

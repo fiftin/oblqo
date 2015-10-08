@@ -82,7 +82,7 @@ namespace Oblqo.Local
             return ((LocalFile)file).File.OpenRead();
         }
 
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
             ImageFormat imageType;
             Stream scaled;
@@ -114,11 +114,11 @@ namespace Oblqo.Local
 
         }
 
-        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
             using (var stream = new FileStream(pathName, System.IO.FileMode.Open))
             {
-                return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, storageFileId, token);
+                return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
             }
         }
         

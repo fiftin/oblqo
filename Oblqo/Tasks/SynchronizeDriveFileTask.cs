@@ -27,13 +27,11 @@ namespace Oblqo.Tasks
         {
             var bestFile = GetBestFile();
             var dr = File.Drive;
-            var tasks = new List<Task>();
             var stream = await bestFile.Drive.ReadFileAsync(bestFile, CancellationTokenSource.Token);
-            foreach (var drive in dr)
-            {
-                if (File.GetFile(drive) != null) continue;
-                tasks.Add(drive.UploadFileAsync(stream, File.Name, DestFolder.GetFile(drive), bestFile.StorageFileId, CancellationTokenSource.Token));
-            }
+            var tasks = (from drive in dr
+                         where File.GetFile(drive) == null
+                         select drive.UploadFileAsync(stream, File.Name, DestFolder.GetFile(drive), bestFile.StorageFileId != null, bestFile.StorageFileId, CancellationTokenSource.Token)
+                         ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);
         }
         

@@ -69,11 +69,12 @@ namespace Oblqo.Google
                 {
                     throw new Exception("Path is not exists: " + currentPath);
                 }
-                if (file == null)
+                if (file != null)
                 {
-                    var newFile = await CreateFolderAsync(f, new GoogleFile(this, parent), token);
-                    file = ((GoogleFile)newFile).File;
+                    continue;
                 }
+                var newFile = await CreateFolderAsync(f, new GoogleFile(this, parent), token);
+                file = ((GoogleFile)newFile).File;
             }
             return new GoogleFile(this, file);
         }
@@ -96,7 +97,7 @@ namespace Oblqo.Google
         }
 
         internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName,
-            IList<ParentReference> parents,
+            IList<ParentReference> parents, bool scaleRequired,
             IList<Property> props, CancellationToken token)
         {
             var service = await GetServiceAsync(token);
@@ -107,7 +108,7 @@ namespace Oblqo.Google
                 Parents = parents
             };
             ImageFormat imageType;
-            var scaled = TryGetImageType(fileName, out imageType)
+            var scaled = scaleRequired && TryGetImageType(fileName, out imageType)
                 ? await ScaleImageAsync(stream, imageType, token)
                 : stream;
             var observed = new ObserverStream(scaled);
@@ -120,7 +121,8 @@ namespace Oblqo.Google
             return new GoogleFile(this, file);
         }
 
-        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, IList<ParentReference> parents,
+        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
+            IList<ParentReference> parents, bool scaleRequired,
             string storageFileId, CancellationToken token)
         {
             var props = new List<Property>
@@ -136,11 +138,11 @@ namespace Oblqo.Google
             var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
-
-            return await UploadFileAsync(stream, fileName, parents, props, token);
+            return await UploadFileAsync(stream, fileName, parents, scaleRequired, props, token);
         }
 
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
+            DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
             return
                 await
@@ -148,17 +150,18 @@ namespace Oblqo.Google
                         new List<ParentReference>
                         {
                             new ParentReference {Id = destFolder == null ? RootId : destFolder.Id}
-                        }, storageFileId,
+                        }, scaleRequired, storageFileId, 
                         token);
         }
 
-        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder,
+            bool scaleRequired, string storageFileId, CancellationToken token)
         {
             Debug.Assert(System.IO.File.Exists(pathName) &&
                          !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
             using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
             {
-                return await UploadFileAsync(stream, System.IO.Path.GetFileName(pathName), destFolder, storageFileId, token);
+                return await UploadFileAsync(stream, System.IO.Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
             }
         }
 
@@ -232,15 +235,6 @@ namespace Oblqo.Google
         {
             return await GetFilesAsync(folder.Id, string.Format("mimeType = '{0}'", GoogleMimeTypes.Folder), token);
         }
-
-//        public override async Task ClearAsync(CancellationToken token)
-//        {
-//            Debug.Assert(RootFolder.IsFolder);
-//            var service = await GetServiceAsync(token);
-//            var files = await GetFilesAsync(RootFolder.Id, "", token);
-//            foreach (var file in files)
-//                await service.Files.Delete(file.Id).ExecuteAsync(token);
-//        }
 
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
@@ -339,8 +333,6 @@ namespace Oblqo.Google
             var request = service.Files.Get(fileId);
             return null;
         }
-
-
-        public async Task WriteAsync(byte[] bytes) { }
+        
     }
 }

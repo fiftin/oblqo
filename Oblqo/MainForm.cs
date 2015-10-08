@@ -1415,6 +1415,20 @@ namespace Oblqo
                 }
             }
         }
+
+        private void synchronizeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
+                if (info.File.DriveFile.StorageFileId == null)
+                {
+                    taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
+                        info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+                }
+            }
+        }
     }
 
 }

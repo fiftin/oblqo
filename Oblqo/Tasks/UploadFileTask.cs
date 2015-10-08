@@ -4,8 +4,8 @@ namespace Oblqo.Tasks
 {
     public class UploadFileTask : AsyncTask
     {
-        public string FileName { get; private set; }
-        public AccountFile DestFolder { get; private set; }
+        public string FileName { get; }
+        public AccountFile DestFolder { get; }
 
         public UploadFileTask(Account account, string accountName, int priority, AsyncTask[] parent, string fileName, AccountFile destFolder)
             : base(account, accountName, priority, parent)

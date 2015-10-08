@@ -76,10 +76,10 @@ namespace Oblqo
             throw new Exception("Can't download this file");
         }
 
-        public async Task<DriveFileCollection> UploadFileAsync(string pathName, DriveFileCollection destFolder, string storageFileId,
+        public async Task<DriveFileCollection> UploadFileAsync(string pathName, DriveFileCollection destFolder, bool scaleRequired, string storageFileId,
             CancellationToken token)
         {
-            var tasks = drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), storageFileId, token));
+            var tasks = drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), scaleRequired, storageFileId, token));
             return new DriveFileCollection(this, await Task.WhenAll(tasks));
         }
 

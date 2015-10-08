@@ -11,45 +11,44 @@ namespace Oblqo.Google
     {
         public const int PropertyMaxLength = 124 / 2;
 
-        private File file;
         internal bool hasChildren;
 
         public GoogleFile(GoogleDrive drive, File file)
             : base(drive)
         {
-            this.file = file;
+            this.File = file;
         }
 
-        public File File => file;
+        public File File { get; }
 
-        public override string Id => file.Id;
+        public override string Id => File.Id;
 
-        public override bool IsImage => file.MimeType.StartsWith("image/");
+        public override bool IsImage => File.MimeType.StartsWith("image/");
 
-        public override bool IsFolder => file.MimeType == GoogleMimeTypes.Folder;
+        public override bool IsFolder => File.MimeType == GoogleMimeTypes.Folder;
 
-        public override string Name => file.Title;
+        public override string Name => File.Title;
 
         public override bool HasChildren => hasChildren;
 
-        public override long Size => file.FileSize.GetValueOrDefault();
+        public override long Size => File.FileSize.GetValueOrDefault();
 
-        public override DateTime ModifiedDate => file.ModifiedDate.GetValueOrDefault();
+        public override DateTime ModifiedDate => File.ModifiedDate.GetValueOrDefault();
 
-        public override DateTime CreatedDate => file.CreatedDate.GetValueOrDefault();
+        public override DateTime CreatedDate => File.CreatedDate.GetValueOrDefault();
 
         public override int OriginalImageWidth
         {
             get
             {
-                if (file.Properties == null)
+                if (File.Properties == null)
                     return ImageWidth;
-                var property = file.Properties.FirstOrDefault(x => x.Key == "OriginalImageWidth");
+                var property = File.Properties.FirstOrDefault(x => x.Key == "OriginalImageWidth");
                 return property == null ? ImageWidth : int.Parse(property.Value);
             }
             set
             {
-                file.Properties.Add(new Property() { Key = "OriginalImageWidth", Value = value.ToString() });
+                File.Properties.Add(new Property() { Key = "OriginalImageWidth", Value = value.ToString() });
             }
         }
 
@@ -57,18 +56,18 @@ namespace Oblqo.Google
         {
             get
             {
-                if (file.Properties == null)
+                if (File.Properties == null)
                     return ImageHeight;
-                var property = file.Properties.FirstOrDefault(x => x.Key == "OriginalImageHeight");
+                var property = File.Properties.FirstOrDefault(x => x.Key == "OriginalImageHeight");
                 return property == null ? ImageHeight : int.Parse(property.Value);
             }
             set
             {
-                if (file.Properties == null)
+                if (File.Properties == null)
                 {
-                    file.Properties = new List<Property>();
+                    File.Properties = new List<Property>();
                 }
-                file.Properties.Add(new Property() { Key = "OriginalImageHeight", Value = value.ToString() });
+                File.Properties.Add(new Property() { Key = "OriginalImageHeight", Value = value.ToString() });
             }
         }
 
@@ -76,46 +75,29 @@ namespace Oblqo.Google
         {
             get
             {
-                if (file.Properties == null)
+                if (File.Properties == null)
                     return Size;
-                var property = file.Properties.FirstOrDefault(x => x.Key == "OriginalSize");
+                var property = File.Properties.FirstOrDefault(x => x.Key == "OriginalSize");
                 return property == null ? Size : long.Parse(property.Value);
             }
             set
             {
-                file.Properties.Add(new Property() { Key = "OriginalSize", Value = value.ToString() });
+                File.Properties.Add(new Property() { Key = "OriginalSize", Value = value.ToString() });
             }
         }
 
-        public override int ImageWidth
-        {
-            get
-            {
-                if (file.ImageMediaMetadata != null && file.ImageMediaMetadata.Width != null)
-                    return file.ImageMediaMetadata.Width.Value;
-                return 0;
-            }
+        public override int ImageWidth => File.ImageMediaMetadata?.Width != null ? File.ImageMediaMetadata.Width.Value : 0;
 
-        }
-
-        public override int ImageHeight
-        {
-            get
-            {
-                if (file.ImageMediaMetadata != null && file.ImageMediaMetadata.Height != null)
-                    return file.ImageMediaMetadata.Height.Value;
-                return 0;
-            }
-        }
+        public override int ImageHeight => File.ImageMediaMetadata?.Height != null ? File.ImageMediaMetadata.Height.Value : 0;
 
         public override bool IsRoot => Id == GoogleDrive.RootId;
 
-        public override string MimeType => file.MimeType;
+        public override string MimeType => File.MimeType;
 
         public override System.Xml.Linq.XElement ToXml()
         {
             var ret = base.ToXml();
-            ret.SetAttributeValue("fileId", file.Id);
+            ret.SetAttributeValue("fileId", File.Id);
             return ret;
         }
 
@@ -126,12 +108,12 @@ namespace Oblqo.Google
 
         private string PropertyValue(string key)
         {
-            return file.Properties == null ? null : (from prop in file.Properties where prop.Key == key select prop.Value).FirstOrDefault();
+            return File.Properties == null ? null : (from prop in File.Properties where prop.Key == key select prop.Value).FirstOrDefault();
         }
 
         public override string GetAttribute(string name)
         {
-            if (file.Properties == null)
+            if (File.Properties == null)
             {
                 return null;
             }
@@ -147,7 +129,7 @@ namespace Oblqo.Google
             var startsWith = string.Format("{0}-{1}", name, "");
             var parts = new string[9];
 
-            foreach (var prop in file.Properties)
+            foreach (var prop in File.Properties)
             {
                 if (prop.Key.Length == fileIdKeyLen
                     && prop.Key.StartsWith(startsWith)
@@ -180,14 +162,14 @@ namespace Oblqo.Google
             }
 
             var service = await((GoogleDrive)Drive).GetServiceAsync(token);
-            await service.Files.Update(new File { Properties = props }, file.Id).ExecuteAsync(token);
+            await service.Files.Update(new File { Properties = props }, File.Id).ExecuteAsync(token);
         }
 
         public override async Task WriteAsync(byte[] bytes, CancellationToken token)
         {
             var stream = new System.IO.MemoryStream(bytes, false);
             var service = await ((GoogleDrive)Drive).GetServiceAsync(token);
-            await service.Files.Update(file, file.Id, stream, file.MimeType).UploadAsync(token);
+            await service.Files.Update(File, File.Id, stream, File.MimeType).UploadAsync(token);
         }
     }
 }

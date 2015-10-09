@@ -29,10 +29,10 @@ namespace Oblqo.Google
             return files.Items.Count > 0;
         }
 
-        public static async Task<GoogleFileList> Get(GoogleDrive drive, FileList fileList, DriveService service, CancellationToken token)
+        public static async Task<GoogleFileList> Get(GoogleDrive drive, GoogleFile folder, FileList fileList, DriveService service, CancellationToken token)
         {
             var ret = new GoogleFileList(drive);
-            foreach (var googleFile in fileList.Items.Select(file => new GoogleFile(drive, file)))
+            foreach (var googleFile in fileList.Items.Select(file => new GoogleFile(drive, file, folder)))
             {
                 if (googleFile.IsFolder)
                     googleFile.hasChildren = await HasSubfoldersAsync(googleFile, service, token);
@@ -41,17 +41,17 @@ namespace Oblqo.Google
             return ret;
         }
 
-        public static async Task<GoogleFileList> Get(GoogleDrive drive, ChildList fileList, DriveService service, CancellationToken token)
-        {
-            var ret = new GoogleFileList(drive);
-            foreach (var child in fileList.Items)
-            {
-                var file = await service.Files.Get(child.Id).ExecuteAsync(token);
-                var googleFile = new GoogleFile(drive, file);
-                ret.files.Add(googleFile);
-            }
-            return ret;
-        }
+//        public static async Task<GoogleFileList> Get(GoogleDrive drive, ChildList fileList, DriveService service, CancellationToken token)
+//        {
+//            var ret = new GoogleFileList(drive);
+//            foreach (var child in fileList.Items)
+//            {
+//                var file = await service.Files.Get(child.Id).ExecuteAsync(token);
+//                var googleFile = new GoogleFile(drive, file);
+//                ret.files.Add(googleFile);
+//            }
+//            return ret;
+//        }
 
         public IEnumerator<DriveFile> GetEnumerator()
         {

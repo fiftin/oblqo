@@ -13,11 +13,14 @@ namespace Oblqo.Google
 
         internal bool hasChildren;
 
-        public GoogleFile(GoogleDrive drive, File file)
+        public GoogleFile(GoogleDrive drive, File file, GoogleFile parentFolder)
             : base(drive)
         {
             this.File = file;
+            Parent = parentFolder;
         }
+
+        public override DriveFile Parent { get; }
 
         public File File { get; }
 

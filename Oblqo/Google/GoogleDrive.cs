@@ -25,7 +25,7 @@ namespace Oblqo.Google
 
 
         private GoogleFile rootFolder;
-        private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
+        //private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
         protected GoogleDrive(Storage storage, Account account, ClientSecrets secrets)
             : base(storage, account)
@@ -60,23 +60,21 @@ namespace Oblqo.Google
             var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
             var currentPath = "";
+            var parentFolder = rootFolder;
             foreach (var f in folders)
             {
                 currentPath += "/" + f;
-                var parent = file;
-                file = await GetFolderAsync(file.Id, f, token);
-                if (file == null && !createIfNotExists)
-                {
-                    throw new Exception("Path is not exists: " + currentPath);
-                }
-                if (file != null)
-                {
-                    continue;
-                }
-                var newFile = await CreateFolderAsync(f, new GoogleFile(this, parent), token);
-                file = ((GoogleFile)newFile).File;
+
+                // Check if file is not already exists & rights to create
+                var existsingFile = await GetFolderAsync(file.Id, f, token);
+                if (existsingFile != null) continue;
+                if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
+
+                var newFolder = (GoogleFile)await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
+                file = newFolder.File;
+                parentFolder = newFolder;
             }
-            return new GoogleFile(this, file);
+            return new GoogleFile(this, file, rootFolder);
         }
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
@@ -97,7 +95,7 @@ namespace Oblqo.Google
         }
 
         internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName,
-            IList<ParentReference> parents, bool scaleRequired,
+            GoogleFile destFolder, bool scaleRequired,
             IList<Property> props, CancellationToken token)
         {
             var service = await GetServiceAsync(token);
@@ -105,7 +103,10 @@ namespace Oblqo.Google
             {
                 Properties = props,
                 Title = fileName,
-                Parents = parents
+                Parents = new List<ParentReference>
+                        {
+                            new ParentReference {Id = destFolder == null ? RootId : destFolder.Id}
+                        }
             };
             ImageFormat imageType;
             var scaled = scaleRequired && TryGetImageType(fileName, out imageType)
@@ -118,11 +119,33 @@ namespace Oblqo.Google
             {
                 throw new Exception(request.Exception.Message);
             }
-            return new GoogleFile(this, file);
+            return new GoogleFile(this, file, destFolder);
         }
 
-        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
-            IList<ParentReference> parents, bool scaleRequired,
+//        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, 
+//            string fileName, 
+//            GoogleFile destFolder, bool scaleRequired,
+//            string storageFileId, CancellationToken token)
+//        {
+//            var props = new List<Property>
+//            {
+//                new Property {Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE"},
+//                new Property {Key = "src", Value = Storage.Kind, Visibility = "PRIVATE"}
+//            };
+//            //
+//            //
+//            // Storage file ID.
+//            var storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
+//            var storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
+//            var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
+//            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
+//            props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
+//            return await UploadFileAsync(stream, fileName, destFolder, scaleRequired, props, token);
+//        }
+
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, 
+            string fileName, 
+            DriveFile destFolder, bool scaleRequired, 
             string storageFileId, CancellationToken token)
         {
             var props = new List<Property>
@@ -138,20 +161,7 @@ namespace Oblqo.Google
             var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
-            return await UploadFileAsync(stream, fileName, parents, scaleRequired, props, token);
-        }
-
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
-            DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
-        {
-            return
-                await
-                    UploadFileAsync(stream, fileName,
-                        new List<ParentReference>
-                        {
-                            new ParentReference {Id = destFolder == null ? RootId : destFolder.Id}
-                        }, scaleRequired, storageFileId, 
-                        token);
+            return await UploadFileAsync(stream, fileName, (GoogleFile)destFolder, scaleRequired, props, token);
         }
 
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder,
@@ -187,12 +197,7 @@ namespace Oblqo.Google
 
         public override DriveFile RootFolder => rootFolder;
 
-        private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, CancellationToken token)
-        {
-            return await GetFilesAsync(folderId, string.Format("mimeType != '{0}'", GoogleMimeTypes.Folder), token);
-        }
-
-        private async Task<ICollection<DriveFile>> GetFilesAsync(string folderId, string q, CancellationToken token)
+        private async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, string q, CancellationToken token)
         {
             try
             {
@@ -201,10 +206,10 @@ namespace Oblqo.Google
                 request.MaxResults = 1000;
                 if (!string.IsNullOrWhiteSpace(q))
                     q = string.Format("and ({0})", q);
-                request.Q = string.Format("'{0}' in parents and trashed = false {1}", folderId, q);
+                request.Q = string.Format("'{0}' in parents and trashed = false {1}", folder.Id, q);
                 request.Fields = "items(downloadUrl,webContentLink,thumbnailLink,id,mimeType,createdDate,modifiedDate,fileSize,title,properties)";
                 var files = await request.ExecuteAsync(token);
-                return await GoogleFileList.Get(this, files, service, token);
+                return await GoogleFileList.Get(this, (GoogleFile)folder, files, service, token);
             }
             catch (TokenResponseException ex)
             {
@@ -214,7 +219,7 @@ namespace Oblqo.Google
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
         {
-            return await GetFilesAsync(folder.Id, token);
+            return await GetFilesAsync(folder, string.Format("mimeType != '{0}'", GoogleMimeTypes.Folder), token);
         }
 
         public override async Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder,
@@ -228,12 +233,12 @@ namespace Oblqo.Google
             };
             var service = await GetServiceAsync(token);
             var file = await service.Files.Insert(folder).ExecuteAsync(token);
-            return new GoogleFile(this, file);
+            return new GoogleFile(this, file, (GoogleFile)destFolder);
         }
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            return await GetFilesAsync(folder.Id, string.Format("mimeType = '{0}'", GoogleMimeTypes.Folder), token);
+            return await GetFilesAsync(folder, string.Format("mimeType = '{0}'", GoogleMimeTypes.Folder), token);
         }
 
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
@@ -242,7 +247,7 @@ namespace Oblqo.Google
             var service = await GetServiceAsync(token);
             if (driveFolder.Id == RootId)
             {
-                var files = await GetFilesAsync(RootId, "", token);
+                var files = await GetFilesAsync(rootFolder, "", token);
                 foreach (var file in files)
                     await service.Files.Delete(file.Id).ExecuteAsync(token);
             }

@@ -9,8 +9,7 @@ namespace Oblqo.Local
 {
     public abstract class LocalFile : DriveFile
     {
-        internal FileSystemInfo file;
-
+        internal readonly FileSystemInfo file;
 
         protected LocalFile(LocalDrive drive, FileSystemInfo file, bool isRoot)
             : base(drive)
@@ -32,6 +31,10 @@ namespace Oblqo.Local
                 this.file = new DirectoryInfo(path);
             }
         }
+
+        public override DriveFile Parent => LocalFileFactory.Instance.Create((LocalDrive)Drive,
+            new DirectoryInfo(Path.GetDirectoryName(file.FullName) ?? ""),
+            false);
 
         public override DateTime CreatedDate => file.CreationTime;
 

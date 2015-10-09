@@ -37,6 +37,7 @@
             this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.driveDisableAccountCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,6 +114,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.driveDisableAccountCheckBox);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.driveRootPathTextBox);
             this.panel1.Controls.Add(this.driveRootPathBrowseButton);
@@ -125,6 +127,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(464, 127);
             this.panel1.TabIndex = 25;
+            // 
+            // driveDisableAccountCheckBox
+            // 
+            this.driveDisableAccountCheckBox.AutoSize = true;
+            this.driveDisableAccountCheckBox.Location = new System.Drawing.Point(6, 96);
+            this.driveDisableAccountCheckBox.Name = "driveDisableAccountCheckBox";
+            this.driveDisableAccountCheckBox.Size = new System.Drawing.Size(104, 17);
+            this.driveDisableAccountCheckBox.TabIndex = 25;
+            this.driveDisableAccountCheckBox.Text = "Disable Account";
+            this.driveDisableAccountCheckBox.UseVisualStyleBackColor = true;
             // 
             // DriveAccountControl
             // 
@@ -150,5 +162,6 @@
         private System.Windows.Forms.TextBox driveRootPathTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox driveDisableAccountCheckBox;
     }
 }

@@ -74,7 +74,6 @@ namespace Oblqo
         /// </summary>
         /// <param name="pathName"></param>
         /// <param name="destFolder"></param>
-        /// <param name="scaleRequired">Need scale image to account settings size.</param>
         /// <param name="token"></param>
         /// <param name="progressCallback"></param>
         public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)

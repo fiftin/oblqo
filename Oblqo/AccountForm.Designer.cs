@@ -50,11 +50,14 @@
             this.addDriveTabPage = new System.Windows.Forms.TabPage();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.storageTabControl.SuspendLayout();
             this.glacierTabPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.driveTabControl.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -211,6 +214,7 @@
             // 
             // driveTabControl
             // 
+            this.driveTabControl.ContextMenuStrip = this.contextMenuStrip1;
             this.driveTabControl.Controls.Add(this.addDriveTabPage);
             this.driveTabControl.ImageList = this.imageList1;
             this.driveTabControl.Location = new System.Drawing.Point(6, 19);
@@ -219,6 +223,8 @@
             this.driveTabControl.Size = new System.Drawing.Size(487, 173);
             this.driveTabControl.TabIndex = 19;
             this.driveTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.driveTabControl_Selecting);
+            this.driveTabControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.driveTabControl_MouseClick);
+            this.driveTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.driveTabControl_MouseDown);
             // 
             // addDriveTabPage
             // 
@@ -236,6 +242,20 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "021.png");
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteAccountToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 26);
+            // 
+            // deleteAccountToolStripMenuItem
+            // 
+            this.deleteAccountToolStripMenuItem.Name = "deleteAccountToolStripMenuItem";
+            this.deleteAccountToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteAccountToolStripMenuItem.Text = "Delete Account";
+            this.deleteAccountToolStripMenuItem.Click += new System.EventHandler(this.deleteAccountToolStripMenuItem_Click);
             // 
             // AccountForm
             // 
@@ -266,6 +286,7 @@
             this.glacierTabPage.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.driveTabControl.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,6 +314,8 @@
         private System.Windows.Forms.TabControl storageTabControl;
         private System.Windows.Forms.TabPage glacierTabPage;
         private System.Windows.Forms.TabPage addDriveTabPage;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem deleteAccountToolStripMenuItem;
     }
 
 }

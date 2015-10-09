@@ -163,6 +163,29 @@ namespace Oblqo
             driveTabControl.SelectedTab = tab;
         }
 
-        
+        private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void driveTabControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            var p = driveTabControl.PointToClient(Cursor.Position);
+            for (var i = 0; i < driveTabControl.TabCount; i++)
+            {
+                var r = driveTabControl.GetTabRect(i);
+                if (r.Contains(p) && driveTabControl.TabPages[i] != addDriveTabPage)
+                {
+                    driveTabControl.SelectedIndex = i;
+                    contextMenuStrip1.Show(Cursor.Position);
+                    return;
+                }
+            }
+        }
+
+        private void driveTabControl_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

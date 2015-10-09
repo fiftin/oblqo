@@ -532,7 +532,7 @@ namespace Oblqo
             else if (newTask is SynchronizeDriveFileTask)
             {
                 var task = (SynchronizeDriveFileTask)newTask;
-                taskItem.Text = Path.GetFileName(task.File.Name);
+                taskItem.Text = Path.GetFileName(task.File?.Name);
                 taskItem.SubItems.Add("Sync File on Drive").Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(0)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";

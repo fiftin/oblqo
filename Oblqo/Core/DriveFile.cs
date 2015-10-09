@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Oblqo
 {
-    public abstract class DriveFile //: IDriveFile
+    public abstract class DriveFile
     {
         public abstract string Id { get; }
         public abstract bool IsImage { get; }
@@ -29,8 +29,9 @@ namespace Oblqo
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
         public abstract string MimeType { get; }
+        public abstract DriveFile Parent { get; }
 
-        public Drive Drive { get; private set; }
+        public Drive Drive { get; }
 
         protected DriveFile(Drive drive)
         {
@@ -60,7 +61,12 @@ namespace Oblqo
         }
 
         public abstract Task WriteAsync(byte[] bytes, CancellationToken token);
+        public abstract string GetAttribute(string name);
+        public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
 
+        /// <summary>
+        /// Scale image to required size.
+        /// </summary>
         public async Task ScaleImageAsync(CancellationToken token)
         {
             var type = GetImageType();
@@ -73,9 +79,6 @@ namespace Oblqo
             await stream.CopyToAsync(memStream);
             await WriteAsync(memStream.ToArray(), token);
         }
-        
-        public abstract string GetAttribute(string name);
-        public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
 
         /// <summary>
         /// Generate unique ID for new source.

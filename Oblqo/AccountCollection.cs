@@ -9,11 +9,18 @@ namespace Oblqo
     public class AccountCollection
     {
         private readonly SortedDictionary<string, Account> accounts = new SortedDictionary<string, Account>();
-        private readonly object locker = new object();
 
         public Account this[string index]
         {
-            get { return accounts[index]; }
+            get
+            {
+                Account ret;
+                if (!accounts.TryGetValue(index, out ret))
+                {
+                    throw new ArgumentException("Invalid index value: " + index, "index");
+                }
+                return ret;
+            }
         }
 
         public bool TryGetValue(string name, out Account account)
@@ -29,11 +36,7 @@ namespace Oblqo
         public bool Remove(Account account)
         {
             var name = GetName(account);
-            if (name == null)
-            {
-                return false;
-            }
-            return accounts.Remove(name);
+            return name != null && accounts.Remove(name);
         }
 
         public bool ContainsKey(string name)
@@ -48,14 +51,7 @@ namespace Oblqo
 
         private string GetName(Account account)
         {
-            foreach (KeyValuePair<string, Account> x in accounts)
-            {
-                if (x.Value == account)
-                {
-                    return x.Key;
-                }
-            }
-            return null;
+            return (from x in accounts where x.Value == account select x.Key).FirstOrDefault();
         }
     }
 }

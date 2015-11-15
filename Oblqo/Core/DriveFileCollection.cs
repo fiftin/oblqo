@@ -14,6 +14,8 @@ namespace Oblqo
 
         public DriveCollection Drive { get; private set; }
 
+        public DriveFileCollection Parent { get; private set; }
+
         public IList<DriveFile> Files => files;
 
         public DriveFileCollection(DriveCollection drive)
@@ -21,13 +23,37 @@ namespace Oblqo
             Drive = drive;
         }
 
-        public DriveFileCollection(DriveCollection drive, IEnumerable<DriveFile> f)
+        public DriveFileCollection(DriveCollection drive, IEnumerable<DriveFile> f, DriveFileCollection parent)
         {
             Drive = drive;
             files.AddRange(f);
+            Parent = parent;
         }
 
         private DriveFile First => files[0];
+
+        public async Task<DriveFile> GetFileAndCreateIfFolderIsNotExistsAsync(Drive drive, CancellationToken token)
+        {
+            var stack = new Stack<DriveFileCollection>();
+            var curr = this;
+            var driveFile = curr.files.SingleOrDefault(file => file.Drive == drive);
+            while (driveFile == null)
+            {
+                stack.Push(curr);
+                if (curr.Parent == null)
+                {
+                    break;
+                }
+                curr = curr.Parent;
+                driveFile = curr.files.SingleOrDefault(file => file.Drive == drive);
+            }
+            while (stack.Count > 0)
+            {
+                var f = stack.Pop();
+                driveFile = await drive.CreateFolderAsync(f.Name, driveFile, token);
+            }
+            return driveFile;
+        }
 
         public DriveFile GetFile(Drive drive)
         {

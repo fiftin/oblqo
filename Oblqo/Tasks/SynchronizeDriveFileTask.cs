@@ -23,14 +23,22 @@ namespace Oblqo.Tasks
             DestFolder = folder;
         }
 
+
+        public async Task<DriveFile> UploadFile(Drive drive)
+        {
+            var token = CancellationTokenSource.Token;
+            var bestFile = GetBestFile();
+            var stream = await bestFile.Drive.ReadFileAsync(bestFile, token);
+            var folder = await DestFolder.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
+            return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId != null, bestFile.StorageFileId, token);
+        }
+
         protected override async Task OnStartAsync()
         {
-            var bestFile = GetBestFile();
             var dr = File.Drive;
-            var stream = await bestFile.Drive.ReadFileAsync(bestFile, CancellationTokenSource.Token);
             var tasks = (from drive in dr
                          where File.GetFile(drive) == null
-                         select drive.UploadFileAsync(stream, File.Name, DestFolder.GetFile(drive), bestFile.StorageFileId != null, bestFile.StorageFileId, CancellationTokenSource.Token)
+                         select UploadFile(drive)
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);
         }

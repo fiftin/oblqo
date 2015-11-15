@@ -1411,7 +1411,8 @@ namespace Oblqo
                 var account = accounts[info.AccountName];
                 if (info.File.DriveFile.Files.Count < account.Drive.Count)
                 {
-                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.DriveFile));
+                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 
+                        0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.DriveFile));
                 }
             }
         }

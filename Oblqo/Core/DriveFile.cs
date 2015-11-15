@@ -29,6 +29,9 @@ namespace Oblqo
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
         public abstract string MimeType { get; }
+        /// <summary>
+        /// Folder contains current file.
+        /// </summary>
         public abstract DriveFile Parent { get; }
 
         public Drive Drive { get; }

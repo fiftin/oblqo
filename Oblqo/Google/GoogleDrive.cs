@@ -64,15 +64,20 @@ namespace Oblqo.Google
             foreach (var f in folders)
             {
                 currentPath += "/" + f;
-
-                // Check if file is not already exists & rights to create
                 var existsingFile = await GetFolderAsync(file.Id, f, token);
-                if (existsingFile != null) continue;
-                if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
-
-                var newFolder = (GoogleFile)await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
-                file = newFolder.File;
-                parentFolder = newFolder;
+                if (existsingFile == null)
+                {
+                    if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
+                    var newFolder =
+                        (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
+                    file = newFolder.File;
+                    parentFolder = newFolder;
+                }
+                else
+                {
+                    file = existsingFile;
+                    parentFolder = new GoogleFile(this, existsingFile, parentFolder);
+                }
             }
             return new GoogleFile(this, file, rootFolder);
         }
@@ -143,10 +148,8 @@ namespace Oblqo.Google
 //            return await UploadFileAsync(stream, fileName, destFolder, scaleRequired, props, token);
 //        }
 
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, 
-            string fileName, 
-            DriveFile destFolder, bool scaleRequired, 
-            string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
+            DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
             var props = new List<Property>
             {

@@ -80,7 +80,7 @@ namespace Oblqo
             CancellationToken token)
         {
             var tasks = drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), scaleRequired, storageFileId, token));
-            return new DriveFileCollection(this, await Task.WhenAll(tasks));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks), destFolder);
         }
 
         public async Task<Stream> ReadFileAsync(DriveFileCollection file, CancellationToken token)
@@ -119,9 +119,8 @@ namespace Oblqo
             CancellationToken token)
         {
             var tasks = drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetFile(drive), token));
-            return new DriveFileCollection(this, await Task.WhenAll(tasks));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks), destFolder);
         }
-
 
         public async Task DeleteFolderAsync(DriveFileCollection driveFolder, CancellationToken token)
         {
@@ -195,7 +194,7 @@ namespace Oblqo
         {
             var elements = xml.Elements();
             var tasks = drives.Select(drive => drive.GetFileAsync(elements.Single(x => x.Attribute("").Value == drive.Id), token));
-            return new DriveFileCollection(this, await Task.WhenAll(tasks));
+            return new DriveFileCollection(this, await Task.WhenAll(tasks), null);
         }
 
         public IEnumerator<Drive> GetEnumerator()

@@ -170,6 +170,11 @@ namespace Oblqo
 
         private void driveTabControl_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
             var p = driveTabControl.PointToClient(Cursor.Position);
             for (var i = 0; i < driveTabControl.TabCount; i++)
             {

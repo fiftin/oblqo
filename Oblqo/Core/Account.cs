@@ -23,13 +23,13 @@ namespace Oblqo
         {
             Storage = storage;
             Drive = drive;
-            RootFolder = new AccountFile(this.Storage.RootFolder, this.Drive.RootFolder);
+            RootFolder = new AccountFile(this.Storage.RootFolder, this.Drive.RootFolder, null);
         }
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)
         {
             var driveFiles = await Drive.GetSubfoldersAsync(folder.DriveFile, token);
-            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
+            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file, folder)).ToList();
         }
 
         public async Task<Stream> ReadFileAsync(AccountFile file, CancellationToken token)
@@ -45,7 +45,7 @@ namespace Oblqo
         public async Task<ICollection<AccountFile>> GetFilesAsync(AccountFile folder, CancellationToken token)
         {
             var driveFiles = await Drive.GetFilesAsync(folder?.DriveFile, token);
-            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file)).ToList();
+            return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file, folder)).ToList();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Oblqo
                         token);
             var driveDir =
                 await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, token);
-            return new AccountFile(storageDir, driveDir);
+            return new AccountFile(storageDir, driveDir, destFolder);
         }
         
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
@@ -112,7 +112,7 @@ namespace Oblqo
         {
             var storageFile = storageXml == null ? null : await Storage.GetFileAsync(storageXml, token);
             var driveFile = driveXml == null ? null : await Drive.GetFileAsync(driveXml, token);
-            return new AccountFile(storageFile, driveFile);
+            return new AccountFile(storageFile, driveFile, null);
         }
 
 

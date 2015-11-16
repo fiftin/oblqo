@@ -1,17 +1,10 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Oblqo
+﻿namespace Oblqo
 {
     public class AccountFile
     {
-        public DriveFileCollection DriveFile { get; set; }
-        public StorageFile StorageFile { get; set; }
-        public AccountFile Parent { get; set; }
-
+        public DriveFileCollection DriveFile { get; }
+        public StorageFile StorageFile { get; }
+        public AccountFile Parent { get; }
         public string Name => DriveFile != null ? DriveFile.Name : StorageFile?.Name;
 
         public bool IsImage => DriveFile != null && DriveFile.IsImage;
@@ -20,10 +13,11 @@ namespace Oblqo
 
         public bool HasChildren => DriveFile != null && DriveFile.HasChildren;
 
-        public AccountFile(StorageFile storageFile, DriveFileCollection driveFile)
+        public AccountFile(StorageFile storageFile, DriveFileCollection driveFile, AccountFile parent)
         {
             StorageFile = storageFile;
             DriveFile = driveFile;
+            Parent = parent;
         }
 
     }

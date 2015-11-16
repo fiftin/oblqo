@@ -6,7 +6,6 @@ namespace Oblqo.Tasks
     {
         public DownloadFileFromStorageTask()
         {
-
         }
 
         public DownloadFileFromStorageTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file,

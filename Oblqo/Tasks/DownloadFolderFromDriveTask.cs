@@ -15,7 +15,7 @@ namespace Oblqo.Tasks
         {
             var folder = Common.AppendToPath(DestFolder, Folder.Name);
             Directory.CreateDirectory(folder);
-            await EnumerateFilesRecursiveAsync(Folder.DriveFile, folder);
+            await EnumerateFilesRecursiveAsync(Folder, folder);
         }
 
         protected override DownloadFileTask CreateDownloadFileTask(Account account, string accountName, int priority, AsyncTask[] parent,

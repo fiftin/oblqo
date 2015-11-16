@@ -10,6 +10,9 @@ using System.Xml.Linq;
 
 namespace Oblqo
 {
+    /// <summary>
+    /// Complex drive.
+    /// </summary>
     public class DriveCollection : IEnumerable<Drive>
     {
         private readonly List<Drive> drives = new List<Drive>();
@@ -141,13 +144,10 @@ namespace Oblqo
 
         private bool TryFindFileByName(string fileName, IEnumerable<DriveFileCollection> fileCollections, out DriveFileCollection collection)
         {
-            foreach (var item in fileCollections)
+            foreach (var item in fileCollections.Where(item => item.Name == fileName))
             {
-                if (item.Name == fileName)
-                {
-                    collection = item;
-                    return true;
-                }
+                collection = item;
+                return true;
             }
             collection = null;
             return false;

@@ -207,8 +207,7 @@ namespace Oblqo
         {
             lock (updateListCancellationTokenSourceLocker)
             {
-                if (updateListCancellationTokenSource != null)
-                    updateListCancellationTokenSource.Cancel();
+                updateListCancellationTokenSource?.Cancel();
                 updateListCancellationTokenSource = new CancellationTokenSource();
             }
             var node = treeView1.SelectedNode;

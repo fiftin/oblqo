@@ -22,10 +22,7 @@ namespace Oblqo.Google
         public string AccessSecretKey { get; set; }
         public ClientSecrets Secrets { get; set; }
         public const string RootId = "root";
-
-
         private GoogleFile rootFolder;
-        //private readonly ManualResetEvent rootFolderEvent = new ManualResetEvent(false);
 
         protected GoogleDrive(Storage storage, Account account, ClientSecrets secrets)
             : base(storage, account)
@@ -100,8 +97,7 @@ namespace Oblqo.Google
         }
 
         internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName,
-            GoogleFile destFolder, bool scaleRequired,
-            IList<Property> props, CancellationToken token)
+            GoogleFile destFolder, bool scaleRequired, IList<Property> props, CancellationToken token)
         {
             var service = await GetServiceAsync(token);
             var file = new File

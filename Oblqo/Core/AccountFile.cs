@@ -10,6 +10,7 @@ namespace Oblqo
     {
         public DriveFileCollection DriveFile { get; set; }
         public StorageFile StorageFile { get; set; }
+        public AccountFile Parent { get; set; }
 
         public string Name => DriveFile != null ? DriveFile.Name : StorageFile?.Name;
 

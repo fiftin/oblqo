@@ -54,29 +54,30 @@ namespace Oblqo.Google
 
         public async Task<GoogleFile> GetFolderByPathAsync(string path, CancellationToken token, bool createIfNotExists = false)
         {
-            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
-            var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
-            var currentPath = "";
-            var parentFolder = rootFolder;
-            foreach (var f in folders)
-            {
-                currentPath += "/" + f;
-                var existsingFile = await GetFolderAsync(file.Id, f, token);
-                if (existsingFile == null)
-                {
-                    if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
-                    var newFolder =
-                        (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
-                    file = newFolder.File;
-                    parentFolder = newFolder;
-                }
-                else
-                {
-                    file = existsingFile;
-                    parentFolder = new GoogleFile(this, existsingFile, parentFolder);
-                }
-            }
-            return new GoogleFile(this, file, rootFolder);
+            throw new NotImplementedException();
+//            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+//            var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
+//            var currentPath = "";
+//            var parentFolder = rootFolder;
+//            foreach (var f in folders)
+//            {
+//                currentPath += "/" + f;
+//                var existsingFile = await GetFolderAsync(file.Id, f, token);
+//                if (existsingFile == null)
+//                {
+//                    if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
+//                    var newFolder =
+//                        (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
+//                    file = newFolder.File;
+//                    parentFolder = newFolder;
+//                }
+//                else
+//                {
+//                    file = existsingFile;
+//                    parentFolder = new GoogleFile(this, existsingFile, parentFolder);
+//                }
+//            }
+//            return new GoogleFile(this, file, rootFolder);
         }
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
@@ -120,7 +121,7 @@ namespace Oblqo.Google
             {
                 throw new Exception(request.Exception.Message);
             }
-            return new GoogleFile(this, file, destFolder);
+            return new GoogleFile(this, file);
         }
 
 //        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, 
@@ -232,7 +233,7 @@ namespace Oblqo.Google
             };
             var service = await GetServiceAsync(token);
             var file = await service.Files.Insert(folder).ExecuteAsync(token);
-            return new GoogleFile(this, file, (GoogleFile)destFolder);
+            return new GoogleFile(this, file);
         }
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)

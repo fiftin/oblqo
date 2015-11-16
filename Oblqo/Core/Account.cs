@@ -23,12 +23,12 @@ namespace Oblqo
         {
             Storage = storage;
             Drive = drive;
-            RootFolder = new AccountFile(this.Storage.RootFolder, this.Drive.RootFolder, null);
+            RootFolder = new AccountFile(Storage.RootFolder, Drive.RootFolder, null);
         }
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)
         {
-            var driveFiles = await Drive.GetSubfoldersAsync(folder.DriveFile, token);
+            var driveFiles = await Drive.GetSubfoldersAsync(folder.DriveFile, folder, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file, folder)).ToList();
         }
 
@@ -44,7 +44,7 @@ namespace Oblqo
 
         public async Task<ICollection<AccountFile>> GetFilesAsync(AccountFile folder, CancellationToken token)
         {
-            var driveFiles = await Drive.GetFilesAsync(folder?.DriveFile, token);
+            var driveFiles = await Drive.GetFilesAsync(folder?.DriveFile, folder, token);
             return driveFiles.Select(file => new AccountFile(Storage.GetFile(file), file, folder)).ToList();
         }
 
@@ -79,7 +79,7 @@ namespace Oblqo
         public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);
-            await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id != null, uploadedFile.Id, token);
+            await Drive.UploadFileAsync(pathName, destFolder.DriveFile, uploadedFile.Id != null, uploadedFile.Id, destFolder, token);
         }
 
         internal void Disconnect()
@@ -99,7 +99,7 @@ namespace Oblqo
                     Storage.CreateFolderAsync(folderName, destFolder.StorageFile,
                         token);
             var driveDir =
-                await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, token);
+                await Drive.CreateFolderAsync(folderName, destFolder.DriveFile, destFolder, token);
             return new AccountFile(storageDir, driveDir, destFolder);
         }
         

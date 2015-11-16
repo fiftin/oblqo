@@ -14,23 +14,27 @@ namespace Oblqo
 
         public DriveCollection Drive { get; private set; }
 
-        public DriveFileCollection Parent => AccountFile.DriveFile;
+        public DriveFileCollection Parent => Owner.DriveFile;
 
-        public AccountFile AccountFile { get; }
+        public AccountFile Owner { get; }
 
         public IList<DriveFile> Files => files;
 
-        public DriveFileCollection(DriveCollection drive, AccountFile accountFile)
+        public DriveFileCollection(DriveCollection drive, AccountFile owner)
         {
             Drive = drive;
-            AccountFile = accountFile;
+            Owner = owner;
         }
 
-        public DriveFileCollection(DriveCollection drive, IEnumerable<DriveFile> f, AccountFile accountFile)
+        public DriveFileCollection(DriveCollection drive, IEnumerable<DriveFile> f, AccountFile owner)
         {
             Drive = drive;
-            files.AddRange(f);
-            AccountFile = accountFile;
+            foreach (var x in f)
+            {
+                x.Owner = owner.DriveFile;
+                files.Add(x);
+            }
+            Owner = owner;
         }
 
         private DriveFile First => files[0];

@@ -26,10 +26,10 @@ namespace Oblqo.Tasks
 
         protected async Task EnumerateFilesRecursiveAsync(AccountFile folder, string dest)
         {
-            var files = await Account.Drive.GetFilesAsync(folder.DriveFile, CancellationTokenSource.Token);
+            var files = await Account.Drive.GetFilesAsync(folder.DriveFile, folder, CancellationTokenSource.Token);
             foreach (var f in files)
                 AddTask(CreateDownloadFileTask(Account, AccountName, 0, null, new AccountFile(Account.Storage.GetFile(f), f, folder), dest));
-            var dirs = await Account.Drive.GetSubfoldersAsync(folder.DriveFile, CancellationTokenSource.Token);
+            var dirs = await Account.Drive.GetSubfoldersAsync(folder.DriveFile, folder, CancellationTokenSource.Token);
             foreach (var d in dirs)
             {
                 var path = Common.AppendToPath(dest, d.Name);

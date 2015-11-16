@@ -29,10 +29,13 @@ namespace Oblqo
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
         public abstract string MimeType { get; }
+
         /// <summary>
         /// Folder contains current file.
         /// </summary>
-        public abstract DriveFile Parent { get; }
+        public virtual DriveFile Parent => Owner.GetFile(Drive);
+
+        public DriveFileCollection Owner { get; set; }
 
         public Drive Drive { get; }
 

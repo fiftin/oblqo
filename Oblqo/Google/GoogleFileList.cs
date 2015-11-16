@@ -32,7 +32,7 @@ namespace Oblqo.Google
         public static async Task<GoogleFileList> Get(GoogleDrive drive, GoogleFile folder, FileList fileList, DriveService service, CancellationToken token)
         {
             var ret = new GoogleFileList(drive);
-            foreach (var googleFile in fileList.Items.Select(file => new GoogleFile(drive, file, folder)))
+            foreach (var googleFile in fileList.Items.Select(file => new GoogleFile(drive, file)))
             {
                 if (googleFile.IsFolder)
                     googleFile.hasChildren = await HasSubfoldersAsync(googleFile, service, token);

@@ -125,9 +125,9 @@ namespace Oblqo
 
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
-            var drives = new DriveCollection();
             var token = new CancellationToken();
             var account = new Account();
+            var drives = new DriveCollection();
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             foreach (var d in info.Drives)
             {
@@ -155,6 +155,7 @@ namespace Oblqo
                 }
             }
             account.Init(storage, drives);
+            drives.Init(account);
             return account;
         }
 

@@ -20,13 +20,17 @@ namespace Oblqo
         public Account Account { get; private set; }
 
         public int Count => drives.Count;
+        public DriveFileCollection RootFolder { get; private set; }
 
         public DriveCollection()
         {
-            RootFolder = new DriveFileCollection(this);
         }
 
-        public DriveFileCollection RootFolder { get; }
+        public void Init(Account owner)
+        {
+            RootFolder = new DriveFileCollection(this, owner.RootFolder);
+        }
+
 
         public void Add(Drive drive)
         {
@@ -80,10 +84,10 @@ namespace Oblqo
         }
 
         public async Task<DriveFileCollection> UploadFileAsync(string pathName, DriveFileCollection destFolder, bool scaleRequired, string storageFileId,
-            CancellationToken token)
+            AccountFile owner, CancellationToken token)
         {
             var tasks = drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), scaleRequired, storageFileId, token));
-            return new DriveFileCollection(this, await Task.WhenAll(tasks), destFolder);
+            return new DriveFileCollection(this, await Task.WhenAll(tasks), owner);
         }
 
         public async Task<Stream> ReadFileAsync(DriveFileCollection file, CancellationToken token)
@@ -119,10 +123,10 @@ namespace Oblqo
         }
 
         public async Task<DriveFileCollection> CreateFolderAsync(string folderName, DriveFileCollection destFolder,
-            CancellationToken token)
+            AccountFile owner, CancellationToken token)
         {
             var tasks = drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetFile(drive), token));
-            return new DriveFileCollection(this, await Task.WhenAll(tasks), destFolder);
+            return new DriveFileCollection(this, await Task.WhenAll(tasks), owner);
         }
 
         public async Task DeleteFolderAsync(DriveFileCollection driveFolder, CancellationToken token)
@@ -132,12 +136,12 @@ namespace Oblqo
         }
 
         public async Task<ICollection<DriveFileCollection>> GetSubfoldersAsync(DriveFileCollection folder,
-            CancellationToken token)
+            AccountFile owner, CancellationToken token)
         {
             var dic = new SortedDictionary<string, DriveFileCollection>();
             foreach (var f in folder.Files)
             {
-                AddFiles(await f.Drive.GetSubfoldersAsync(f, token), dic);
+                AddFiles(await f.Drive.GetSubfoldersAsync(f, token), dic, owner);
             }
             return dic.Values;
         }
@@ -153,39 +157,42 @@ namespace Oblqo
             return false;
         }
 
-        private void AddFile(DriveFile file, IDictionary<string, DriveFileCollection> fileCollections)
+        private void AddFile(DriveFile file, IDictionary<string, DriveFileCollection> fileCollections, AccountFile owner)
         {
             DriveFileCollection collection;
             if (file.StorageFileId == null)
             {
                 if (!TryFindFileByName(file.Name, fileCollections.Values, out collection))
                 {
-                    collection = new DriveFileCollection(this);
+                    collection = new DriveFileCollection(this, owner);
                     fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
                 }
             }
             else if (!fileCollections.TryGetValue(file.StorageFileId, out collection))
             {
-                collection = new DriveFileCollection(this);
+                collection = new DriveFileCollection(this, owner);
                 fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
             }
             collection.Add(file);
         }
 
-        private void AddFiles(IEnumerable<DriveFile> files, SortedDictionary<string, DriveFileCollection> fileCollections)
+        private void AddFiles(IEnumerable<DriveFile> files, 
+            SortedDictionary<string, DriveFileCollection> fileCollections,
+            AccountFile owner)
         {
             foreach (var file in files)
             {
-                AddFile(file, fileCollections);
+                AddFile(file, fileCollections, owner);
             }
         }
 
-        public async Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder, CancellationToken token)
+        public async Task<ICollection<DriveFileCollection>> GetFilesAsync(DriveFileCollection folder,
+            AccountFile owner, CancellationToken token)
         {
             var dic = new SortedDictionary<string, DriveFileCollection>();
             foreach (var f in folder.Files)
             {
-                AddFiles(await f.Drive.GetFilesAsync(f, token), dic);
+                AddFiles(await f.Drive.GetFilesAsync(f, token), dic, owner);
             }
             return dic.Values;
         }

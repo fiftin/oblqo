@@ -13,17 +13,16 @@ namespace Oblqo
     {
         public Storage Storage { get; private set; }
         public DriveCollection Drive { get; private set; }
-        public AccountFile RootFolder { get; private set; }
-        public object Tag { get; set; }
-        public Account()
-        {
-        }
+        private AccountFile rootFolder;
 
-        internal void Init(Storage storage, DriveCollection drive)
+        public AccountFile RootFolder => rootFolder ?? (rootFolder = new AccountFile(Storage.RootFolder, Drive.RootFolder, null));
+
+        public object Tag { get; set; }
+ 
+        public Account(Storage storage, DriveCollection drive)
         {
             Storage = storage;
             Drive = drive;
-            RootFolder = new AccountFile(Storage.RootFolder, Drive.RootFolder, null);
         }
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)

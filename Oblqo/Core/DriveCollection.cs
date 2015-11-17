@@ -15,27 +15,26 @@ namespace Oblqo
     /// </summary>
     public class DriveCollection : IEnumerable<Drive>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly List<Drive> drives = new List<Drive>();
-        public Storage Storage { get; private set; }
-        public Account Account { get; private set; }
+
+        public Account Owner { get; internal set; }
+
+        public Storage Storage => Owner.Storage;
 
         public int Count => drives.Count;
-        public DriveFileCollection RootFolder { get; private set; }
+
+        public DriveFileCollection RootFolder { get; }
 
         public DriveCollection()
         {
+            RootFolder = new DriveFileCollection(this);
         }
-
-        public void Init(Account owner)
-        {
-            RootFolder = new DriveFileCollection(this, owner.RootFolder);
-        }
-
 
         public void Add(Drive drive)
         {
-            Account = drive.Account;
-            Storage = drive.Storage;
             RootFolder.Add(drive.RootFolder);
             drives.Add(drive);
         }

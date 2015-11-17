@@ -15,8 +15,10 @@ namespace Oblqo
     {
         public abstract DriveFile RootFolder { get; }
         public Size ImageMaxSize { get; set; }
-        public Storage Storage { get; private set; }
-        public Account Account { get; private set; }
+
+        public Account Owner { get; }
+
+        public Storage Storage => Owner.Storage;
 
         public string Id { get; set; }
 
@@ -29,10 +31,9 @@ namespace Oblqo
         /// </summary>
         public static readonly string StorageFileIdFormat = "{0}.id-{1}";
 
-        protected Drive(Storage storage, Account account)
+        protected Drive(Account owner)
         {
-            Storage = storage;
-            Account = account;
+            Owner = owner;
         }
 
         public Image ScaleImage(Image image)

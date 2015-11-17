@@ -16,9 +16,14 @@ namespace Oblqo
 
         public DriveFileCollection Parent => Owner.DriveFile;
 
-        public AccountFile Owner { get; }
+        public AccountFile Owner { get; internal set; }
 
         public IList<DriveFile> Files => files;
+
+        internal DriveFileCollection(DriveCollection drive)
+        {
+            Drive = drive;
+        }
 
         public DriveFileCollection(DriveCollection drive, AccountFile owner)
         {

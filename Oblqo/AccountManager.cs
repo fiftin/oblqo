@@ -126,9 +126,11 @@ namespace Oblqo
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
             var token = new CancellationToken();
-            var account = new Account();
+
+            
             var drives = new DriveCollection();
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
+            var account = new Account(storage, drives);
             foreach (var d in info.Drives)
             {
                 switch (d.DriveType)
@@ -144,7 +146,7 @@ namespace Oblqo
                         drives.Add(drive);
                         break;
                     case DriveType.LocalDrive:
-                        var localDrive = new Local.LocalDrive(storage, account, d.DriveRootPath)
+                        var localDrive = new Local.LocalDrive(account, d.DriveRootPath)
                         {
                             ImageMaxSize = d.DriveImageMaxSize
                         };
@@ -154,8 +156,8 @@ namespace Oblqo
                         throw new NotSupportedException("Drive with this type is not supported");
                 }
             }
-            account.Init(storage, drives);
-            drives.Init(account);
+            drives.Owner = account;
+            drives.RootFolder.Owner = account.RootFolder;
             return account;
         }
 

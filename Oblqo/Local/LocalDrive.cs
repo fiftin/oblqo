@@ -13,8 +13,8 @@ namespace Oblqo.Local
 {
     public class LocalDrive : Drive
     {
-        public LocalDrive(Storage storage, Account account, string rootPath)
-            : base(storage, account)
+        public LocalDrive(Account account, string rootPath)
+            : base(account)
         {
             RootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
         }

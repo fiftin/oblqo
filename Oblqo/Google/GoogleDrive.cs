@@ -24,15 +24,15 @@ namespace Oblqo.Google
         public const string RootId = "root";
         private GoogleFile rootFolder;
 
-        protected GoogleDrive(Storage storage, Account account, ClientSecrets secrets)
-            : base(storage, account)
+        protected GoogleDrive(Account account, ClientSecrets secrets)
+            : base(account)
         {
             Secrets = secrets;
         }
 
         public static async Task<GoogleDrive> CreateInstance(Storage storage, Account account, ClientSecrets secrets, string rootPath, CancellationToken token)
         {
-            var ret = new GoogleDrive(storage, account, secrets);
+            var ret = new GoogleDrive(account, secrets);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath, token, true);
             ret.rootFolder = rootFolder;
             return ret;
@@ -52,32 +52,34 @@ namespace Oblqo.Google
             return result.Items[0];
         }
 
+        /// <summary>
+        /// Used only for create root folder.
+        /// </summary>
         public async Task<GoogleFile> GetFolderByPathAsync(string path, CancellationToken token, bool createIfNotExists = false)
         {
-            throw new NotImplementedException();
-//            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
-//            var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
-//            var currentPath = "";
-//            var parentFolder = rootFolder;
-//            foreach (var f in folders)
-//            {
-//                currentPath += "/" + f;
-//                var existsingFile = await GetFolderAsync(file.Id, f, token);
-//                if (existsingFile == null)
-//                {
-//                    if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
-//                    var newFolder =
-//                        (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file, parentFolder), token);
-//                    file = newFolder.File;
-//                    parentFolder = newFolder;
-//                }
-//                else
-//                {
-//                    file = existsingFile;
-//                    parentFolder = new GoogleFile(this, existsingFile, parentFolder);
-//                }
-//            }
-//            return new GoogleFile(this, file, rootFolder);
+            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+            var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
+            var currentPath = "";
+            //GoogleFile parentFolder = null;
+            foreach (var f in folders)
+            {
+                currentPath += "/" + f;
+                var existsingFile = await GetFolderAsync(file.Id, f, token);
+                if (existsingFile == null)
+                {
+                    if (!createIfNotExists) throw new Exception("Path is not exists: " + currentPath);
+                    var newFolder =
+                        (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file), token);
+                    file = newFolder.File;
+                    //parentFolder = newFolder;
+                }
+                else
+                {
+                    file = existsingFile;
+                    //parentFolder = new GoogleFile(this, existsingFile);
+                }
+            }
+            return new GoogleFile(this, file);
         }
 
         internal async Task<DriveService> GetServiceAsync(CancellationToken token)
@@ -93,7 +95,7 @@ namespace Oblqo.Google
             }
             catch (TokenResponseException ex)
             {
-                throw new ConnectionException(Account, ex.Message, ex);
+                throw new ConnectionException(Owner, ex.Message, ex);
             }
         }
 
@@ -213,7 +215,7 @@ namespace Oblqo.Google
             }
             catch (TokenResponseException ex)
             {
-                throw new ConnectionException(Account, ex.Message, ex);
+                throw new ConnectionException(Owner, ex.Message, ex);
             }
         }
 

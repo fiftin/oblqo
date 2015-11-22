@@ -11,17 +11,15 @@ namespace Oblqo.Local
     {
         internal readonly FileSystemInfo file;
 
-        protected LocalFile(LocalDrive drive, FileSystemInfo file, bool isRoot)
+        protected LocalFile(LocalDrive drive, FileSystemInfo file)
             : base(drive)
         {
-            this.IsRoot = isRoot;
             this.file = file;
         }
 
-        protected LocalFile(LocalDrive drive, string path, bool isRoot)
+        protected LocalFile(LocalDrive drive, string path)
             : base(drive)
         {
-            this.IsRoot = isRoot;
             if (System.IO.File.Exists(path))
             {
                 this.file = new FileInfo(path);
@@ -32,9 +30,23 @@ namespace Oblqo.Local
             }
         }
 
-        public override DriveFile Parent => LocalFileFactory.Instance.Create((LocalDrive)Drive,
-            new DirectoryInfo(Path.GetDirectoryName(file.FullName) ?? ""),
-            false);
+        public override DriveFile Parent
+        {
+            get
+            {
+                if (IsRoot)
+                {
+                    return null;
+                }
+                var parentPath = Path.GetDirectoryName(file.FullName);
+                if (parentPath == null)
+                {
+                    return null;
+                }
+                return LocalFileFactory.Instance.Create((LocalDrive)Drive,
+                    new DirectoryInfo(parentPath), false);
+            }
+        }
 
         public override DateTime CreatedDate => file.CreationTime;
 
@@ -81,7 +93,7 @@ namespace Oblqo.Local
 
         public override bool IsImage => MimeType.StartsWith("image/");
 
-        public override bool IsRoot { get; }
+        public override bool IsRoot => file.FullName == ((LocalFile)Drive.RootFolder).file.FullName;
 
         public override string MimeType => MimeTypes.GetMimeTypeByExtension(file.Name);
 

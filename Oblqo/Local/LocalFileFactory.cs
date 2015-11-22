@@ -15,7 +15,7 @@ namespace Oblqo.Local
                 if (instance == null)
                 {
                     instance = new LocalFileFactory();
-                    instance.Register(PlatformID.Win32NT, (drive, file, isRoot) => new NtfsLocalFile(drive, file, isRoot));
+                    instance.Register(PlatformID.Win32NT, (drive, file, isRoot) => new NtfsLocalFile(drive, file));
                 }
                 return instance;
             }

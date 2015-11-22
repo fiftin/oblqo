@@ -8,19 +8,19 @@ namespace Oblqo.Tasks
 {
     public class SynchronizeDriveFileTask : AsyncTask
     {
-        public DriveFileCollection File { get; set; }
-        public DriveFileCollection DestFolder { get; set; }
+        public AccountFile File { get; set; }
+
+        public AccountFile DestFolder => File.Parent;
 
         public SynchronizeDriveFileTask()
         {
 
         }
 
-        public SynchronizeDriveFileTask(Account account, string accountName, int priority, AsyncTask[] parent, DriveFileCollection file, DriveFileCollection folder)
+        public SynchronizeDriveFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file)
             : base(account, accountName, priority, parent)
         {
             File = file;
-            DestFolder = folder;
         }
 
 
@@ -35,8 +35,7 @@ namespace Oblqo.Tasks
 
         protected override async Task OnStartAsync()
         {
-            var dr = File.Drive;
-            var tasks = (from drive in dr
+            var tasks = (from drive in Account.Drives
                          where File.GetFile(drive) == null
                          select UploadFile(drive)
                          ).Cast<Task>().ToList();
@@ -45,7 +44,7 @@ namespace Oblqo.Tasks
         
         private DriveFile GetBestFile()
         {
-            return File.First();
+            return File.DriveFiles.First();
         }
     }
 }

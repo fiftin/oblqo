@@ -16,7 +16,7 @@ namespace Oblqo
 
         public Storage Storage { get; private set; }
 
-        public StorageFile(Storage storage)
+        protected StorageFile(Storage storage)
         {
             Storage = storage;
         }

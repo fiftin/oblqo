@@ -14,6 +14,7 @@ namespace Oblqo
     public abstract class Drive
     {
         public abstract DriveFile RootFolder { get; }
+
         public Size ImageMaxSize { get; set; }
 
         public Account Owner { get; }

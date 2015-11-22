@@ -274,9 +274,9 @@ namespace Oblqo
                         }
                         
                         var key = "file";
-                        if (!string.IsNullOrWhiteSpace(file.DriveFile.MimeType))
+                        if (!string.IsNullOrWhiteSpace(file.MimeType))
                         {
-                            var mimeTypeParts = file.DriveFile.MimeType.Split('/');
+                            var mimeTypeParts = file.MimeType.Split('/');
                             if (mimeTypeParts.Length == 2)
                             {
                                 var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
@@ -289,19 +289,19 @@ namespace Oblqo
 
                         var item = fileListView.Items.Add("", file.Name, key);
 
-                        if (file.DriveFile.Files.Count != account.Drive.Count)
+                        if (file.DriveFiles.Count != account.Drives.Count)
                         {
                             item.ForeColor = Color.Red;
                         }
 
-                        if (string.IsNullOrEmpty(file.DriveFile.StorageFileId))
+                        if (string.IsNullOrEmpty(file.StorageFileId))
                         {
                             item.Font = unsyncFileFont;
                         }
 
                         item.Tag = new NodeInfo(file, info.AccountName);
-                        item.SubItems.Add(file.DriveFile.ModifiedDate.ToShortDateString());
-                        item.SubItems.Add(Common.NumberOfBytesToString(file.DriveFile.Size));
+                        item.SubItems.Add(file.ModifiedDate.ToShortDateString());
+                        item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
                     }
                     fileListNumberOfFilesLabel.Text = string.Format("{0} files, {1} unsync", numberOfFiles, numberOfUnsyncFiles);
                     fileListView.Enabled = true;
@@ -447,16 +447,7 @@ namespace Oblqo
                 var task = (DownloadFileFromStorageTask)newTask;
                 taskItem.Text = task.File.Name;
                 taskItem.SubItems.Add("Download File").Name = "type";
-                if (task.File.DriveFile != null)
-                {
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                        .Name = "size";
-                }
-                else
-                {
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
-                        .Name = "size";
-                }
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.OriginalSize)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
             else if (newTask is DownloadFileFromDriveTask)
@@ -464,16 +455,7 @@ namespace Oblqo
                 var task = (DownloadFileFromDriveTask)newTask;
                 taskItem.Text = task.File.Name;
                 taskItem.SubItems.Add("Download File").Name = "type";
-                if (task.File.DriveFile != null)
-                {
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.DriveFile.OriginalSize))
-                        .Name = "size";
-                }
-                else
-                {
-                    taskItem.SubItems.Add(Common.NumberOfBytesToString(0))
-                        .Name = "size";
-                }
+                taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.OriginalSize)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
             else if (newTask is UploadFileTask)
@@ -1275,7 +1257,7 @@ namespace Oblqo
         {
             e.DrawDefault = true;
             var info = (NodeInfo)e.Item.Tag;
-            if (string.IsNullOrWhiteSpace(info.File.DriveFile.StorageFileId))
+            if (string.IsNullOrWhiteSpace(info.File.StorageFileId))
             {
                 e.Graphics.DrawLine(Pens.Black, e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2,
                     e.Bounds.Right, e.Bounds.Y + e.Bounds.Height / 2);
@@ -1291,7 +1273,7 @@ namespace Oblqo
                 if (info.File.DriveFile.StorageFileId == null)
                 {
                     taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
-                        info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+                        info.AccountName, 0, new AsyncTask[0], info.File));
                 }
             }
         }
@@ -1408,10 +1390,9 @@ namespace Oblqo
                 var info = (NodeInfo)item.Tag;
                 var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
                 var account = accounts[info.AccountName];
-                if (info.File.DriveFile.Files.Count < account.Drive.Count)
+                if (info.File.DriveFiles.Count < account.Drives.Count)
                 {
-                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 
-                        0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.DriveFile));
+                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 0, new AsyncTask[0], info.File));
                 }
             }
         }
@@ -1425,7 +1406,7 @@ namespace Oblqo
                 if (info.File.DriveFile.StorageFileId == null)
                 {
                     taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
-                        info.AccountName, 0, new AsyncTask[0], info.File.DriveFile, folderInfo.File.StorageFile));
+                        info.AccountName, 0, new AsyncTask[0], info.File));
                 }
             }
         }

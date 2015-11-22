@@ -33,8 +33,8 @@ namespace Oblqo.Local
             uint dwFlagsAndAttributes,
             IntPtr hTemplateFile);
 
-        public NtfsLocalFile(LocalDrive drive, FileSystemInfo file, bool isRoot)
-            :base(drive, file, isRoot)
+        public NtfsLocalFile(LocalDrive drive, FileSystemInfo file)
+            :base(drive, file)
         {
         }
 

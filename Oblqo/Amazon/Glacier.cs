@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.Glacier;
 using Amazon.Glacier.Model;
-using Amazon.Glacier.Transfer;
-using Amazon.Runtime;
+using System.Collections.Generic;
+using Oblqo.Core;
 
 namespace Oblqo.Amazon
 {
@@ -57,9 +57,13 @@ namespace Oblqo.Amazon
             var res = await client.DeleteArchiveAsync(req, token);
         }
 
-        public override StorageFile GetFile(DriveFileCollection driveFile)
+        public override StorageFile GetFile(DriveFileCollection driveFiles)
         {
-            return new GlacierFile(this, driveFile.StorageFileId, driveFile.IsFolder, driveFile.Name);
+            foreach (var x in driveFiles)
+            {
+                
+            }
+            return new GlacierFile(this, driveFiles.StorageFileId, driveFiles.IsFolder, driveFiles.Name);
         }
 
         public override async Task<StorageFile> UploadFileAsync(Stream fileStream, string fn, StorageFile destFolder,

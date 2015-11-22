@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Oblqo
 {
-    public abstract class DriveFile
+    public abstract class DriveFile : IDriveFile
     {
         public abstract string Id { get; }
         public abstract bool IsImage { get; }
@@ -35,13 +35,18 @@ namespace Oblqo
         /// </summary>
         public virtual DriveFile Parent => Owner.GetFile(Drive);
 
-        public DriveFileCollection Owner { get; set; }
+        public AccountFile Owner { get; set; }
 
         public Drive Drive { get; }
 
         protected DriveFile(Drive drive)
         {
             Drive = drive;
+        }
+
+        public async Task<Stream> ReadFileAsync(CancellationToken token)
+        {
+            return await Drive.ReadFileAsync(this, token);
         }
 
         public virtual XElement ToXml()

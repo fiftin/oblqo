@@ -201,7 +201,7 @@
     <Compile Include="Tasks\RequestGlacierInventoryTask.cs" />
     <Compile Include="Tasks\SynchronizeDriveFileTask.cs" />
     <Compile Include="Tasks\SynchronizeFileTask.cs" />
-    <Compile Include="Tasks\SynchronizeFolderTask.cs" />
+    <Compile Include="Tasks\SynchronizeDriveEmptyFolderTask.cs" />
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="Core\TransferProgress.cs" />

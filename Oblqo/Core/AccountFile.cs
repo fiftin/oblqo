@@ -95,7 +95,16 @@ namespace Oblqo
             while (stack.Count > 0)
             {
                 var f = stack.Pop();
-                driveFile = await drive.CreateFolderAsync(f.Name, driveFile, token);
+                var dirs = await drive.GetSubfoldersAsync(driveFile, token);
+                var dir = dirs.FirstOrDefault(x => x.Name == f.Name);
+                if (dir == null)
+                {
+                    driveFile = await drive.CreateFolderAsync(f.Name, driveFile, token);
+                }
+                else
+                {
+                    driveFile = dir;
+                }
                 f.DriveFiles.Add(driveFile);
             }
             return driveFile;
@@ -108,6 +117,7 @@ namespace Oblqo
             {
                 root.Add(file.ToXml());
             }
+            root.Add(StorageFile.ToXml());
             return root;
         }
     }

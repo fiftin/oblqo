@@ -30,12 +30,8 @@ namespace Oblqo
 
         private readonly List<AsyncTask> tasks = new List<AsyncTask>();
         private int maxNumberOfTasksRunning = 5;
-        //private readonly AutoResetEvent newTaskEvent = new AutoResetEvent(true);
         public readonly object SyncRoot = new object();
         private bool running;
-        //private int numberOfTasksRunning;
-        //private readonly List<TaskInfo> runningTasks = new List<TaskInfo>();
-        //private Task checkingTaskStatesTask;
 
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
@@ -51,10 +47,10 @@ namespace Oblqo
                 {
                     using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
-                        var xml = System.Xml.Linq.XDocument.Load(stream).Root;
+                        var xml = XDocument.Load(stream).Root;
                         var type = Type.GetType(xml.Attribute("type").Value);
                         var ctors = type.GetConstructors();
-                        var ctor = type.GetConstructor(System.Type.EmptyTypes);
+                        var ctor = type.GetConstructor(Type.EmptyTypes);
                         if (ctor == null)
                         {
                             throw new Exception("Task has no empty constructor: " + type.Name);

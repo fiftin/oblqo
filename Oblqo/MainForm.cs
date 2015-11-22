@@ -96,9 +96,10 @@ namespace Oblqo
             {
                 accountManager = AccountManager.Load();
             }
-            catch
+            catch (Exception ex)
             {
                 accountManager = new AccountManager();
+                OnError(ex);
             }
             taskManager.TaskStateChanged += taskManager_TaskStateChanged;
             taskManager.TaskAdded += taskManager_TaskAdded;
@@ -893,7 +894,7 @@ namespace Oblqo
                                 widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
                         }));
                     }
-                    catch (System.OperationCanceledException) { }
+                    catch (OperationCanceledException) { }
                 }
                 catch (Exception ex)
                 {
@@ -904,11 +905,11 @@ namespace Oblqo
 
         private void OnError(Exception exception)
         {
-            if (exception is Oblqo.Core.ConnectionException)
+            if (exception is Core.ConnectionException)
             {
                 Invoke(new MethodInvoker(() =>
                 {
-                    var acc = ((Oblqo.Core.ConnectionException)exception).Account;
+                    var acc = ((Core.ConnectionException)exception).Account;
                     if (acc.Tag is TreeNode)
                     {
                         DisconnectAccount((TreeNode)acc.Tag);
@@ -939,11 +940,12 @@ namespace Oblqo
                         item.Tag = exception;
                         logTabPage.ImageKey = "error";
                         IndicateError();
-
-
                     }));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
             }
         }
 
@@ -1385,14 +1387,17 @@ namespace Oblqo
 
         private void synchronizeOnDrivesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
+            var syncFolderTask = new SynchronizeDriveEmptyFolderTask(accounts[folderInfo.AccountName],
+                folderInfo.AccountName, 0, new AsyncTask[0], folderInfo.File);
+            taskManager.Add(syncFolderTask);
             foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo)item.Tag;
-                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
                 var account = accounts[info.AccountName];
                 if (info.File.DriveFiles.Count < account.Drives.Count)
                 {
-                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 0, new AsyncTask[0], info.File));
+                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 0, new AsyncTask[] { syncFolderTask }, info.File));
                 }
             }
         }
@@ -1409,6 +1414,11 @@ namespace Oblqo
                         info.AccountName, 0, new AsyncTask[0], info.File));
                 }
             }
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -45,12 +45,17 @@ namespace Oblqo
                 {
                     return await drive.ReadFileAsync(file.GetFile(drive), token);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // ignored
+                    OnError(ex);
                 }
             }
             throw new Exception("Can't download this file");
+        }
+
+        private void OnError(Exception ex)
+        {
+            throw ex;
         }
 
         public async Task<Image> GetThumbnailAsync(AccountFile file, CancellationToken token)
@@ -61,9 +66,9 @@ namespace Oblqo
                 {
                     return await drive.GetThumbnailAsync(file.GetFile(drive), token);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // ignored
+                    OnError(ex);
                 }
             }
             throw new Exception("Can't download this file");
@@ -90,9 +95,9 @@ namespace Oblqo
                 {
                     await drive.DownloadFileAsync(file.GetFile(drive), destFolder, actionIfFileExists, token);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // ignored
+                    OnError(ex);
                 }
             }
             throw new Exception("Can't download this file");

@@ -21,6 +21,7 @@ namespace Oblqo
     public class AccountManager
     {
         private List<AccountInfo> accounts = new List<AccountInfo>();
+        private List<Exception> errors = new List<Exception>();
 
         public AccountManager()
         {
@@ -81,13 +82,18 @@ namespace Oblqo
                             ret.Add(account);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        // ignored
+                        ret.OnError(ex);
                     }
                 }
             }
             return ret;
+        }
+
+        private void OnError(Exception ex)
+        {
+            errors.Add(ex);
         }
 
         public void Save()
@@ -104,9 +110,9 @@ namespace Oblqo
                         {
                             store.DeleteDirectory(oldPath);
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            // ignored
+                            OnError(ex);
                         }
                     }
                     var path = "accounts/" + account.AccountName;

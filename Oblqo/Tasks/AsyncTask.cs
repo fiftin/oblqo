@@ -128,13 +128,11 @@ namespace Oblqo
             {
                 State = AsyncTaskState.Error;
                 Exception = ex;
-                try {
+                try
+                {
                     OnStateChanged();
                 }
-                catch
-                {
-
-                }
+                catch { }
             }
         }
 

@@ -9,12 +9,9 @@ namespace Oblqo.Tasks
     public class SynchronizeDriveFileTask : AsyncTask
     {
         public AccountFile File { get; set; }
-
-        public AccountFile DestFolder => File.Parent;
-
+        
         public SynchronizeDriveFileTask()
         {
-
         }
 
         public SynchronizeDriveFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile file)
@@ -23,13 +20,12 @@ namespace Oblqo.Tasks
             File = file;
         }
 
-
-        public async Task<DriveFile> UploadFile(Drive drive)
+        public async Task<DriveFile> UploadFileAsync(Drive drive)
         {
             var token = CancellationTokenSource.Token;
             var bestFile = GetBestFile();
             var stream = await bestFile.Drive.ReadFileAsync(bestFile, token);
-            var folder = await DestFolder.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
+            var folder = await File.Parent.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
             return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId != null, bestFile.StorageFileId, token);
         }
 
@@ -37,7 +33,7 @@ namespace Oblqo.Tasks
         {
             var tasks = (from drive in Account.Drives
                          where File.GetFile(drive) == null
-                         select UploadFile(drive)
+                         select UploadFileAsync(drive)
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);
         }

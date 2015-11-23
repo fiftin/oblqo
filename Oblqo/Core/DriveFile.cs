@@ -41,7 +41,7 @@ namespace Oblqo
 
         protected DriveFile(Drive drive)
         {
-            Drive = drive;
+            this.Drive = drive;
         }
 
         public async Task<Stream> ReadFileAsync(CancellationToken token)

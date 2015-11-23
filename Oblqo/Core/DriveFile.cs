@@ -64,13 +64,6 @@ namespace Oblqo
             return await Drive.ReadFileAsync(this, token);
         }
 
-        public ImageFormat GetImageType()
-        {
-            ImageFormat ret;
-            Drive.TryGetImageType(Name, out ret);
-            return ret;
-        }
-
         public abstract Task WriteAsync(byte[] bytes, CancellationToken token);
         public abstract string GetAttribute(string name);
         public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
@@ -79,12 +72,11 @@ namespace Oblqo
         /// Scale image to required size.
         /// </summary>
         public async Task ScaleImageAsync(CancellationToken token)
-        {
-            var type = GetImageType();
-            if (type == null)
-            {
-                return;
-            }
+		{
+			ImageFormat type;
+			if (!Drive.TryGetImageType (Name, out type)) {
+				return;
+			}
             var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token);
             var memStream = new MemoryStream();
             await stream.CopyToAsync(memStream);

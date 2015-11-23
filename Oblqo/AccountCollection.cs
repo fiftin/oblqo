@@ -35,8 +35,7 @@ namespace Oblqo
 
         public bool Remove(Account account)
         {
-            var name = GetName(account);
-            return name != null && accounts.Remove(name);
+			return accounts.Remove(GetName(account));
         }
 
         public bool ContainsKey(string name)
@@ -51,7 +50,7 @@ namespace Oblqo
 
         private string GetName(Account account)
         {
-            return (from x in accounts where x.Value == account select x.Key).FirstOrDefault();
+            return (from x in accounts where x.Value == account select x.Key).First();
         }
     }
 }

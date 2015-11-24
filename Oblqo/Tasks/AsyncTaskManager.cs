@@ -49,7 +49,6 @@ namespace Oblqo
                     {
                         var xml = XDocument.Load(stream).Root;
                         var type = Type.GetType(xml.Attribute("type").Value);
-                        var ctors = type.GetConstructors();
                         var ctor = type.GetConstructor(Type.EmptyTypes);
                         if (ctor == null)
                         {

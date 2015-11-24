@@ -59,13 +59,13 @@ namespace Oblqo
         public AccountFile(StorageFile storageFile, IEnumerable<DriveFile> driveFiles, AccountFile parent)
         {
             DriveFiles.AddRange(driveFiles);
-            StorageFile = storageFile;
+            this.StorageFile = storageFile;
             Parent = parent;
         }
 
         public AccountFile(StorageFile storageFile, AccountFile parent)
         {
-            StorageFile = storageFile;
+            this.StorageFile = storageFile;
             Parent = parent;
         }
 

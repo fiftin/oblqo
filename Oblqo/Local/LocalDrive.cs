@@ -13,13 +13,21 @@ namespace Oblqo.Local
 {
     public class LocalDrive : Drive
     {
+		private DriveFile rootFolder;
+
         public LocalDrive(Account account, string rootPath)
             : base(account)
         {
-            RootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
+			rootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
         }
 
-        public override DriveFile RootFolder { get; }
+		public override DriveFile RootFolder 
+		{ 
+			get 
+			{ 
+				return rootFolder;
+			}
+		}
 
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

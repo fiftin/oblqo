@@ -6,6 +6,7 @@ packages/
 *.pdb
 *.orderedtest
 *.cache
+*.userprefs
 Oblqo/bin/
 Oblqo/obj/
 OblakooTest/bin/

@@ -24,7 +24,7 @@ namespace Oblqo
  
         public Account(Storage storage)
         {
-            Storage = storage;
+            this.Storage = storage;
         }
 
         public async Task<ICollection<AccountFile>> GetSubfoldersAsync(AccountFile folder, CancellationToken token)

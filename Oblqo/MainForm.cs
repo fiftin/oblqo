@@ -289,8 +289,8 @@ namespace Oblqo
                         }
 
                         var item = fileListView.Items.Add("", file.Name, key);
-
-                        if (file.DriveFiles.Count != account.Drives.Count)
+                        var isDrivesSyncronized = account.Drives.Select(x => file.GetFile(x)).All(x => x != null);
+                        if (!isDrivesSyncronized)
                         {
                             item.ForeColor = Color.Red;
                         }

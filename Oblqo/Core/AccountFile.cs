@@ -56,9 +56,6 @@ namespace Oblqo
         public bool IsRoot => DriveFile.IsRoot;
         public string MimeType => DriveFile.MimeType;
 
-
-
-
         public AccountFile(StorageFile storageFile, IEnumerable<DriveFile> driveFiles, AccountFile parent)
         {
             DriveFiles.AddRange(driveFiles);
@@ -74,7 +71,8 @@ namespace Oblqo
 
         public DriveFile GetFile(Drive drive)
         {
-            return DriveFiles.SingleOrDefault(file => file.Drive == drive);
+            return DriveFiles.FirstOrDefault(file => file.Drive == drive);
+            //return DriveFiles.SingleOrDefault(file => file.Drive == drive);
         }
 
         public async Task<DriveFile> GetFileAndCreateIfFolderIsNotExistsAsync(Drive drive, CancellationToken token)

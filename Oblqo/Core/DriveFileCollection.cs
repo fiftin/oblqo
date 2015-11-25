@@ -50,6 +50,10 @@ namespace Oblqo
         public void AddRange(IEnumerable<DriveFile> driveFiles)
         {
             files.AddRange(driveFiles);
+            if (files.Count > 2)
+            {
+                Console.WriteLine(files.Count);
+            }
         }
 
         public DateTime ModifiedDate => files.Select(x => x.ModifiedDate).Max();
@@ -132,6 +136,10 @@ namespace Oblqo
         public void Add(DriveFile item)
         {
             files.Add(item);
+            if (files.Count > 2)
+            {
+                Console.WriteLine(files.Count);
+            }
         }
 
         public void Clear()

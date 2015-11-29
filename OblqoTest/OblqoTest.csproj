@@ -53,7 +53,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MockDrive.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="MockDriveFile.cs" />
+    <Compile Include="MockDriveTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

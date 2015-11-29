@@ -11,58 +11,54 @@ namespace OblqoTest
 {
     class MockDrive : Drive
     {
-
+        internal MockDriveFile root;
+        internal MockDriveFile rootFolder;
 
         public MockDrive(Account owner) : base(owner)
         {
         }
 
-        public override DriveFile RootFolder
+        public override DriveFile RootFolder => rootFolder;
+
+        public override async Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder, 
+            CancellationToken token)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            return ((MockDriveFile)destFolder).CreateFolder(folderName);
         }
 
-        public override Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder, CancellationToken token)
+        public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
+        {
+            rootFolder.DeleteFileRecursive(driveFile);
+        }
+
+        public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
+        {
+            rootFolder.DeleteFileRecursive(driveFolder);
+        }
+
+        public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
+        public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
+        public override async Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+        public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return ((MockDriveFile)folder).files.Where(x => !x.IsFolder).Cast<DriveFile>().ToList();
         }
 
-        public override Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
+        public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            throw new NotImplementedException();
-        }
-
-        public override Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
-        {
-            throw new NotImplementedException();
+            return ((MockDriveFile)folder).files.Where(x => x.IsFolder).Cast<DriveFile>().ToList();
         }
 
         public override Task<System.Drawing.Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
@@ -70,9 +66,9 @@ namespace OblqoTest
             throw new NotImplementedException();
         }
 
-        public override Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
+        public override async Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return new MemoryStream(((MockDriveFile)file).content);
         }
 
         public override Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
@@ -80,9 +76,12 @@ namespace OblqoTest
             throw new NotImplementedException();
         }
 
-        public override Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var file = new MockDriveFile(this, fileName, false);
+            file.content = new byte[fileStream.Length];
+            fileStream.Read(file.content, 0, (int)fileStream.Length);
+            return file;
         }
     }
 }

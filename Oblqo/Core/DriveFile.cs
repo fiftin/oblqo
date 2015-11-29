@@ -23,6 +23,7 @@ namespace Oblqo
 
         public abstract int OriginalImageWidth { get; set; }
         public abstract int OriginalImageHeight { get; set; }
+
         public abstract long OriginalSize { get; set; }
 
         public abstract int ImageWidth { get; }

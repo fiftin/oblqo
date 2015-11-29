@@ -9,5 +9,7 @@ packages/
 *.userprefs
 Oblqo/bin/
 Oblqo/obj/
-OblakooTest/bin/
-OblakooTest/obj/
+OblqoTest/bin/
+OblqoTest/obj/
+*.suo
+*~

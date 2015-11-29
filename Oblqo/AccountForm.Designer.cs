@@ -46,7 +46,7 @@
             this.glacierVaultTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.driveTabControl = new System.Windows.Forms.TabControl();
+            this.driveTabControl = new DraggableTabControl();
             this.addDriveTabPage = new System.Windows.Forms.TabPage();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -309,7 +309,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox regionComboBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.TabControl driveTabControl;
+        private DraggableTabControl driveTabControl;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabControl storageTabControl;
         private System.Windows.Forms.TabPage glacierTabPage;

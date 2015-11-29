@@ -121,6 +121,12 @@
     <Compile Include="Core\IDriveFile.cs" />
     <Compile Include="Core\MimeTypes.cs" />
     <Compile Include="Core\StorageFileIdentity.cs" />
+    <Compile Include="DraggableTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DraggableTabControl.Designer.cs">
+      <DependentUpon>DraggableTabControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DriveAccountControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

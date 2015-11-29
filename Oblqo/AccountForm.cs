@@ -20,8 +20,6 @@ namespace Oblqo
             }
         }
 
-        //private readonly List<DriveInfo> drives = new List<DriveInfo>();
-
         public AccountForm(bool newAccount)
         {
             InitializeComponent();
@@ -47,7 +45,6 @@ namespace Oblqo
         public void AddDrives(IEnumerable<DriveInfo> d)
         {
             var driveInfos = d as DriveInfo[] ?? d.ToArray();
-            //this.drives.AddRange(driveInfos);
             foreach (var page in driveInfos.Select(drive => new DriveAccountTabPage(drive)))
             {
                 driveTabControl.TabPages.Add(page);
@@ -165,7 +162,7 @@ namespace Oblqo
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            driveTabControl.TabPages.RemoveAt(driveTabControl.SelectedIndex);
         }
 
         private void driveTabControl_MouseDown(object sender, MouseEventArgs e)

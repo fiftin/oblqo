@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Amazon.Route53Domains.Model;
 using Google.Apis.Auth.OAuth2;
 using Oblqo.Amazon;
 using Oblqo.Google;

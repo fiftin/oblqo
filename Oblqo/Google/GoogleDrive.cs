@@ -297,10 +297,11 @@ namespace Oblqo.Google
             }
         }
 
-        public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+
+        public override async Task DownloadFileAsync(DriveFile driveFile, System.IO.Stream fileStream, CancellationToken token)
         {
             Debug.Assert(!driveFile.IsFolder);
-            var url = ((GoogleFile) driveFile).File.DownloadUrl;
+            var url = ((GoogleFile)driveFile).File.DownloadUrl;
             if (url == null)
                 throw new TaskException("Can't download this file");
             var service = await GetServiceAsync(token);
@@ -309,6 +310,17 @@ namespace Oblqo.Google
             {
                 throw new Exception("Can't download this file");
             }
+            var buffer = new byte[1000];
+            var n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
+            while (n > 0)
+            {
+                await fileStream.WriteAsync(buffer, 0, n, token);
+                n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
+            }
+        }
+
+        public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
+        {
             var fileName = Common.AppendToPath(destFolder, driveFile.Name);
             if (System.IO.File.Exists(fileName))
             {
@@ -323,13 +335,7 @@ namespace Oblqo.Google
             }
             using (var fileStream = System.IO.File.Create(fileName))
             {
-                var buffer = new byte[1000];
-                var n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                while (n > 0)
-                {
-                    await fileStream.WriteAsync(buffer, 0, n, token);
-                    n = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                }
+                await DownloadFileAsync(driveFile, fileStream, token);
             }
         }
 
@@ -340,6 +346,6 @@ namespace Oblqo.Google
             var request = service.Files.Get(fileId);
             return null;
         }
-        
+
     }
 }

@@ -9,7 +9,7 @@ using Oblqo;
 
 namespace OblqoTest
 {
-    class MockDrive : Drive
+    public class MockDrive : Drive
     {
         internal MockDriveFile root;
         internal MockDriveFile rootFolder;
@@ -34,6 +34,11 @@ namespace OblqoTest
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
             rootFolder.DeleteFileRecursive(driveFolder);
+        }
+
+        public override async Task DownloadFileAsync(DriveFile driveFile, Stream output, CancellationToken token)
+        {
+            await output.WriteAsync(((MockDriveFile)driveFile).content, 0, ((MockDriveFile)driveFile).content.Length);
         }
 
         public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)

@@ -1416,9 +1416,36 @@ namespace Oblqo
             }
         }
 
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void taskDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (taskListView.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            var item = taskListView.SelectedItems[0];
+            var task = (AsyncTask)item.Tag;
+            if (task.State == AsyncTaskState.Error)
+            {
+                using (var exceptionDlg = new ThreadExceptionDialog(task.Exception))
+                {
+                    exceptionDlg.ShowDialog();
+                }
+            }
+        }
 
+        private void taskMenu_Opened(object sender, EventArgs e)
+        {
+            var cancellable = false;
+            foreach (var task in from ListViewItem item in taskListView.SelectedItems select (AsyncTask)item.Tag)
+            {
+                if (task.State == AsyncTaskState.Running
+                    || task.State == AsyncTaskState.Waiting)
+                {
+                    cancellable = true;
+                    break;
+                }
+            }
+            cancelTaskToolStripMenuItem.Enabled = cancellable;
         }
     }
 

@@ -8,20 +8,20 @@ using Oblqo;
 
 namespace OblqoTest
 {
-    class MockDriveFile : DriveFile
+    public class MockDriveFile : DriveFile
     {
         internal List<MockDriveFile> files = new List<MockDriveFile>();
 
         private Dictionary<string, string> attrs = new Dictionary<string, string>();
+
+        internal byte[] content = new byte[0];
 
         internal MockDriveFile Add(MockDriveFile file)
         {
             files.Add(file);
             return file;
         }
-
-        internal byte[] content = new byte[0];
-
+        
         public MockDriveFile(Drive drive,
             string name,
             bool isFolder = false,
@@ -111,7 +111,9 @@ namespace OblqoTest
 
         public override string GetAttribute(string name)
         {
-            return attrs[name];
+            string ret;
+            attrs.TryGetValue(name, out ret);
+            return ret;
         }
 
         public override async Task SetAttributeAsync(string name, string value, CancellationToken token)

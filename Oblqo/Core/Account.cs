@@ -87,6 +87,11 @@ namespace Oblqo
             await Storage.DownloadFileAsync(file.StorageFile, destFolder, actionIfFileExists, token, progressCallback);
         }
 
+        public async Task DownloadFileFromStorageAsync(AccountFile file, Stream output, CancellationToken token, Action<TransferProgress> progressCallback)
+        {
+            await Storage.DownloadFileAsync(file.StorageFile, output, token, progressCallback);
+        }
+
         public async Task DownloadFileFromDriveAsync(AccountFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
             foreach (var drive in Drives)
@@ -94,6 +99,7 @@ namespace Oblqo
                 try
                 {
                     await drive.DownloadFileAsync(file.GetFile(drive), destFolder, actionIfFileExists, token);
+                    return;
                 }
                 catch (Exception ex)
                 {
@@ -103,6 +109,22 @@ namespace Oblqo
             throw new Exception("Can't download this file");
         }
 
+        public async Task DownloadFileFromDriveAsync(AccountFile file, Stream output, CancellationToken token)
+        {
+            foreach (var drive in Drives)
+            {
+                try
+                {
+                    await drive.DownloadFileAsync(file.GetFile(drive), output, token);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+            }
+            throw new Exception("Can't download this file");
+        }
         /// <summary>
         /// Upload folder of file to storage and drive.
         /// </summary>

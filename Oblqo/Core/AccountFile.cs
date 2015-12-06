@@ -41,6 +41,8 @@ namespace Oblqo
 
         public bool IsFolder => (DriveFiles.Count > 0 && DriveFiles[0].IsFolder) || (StorageFile != null && StorageFile.IsFolder);
 
+        public bool IsFile => !IsFolder;
+
         public bool HasChildren => DriveFiles.Count > 0 && DriveFiles[0].HasChildren;
 
         public long Size => DriveFile.Size;

@@ -17,7 +17,7 @@ namespace Oblqo
             if (bytes < 1000)
                 return string.Format("{0}B", bytes);
             else if (bytes < 1000000)
-                return string.Format("{0}KB", bytes/1000);
+                return string.Format("{0}KB", bytes / 1000);
             else if (bytes < 1000000000)
                 return string.Format("{0}MB", bytes / 1000000);
             else
@@ -50,6 +50,11 @@ namespace Oblqo
 
         public static async Task<int> CopyStreamAsync(Stream input, Stream output, Action<TransferProgress> callback = null, long length = -1)
         {
+            return await CopyStreamAsync(input, output, CancellationToken.None);
+        }
+
+        public static async Task<int> CopyStreamAsync(Stream input, Stream output, CancellationToken token, Action<TransferProgress> callback = null, long length = -1)
+        {
             long len;
             if (length >= 0)
             {
@@ -72,7 +77,7 @@ namespace Oblqo
             while (!ok)
             {
                 var buffer = new byte[BufferLength];
-                var n = await input.ReadAsync(buffer, 0, buffer.Length);
+                var n = await input.ReadAsync(buffer, 0, buffer.Length, token);
                 if (n <= 0)
                     ok = true;
                 else

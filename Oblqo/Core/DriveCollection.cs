@@ -52,6 +52,11 @@ namespace Oblqo
             drives.Add(item);
         }
 
+        public void AddRange(IEnumerable<Drive> items)
+        {
+            drives.AddRange(items);
+        }
+
         public void Clear()
         {
             throw new NotImplementedException();

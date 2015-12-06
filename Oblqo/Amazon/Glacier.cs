@@ -137,10 +137,10 @@ namespace Oblqo.Amazon
                 }*/
         }
 
-        public override async Task DownloadFileAsync(StorageFile file, string destFolder,
-            ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
+        public override async Task DownloadFileAsync(StorageFile file, Stream output, CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            if (file.IsFolder) {
+            if (file.IsFolder)
+            {
                 throw new NotSupportedException("Glacier is not supported directories");
             }
             string jobId;
@@ -172,9 +172,15 @@ namespace Oblqo.Amazon
             }
             var req = new GetJobOutputRequest(Vault, jobId, null);
             var result = await client.GetJobOutputAsync(req, token);
+            await Common.CopyStreamAsync(result.Body, output, null, result.ContentLength);
+        }
+
+        public override async Task DownloadFileAsync(StorageFile file, string destFolder,
+            ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback)
+        {
             using (var output = File.OpenWrite(Common.AppendToPath(destFolder, file.Name)))
             {
-                await Common.CopyStreamAsync(result.Body, output, null, result.ContentLength);
+                await DownloadFileAsync(file, output, token, progressCallback);
             }
         }
 
@@ -218,7 +224,6 @@ namespace Oblqo.Amazon
             }
             return ret;
         }
-
 
         public override string Kind
         {

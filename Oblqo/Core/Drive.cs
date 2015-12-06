@@ -111,6 +111,7 @@ namespace Oblqo
         public abstract Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token);
         
         public abstract Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token);
+        public abstract Task DownloadFileAsync(DriveFile driveFile, Stream output, CancellationToken token);
 
         public abstract Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token);
         public abstract Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token);

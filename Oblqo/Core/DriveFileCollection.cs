@@ -17,6 +17,11 @@ namespace Oblqo
         {
         }
 
+        public DriveFileCollection(params DriveFile[] files)
+        {
+            this.files.AddRange(files);
+        }
+
         public DriveFileCollection(IEnumerable<DriveFile> files)
         {
             this.files.AddRange(files);

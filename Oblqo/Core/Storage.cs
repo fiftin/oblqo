@@ -20,6 +20,7 @@ namespace Oblqo
         public abstract Task<StorageFile> UploadFileAsync(Stream stream, string fileName, StorageFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback);
         public abstract Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback);
         public abstract Task DownloadFileAsync(StorageFile file, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token, Action<TransferProgress> progressCallback);
+        public abstract Task DownloadFileAsync(StorageFile file, Stream stream, CancellationToken token, Action<TransferProgress> progressCallback);
         public abstract Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token);
         public abstract StorageFile RootFolder { get; }
         public abstract bool IsSupportFolders { get; }

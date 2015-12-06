@@ -52,9 +52,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AccountTest.cs" />
+    <Compile Include="AsyncTask.cs" />
+    <Compile Include="TestEnvironment.cs" />
     <Compile Include="MockDrive.cs" />
     <Compile Include="MockDriveFile.cs" />
-    <Compile Include="MockDriveTest.cs" />
+    <Compile Include="MockStorage.cs" />
+    <Compile Include="MockStorageFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -48,9 +48,21 @@ namespace Oblqo.Local
             ((LocalFile)driveFolder).Directory.Delete();
         }
 
+        public override async Task DownloadFileAsync(DriveFile driveFile, Stream output, CancellationToken token)
+        {
+            using (var input = ((LocalFile)driveFile).File.OpenRead())
+            {
+                await Common.CopyStreamAsync(input, output, token);
+            }
+        }
+
         public override async Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
-            ((LocalFile)driveFile).File.CopyTo(destFolder + Path.DirectorySeparatorChar + ((LocalFile)driveFile).File.Name);
+            // TODO: use actionIfFileExists
+            using (var output = File.OpenWrite(destFolder + Path.DirectorySeparatorChar + driveFile.Name))
+            {
+                await DownloadFileAsync(driveFile, output, token);
+            }
         }
 
         public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
@@ -129,6 +141,6 @@ namespace Oblqo.Local
                 return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
             }
         }
-        
+
     }
 }

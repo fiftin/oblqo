@@ -120,8 +120,7 @@ namespace Oblqo
                 {
                     Save(task);
                 }
-            }   
-            //newTaskEvent.Set();
+            } 
             if (TaskAdded != null)
                 TaskAdded(this, new AsyncTaskEventArgs(task));
         }
@@ -147,6 +146,8 @@ namespace Oblqo
                         var tasksPath = "accounts/" + task.AccountName + "/tasks/";
                         store.DeleteFile(tasksPath + task.ID);
                     }
+                    task.StateChanged -= task_StateChanged;
+                    task.Progress -= task_Progress;
                     break;
             }
         }
@@ -180,14 +181,11 @@ namespace Oblqo
             switch (e.Task.State)
             {
                 case AsyncTaskState.Running:
-                    //Interlocked.Increment(ref numberOfTasksRunning);
                     break;
                 case AsyncTaskState.Cancelled:
                 case AsyncTaskState.Completed:
-                    //Interlocked.Decrement(ref numberOfTasksRunning);
                     break;
             }
-            //newTaskEvent.Set();
             if (TaskStateChanged != null)
                 TaskStateChanged(this, e);
 
@@ -199,7 +197,6 @@ namespace Oblqo
             set
             {
                 maxNumberOfTasksRunning = value;
-                //newTaskEvent.Set();
             }
         }
 
@@ -217,7 +214,7 @@ namespace Oblqo
         public void Start()
         {
             running = true;
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (running)
                 {
@@ -254,7 +251,7 @@ namespace Oblqo
                     {
                         OnError(ex);
                     }
-                    Thread.Sleep(1000);
+                    await Task.Delay(1000);
                 }
             });
         }

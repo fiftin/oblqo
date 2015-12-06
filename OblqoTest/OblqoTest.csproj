@@ -53,7 +53,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AccountTest.cs" />
-    <Compile Include="AsyncTask.cs" />
+    <Compile Include="AsyncTaskManagerTest.cs" />
+    <Compile Include="AsyncTaskTest.cs" />
     <Compile Include="TestEnvironment.cs" />
     <Compile Include="MockDrive.cs" />
     <Compile Include="MockDriveFile.cs" />

@@ -18,8 +18,7 @@ namespace Oblqo
         {
             public DateTime StartTime { get; set; }
             public AsyncTask AsyncTask { get; set; }
-            public Task Task { get; private set; }
-
+            public Task Task { get; }
             public TaskInfo(AsyncTask asyncTask, Task task)
             {
                 StartTime = DateTime.Now;
@@ -29,9 +28,10 @@ namespace Oblqo
         }
 
         private readonly List<AsyncTask> tasks = new List<AsyncTask>();
-        private int maxNumberOfTasksRunning = 5;
+
         public readonly object SyncRoot = new object();
-        private bool running;
+
+        public int MaxNumberOfTasksRunning { get; set; } = 5;
 
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
@@ -122,7 +122,11 @@ namespace Oblqo
                 }
             } 
             if (TaskAdded != null)
+            {
                 TaskAdded(this, new AsyncTaskEventArgs(task));
+            }
+            // TODO: update queue
+            Update();
         }
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)
@@ -135,21 +139,24 @@ namespace Oblqo
         {
             var task = ((AsyncTask)sender);
             if (TaskStateChanged != null)
+            {
                 TaskStateChanged(this, new AsyncTaskEventArgs(task));
-            switch (task.State)
+            }
+            switch (task.State) // delete finished tasks from tracking
             {
                 case AsyncTaskState.Cancelled:
                 case AsyncTaskState.Completed:
                 case AsyncTaskState.Error:
-                    using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-                    {
-                        var tasksPath = "accounts/" + task.AccountName + "/tasks/";
-                        store.DeleteFile(tasksPath + task.ID);
-                    }
+                    //using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+                    //{
+                    //    var tasksPath = "accounts/" + task.AccountName + "/tasks/";
+                    //    store.DeleteFile(tasksPath + task.ID);
+                    //}
                     task.StateChanged -= task_StateChanged;
                     task.Progress -= task_Progress;
                     break;
             }
+            Update();
         }
 
         public void Remove(AsyncTask task)
@@ -191,69 +198,43 @@ namespace Oblqo
 
         }
 
-        public int MaxNumberOfTasksRunning
+        protected void Update()
         {
-            get { return maxNumberOfTasksRunning; }
-            set
+            List<AsyncTask> tasksNow;
+            lock (SyncRoot)
             {
-                maxNumberOfTasksRunning = value;
+                tasksNow = new List<AsyncTask>(tasks);
+            }
+            try
+            {
+                var waitingTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Waiting);
+                var runningTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Running);
+                var i = MaxNumberOfTasksRunning - runningTasks.Count;
+                if (i > 0 && waitingTasks.Count > 0)
+                {
+                    foreach (var task in waitingTasks)
+                    {
+                        if (i == 0)
+                        {
+                            break;
+                        }
+                        if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished)
+                        {
+                            continue;
+                        }
+                        var taskInfo = new TaskInfo(task, task.StartAsync());
+                        i--;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Stop()
-        {
-            running = false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void Start()
         {
-            running = true;
-            Task.Run(async () =>
-            {
-                while (running)
-                {
-                    List<AsyncTask> tasksNow;
-                    lock (SyncRoot)
-                    {
-                        tasksNow = new List<AsyncTask>(tasks);
-                    }
-                    try
-                    {
-                        var waitingTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Waiting);
-                        var runningTasks = tasksNow.FindAll(x => x.State == AsyncTaskState.Running);
-                        var i = MaxNumberOfTasksRunning - runningTasks.Count;
-                        if (i > 0 && waitingTasks.Count > 0)
-                        {
-                            foreach (var task in waitingTasks)
-                            {
-                                if (i == 0)
-                                {
-                                    break;
-                                }
-                                if (!Common.IsEmptyOrNull(task.Parents) && !task.IsAllParentTasksFinished)
-                                {
-                                    continue;
-                                }
-                                var t = new Task(task.StartAsync);
-                                t.Start();
-                                var taskInfo = new TaskInfo(task, t);
-                                i--;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        OnError(ex);
-                    }
-                    await Task.Delay(1000);
-                }
-            });
         }
 
         

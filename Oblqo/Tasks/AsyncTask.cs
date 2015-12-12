@@ -76,7 +76,9 @@ namespace Oblqo
         {
         }
 
-        protected AsyncTask(Account account, string accountName, int priority, AsyncTask[] parents, AsyncTaskParentsMode parentsMode = AsyncTaskParentsMode.CancelIfAnyErrorOrCanceled)
+        protected AsyncTask(Account account, string accountName, int priority, 
+            AsyncTask[] parents, 
+            AsyncTaskParentsMode parentsMode = AsyncTaskParentsMode.CancelIfAnyErrorOrCanceled)
         {
             Account = account;
             AccountName = accountName;
@@ -113,7 +115,7 @@ namespace Oblqo
                 Progress(this, e);
         }
 
-        public async void StartAsync()
+        public async Task StartAsync()
         {
             State = AsyncTaskState.Running;
             OnStateChanged();

@@ -33,10 +33,6 @@ namespace OblqoTest
             /// </summary>
             public readonly EventWaitHandle locker;
 
-            /// <summary>
-            /// Locked until task completed.
-            /// </summary>
-            public readonly EventWaitHandle waiter;
 
             public LockTask(
                 int delay,
@@ -48,8 +44,6 @@ namespace OblqoTest
             {
                 this.delay = delay;
                 locker = new ManualResetEvent(true); // always unlocked
-                waiter = new ManualResetEvent(false);
-                StateChanged += LockTask_StateChanged;
             }
 
             public LockTask(Account account = null,
@@ -60,16 +54,6 @@ namespace OblqoTest
             {
                 this.delay = 0; // no delay
                 locker = new AutoResetEvent(false);
-                waiter = new ManualResetEvent(false);
-                StateChanged += LockTask_StateChanged;
-            }
-
-            private void LockTask_StateChanged(object sender, EventArgs e)
-            {
-                if (((LockTask)sender).State == AsyncTaskState.Completed)
-                {
-                    waiter.Set();
-                }
             }
 
             protected override async Task OnStartAsync()
@@ -89,12 +73,12 @@ namespace OblqoTest
         [TestMethod]
         public void ShouldBeAsync()
         {
-            var man = new AsyncTaskManager();
+            var man = new AsyncTaskManager(new IsolatedConfigurationStorage());
             // very long task
             var task = new LockTask(100000);
             man.Add(task, save: false);
             // wait short a time and check state
-            Assert.IsFalse(task.waiter.WaitOne(100));
+            Assert.IsFalse(task.CompleteWaitHandle.WaitOne(100));
             Assert.AreNotEqual(AsyncTaskState.Completed, task.State);
             Assert.IsFalse(task.ok);
         }
@@ -102,12 +86,12 @@ namespace OblqoTest
         [TestMethod]
         public void ShouldBeCompletedAtTime()
         {
-            var man = new AsyncTaskManager();
+            var man = new AsyncTaskManager(new IsolatedConfigurationStorage());
             var task = new LockTask();
             man.Add(task, save: false);
             Assert.IsFalse(task.ok);
             task.locker.Set();
-            Assert.IsTrue(task.waiter.WaitOne(3000));
+            Assert.IsTrue(task.CompleteWaitHandle.WaitOne());
             Assert.IsTrue(task.ok);
             Assert.AreEqual(AsyncTaskState.Completed, task.State);
         }
@@ -124,25 +108,37 @@ namespace OblqoTest
             var createFolder = new LockTask(env.Account);
             var createSubfolder = new LockTask(env.Account, 10, new AsyncTask[] { createFolder });
             var uploadFile1 = new LockTask(env.Account, 10, new AsyncTask[] { createSubfolder });
-            //var uploadFile2 = new LockTask(env.Account, 10, new AsyncTask[] { createSubfolder });
-            //var deleteFile2 = new LockTask(env.Account, 10, new AsyncTask[] { uploadFile2 });
+            var uploadFile2 = new LockTask(env.Account, 10, new AsyncTask[] { createSubfolder });
+            var deleteFile2 = new LockTask(env.Account, 10, new AsyncTask[] { uploadFile2 });
 
-            var man = new AsyncTaskManager();
+            var man = new AsyncTaskManager(new MockConfigurationStorage());
 
-            man.Add(createFolder, save: false);
-            man.Add(createSubfolder, save: false);
-            man.Add(uploadFile1, save: false);
-            //man.Add(uploadFile2, save: false);
-            //man.Add(deleteFile2, save: false);
+            man.Add(createFolder);
+            man.Add(createSubfolder);
+            man.Add(uploadFile1);
+            man.Add(uploadFile2);
+            man.Add(deleteFile2);
 
             createFolder.locker.Set();
-            createSubfolder.locker.Set();
-            uploadFile1.locker.Set();
-            //uploadFile2.locker.Set();
-            //deleteFile2.locker.Set();
 
-            Assert.IsTrue(createSubfolder.waiter.WaitOne(3000));
+            Assert.IsFalse(createSubfolder.ok);
+            createSubfolder.locker.Set();
+
+            Assert.IsFalse(uploadFile1.ok);
+            uploadFile1.locker.Set();
+
+            Assert.IsFalse(uploadFile2.ok);
+            uploadFile2.locker.Set();
+
+            Assert.IsFalse(deleteFile2.ok);
+            deleteFile2.locker.Set();
+
+            Assert.IsTrue(deleteFile2.CompleteWaitHandle.WaitOne());
             Assert.IsTrue(createFolder.ok);
+            Assert.IsTrue(createSubfolder.ok);
+            Assert.IsTrue(uploadFile1.ok);
+            Assert.IsTrue(uploadFile2.ok);
+            Assert.IsTrue(deleteFile2.ok);
         }
     }
 }

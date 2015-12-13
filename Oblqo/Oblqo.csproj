@@ -102,6 +102,7 @@
     <Compile Include="AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="CamelcaseWrapper.cs" />
+    <Compile Include="ConfigurationStorage.cs" />
     <Compile Include="Core\Account.cs" />
     <Compile Include="Core\AccountFile.cs" />
     <Compile Include="AccountInfo.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="DriveAccountTabPage.Designer.cs">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="IsolatedConfigurationStorage.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
     <Compile Include="Local\LocalFileFactory.cs" />

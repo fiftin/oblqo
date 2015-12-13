@@ -16,7 +16,7 @@ namespace Oblqo
 
         private List<AsyncTask> parents = new List<AsyncTask>();
         private AsyncTask[] parentsCache = new AsyncTask[0];
-
+        public readonly EventWaitHandle CompleteWaitHandle = new ManualResetEvent(false);
 
         public void AddParent(AsyncTask parent)
         {
@@ -144,10 +144,19 @@ namespace Oblqo
         {
             State = AsyncTaskState.Cancelled;
             cancellationTokenSource.Cancel();
+            OnStateChanged();
         }
 
         protected virtual void OnStateChanged()
         {
+            switch (State)
+            {
+                case AsyncTaskState.Cancelled:
+                case AsyncTaskState.Completed:
+                case AsyncTaskState.Error:
+                    CompleteWaitHandle.Set();
+                    break;
+            }
             if (StateChanged != null) StateChanged(this, EventArgs.Empty);
         }
 

@@ -28,10 +28,16 @@ namespace Oblqo
         }
 
         private readonly List<AsyncTask> tasks = new List<AsyncTask>();
+        private readonly ConfigurationStorage config;
 
         public readonly object SyncRoot = new object();
 
         public int MaxNumberOfTasksRunning { get; set; } = 5;
+
+        public AsyncTaskManager(ConfigurationStorage config)
+        {
+            this.config = config;
+        }
 
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
@@ -56,7 +62,7 @@ namespace Oblqo
                         }
                         var task = (AsyncTask)ctor.Invoke(new object[0]);
                         await task.LoadAsync(account, filename, xml, token);
-                        Add(task, false);
+                        Add(task, save: false);
                     }
                 }
                 catch (Exception ex)
@@ -77,35 +83,7 @@ namespace Oblqo
 
         public void Save(AsyncTask task)
         {
-            var accountName = task.AccountName;
-            var tasksPath = "accounts/" + accountName + "/tasks/";
-            switch (task.State)
-            {
-                case AsyncTaskState.Cancelled:
-                case AsyncTaskState.Completed:
-                case AsyncTaskState.Error:
-                    using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-                    {
-                        if (store.FileExists(tasksPath + task.ID))
-                        {
-                            store.DeleteFile(tasksPath + task.ID);
-                        }
-                    }
-                    return;
-            }
-            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-            {
-                if (!store.DirectoryExists(tasksPath))
-                {
-                    store.CreateDirectory(tasksPath);
-                }
-                var doc = new XDocument();
-                doc.Add(task.ToXml());
-                using (var stream = store.CreateFile(tasksPath + task.ID))
-                {
-                    doc.Save(stream);
-                }
-            }
+            config.SaveTask(task);
         }
 
         public void Add(AsyncTask task, bool save = true)
@@ -125,7 +103,6 @@ namespace Oblqo
             {
                 TaskAdded(this, new AsyncTaskEventArgs(task));
             }
-            // TODO: update queue
             Update();
         }
 
@@ -147,11 +124,7 @@ namespace Oblqo
                 case AsyncTaskState.Cancelled:
                 case AsyncTaskState.Completed:
                 case AsyncTaskState.Error:
-                    //using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-                    //{
-                    //    var tasksPath = "accounts/" + task.AccountName + "/tasks/";
-                    //    store.DeleteFile(tasksPath + task.ID);
-                    //}
+                    config.DeleteTask(task);
                     task.StateChanged -= task_StateChanged;
                     task.Progress -= task_Progress;
                     break;
@@ -222,7 +195,8 @@ namespace Oblqo
                         {
                             continue;
                         }
-                        var taskInfo = new TaskInfo(task, task.StartAsync());
+                        var tsk = task.StartAsync();
+                        var taskInfo = new TaskInfo(task, tsk);
                         i--;
                     }
                 }

@@ -75,7 +75,7 @@ namespace Oblqo
 
         private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
-        private readonly AsyncTaskManager taskManager = new AsyncTaskManager();
+        private readonly AsyncTaskManager taskManager = new AsyncTaskManager(new IsolatedConfigurationStorage());
         private CancellationTokenSource updateListCancellationTokenSource;
         private readonly object updateListCancellationTokenSourceLocker = new object();
         private CancellationTokenSource pictureCancellationTokenSource;

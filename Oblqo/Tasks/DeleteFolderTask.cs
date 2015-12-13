@@ -36,6 +36,7 @@ namespace Oblqo.Tasks
                 while (lastTask.State == AsyncTaskState.Running || lastTask.State == AsyncTaskState.Waiting)
                     await Task.Delay(500);
                 State = lastTask.State;
+                OnStateChanged();
             });
         }
 

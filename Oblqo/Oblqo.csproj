@@ -57,6 +57,10 @@
     <Reference Include="Google.Apis.PlatformServices">
       <HintPath>..\packages\Google.Apis.1.9.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -141,6 +145,8 @@
     <Compile Include="DriveAccountTabPage.Designer.cs">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="GData\GDrive.cs" />
+    <Compile Include="GData\GFile.cs" />
     <Compile Include="IsolatedConfigurationStorage.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />

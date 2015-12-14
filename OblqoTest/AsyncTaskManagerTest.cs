@@ -73,10 +73,10 @@ namespace OblqoTest
         [TestMethod]
         public void ShouldBeAsync()
         {
-            var man = new AsyncTaskManager(new IsolatedConfigurationStorage());
+            var man = new AsyncTaskManager(new MockConfigurationStorage());
             // very long task
             var task = new LockTask(100000);
-            man.Add(task, save: false);
+            man.Add(task);
             // wait short a time and check state
             Assert.IsFalse(task.CompleteWaitHandle.WaitOne(100));
             Assert.AreNotEqual(AsyncTaskState.Completed, task.State);
@@ -86,9 +86,9 @@ namespace OblqoTest
         [TestMethod]
         public void ShouldBeCompletedAtTime()
         {
-            var man = new AsyncTaskManager(new IsolatedConfigurationStorage());
+            var man = new AsyncTaskManager(new MockConfigurationStorage());
             var task = new LockTask();
-            man.Add(task, save: false);
+            man.Add(task);
             Assert.IsFalse(task.ok);
             task.locker.Set();
             Assert.IsTrue(task.CompleteWaitHandle.WaitOne());
@@ -96,10 +96,32 @@ namespace OblqoTest
             Assert.AreEqual(AsyncTaskState.Completed, task.State);
         }
 
-        //[TestMethod]
-        //public async Task ShouldBeCompletedСonsequentiallyAsync()
-        //{
-        //}
+        [TestMethod]
+        public async Task ShouldBeCompletedСonsequentiallyAsync()
+        {
+            var env = await TestEnvironment.CreateSimpleAsync();
+            var man = new AsyncTaskManager(new MockConfigurationStorage());
+            man.MaxNumberOfTasksRunning = 1;
+            List<LockTask> tasks = new List<LockTask>();
+            for (int i = 0; i < 10; i++)
+            {
+                var newTask = new LockTask(env.Account);
+                tasks.Add(newTask);
+                man.Add(newTask);
+            }
+            for (var i = 0; i < 10; i++)
+            {
+                var currentTask = tasks[i];
+                currentTask.locker.Set();
+                Assert.IsTrue(currentTask.CompleteWaitHandle.WaitOne());
+                Assert.AreEqual(AsyncTaskState.Completed, currentTask.State);
+                for (var k = i + 2; k < 10; k++)
+                {
+                    var task = tasks[k];
+                    Assert.AreEqual(AsyncTaskState.Waiting, task.State);
+                }
+            }
+        }
 
         [TestMethod]
         public async Task ShouldBeCompletedhHierarchically()

@@ -98,7 +98,7 @@ namespace Oblqo
                 {
                     Save(task);
                 }
-            } 
+            }
             if (TaskAdded != null)
             {
                 TaskAdded(this, new AsyncTaskEventArgs(task));

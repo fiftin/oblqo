@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Oblqo.Tasks
 {
@@ -38,14 +39,14 @@ namespace Oblqo.Tasks
             }
         }
 
-        public override async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
+        public override async Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
         {
             await base.LoadAsync(account, id, xml, token);
             DestFolder = xml.Element("destFolder").Value;
-            Folder = await account.GetFileAsync(xml.Element("storageFolder"), xml.Element("driveFolder"), token);
+            Folder = await account.GetFileAsync(xml, token);
         }
 
-        public override System.Xml.Linq.XElement ToXml()
+        public override XElement ToXml()
         {
             var xml = base.ToXml();
             return xml;

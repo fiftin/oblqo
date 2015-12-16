@@ -23,7 +23,8 @@ namespace Oblqo
 
         public virtual XElement ToXml()
         {
-            var ret = new XElement(IsFolder ? "storageFolder" : "storageFile");
+            var ret = new XElement("storageFile");
+            ret.SetAttributeValue("id", Id);
             return ret;
         }
     }

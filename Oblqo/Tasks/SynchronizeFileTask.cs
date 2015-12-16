@@ -58,13 +58,14 @@ namespace Oblqo.Tasks
         public override async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
         {
             await base.LoadAsync(account, id, xml, token);
-            SourceFile = await account.GetFileAsync(xml.Element("driveFile"), xml.Element("sourceFile"), token);
+            SourceFile = await account.GetFileAsync(xml.Element("sourceFile"), token);
         }
 
         public override System.Xml.Linq.XElement ToXml()
         {
             var xml = base.ToXml();
-            xml.Add(SourceFile.ToXml());
+            var sourceFileXml = SourceFile.ToXml("sourceFile");
+            xml.Add();
             return xml;
         }
     }

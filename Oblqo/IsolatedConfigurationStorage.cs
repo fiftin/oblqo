@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,35 @@ namespace Oblqo
                 var tasksPath = "accounts/" + task.AccountName + "/tasks/";
                 store.DeleteFile(tasksPath + task.ID);
             }
+        }
+
+        public override async Task<IEnumerable<AsyncTask>> GetTasksAsync(Account account, string accountName, CancellationToken token)
+        {
+            var ret = new List<AsyncTask>();
+            var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            if (!store.DirectoryExists("accounts/" + accountName + "/tasks"))
+            {
+                return ret;
+            }
+            var fileNames = store.GetFileNames("accounts/" + accountName + "/tasks/*");
+            foreach (var filename in fileNames)
+            {
+                try
+                {
+                    using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
+                    {
+                        var xml = XDocument.Load(stream).Root;
+                        var task = await AsyncTask.LoadFromXmlAsync(account, filename, xml, token);
+                        ret.Add(task);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    store.DeleteFile("accounts/" + accountName + "/tasks/" + filename);
+                    OnError(ex);
+                }
+            }
+            return ret;
         }
 
         public override void SaveTask(AsyncTask task)

@@ -30,7 +30,7 @@ namespace Oblqo.Google
             Secrets = secrets;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(Storage storage, Account account, ClientSecrets secrets, string rootPath, CancellationToken token)
+        public static async Task<GoogleDrive> CreateInstance(Account account, ClientSecrets secrets, string rootPath, CancellationToken token)
         {
             var ret = new GoogleDrive(account, secrets);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath, token, true);

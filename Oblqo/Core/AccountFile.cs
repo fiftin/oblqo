@@ -43,6 +43,8 @@ namespace Oblqo
 
         public bool IsFile => !IsFolder;
 
+        public bool HasParent => Parent != null;
+
         public bool HasChildren => DriveFiles.Count > 0 && DriveFiles[0].HasChildren;
 
         public long Size => DriveFile.Size;
@@ -110,14 +112,21 @@ namespace Oblqo
             return driveFile;
         }
 
-        public XElement ToXml()
+        public XElement ToXml(string tagName)
         {
-            var root = new XElement("file");
+            var root = new XElement(tagName);
+            var driveFiles = new XElement("driveFiles");
             foreach (var file in DriveFiles)
             {
-                root.Add(file.ToXml());
+                driveFiles.Add(file.ToXml());
             }
+            root.Add(driveFiles);
             root.Add(StorageFile.ToXml());
+            if (HasParent)
+            {
+                var parent = Parent.ToXml("parent");
+                root.Add(parent);
+            }
             return root;
         }
     }

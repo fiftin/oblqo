@@ -106,7 +106,6 @@ namespace Oblqo
             taskManager.TaskRemoved += taskManager_TaskRemoved;
             taskManager.Exception += taskManager_Exception;
             taskManager.TaskProgress += taskManager_TaskProgress;
-            taskManager.Start();
             InitUI();
             splitContainer2.SplitterWidth = 7;
             unsyncFileFont = new Font(Font, FontStyle.Strikeout);
@@ -690,7 +689,7 @@ namespace Oblqo
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             accountManager.Save();
-            taskManager.Save();
+            taskManager.SaveAll();
         }
 
         /// <summary>

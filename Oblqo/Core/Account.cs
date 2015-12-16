@@ -184,25 +184,24 @@ namespace Oblqo
             return driveFiles.Values.Select(files => new AccountFile(Storage.GetFile(files), files, folder)).ToList();
         }
 
-        public async Task<AccountFile> GetFileAsync(XElement storageXml, XElement driveXml, CancellationToken token)
+        public async Task<AccountFile> GetFileAsync(XElement fileXml, CancellationToken token)
         {
+            var storageXml = fileXml.Element("storageFile");
+            var driveXmls = fileXml.Element("driveFiles").Elements();
             var storageFile = storageXml == null ? null : await Storage.GetFileAsync(storageXml, token);
             List<DriveFile> driveFiles;
-            if (driveXml == null)
-            {
-                driveFiles = null;
-            }
-            else
-            {
-                var tasks =
-                    Drives.Select(
-                        drive =>
-                            drive.GetFileAsync(driveXml.Elements().Single(x => x.Attribute("").Value == drive.Id), token));
-                driveFiles = new List<DriveFile>(await Task.WhenAll(tasks));
-            }
-            return new AccountFile(storageFile, driveFiles, null);
+            var tasks =
+                Drives.Select(
+                    drive =>
+                    {
+                        var driveFileXml = driveXmls.SingleOrDefault(x => x.Attribute("driveId").Value == drive.Id);
+                        return driveFileXml == null ? null : drive.GetFileAsync(driveFileXml, token);
+                    }).Where(x => x != null);
+            driveFiles = new List<DriveFile>(await Task.WhenAll(tasks));
+            var parentXml = fileXml.Element("parent");
+            AccountFile parent = parentXml == null ? null : await GetFileAsync(parentXml, token);
+            return new AccountFile(storageFile, driveFiles, parent);
         }
-        
 
         private void PutFilesTo(IEnumerable<DriveFile> files,
             IDictionary<string, DriveFileCollection> fileCollections)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Oblqo
 {
@@ -89,7 +90,7 @@ namespace Oblqo
             ID = Guid.NewGuid().ToString();
         }
 
-        public virtual async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
+        public virtual async Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
         {
             Account = account;
             AccountName = xml.Attribute("accountName").Value;
@@ -99,14 +100,27 @@ namespace Oblqo
             ID = id;
         }
 
-        public virtual System.Xml.Linq.XElement ToXml()
+        public virtual XElement ToXml()
         {
-            var xml = new System.Xml.Linq.XElement("task");
-            xml.SetAttributeValue("type", this.GetType().FullName);
+            var xml = new XElement("task");
+            xml.SetAttributeValue("type", GetType().FullName);
             xml.SetAttributeValue("accountName", AccountName);
             xml.SetAttributeValue("priority", Priority);
             xml.SetAttributeValue("parentsMode", ParentsMode);
             return xml;
+        }
+
+        public static async Task<AsyncTask> LoadFromXmlAsync(Account account, string id, XElement xml, CancellationToken token)
+        {
+            var type = Type.GetType(xml.Attribute("type").Value);
+            var ctor = type.GetConstructor(Type.EmptyTypes);
+            if (ctor == null)
+            {
+                throw new Exception("Task has no empty constructor: " + type.Name);
+            }
+            var task = (AsyncTask)ctor.Invoke(new object[0]);
+            await task.LoadAsync(account, id, xml, token);
+            return task;
         }
 
         protected virtual void OnProgress(AsyncTaskProgressEventArgs e)

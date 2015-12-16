@@ -140,7 +140,7 @@ namespace Oblqo
                     case DriveType.GoogleDrive:
                         var drive =
                             await
-                                GoogleDrive.CreateInstance(storage, account,
+                                GoogleDrive.CreateInstance(account,
                                     GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
                                     d.DriveRootPath, token);
                         drive.ImageMaxSize = d.DriveImageMaxSize;

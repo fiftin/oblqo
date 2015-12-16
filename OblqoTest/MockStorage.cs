@@ -63,9 +63,10 @@ namespace OblqoTest
             return ret;
         }
 
-        public override Task<StorageFile> GetFileAsync(XElement xml, CancellationToken token)
+        public override async Task<StorageFile> GetFileAsync(XElement xml, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var ret = new MockStorageFile(this, xml.Attribute("name").Value);
+            return ret;
         }
 
         public override Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)

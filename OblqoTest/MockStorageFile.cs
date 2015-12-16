@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OblqoTest
 {
@@ -28,6 +29,13 @@ namespace OblqoTest
         public static string FileNameToId(string name)
         {
             return name.Replace('.', '-').ToLower();
+        }
+
+        public override XElement ToXml()
+        {
+            var xml = base.ToXml();
+            xml.SetAttributeValue("name", Name);
+            return xml;
         }
 
         internal byte[] content = new byte[0];

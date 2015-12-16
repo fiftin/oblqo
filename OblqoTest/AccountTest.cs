@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 
 namespace OblqoTest
 {
@@ -82,6 +83,20 @@ namespace OblqoTest
 
         }
 
+
+        [TestMethod]
+        public async Task TestGetFileAsync()
+        {
+            var env = await TestEnvironment.CreateSimpleAsync();
+            var storageXml = new XElement("storageFile");
+            storageXml.SetAttributeValue("name", "test.txt");
+            var driveXmls = new XElement("driveFiles");
+            var fileXml = new XElement("file");
+            fileXml.Add(storageXml);
+            fileXml.Add(driveXmls);
+            var file = await env.Account.GetFileAsync(fileXml, CancellationToken.None);
+
+        }
 
     }
 }

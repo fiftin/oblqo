@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Oblqo.Tasks;
 using System.IO.IsolatedStorage;
 using System.Xml.Linq;
-// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblqo
 {
@@ -37,43 +36,21 @@ namespace Oblqo
         public AsyncTaskManager(ConfigurationStorage config)
         {
             this.config = config;
+            this.config.Error += Config_Error; ;
+        }
+
+        private void Config_Error(object sender, ExceptionEventArgs e)
+        {
+            OnError(e.Exception);
         }
 
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
-            var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-            if (!store.DirectoryExists("accounts/" + accountName + "/tasks"))
-            {
-                return;
-            }
-            var fileNames = store.GetFileNames("accounts/" + accountName + "/tasks/*");
-            foreach (var filename in fileNames)
-            {
-                try
-                {
-                    using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                    {
-                        var xml = XDocument.Load(stream).Root;
-                        var type = Type.GetType(xml.Attribute("type").Value);
-                        var ctor = type.GetConstructor(Type.EmptyTypes);
-                        if (ctor == null)
-                        {
-                            throw new Exception("Task has no empty constructor: " + type.Name);
-                        }
-                        var task = (AsyncTask)ctor.Invoke(new object[0]);
-                        await task.LoadAsync(account, filename, xml, token);
-                        Add(task, save: false);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    store.DeleteFile("accounts/" + accountName + "/tasks/" + filename);
-                    OnError(ex);
-                }
-            }
+            var tasks = await config.GetTasksAsync(account, accountName, token);
+            AddRange(tasks);
         }
 
-        public void Save()
+        public void SaveAll()
         {
             foreach (var task in tasks)
             {
@@ -86,7 +63,12 @@ namespace Oblqo
             config.SaveTask(task);
         }
 
-        public void Add(AsyncTask task, bool save = true)
+        public void AddRange(IEnumerable<AsyncTask> newTasks)
+        {
+            tasks.AddRange(newTasks);
+        }
+
+        public void Add(AsyncTask task)
         {
             lock (SyncRoot)
             {
@@ -94,16 +76,18 @@ namespace Oblqo
                 task.StateChanged += task_StateChanged;
                 task.Progress += task_Progress;
                 task.Manager = this;
-                if (save)
-                {
-                    Save(task);
-                }
             }
             if (TaskAdded != null)
             {
                 TaskAdded(this, new AsyncTaskEventArgs(task));
             }
             Update();
+        }
+
+        public void AddAndSave(AsyncTask task)
+        {
+            Add(task);
+            Save(task);
         }
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)
@@ -206,11 +190,6 @@ namespace Oblqo
                 OnError(ex);
             }
         }
-
-        public void Start()
-        {
-        }
-
         
         private void OnError(Exception exception)
         {

@@ -52,9 +52,9 @@ namespace Oblqo
 
         public virtual XElement ToXml()
         {
-            var ret = new XElement(IsFolder ? "driveFolder" : "driveFile");
+            var ret = new XElement("driveFile");
             ret.SetAttributeValue("id", Id);
-            ret.SetAttributeValue("isFolder", IsFolder);
+            ret.SetAttributeValue("driveId", Drive.Id);
             ret.SetAttributeValue("storageFileId", StorageFileId);
             return ret;
         }

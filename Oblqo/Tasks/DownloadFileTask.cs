@@ -26,21 +26,14 @@ namespace Oblqo.Tasks
         {
             await base.LoadAsync(account, id, xml, token);
             DestFolder = xml.Element("destFolder").Value;
-            File = await account.GetFileAsync(xml.Element("storageFile"), xml.Element("driveFile"), token);
+            File = await account.GetFileAsync(xml.Element("file"), token);
         }
 
         public override System.Xml.Linq.XElement ToXml()
         {
             var xml = base.ToXml();
             xml.SetElementValue("destFolder", DestFolder);
-            if (File.DriveFile != null)
-            {
-                xml.Add(File.DriveFile.ToXml());
-            }
-            if (File.StorageFile != null)
-            {
-                xml.Add(File.StorageFile.ToXml());
-            }
+            xml.Add(File.ToXml("file"));
             return xml;
         }
     }

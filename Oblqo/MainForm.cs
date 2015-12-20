@@ -260,14 +260,14 @@ namespace Oblqo
                         {
                             numberOfUnsyncFiles++;
                         }
-                        else if (showSyncFilesOnlyCheckbox.Checked)
+                        else if (currentDirectoryInfoPanel.ShowOnlyUnsyncronizedFiles)
                         {
                             continue;
                         }
 
-                        if (fileListFilterTextBox.Tag != null)
+                        if (currentDirectoryInfoPanel.IsFiltered)
                         {
-                            if (!file.Name.Contains(fileListFilterTextBox.Text))
+                            if (!file.Name.Contains(currentDirectoryInfoPanel.Filter))
                             {
                                 continue;
                             }
@@ -303,7 +303,8 @@ namespace Oblqo
                         item.SubItems.Add(file.ModifiedDate.ToShortDateString());
                         item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
                     }
-                    fileListNumberOfFilesLabel.Text = string.Format("{0} files, {1} unsync", numberOfFiles, numberOfUnsyncFiles);
+                    currentDirectoryInfoPanel.NumberOfFiles = numberOfFiles;
+                    currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = numberOfUnsyncFiles;
                     fileListView.Enabled = true;
                     loadingFileListProgressBar.Visible = false;
                 }));
@@ -1348,42 +1349,6 @@ namespace Oblqo
 
         #endregion
 
-        private void fileListFilterTextBox_Enter(object sender, EventArgs e)
-        {
-            if (fileListFilterTextBox.Tag == null)
-            {
-                fileListFilterTextBox.Text = "";
-                fileListFilterTextBox.ForeColor = SystemColors.ControlText;
-            }
-        }
-
-        private void fileListFilterTextBox_Leave(object sender, EventArgs e)
-        {
-            if (fileListFilterTextBox.Text == "")
-            {
-                fileListFilterTextBox.Text = "Filter";
-                fileListFilterTextBox.ForeColor = Color.DarkGray;
-                fileListFilterTextBox.Tag = null;
-            } else
-            {
-                fileListFilterTextBox.Tag = new object();
-            }
-        }
-
-        private void fileListFilterTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void fileListFilterTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                fileListView.Focus();
-                UpdateFileList();
-            }
-        }
-
         private void synchronizeOnDrivesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
@@ -1445,6 +1410,12 @@ namespace Oblqo
                 }
             }
             cancelTaskToolStripMenuItem.Enabled = cancellable;
+        }
+
+        private void currentDirectoryInfoPanel_FilterChanged(object sender, EventArgs e)
+        {
+            fileListView.Focus();
+            UpdateFileList();
         }
     }
 

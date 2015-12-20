@@ -117,6 +117,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DriveFileControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DriveFileControl.Designer.cs">
+      <DependentUpon>DriveFileControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="Core\CamelcaseWrapper.cs" />
@@ -159,11 +165,17 @@
     <Compile Include="Controls\DriveAccountTabPage.Designer.cs">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileInfoControl.cs">
+    <Compile Include="Controls\FileInfoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FileInfoControl.Designer.cs">
+    <Compile Include="Controls\FileInfoControl.Designer.cs">
       <DependentUpon>FileInfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileListStatusBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileListStatusBar.Designer.cs">
+      <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
     <Compile Include="GData\GDrive.cs" />
     <Compile Include="GData\GFile.cs" />
@@ -173,6 +185,12 @@
     <Compile Include="Local\LocalFileFactory.cs" />
     <Compile Include="Local\NtfsLocalFile.cs" />
     <Compile Include="Core\Resolution.cs" />
+    <Compile Include="TaskList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TaskList.Designer.cs">
+      <DependentUpon>TaskList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />
@@ -257,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileListStatusBar.resx">
+      <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

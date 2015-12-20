@@ -15,10 +15,10 @@ namespace Oblqo
         public DriveAccountControl()
         {
             InitializeComponent();
-            imageResolutionComboBox.Items.Add(new Resolution(1024, 768));
-            imageResolutionComboBox.Items.Add(new Resolution(1280, 1024));
-            imageResolutionComboBox.Items.Add(new Resolution(1600, 1200));
-            imageResolutionComboBox.Items.Add(new Resolution(Size.Empty));
+            imageResolutionComboBox.Items.Add(new Dimensions(1024, 768));
+            imageResolutionComboBox.Items.Add(new Dimensions(1280, 1024));
+            imageResolutionComboBox.Items.Add(new Dimensions(1600, 1200));
+            imageResolutionComboBox.Items.Add(new Dimensions(Size.Empty));
 
             imageResolutionComboBox.SelectedIndex = 2;
 
@@ -46,12 +46,12 @@ namespace Oblqo
 
         public Size DriveImageResolution
         {
-            get { return ((Resolution)imageResolutionComboBox.SelectedItem).Size; }
+            get { return ((Dimensions)imageResolutionComboBox.SelectedItem).Size; }
             set
             {
                 for (var i = 0; i < imageResolutionComboBox.Items.Count; i++)
                 {
-                    var x = (Resolution)imageResolutionComboBox.Items[i];
+                    var x = (Dimensions)imageResolutionComboBox.Items[i];
                     if (!x.Size.Equals(value)) continue;
                     imageResolutionComboBox.SelectedIndex = i;
                     break;

@@ -117,10 +117,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountCollection.cs" />
+    <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
-    <Compile Include="CamelcaseWrapper.cs" />
-    <Compile Include="ConfigurationStorage.cs" />
+    <Compile Include="Core\CamelcaseWrapper.cs" />
+    <Compile Include="Core\ConfigurationStorage.cs" />
     <Compile Include="Core\Account.cs" />
     <Compile Include="Core\AccountFile.cs" />
     <Compile Include="AccountInfo.cs" />
@@ -131,7 +131,7 @@
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AccountManager.cs" />
-    <Compile Include="ActionIfFileExists.cs" />
+    <Compile Include="Core\ActionIfFileExists.cs" />
     <Compile Include="Amazon\GlacierFile.cs" />
     <Compile Include="Core\ConnectionException.cs" />
     <Compile Include="Core\DriveCollection.cs" />
@@ -140,33 +140,39 @@
     <Compile Include="Core\IDriveFile.cs" />
     <Compile Include="Core\MimeTypes.cs" />
     <Compile Include="Core\StorageFileIdentity.cs" />
-    <Compile Include="DraggableTabControl.cs">
+    <Compile Include="Controls\DraggableTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DraggableTabControl.Designer.cs">
+    <Compile Include="Controls\DraggableTabControl.Designer.cs">
       <DependentUpon>DraggableTabControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="DriveAccountControl.cs">
+    <Compile Include="Controls\DriveAccountControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DriveAccountControl.Designer.cs">
+    <Compile Include="Controls\DriveAccountControl.Designer.cs">
       <DependentUpon>DriveAccountControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DriveInfo.cs" />
-    <Compile Include="DriveAccountTabPage.cs">
+    <Compile Include="Controls\DriveAccountTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DriveAccountTabPage.Designer.cs">
+    <Compile Include="Controls\DriveAccountTabPage.Designer.cs">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileInfoControl.Designer.cs">
+      <DependentUpon>FileInfoControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GData\GDrive.cs" />
     <Compile Include="GData\GFile.cs" />
-    <Compile Include="IsolatedConfigurationStorage.cs" />
+    <Compile Include="Core\IsolatedConfigurationStorage.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
     <Compile Include="Local\LocalFileFactory.cs" />
     <Compile Include="Local\NtfsLocalFile.cs" />
-    <Compile Include="Resolution.cs" />
+    <Compile Include="Core\Resolution.cs" />
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />
@@ -243,10 +249,10 @@
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DriveAccountControl.resx">
+    <EmbeddedResource Include="Controls\DriveAccountControl.resx">
       <DependentUpon>DriveAccountControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DriveAccountTabPage.resx">
+    <EmbeddedResource Include="Controls\DriveAccountTabPage.resx">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExceptionForm.resx">

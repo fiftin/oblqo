@@ -3,10 +3,10 @@ using System.Drawing;
 
 namespace Oblqo
 {
-    internal class Resolution
+    public class Dimensions
     {
-        public Resolution(Size size) : this(size.Width,size.Height) { }
-        public Resolution(int w, int h)
+        public Dimensions(Size size) : this(size.Width,size.Height) { }
+        public Dimensions(int w, int h)
         {
             Size = new Size(w, h);
         }

@@ -88,14 +88,12 @@ namespace OblqoTest
         public async Task TestGetFileAsync()
         {
             var env = await TestEnvironment.CreateSimpleAsync();
-            var storageXml = new XElement("storageFile");
-            storageXml.SetAttributeValue("name", "test.txt");
-            var driveXmls = new XElement("driveFiles");
-            var fileXml = new XElement("file");
-            fileXml.Add(storageXml);
-            fileXml.Add(driveXmls);
-            var file = await env.Account.GetFileAsync(fileXml, CancellationToken.None);
-
+            var file = await env.GetFileByFullPathAsync("photos2015/PHOTO1.jpg");
+            var fileXml = file.ToXml("file");
+            var restoredFile = await env.Account.GetFileAsync(fileXml, CancellationToken.None);
+            Assert.AreEqual(file.Name, restoredFile.Name);
+            Assert.AreEqual(file.Parent.Name, restoredFile.Parent.Name);
+            
         }
 
     }

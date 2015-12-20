@@ -21,7 +21,7 @@ namespace Oblqo
 
         public Storage Storage => Owner.Storage;
 
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// Name format of property for storage file ID.
@@ -32,9 +32,10 @@ namespace Oblqo
         /// </summary>
         public static readonly string StorageFileIdFormat = "{0}.id-{1}";
 
-        protected Drive(Account owner)
+        protected Drive(Account owner, string id)
         {
             Owner = owner;
+            Id = id;
         }
 
         public Image ScaleImage(Image image)

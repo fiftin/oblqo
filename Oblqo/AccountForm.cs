@@ -45,8 +45,9 @@ namespace Oblqo
         public void AddDrives(IEnumerable<DriveInfo> d)
         {
             var driveInfos = d as DriveInfo[] ?? d.ToArray();
-            foreach (var page in driveInfos.Select(drive => new DriveAccountTabPage(drive)))
+            foreach (var page in driveInfos.Select(drive => new DriveAccountTabPage(drive) { DriveId = string.IsNullOrEmpty(drive.DriveId) ? Guid.NewGuid().ToString() : drive.DriveId }))
             {
+                
                 driveTabControl.TabPages.Add(page);
             }
             driveTabControl.TabPages.Remove(addDriveTabPage);
@@ -59,7 +60,8 @@ namespace Oblqo
             {
                 DriveType = page.DriveControl.DriveType,
                 DriveRootPath = page.DriveControl.DriveRootPath,
-                DriveImageMaxSize = page.DriveControl.DriveImageResolution
+                DriveImageMaxSize = page.DriveControl.DriveImageResolution,
+                DriveId = page.DriveId
             }).ToList();
         }
 
@@ -155,7 +157,7 @@ namespace Oblqo
             {
                 return;
             }
-            var tab = new DriveAccountTabPage();
+            var tab = new DriveAccountTabPage() { DriveId = Guid.NewGuid().ToString() };
             driveTabControl.TabPages.Insert(driveTabControl.TabPages.Count - 1, tab);
             driveTabControl.SelectedTab = tab;
         }

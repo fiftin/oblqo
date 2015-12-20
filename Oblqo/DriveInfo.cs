@@ -18,5 +18,7 @@ namespace Oblqo
         public string DriveRootPath { get; set; }
 
         public Size DriveImageMaxSize { get; set; }
+
+        public string DriveId { get; set; }
     }
 }

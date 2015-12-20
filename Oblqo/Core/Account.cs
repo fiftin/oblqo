@@ -195,7 +195,8 @@ namespace Oblqo
                     drive =>
                     {
                         var driveFileXml = driveXmls.SingleOrDefault(x => x.Attribute("driveId").Value == drive.Id);
-                        return driveFileXml == null ? null : drive.GetFileAsync(driveFileXml, token);
+                        var ret = driveFileXml == null ? null : drive.GetFileAsync(driveFileXml, token);
+                        return ret;
                     }).Where(x => x != null);
             driveFiles = new List<DriveFile>(await Task.WhenAll(tasks));
             var parentXml = fileXml.Element("parent");

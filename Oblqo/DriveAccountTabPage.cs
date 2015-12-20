@@ -50,5 +50,7 @@ namespace Oblqo
         {
             Text = Common.CamelcaseToHumanReadable(driveAccountControl1.DriveType.ToString());
         }
+
+        public string DriveId { get; set; }
     }
 }

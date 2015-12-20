@@ -24,15 +24,15 @@ namespace Oblqo.Google
         public const string RootId = "root";
         private GoogleFile rootFolder;
 
-        protected GoogleDrive(Account account, ClientSecrets secrets)
-            : base(account)
+        protected GoogleDrive(Account account, string id, ClientSecrets secrets)
+            : base(account, id)
         {
             Secrets = secrets;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(Account account, ClientSecrets secrets, string rootPath, CancellationToken token)
+        public static async Task<GoogleDrive> CreateInstance(Account account, string id, ClientSecrets secrets, string rootPath, CancellationToken token)
         {
-            var ret = new GoogleDrive(account, secrets);
+            var ret = new GoogleDrive(account, id, secrets);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath, token, true);
             ret.rootFolder = rootFolder;
             return ret;
@@ -125,28 +125,7 @@ namespace Oblqo.Google
             }
             return new GoogleFile(this, file);
         }
-
-//        internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, 
-//            string fileName, 
-//            GoogleFile destFolder, bool scaleRequired,
-//            string storageFileId, CancellationToken token)
-//        {
-//            var props = new List<Property>
-//            {
-//                new Property {Key = string.Format("{0}.sid", Storage.Kind), Value = Storage.Id, Visibility = "PRIVATE"},
-//                new Property {Key = "src", Value = Storage.Kind, Visibility = "PRIVATE"}
-//            };
-//            //
-//            //
-//            // Storage file ID.
-//            var storageFileIdPropertyKeyLen = string.Format(StorageFileIdFormat, Storage.Kind, 0).Length;
-//            var storageFileIdPropertyValueLen = GoogleFile.PropertyMaxLength - storageFileIdPropertyKeyLen;
-//            var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
-//            if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
-//            props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
-//            return await UploadFileAsync(stream, fileName, destFolder, scaleRequired, props, token);
-//        }
-
+        
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
             DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
@@ -297,7 +276,6 @@ namespace Oblqo.Google
             }
         }
 
-
         public override async Task DownloadFileAsync(DriveFile driveFile, System.IO.Stream fileStream, CancellationToken token)
         {
             Debug.Assert(!driveFile.IsFolder);
@@ -344,7 +322,8 @@ namespace Oblqo.Google
             var fileId = xml.Attribute("fileId").Value;
             var service = await GetServiceAsync(token);
             var request = service.Files.Get(fileId);
-            return null;
+            var file = await request.ExecuteAsync();
+            return new GoogleFile(this, file);
         }
 
     }

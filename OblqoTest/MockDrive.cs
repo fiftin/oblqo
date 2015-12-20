@@ -14,9 +14,8 @@ namespace OblqoTest
         internal MockDriveFile root;
         internal MockDriveFile rootFolder;
 
-        public MockDrive(Account owner) : base(owner)
+        public MockDrive(Account owner) : base(owner, "mock")
         {
-            Id = "mock";
         }
 
         public override DriveFile RootFolder => rootFolder;

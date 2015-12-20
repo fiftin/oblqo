@@ -65,7 +65,10 @@ namespace Oblqo
 
         public void AddRange(IEnumerable<AsyncTask> newTasks)
         {
-            tasks.AddRange(newTasks);
+            foreach (var x in newTasks)
+            {
+                Add(x);
+            }
         }
 
         public void Add(AsyncTask task)

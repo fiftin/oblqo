@@ -140,7 +140,7 @@ namespace Oblqo
                     case DriveType.GoogleDrive:
                         var drive =
                             await
-                                GoogleDrive.CreateInstance(account,
+                                GoogleDrive.CreateInstance(account, d.DriveId,
                                     GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
                                     d.DriveRootPath, token);
                         drive.ImageMaxSize = d.DriveImageMaxSize;
@@ -148,7 +148,7 @@ namespace Oblqo
                         account.Drives.Add(drive);
                         break;
                     case DriveType.LocalDrive:
-                        var localDrive = new Local.LocalDrive(account, d.DriveRootPath)
+                        var localDrive = new Local.LocalDrive(account, d.DriveId, d.DriveRootPath)
                         {
                             ImageMaxSize = d.DriveImageMaxSize
                         };

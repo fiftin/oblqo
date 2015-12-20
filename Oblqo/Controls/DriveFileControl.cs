@@ -12,9 +12,29 @@ namespace Oblqo.Controls
 {
     public partial class DriveFileControl : UserControl
     {
+        private DriveFile file;
+
         public DriveFileControl()
         {
             InitializeComponent();
+        }
+
+        public DriveFile File
+        {
+            get
+            {
+                return file;
+            }
+            set
+            {
+                file = value;
+                OnFileChanged();
+            }
+        }
+
+        protected virtual void OnFileChanged()
+        {
+            
         }
     }
 }

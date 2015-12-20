@@ -123,6 +123,12 @@
     <Compile Include="Controls\DriveFileControl.Designer.cs">
       <DependentUpon>DriveFileControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DriveFileTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DriveFileTabPage.Designer.cs">
+      <DependentUpon>DriveFileTabPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="Core\CamelcaseWrapper.cs" />
@@ -171,10 +177,10 @@
     <Compile Include="Controls\FileInfoControl.Designer.cs">
       <DependentUpon>FileInfoControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileListStatusBar.cs">
+    <Compile Include="Controls\FileListStatusBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FileListStatusBar.Designer.cs">
+    <Compile Include="Controls\FileListStatusBar.Designer.cs">
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
     <Compile Include="GData\GDrive.cs" />
@@ -185,6 +191,7 @@
     <Compile Include="Local\LocalFileFactory.cs" />
     <Compile Include="Local\NtfsLocalFile.cs" />
     <Compile Include="Core\Resolution.cs" />
+    <Compile Include="NodeInfo.cs" />
     <Compile Include="TaskList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -264,6 +271,12 @@
     <EmbeddedResource Include="AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DriveFileControl.resx">
+      <DependentUpon>DriveFileControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FileInfoControl.resx">
+      <DependentUpon>FileInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -276,7 +289,7 @@
     <EmbeddedResource Include="ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FileListStatusBar.resx">
+    <EmbeddedResource Include="Controls\FileListStatusBar.resx">
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -292,6 +305,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TaskList.resx">
+      <DependentUpon>TaskList.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

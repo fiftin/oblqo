@@ -25,15 +25,6 @@ namespace Oblqo
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
 
-        /// <summary>
-        /// Type of node in left side tree view.
-        /// </summary>
-        private enum NodeType
-        {
-            Account,
-            Folder
-        }
-
         class FileListSorder : IComparer
         {
 
@@ -47,31 +38,6 @@ namespace Oblqo
                 return -1;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        private class NodeInfo
-        {
-            public NodeInfo(AccountInfo accountInfo)
-            {
-                Type = NodeType.Account;
-                AccountInfo = accountInfo;
-                AccountName = AccountInfo.AccountName;
-            }
-
-            public NodeInfo(AccountFile file, string accountName)
-            {
-                Type = NodeType.Folder;
-                File = file;
-                AccountName = accountName;
-            }
-
-            public NodeType Type { get; private set; }
-            public AccountFile File { get; set; }
-            public AccountInfo AccountInfo { get; private set; }
-            public string AccountName { get; private set; }
-        }
-
 
         private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
@@ -325,9 +291,6 @@ namespace Oblqo
                 case NodeType.Account:
                     vaultNameLabel.Text = nodeInfo.AccountInfo.StorageVault;
                     vaultRegionLabel.Text = nodeInfo.AccountInfo.StorageRegionSystemName;
-                    //driveTypeLabel.Text = Common.CamelcaseToHumanReadable(nodeInfo.AccountInfo.DriveType.ToString());
-                    //driveRootLabel.Text = nodeInfo.AccountInfo.DriveRootPath.Length == 0 ? "/" : nodeInfo.AccountInfo.DriveRootPath;
-                    //imageMaxSizeLabel.Text = string.Format("{0} x {1}", nodeInfo.AccountInfo.DriveImageMaxSize.Width, nodeInfo.AccountInfo.DriveImageMaxSize.Height);
                     break;
                 case NodeType.Folder:
                     break;

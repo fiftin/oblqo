@@ -129,6 +129,18 @@
     <Compile Include="Controls\DriveStrip.Designer.cs">
       <DependentUpon>DriveStrip.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageViewer.Designer.cs">
+      <DependentUpon>ImageViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageViewerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageViewerControl.Designer.cs">
+      <DependentUpon>ImageViewerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="Core\CamelcaseWrapper.cs" />
@@ -270,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DriveStrip.resx">
       <DependentUpon>DriveStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImageViewerControl.resx">
+      <DependentUpon>ImageViewerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>

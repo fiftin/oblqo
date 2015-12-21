@@ -26,5 +26,7 @@ namespace Oblqo.Tasks
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);
         }
+
+        public override bool Visible => false;
     }
 }

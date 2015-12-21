@@ -14,6 +14,7 @@ namespace Oblqo
     {
         private int numberOfFiles;
         private int numberOfUnsyncronizedFiles;
+        private string filter = "";
 
         public bool IsFiltered { get; private set; }
 
@@ -49,8 +50,17 @@ namespace Oblqo
         {
             get
             {
-                return fileListFilterTextBox.Text;
+                return filter;
             }
+        }
+
+        public bool IsValid(string s)
+        {
+            if (!IsFiltered)
+            {
+                return true;
+            }
+            return s.ToLower().Contains(Filter.ToLower());
         }
 
         public bool ShowOnlyUnsyncronizedFiles
@@ -68,12 +78,22 @@ namespace Oblqo
                 IsFiltered = false;
                 fileListFilterTextBox.ForeColor = Color.DarkGray;
                 fileListFilterTextBox.Text = "Filter";
+                if (filter != "")
+                {
+                    filter = "";
+                    OnFilterChanged();
+                }
             }
             else
             {
                 IsFiltered = true;
+                if (filter != fileListFilterTextBox.Text)
+                {
+                    filter = fileListFilterTextBox.Text;
+                    OnFilterChanged();
+                }
             }
-            OnFilterChanged();
+
         }
 
         private void fileListFilterTextBox_Enter(object sender, EventArgs e)

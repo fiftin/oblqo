@@ -48,6 +48,7 @@ namespace Oblqo
             }
         }
 
+        public virtual bool Visible => true;
         public string ID { get; private set; }
         public Account Account { get; private set; }
         public string AccountName { get; private set; }

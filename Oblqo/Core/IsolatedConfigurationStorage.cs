@@ -17,34 +17,39 @@ namespace Oblqo
             using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
             {
                 var tasksPath = "accounts/" + task.AccountName + "/tasks/";
-                store.DeleteFile(tasksPath + task.ID);
+                if (store.FileExists(tasksPath + task.ID))
+                {
+                    store.DeleteFile(tasksPath + task.ID);
+                }
             }
         }
 
         public override async Task<IEnumerable<AsyncTask>> GetTasksAsync(Account account, string accountName, CancellationToken token)
         {
             var ret = new List<AsyncTask>();
-            var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-            if (!store.DirectoryExists("accounts/" + accountName + "/tasks"))
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
             {
-                return ret;
-            }
-            var fileNames = store.GetFileNames("accounts/" + accountName + "/tasks/*");
-            foreach (var filename in fileNames)
-            {
-                try
+                if (!store.DirectoryExists("accounts/" + accountName + "/tasks"))
                 {
-                    using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                    {
-                        var xml = XDocument.Load(stream).Root;
-                        var task = await AsyncTask.LoadFromXmlAsync(account, filename, xml, token);
-                        ret.Add(task);
-                    }
+                    return ret;
                 }
-                catch (Exception ex)
+                var fileNames = store.GetFileNames("accounts/" + accountName + "/tasks/*");
+                foreach (var filename in fileNames)
                 {
-                    store.DeleteFile("accounts/" + accountName + "/tasks/" + filename);
-                    OnError(ex);
+                    try
+                    {
+                        using (var stream = store.OpenFile("accounts/" + accountName + "/tasks/" + filename, FileMode.Open, FileAccess.Read, FileShare.None))
+                        {
+                            var xml = XDocument.Load(stream).Root;
+                            var task = await AsyncTask.LoadFromXmlAsync(account, filename, xml, token);
+                            ret.Add(task);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        store.DeleteFile("accounts/" + accountName + "/tasks/" + filename);
+                        OnError(ex);
+                    }
                 }
             }
             return ret;

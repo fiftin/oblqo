@@ -218,8 +218,14 @@ namespace Oblqo
                     int numberOfUnsyncFiles = 0;
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
-                        numberOfFiles++;
-                        if (string.IsNullOrEmpty(file.StorageFile?.Id))
+                        bool isSyncronizedFile = string.IsNullOrEmpty(file.StorageFile?.Id);
+
+                        if (!currentDirectoryInfoPanel.IsValid(file.Name))
+                        {
+                            continue;
+                        }
+
+                        if (isSyncronizedFile)
                         {
                             numberOfUnsyncFiles++;
                         }
@@ -228,14 +234,9 @@ namespace Oblqo
                             continue;
                         }
 
-                        if (currentDirectoryInfoPanel.IsFiltered)
-                        {
-                            if (!file.Name.Contains(currentDirectoryInfoPanel.Filter))
-                            {
-                                continue;
-                            }
-                        }
-                        
+
+                        numberOfFiles++;
+
                         var key = "file";
                         if (!string.IsNullOrWhiteSpace(file.MimeType))
                         {
@@ -394,6 +395,11 @@ namespace Oblqo
 
         private ListViewItem AddTask(AsyncTask newTask)
         {
+            if (!newTask.Visible)
+            {
+                return null;
+            }
+
             var taskItem = new ListViewItem { Tag = newTask };
             if (newTask is UploadFolderTask)
             {

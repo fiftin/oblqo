@@ -167,10 +167,18 @@ namespace Oblqo
             var tasks = Drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetDriveFile(drive), token));
             return new AccountFile(this, storageDir, await Task.WhenAll(tasks), destFolder);
         }
-        
+
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
         {
-            var tasks = Drives.Select(drive => drive.DeleteFolderAsync(folder.GetDriveFile(drive), token));
+            var tasks = Drives.Select(drive =>
+            {
+                var file = folder.GetDriveFile(drive);
+                if (file == null)
+                {
+                    return null;
+                }
+                return drive.DeleteFolderAsync(file, token);
+            }).Where(x => x != null);
             await Task.WhenAll(tasks);
         }
 

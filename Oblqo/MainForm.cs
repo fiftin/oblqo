@@ -890,8 +890,11 @@ namespace Oblqo
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
+                    var syncDestFolderTask = new SynchronizeDriveEmptyFolderTask(accounts[nodeInfo.AccountName],
+                        nodeInfo.AccountName, AsyncTask.NormalPriority, null, nodeInfo.File);
+                    taskManager.Add(syncDestFolderTask);
                     taskManager.Add(new CreateFolderTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName,
-                        AsyncTask.NormalPriority, null, dialog.DirecotryName, nodeInfo.File) {Tag = node});
+                        AsyncTask.NormalPriority, new AsyncTask[] { syncDestFolderTask }, dialog.DirecotryName, nodeInfo.File) {Tag = node});
                 }
             }
         }
@@ -1276,8 +1279,9 @@ namespace Oblqo
             var task = (AsyncTask)item.Tag;
             if (task.State == AsyncTaskState.Error)
             {
-                using (var exceptionDlg = new ThreadExceptionDialog(task.Exception))
+                using (var exceptionDlg = new ExceptionForm())
                 {
+                    exceptionDlg.Exception = task.Exception;
                     exceptionDlg.ShowDialog();
                 }
             }
@@ -1324,6 +1328,10 @@ namespace Oblqo
         private void driveStrip1_SelectedDriveChanged(object sender, EventArgs e)
         {
             fileInfoPanel.DriveFile = driveStrip1.DriveFile;
+        }
+
+        private void synchronizeFolder_Click(object sender, EventArgs e)
+        {
         }
     }
 

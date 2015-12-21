@@ -44,13 +44,10 @@ namespace Oblqo
         private readonly AsyncTaskManager taskManager = new AsyncTaskManager(new IsolatedConfigurationStorage());
         private CancellationTokenSource updateListCancellationTokenSource;
         private readonly object updateListCancellationTokenSourceLocker = new object();
-        private CancellationTokenSource pictureCancellationTokenSource;
-        private readonly object pictureCancellationTokenSourceLoker = new object();
         private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
         private ExceptionForm exceptionForm;
         private int loadingFolderImageAngle;
         private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
-        private int controlNumber = 0;
         private int indicateErrorNo;
         private Font unsyncFileFont;
 
@@ -155,18 +152,18 @@ namespace Oblqo
 
         public void HideFileInfoPanel()
         {
-            if (!pictureBox1.Visible) return;
+            if (!fileInfoPanel.Visible) return;
             splitter1.Hide();
-            pictureBox1.BackgroundImage = null;
             fileInfoPanel.Hide();
+            driveStrip1.Visible = false;
         }
 
         public void ShowFileInfoPanel()
         {
-            if (pictureBox1.Visible) return;
-            pictureBox1.BackgroundImage = Resources.loading;
+            if (fileInfoPanel.Visible) return;
             splitter1.Show();
             fileInfoPanel.Show();
+            driveStrip1.Visible = true;
         }
 
         private void UpdateFileList()
@@ -254,7 +251,7 @@ namespace Oblqo
                         }
 
                         var item = fileListView.Items.Add("", file.Name, key);
-                        var isDrivesSyncronized = account.Drives.Select(x => file.GetFile(x)).All(x => x != null);
+                        var isDrivesSyncronized = account.Drives.Select(x => file.GetDriveFile(x)).All(x => x != null);
                         if (!isDrivesSyncronized)
                         {
                             item.ForeColor = Color.Red;
@@ -798,72 +795,10 @@ namespace Oblqo
 
             ShowFileInfoPanel();
 
-            controlNumber++;
-            var info = (NodeInfo) fileListView.SelectedItems[0].Tag;
+            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
 
-            fileNameLabel.Text = info.File.Name;
-            fileSizeLabel.Text = Common.NumberOfBytesToString(info.File.DriveFile.Size);
-            fileStorageIdLabel.Text = string.IsNullOrEmpty(info.File.StorageFile.Id) ? "none" : info.File.StorageFile.Id;
-            storageIdLabel.Text = info.File.StorageFile.Storage.Id;
+            driveStrip1.File = info.File;
 
-            label3.Visible = false;
-            widthAndHeightLabel.Visible = false;
-
-            if (!info.File.IsImage)
-            {
-                lock (pictureCancellationTokenSourceLoker)
-                {
-                    pictureCancellationTokenSource?.Cancel();
-                    pictureCancellationTokenSource = new CancellationTokenSource();
-                }
-
-                loadingImageProgressBar.Visible = false;
-                pictureBox1.BackgroundImage = Resources.no_image;
-                return;
-            }
-            
-            // Image preview async loading
-            loadingImageProgressBar.Visible = true;
-            Task.Run(async delegate
-            {
-                try
-                {
-                    lock (pictureCancellationTokenSourceLoker)
-                    {
-                        if (pictureCancellationTokenSource != null)
-                            pictureCancellationTokenSource.Cancel();
-                        pictureCancellationTokenSource = new CancellationTokenSource();
-                    }
-
-                    pictureBox1.BackgroundImage = Resources.loading;
-                    int cn = controlNumber;
-                    Image image;
-                    try
-                    {
-                        image = await accounts[info.AccountName].GetImageAsync(info.File, pictureCancellationTokenSource.Token);
-                        if (cn != controlNumber)
-                        {
-                            return;
-                        }
-                        Invoke(new MethodInvoker(() =>
-                        {
-                            label3.Visible = true;
-                            widthAndHeightLabel.Visible = true;
-                            widthAndHeightLabel.Text = string.Format("{0} x {1}", info.File.DriveFile.ImageWidth, info.File.DriveFile.ImageHeight);
-                            pictureBox1.BackgroundImage = image;
-                            pictureBox1.Image = null;
-                            loadingImageProgressBar.Visible = false;
-                            if (widthAndHeightLabel.Text == "0 x 0")
-                                widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
-                        }));
-                    }
-                    catch (OperationCanceledException) { }
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-            });
         }
 
         private void OnError(Exception exception)
@@ -989,6 +924,10 @@ namespace Oblqo
             }
             loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
             loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
+
+            driveStrip1.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
+            driveStrip1.Width = fileInfoPanel.Width - 1;
+
         }
 
         /// <summary>
@@ -1001,12 +940,12 @@ namespace Oblqo
             {
                 bar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth;
                 bar.Width = fileListView.Width;
-                bar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 3;
+                bar.Top = splitContainer1.Top + splitContainer1.SplitterDistance + 7;
             }
 
-            loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
-            loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
-            loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
+            driveStrip1.Left = loadingImageProgressBar.Left = splitContainer2.SplitterDistance + splitContainer2.SplitterWidth + splitter1.Left + splitter1.Width;
+            driveStrip1.Width = loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
+            driveStrip1.Top = loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
         }
 
         /// <summary>
@@ -1146,7 +1085,6 @@ namespace Oblqo
 
         }
 
-
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in fileListView.SelectedItems)
@@ -1235,7 +1173,7 @@ namespace Oblqo
             {
                 var info = (NodeInfo)item.Tag;
                 var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
-                if (info.File.DriveFile.StorageFileId == null)
+                if (info.File.DriveFiles.StorageFileId == null)
                 {
                     taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
                         info.AccountName, 0, new AsyncTask[0], info.File));
@@ -1335,7 +1273,7 @@ namespace Oblqo
             {
                 var info = (NodeInfo)item.Tag;
                 var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
-                if (info.File.DriveFile.StorageFileId == null)
+                if (info.File.DriveFiles.StorageFileId == null)
                 {
                     taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
                         info.AccountName, 0, new AsyncTask[0], info.File));
@@ -1379,6 +1317,28 @@ namespace Oblqo
         {
             fileListView.Focus();
             UpdateFileList();
+        }
+
+        private void fileInfoPanel_Error(object sender, ExceptionEventArgs e)
+        {
+            OnError(e.Exception);
+        }
+
+        private void fileInfoPanel_ImageLoading(object sender, EventArgs e)
+        {
+            loadingImageProgressBar.Visible = true;
+            driveStrip1.Visible = false;
+        }
+
+        private void fileInfoPanel_ImageLoaded(object sender, EventArgs e)
+        {
+            loadingImageProgressBar.Visible = false;
+            driveStrip1.Visible = true;
+        }
+
+        private void driveStrip1_SelectedDriveChanged(object sender, EventArgs e)
+        {
+            fileInfoPanel.DriveFile = driveStrip1.DriveFile;
         }
     }
 

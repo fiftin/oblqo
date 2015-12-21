@@ -178,6 +178,9 @@ namespace Oblqo.Google
 
         public override DriveFile RootFolder => rootFolder;
 
+        public override string ShortName => "Google";
+
+
         private async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, string q, CancellationToken token)
         {
             try

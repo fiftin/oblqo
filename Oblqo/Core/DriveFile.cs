@@ -34,7 +34,7 @@ namespace Oblqo
         /// <summary>
         /// Folder contains current file.
         /// </summary>
-        public virtual DriveFile Parent => Owner.GetFile(Drive);
+        public virtual DriveFile Parent => Owner.GetDriveFile(Drive);
 
         public AccountFile Owner { get; set; }
 

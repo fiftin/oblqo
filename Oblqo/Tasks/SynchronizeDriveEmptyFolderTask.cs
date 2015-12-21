@@ -21,7 +21,7 @@ namespace Oblqo.Tasks
         {
             var token = CancellationTokenSource.Token;
             var tasks = (from drive in Account.Drives
-                         where Folder.GetFile(drive) == null
+                         where Folder.GetDriveFile(drive) == null
                          select Folder.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token)
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);

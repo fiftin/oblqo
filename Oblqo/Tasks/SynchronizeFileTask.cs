@@ -28,7 +28,7 @@ namespace Oblqo.Tasks
             {
                 return;
             }
-            var inStream = await SourceFile.DriveFile.ReadFileAsync(CancellationTokenSource.Token);
+            var inStream = await SourceFile.DriveFiles.ReadFileAsync(CancellationTokenSource.Token);
             if (!inStream.CanSeek) // Amazon Glicer required SetPosition. Read file to memory, if inStream is not support it.
             {
                 var memStream = new MemoryStream();
@@ -42,10 +42,10 @@ namespace Oblqo.Tasks
                 SourceFile.Parent.StorageFile,
                 CancellationTokenSource.Token,
                 e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
-            await SourceFile.DriveFile.SetStorageFileIdAsync(storageFile.Id, CancellationTokenSource.Token);
-            SourceFile.DriveFile.OriginalImageHeight = SourceFile.ImageHeight;
-            SourceFile.DriveFile.OriginalImageWidth = SourceFile.ImageWidth;
-            SourceFile.DriveFile.OriginalSize = SourceFile.Size;
+            await SourceFile.DriveFiles.SetStorageFileIdAsync(storageFile.Id, CancellationTokenSource.Token);
+            SourceFile.DriveFiles.OriginalImageHeight = SourceFile.ImageHeight;
+            SourceFile.DriveFiles.OriginalImageWidth = SourceFile.ImageWidth;
+            SourceFile.DriveFiles.OriginalSize = SourceFile.Size;
             if (SourceFile.IsImage)
             {
                 //TODO: Uncomment

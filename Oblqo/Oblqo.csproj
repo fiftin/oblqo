@@ -123,11 +123,11 @@
     <Compile Include="Controls\DriveFileControl.Designer.cs">
       <DependentUpon>DriveFileControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DriveFileTabPage.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Controls\DriveStrip.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\DriveFileTabPage.Designer.cs">
-      <DependentUpon>DriveFileTabPage.cs</DependentUpon>
+    <Compile Include="Controls\DriveStrip.Designer.cs">
+      <DependentUpon>DriveStrip.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
@@ -170,12 +170,6 @@
     </Compile>
     <Compile Include="Controls\DriveAccountTabPage.Designer.cs">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FileInfoControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\FileInfoControl.Designer.cs">
-      <DependentUpon>FileInfoControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\FileListStatusBar.cs">
       <SubType>UserControl</SubType>
@@ -274,8 +268,8 @@
     <EmbeddedResource Include="Controls\DriveFileControl.resx">
       <DependentUpon>DriveFileControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\FileInfoControl.resx">
-      <DependentUpon>FileInfoControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DriveStrip.resx">
+      <DependentUpon>DriveStrip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>

@@ -18,7 +18,7 @@ namespace Oblqo
         private AccountFile rootFolder;
 
         public AccountFile RootFolder
-            => rootFolder ?? (rootFolder = new AccountFile(Storage.RootFolder, Drives.Select(x => x.RootFolder), null));
+            => rootFolder ?? (rootFolder = new AccountFile(this, Storage.RootFolder, Drives.Select(x => x.RootFolder), null));
 
         public object Tag { get; set; }
  
@@ -34,7 +34,7 @@ namespace Oblqo
             {
                 PutFilesTo(await f.Drive.GetSubfoldersAsync(f, token), driveFiles);
             }
-            return driveFiles.Values.Select(files => new AccountFile(Storage.GetFile(files), files, folder)).ToList();
+            return driveFiles.Values.Select(files => new AccountFile(this, Storage.GetFile(files), files, folder)).ToList();
         }
 
         public async Task<Stream> ReadFileAsync(AccountFile file, CancellationToken token)
@@ -43,7 +43,7 @@ namespace Oblqo
             {
                 try
                 {
-                    return await drive.ReadFileAsync(file.GetFile(drive), token);
+                    return await drive.ReadFileAsync(file.GetDriveFile(drive), token);
                 }
                 catch (Exception ex)
                 {
@@ -64,7 +64,7 @@ namespace Oblqo
             {
                 try
                 {
-                    return await drive.GetThumbnailAsync(file.GetFile(drive), token);
+                    return await drive.GetThumbnailAsync(file.GetDriveFile(drive), token);
                 }
                 catch (Exception ex)
                 {
@@ -98,7 +98,7 @@ namespace Oblqo
             {
                 try
                 {
-                    await drive.DownloadFileAsync(file.GetFile(drive), destFolder, actionIfFileExists, token);
+                    await drive.DownloadFileAsync(file.GetDriveFile(drive), destFolder, actionIfFileExists, token);
                     return;
                 }
                 catch (Exception ex)
@@ -115,7 +115,7 @@ namespace Oblqo
             {
                 try
                 {
-                    await drive.DownloadFileAsync(file.GetFile(drive), output, token);
+                    await drive.DownloadFileAsync(file.GetDriveFile(drive), output, token);
                     return;
                 }
                 catch (Exception ex)
@@ -131,7 +131,7 @@ namespace Oblqo
         public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);
-            var tasks = Drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetFile(drive), false, uploadedFile.Id, token));
+            var tasks = Drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetDriveFile(drive), false, uploadedFile.Id, token));
             await Task.WhenAll(tasks);
         }
 
@@ -143,7 +143,7 @@ namespace Oblqo
         {
             foreach (var drive in Drives)
             {
-                var f = file.GetFile(drive);
+                var f = file.GetDriveFile(drive);
                 if (f == null)
                 {
                     continue;
@@ -164,13 +164,13 @@ namespace Oblqo
                 await
                     Storage.CreateFolderAsync(folderName, destFolder.StorageFile,
                         token);
-            var tasks = Drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetFile(drive), token));
-            return new AccountFile(storageDir, await Task.WhenAll(tasks), destFolder);
+            var tasks = Drives.Select(drive => drive.CreateFolderAsync(folderName, destFolder.GetDriveFile(drive), token));
+            return new AccountFile(this, storageDir, await Task.WhenAll(tasks), destFolder);
         }
         
         public async Task DeleteFolderAsync(AccountFile folder, CancellationToken token)
         {
-            var tasks = Drives.Select(drive => drive.DeleteFolderAsync(folder.GetFile(drive), token));
+            var tasks = Drives.Select(drive => drive.DeleteFolderAsync(folder.GetDriveFile(drive), token));
             await Task.WhenAll(tasks);
         }
 
@@ -181,7 +181,7 @@ namespace Oblqo
             {
                 PutFilesTo(await f.Drive.GetFilesAsync(f, token), driveFiles);
             }
-            return driveFiles.Values.Select(files => new AccountFile(Storage.GetFile(files), files, folder)).ToList();
+            return driveFiles.Values.Select(files => new AccountFile(this, Storage.GetFile(files), files, folder)).ToList();
         }
 
         public async Task<AccountFile> GetFileAsync(XElement fileXml, CancellationToken token)
@@ -201,7 +201,7 @@ namespace Oblqo
             driveFiles = new List<DriveFile>(await Task.WhenAll(tasks));
             var parentXml = fileXml.Element("parent");
             AccountFile parent = parentXml == null ? null : await GetFileAsync(parentXml, token);
-            return new AccountFile(storageFile, driveFiles, parent);
+            return new AccountFile(this, storageFile, driveFiles, parent);
         }
 
         private void PutFilesTo(IEnumerable<DriveFile> files,

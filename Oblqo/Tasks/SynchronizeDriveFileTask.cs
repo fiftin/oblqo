@@ -32,7 +32,7 @@ namespace Oblqo.Tasks
         protected override async Task OnStartAsync()
         {
             var tasks = (from drive in Account.Drives
-                         where File.GetFile(drive) == null
+                         where File.GetDriveFile(drive) == null
                          select UploadFileAsync(drive)
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);

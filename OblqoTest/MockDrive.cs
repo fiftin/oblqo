@@ -20,6 +20,8 @@ namespace OblqoTest
 
         public override DriveFile RootFolder => rootFolder;
 
+        public override string ShortName => "Mock";
+
         public override async Task<DriveFile> CreateFolderAsync(string folderName, DriveFile destFolder, 
             CancellationToken token)
         {

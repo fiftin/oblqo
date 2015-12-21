@@ -22,7 +22,7 @@ namespace Oblqo
 
         public Drive Drive => Drives.First();
 
-        public DriveFileCollection DriveFile => DriveFiles;
+        // public DriveFileCollection DriveFile => DriveFiles;
 
 
         public string StorageFileId
@@ -47,36 +47,50 @@ namespace Oblqo
 
         public bool HasChildren => DriveFiles.Count > 0 && DriveFiles[0].HasChildren;
 
-        public long Size => DriveFile.Size;
-        public DateTime ModifiedDate => DriveFile.ModifiedDate;
-        public DateTime CreatedDate => DriveFile.CreatedDate;
+        public long Size => DriveFiles.Size;
+        public DateTime ModifiedDate => DriveFiles.ModifiedDate;
+        public DateTime CreatedDate => DriveFiles.CreatedDate;
 
-        public int OriginalImageWidth => DriveFile.OriginalImageWidth;
-        public int OriginalImageHeight => DriveFile.OriginalImageHeight;
-        public long OriginalSize => DriveFile.OriginalSize;
+        public int OriginalImageWidth => DriveFiles.OriginalImageWidth;
+        public int OriginalImageHeight => DriveFiles.OriginalImageHeight;
+        public long OriginalSize => DriveFiles.OriginalSize;
 
-        public int ImageWidth => DriveFile.ImageWidth;
-        public int ImageHeight => DriveFile.ImageHeight;
-        public bool IsRoot => DriveFile.IsRoot;
-        public string MimeType => DriveFile.MimeType;
+        public int ImageWidth => DriveFiles.ImageWidth;
+        public int ImageHeight => DriveFiles.ImageHeight;
+        public bool IsRoot => DriveFiles.IsRoot;
+        public string MimeType => DriveFiles.MimeType;
+        public Account Account { get; }
 
-        public AccountFile(StorageFile storageFile, IEnumerable<DriveFile> driveFiles, AccountFile parent)
+        public AccountFile(Account account, StorageFile storageFile, IEnumerable<DriveFile> driveFiles, AccountFile parent)
         {
             DriveFiles.AddRange(driveFiles);
             this.StorageFile = storageFile;
             Parent = parent;
+            Account = account;
         }
 
-        public AccountFile(StorageFile storageFile, AccountFile parent)
+        public AccountFile(Account account, StorageFile storageFile, AccountFile parent)
         {
             this.StorageFile = storageFile;
             Parent = parent;
+            Account = account;
         }
 
-        public DriveFile GetFile(Drive drive)
+        public DriveFile GetDriveFile(Drive drive)
         {
             return DriveFiles.FirstOrDefault(file => file.Drive == drive);
-            //return DriveFiles.SingleOrDefault(file => file.Drive == drive);
+        }
+
+        public DriveFile GetDriveFile(string driveId)
+        {
+            foreach (var file in DriveFiles)
+            {
+                if (file.Drive.Id == driveId)
+                {
+                    return file;
+                }
+            }
+            return null;
         }
 
         public async Task<DriveFile> GetFileAndCreateIfFolderIsNotExistsAsync(Drive drive, CancellationToken token)
@@ -129,5 +143,6 @@ namespace Oblqo
             }
             return root;
         }
+        
     }
 }

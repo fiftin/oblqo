@@ -17,7 +17,7 @@ namespace Oblqo.Tasks
         {
             if (!string.IsNullOrEmpty(File.StorageFile.Id))
                 await Account.Storage.DeleteFileAsync(File.StorageFile, CancellationTokenSource.Token);
-            await Account.Drives.DeleteFileAsync(File.DriveFile, CancellationTokenSource.Token);
+            await Account.Drives.DeleteFileAsync(File.DriveFiles, CancellationTokenSource.Token);
         }
     }
 }

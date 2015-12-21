@@ -50,9 +50,10 @@
             // showSyncFilesOnlyCheckbox
             // 
             this.showSyncFilesOnlyCheckbox.AutoSize = true;
-            this.showSyncFilesOnlyCheckbox.Location = new System.Drawing.Point(179, 2);
+            this.showSyncFilesOnlyCheckbox.Location = new System.Drawing.Point(138, 2);
             this.showSyncFilesOnlyCheckbox.Name = "showSyncFilesOnlyCheckbox";
-            this.showSyncFilesOnlyCheckbox.Size = new System.Drawing.Size(112, 17);
+            this.showSyncFilesOnlyCheckbox.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
+            this.showSyncFilesOnlyCheckbox.Size = new System.Drawing.Size(132, 17);
             this.showSyncFilesOnlyCheckbox.TabIndex = 7;
             this.showSyncFilesOnlyCheckbox.Text = "Show unsync only";
             this.showSyncFilesOnlyCheckbox.UseVisualStyleBackColor = true;

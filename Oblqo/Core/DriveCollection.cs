@@ -192,5 +192,17 @@ namespace Oblqo
         {
             return drives.GetEnumerator();
         }
+
+        public Drive FindById(string driveId)
+        {
+            foreach (var drive in drives)
+            {
+                if (drive.Id == driveId)
+                {
+                    return drive;
+                }
+            }
+            return null;
+        }
     }
 }

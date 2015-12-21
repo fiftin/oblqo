@@ -17,7 +17,7 @@ namespace Oblqo.Tasks
 
         protected override async Task OnStartAsync()
         {
-            await Account.Drives.DownloadFileAsync(File.DriveFile, DestFolder,
+            await Account.Drives.DownloadFileAsync(File.DriveFiles, DestFolder,
                 ActionIfFileExists.Rewrite, CancellationTokenSource.Token);
         }
     }

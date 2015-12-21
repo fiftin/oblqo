@@ -22,6 +22,7 @@ namespace Oblqo
         public Storage Storage => Owner.Storage;
 
         public string Id { get; }
+        public abstract string ShortName { get; }
 
         /// <summary>
         /// Name format of property for storage file ID.

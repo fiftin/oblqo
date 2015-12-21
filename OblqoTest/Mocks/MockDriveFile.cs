@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Oblqo;
 
 namespace OblqoTest
@@ -125,5 +126,11 @@ namespace OblqoTest
         {
             throw new NotImplementedException();
         }
+
+        public override XElement ToXml()
+        {
+            return base.ToXml();
+        }
+
     }
 }

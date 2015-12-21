@@ -14,7 +14,7 @@ namespace OblqoTest
         internal MockDriveFile root;
         internal MockDriveFile rootFolder;
 
-        public MockDrive(Account owner) : base(owner, "mock")
+        public MockDrive(Account owner) : base(owner, Guid.NewGuid().ToString())
         {
         }
 
@@ -55,7 +55,12 @@ namespace OblqoTest
 
         public override async Task<DriveFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var file = new MockDriveFile(this,
+                xml.Attribute("name").Value,
+                bool.Parse(xml.Attribute("isFolder").Value),
+                bool.Parse(xml.Attribute("isImage").Value),
+                bool.Parse(xml.Attribute("isRoot").Value));
+            return file;
         }
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
@@ -88,6 +93,8 @@ namespace OblqoTest
             var file = new MockDriveFile(this, fileName, false);
             file.content = new byte[fileStream.Length];
             fileStream.Read(file.content, 0, (int)fileStream.Length);
+            MockDriveFile folder = (MockDriveFile)destFolder;
+            folder.Add(file);
             return file;
         }
     }

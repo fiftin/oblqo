@@ -55,7 +55,7 @@ namespace OblqoTest
 
         internal bool DeleteFileRecursive(DriveFile driveFile)
         {
-            var y = files.FirstOrDefault(x => x == driveFile);
+            var y = files.FirstOrDefault(x => x.Name == driveFile.Name);
             if (y != null)
             {
                 return files.Remove(y);
@@ -129,7 +129,14 @@ namespace OblqoTest
 
         public override XElement ToXml()
         {
-            return base.ToXml();
+            var xml = base.ToXml();
+
+            xml.SetAttributeValue("name", Name);
+            xml.SetAttributeValue("isFolder", IsFolder);
+            xml.SetAttributeValue("isImage", IsImage);
+            xml.SetAttributeValue("isRoot", IsRoot);
+
+            return xml;
         }
 
     }

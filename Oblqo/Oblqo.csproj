@@ -198,10 +198,10 @@
     <Compile Include="Local\NtfsLocalFile.cs" />
     <Compile Include="Core\Resolution.cs" />
     <Compile Include="NodeInfo.cs" />
-    <Compile Include="TaskList.cs">
+    <Compile Include="Controls\TaskList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TaskList.Designer.cs">
+    <Compile Include="Controls\TaskList.Designer.cs">
       <DependentUpon>TaskList.cs</DependentUpon>
     </Compile>
     <Compile Include="Tasks\AsyncTask.cs" />
@@ -314,7 +314,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TaskList.resx">
+    <EmbeddedResource Include="Controls\TaskList.resx">
       <DependentUpon>TaskList.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

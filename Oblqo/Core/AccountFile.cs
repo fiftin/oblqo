@@ -135,7 +135,10 @@ namespace Oblqo
                 driveFiles.Add(file.ToXml());
             }
             root.Add(driveFiles);
-            root.Add(StorageFile.ToXml());
+            if (StorageFile != null)
+            {
+                root.Add(StorageFile.ToXml());
+            }
             if (HasParent)
             {
                 var parent = Parent.ToXml("parent");

@@ -120,13 +120,12 @@
     <Compile Include="AccountTest.cs" />
     <Compile Include="AsyncTaskManagerTest.cs" />
     <Compile Include="AsyncTaskTest.cs" />
-    <Compile Include="GoogleDriveTest.cs" />
-    <Compile Include="MockConfigurationStorage.cs" />
+    <Compile Include="Mocks\MockConfigurationStorage.cs" />
     <Compile Include="TestEnvironment.cs" />
-    <Compile Include="MockDrive.cs" />
-    <Compile Include="MockDriveFile.cs" />
-    <Compile Include="MockStorage.cs" />
-    <Compile Include="MockStorageFile.cs" />
+    <Compile Include="Mocks\MockDrive.cs" />
+    <Compile Include="Mocks\MockDriveFile.cs" />
+    <Compile Include="Mocks\MockStorage.cs" />
+    <Compile Include="Mocks\MockStorageFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

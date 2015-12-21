@@ -48,10 +48,8 @@ namespace Oblqo.Tasks
         public override XElement ToXml()
         {
             var xml = base.ToXml();
-
             var fileXml = File.ToXml("file");
             xml.Add(fileXml);
-
             return xml;
         }
 

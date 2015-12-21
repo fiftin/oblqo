@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Oblqo.Tasks
 {
@@ -41,6 +43,22 @@ namespace Oblqo.Tasks
         private DriveFile GetBestFile()
         {
             return File.DriveFiles.First();
+        }
+
+        public override XElement ToXml()
+        {
+            var xml = base.ToXml();
+
+            var fileXml = File.ToXml("file");
+            xml.Add(fileXml);
+
+            return xml;
+        }
+
+        public override async Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
+        {
+            await base.LoadAsync(account, id, xml, token);
+            File = await account.GetFileAsync(xml.Element("file"), token);
         }
     }
 }

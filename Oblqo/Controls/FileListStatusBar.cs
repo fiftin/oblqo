@@ -112,6 +112,7 @@ namespace Oblqo
         
         private void FileListStatusBar_SizeChanged(object sender, EventArgs e)
         {
+            showSyncFilesOnlyCheckbox.Left = fileListNumberOfFilesLabel.Right;
             fileListFilterTextBox.Left = showSyncFilesOnlyCheckbox.Right;
             fileListFilterTextBox.Width = Width - showSyncFilesOnlyCheckbox.Right;
         }

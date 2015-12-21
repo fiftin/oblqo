@@ -52,10 +52,10 @@
             this.showSyncFilesOnlyCheckbox.AutoSize = true;
             this.showSyncFilesOnlyCheckbox.Location = new System.Drawing.Point(138, 2);
             this.showSyncFilesOnlyCheckbox.Name = "showSyncFilesOnlyCheckbox";
-            this.showSyncFilesOnlyCheckbox.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
-            this.showSyncFilesOnlyCheckbox.Size = new System.Drawing.Size(132, 17);
+            this.showSyncFilesOnlyCheckbox.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.showSyncFilesOnlyCheckbox.Size = new System.Drawing.Size(95, 17);
             this.showSyncFilesOnlyCheckbox.TabIndex = 7;
-            this.showSyncFilesOnlyCheckbox.Text = "Show unsync only";
+            this.showSyncFilesOnlyCheckbox.Text = "Hide synced";
             this.showSyncFilesOnlyCheckbox.UseVisualStyleBackColor = true;
             this.showSyncFilesOnlyCheckbox.CheckedChanged += new System.EventHandler(this.showSyncFilesOnlyCheckbox_CheckedChanged);
             // 
@@ -64,7 +64,8 @@
             this.fileListNumberOfFilesLabel.AutoSize = true;
             this.fileListNumberOfFilesLabel.Location = new System.Drawing.Point(3, 3);
             this.fileListNumberOfFilesLabel.Name = "fileListNumberOfFilesLabel";
-            this.fileListNumberOfFilesLabel.Size = new System.Drawing.Size(83, 13);
+            this.fileListNumberOfFilesLabel.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.fileListNumberOfFilesLabel.Size = new System.Drawing.Size(93, 13);
             this.fileListNumberOfFilesLabel.TabIndex = 6;
             this.fileListNumberOfFilesLabel.Text = "0 files, 0 unsync";
             // 

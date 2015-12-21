@@ -275,26 +275,6 @@ namespace Oblqo
             });
         }
 
-        /// <summary>
-        /// Update labels on Properties page.
-        /// </summary>
-        private void UpdateProperties()
-        {
-            var node = treeView1.SelectedNode;
-            if (node == null)
-                return;
-            var nodeInfo = (NodeInfo)node.Tag;
-            switch (nodeInfo.Type)
-            {
-                case NodeType.Account:
-                    vaultNameLabel.Text = nodeInfo.AccountInfo.StorageVault;
-                    vaultRegionLabel.Text = nodeInfo.AccountInfo.StorageRegionSystemName;
-                    break;
-                case NodeType.Folder:
-                    break;
-            }
-        }
-
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
         {
             var token = new CancellationToken();
@@ -735,7 +715,6 @@ namespace Oblqo
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UpdateFileList();
-            UpdateProperties();
             UpdateToolBarAndMenu();
         }
 

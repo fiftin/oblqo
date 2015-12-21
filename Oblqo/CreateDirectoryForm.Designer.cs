@@ -90,6 +90,7 @@
             this.Name = "CreateFolderForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Folder";
             this.Load += new System.EventHandler(this.CreateFolderForm_Load);
             this.ResumeLayout(false);

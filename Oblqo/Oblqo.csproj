@@ -243,7 +243,6 @@
     <Compile Include="Tasks\DownloadFolderFromDriveTask.cs" />
     <Compile Include="Tasks\DownloadFolderFromStorageTask.cs" />
     <Compile Include="Tasks\DownloadFolderTask.cs" />
-    <Compile Include="Tasks\RequestGlacierInventoryTask.cs" />
     <Compile Include="Tasks\SynchronizeDriveFileTask.cs" />
     <Compile Include="Tasks\SynchronizeFileTask.cs" />
     <Compile Include="Tasks\SynchronizeDriveEmptyFolderTask.cs" />

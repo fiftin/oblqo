@@ -42,13 +42,15 @@ namespace Oblqo.Tasks
         public override async Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
         {
             await base.LoadAsync(account, id, xml, token);
-            DestFolder = xml.Element("destFolder").Value;
+            DestFolder = xml.Attribute("destFolder").Value;
             Folder = await account.GetFileAsync(xml, token);
         }
 
         public override XElement ToXml()
         {
             var xml = base.ToXml();
+            xml.SetAttributeValue("destFolder", DestFolder);
+            xml.Add(Folder.ToXml("folder"));
             return xml;
         }
     }

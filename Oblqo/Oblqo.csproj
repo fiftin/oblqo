@@ -129,18 +129,6 @@
     <Compile Include="Controls\DriveStrip.Designer.cs">
       <DependentUpon>DriveStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ImageViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ImageViewer.Designer.cs">
-      <DependentUpon>ImageViewer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImageViewerControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ImageViewerControl.Designer.cs">
-      <DependentUpon>ImageViewerControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
     <Compile Include="Core\CamelcaseWrapper.cs" />
@@ -189,8 +177,6 @@
     <Compile Include="Controls\FileListStatusBar.Designer.cs">
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="GData\GDrive.cs" />
-    <Compile Include="GData\GFile.cs" />
     <Compile Include="Core\IsolatedConfigurationStorage.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
@@ -198,12 +184,6 @@
     <Compile Include="Local\NtfsLocalFile.cs" />
     <Compile Include="Core\Resolution.cs" />
     <Compile Include="NodeInfo.cs" />
-    <Compile Include="Controls\TaskList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TaskList.Designer.cs">
-      <DependentUpon>TaskList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />
@@ -283,9 +263,6 @@
     <EmbeddedResource Include="Controls\DriveStrip.resx">
       <DependentUpon>DriveStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ImageViewerControl.resx">
-      <DependentUpon>ImageViewerControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,9 +291,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Controls\TaskList.resx">
-      <DependentUpon>TaskList.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

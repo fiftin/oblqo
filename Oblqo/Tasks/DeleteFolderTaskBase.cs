@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 namespace Oblqo.Tasks
 {
+    [AccountFileStateChange(AccountFileStates.Deleted, "Folder")]
     public abstract class DeleteFolderTaskBase : AsyncTask
     {
         public AccountFile Folder { get; private set; }

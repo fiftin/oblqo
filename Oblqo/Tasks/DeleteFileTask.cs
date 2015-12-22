@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace Oblqo.Tasks
 {
+    [AccountFileStateChange(AccountFileStates.Deleted)]
     public class DeleteFileTask : AsyncTask
     {
         public AccountFile File { get; private set; }

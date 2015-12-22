@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oblqo.Tasks
 {
+    [AccountFileStateChange(AccountFileStates.New, "CreatedFolder")]
     public class UploadFolderTask : AsyncTask
     {
 

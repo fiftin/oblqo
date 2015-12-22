@@ -28,20 +28,28 @@ namespace Oblqo.Tasks
             {
                 return;
             }
-            var inStream = await SourceFile.DriveFiles.ReadFileAsync(CancellationTokenSource.Token);
-            if (!inStream.CanSeek) // Amazon Glicer required SetPosition. Read file to memory, if inStream is not support it.
+            StorageFile storageFile;
+            using (var inStream = await SourceFile.DriveFiles.ReadFileAsync(CancellationTokenSource.Token))
             {
-                var memStream = new MemoryStream();
-                await Common.CopyStreamAsync(inStream, memStream);
-                memStream.Seek(0, SeekOrigin.Begin);
-                inStream = memStream;
+                Stream stream;
+                if (!inStream.CanSeek) // Amazon Glicer required SetPosition. Read file to memory, if inStream is not support it.
+                {
+                    var memStream = new MemoryStream();
+                    await Common.CopyStreamAsync(inStream, memStream);
+                    memStream.Seek(0, SeekOrigin.Begin);
+                    stream = memStream;
+                }
+                else
+                {
+                    stream = inStream;
+                }
+                storageFile = await SourceFile.Storage.UploadFileAsync(
+                    stream,
+                    SourceFile.Name,
+                    SourceFile.Parent.StorageFile,
+                    CancellationTokenSource.Token,
+                    e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
             }
-            var storageFile = await SourceFile.Storage.UploadFileAsync(
-                inStream,
-                SourceFile.Name,
-                SourceFile.Parent.StorageFile,
-                CancellationTokenSource.Token,
-                e => OnProgress(new AsyncTaskProgressEventArgs(e.PercentDone, null)));
             await SourceFile.DriveFiles.SetStorageFileIdAsync(storageFile.Id, CancellationTokenSource.Token);
             SourceFile.DriveFiles.OriginalImageHeight = SourceFile.ImageHeight;
             SourceFile.DriveFiles.OriginalImageWidth = SourceFile.ImageWidth;

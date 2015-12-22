@@ -26,9 +26,11 @@ namespace Oblqo.Tasks
         {
             var token = CancellationTokenSource.Token;
             var bestFile = GetBestFile();
-            var stream = await bestFile.Drive.ReadFileAsync(bestFile, token);
-            var folder = await File.Parent.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
-            return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId != null, bestFile.StorageFileId, token);
+            using (var stream = await bestFile.Drive.ReadFileAsync(bestFile, token))
+            {
+                var folder = await File.Parent.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
+                return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId != null, bestFile.StorageFileId, token);
+            }
         }
 
         protected override async Task OnStartAsync()

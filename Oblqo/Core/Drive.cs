@@ -101,13 +101,14 @@ namespace Oblqo
             var image = Image.FromStream(input);
             return await ScaleImageAsync(image, type, token);
         }
-        
 
         public virtual async Task<Image> GetImageAsync(DriveFile file, CancellationToken token)
         {
-            return Image.FromStream(await ReadFileAsync(file, token));
+            using (var stream = await ReadFileAsync(file, token))
+            {
+                return Image.FromStream(stream);
+            }
         }
-
         
         public abstract Task DeleteFileAsync(DriveFile driveFile, CancellationToken token);
         public abstract Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token);

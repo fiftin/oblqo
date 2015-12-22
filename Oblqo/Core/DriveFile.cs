@@ -78,10 +78,14 @@ namespace Oblqo
 			if (!Drive.TryGetImageType (Name, out type)) {
 				return;
 			}
-            var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token);
-            var memStream = new MemoryStream();
-            await stream.CopyToAsync(memStream);
-            await WriteAsync(memStream.ToArray(), token);
+            using (var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token))
+            {
+                using (var memStream = new MemoryStream())
+                {
+                    await stream.CopyToAsync(memStream);
+                    await WriteAsync(memStream.ToArray(), token);
+                }
+            }
         }
 
         /// <summary>

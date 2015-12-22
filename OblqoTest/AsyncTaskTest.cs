@@ -107,5 +107,17 @@ namespace OblqoTest
             }
             catch (ArgumentException) { }
         }
+
+        public async Task TestDeleteFolder2DriveTask()
+        {
+            var man = new AsyncTaskManager(new MockConfigurationStorage());
+            var env = await TestEnvironment.CreateTwoDrivesSimpleAsync();
+
+            var folder = await env.GetFolderByFullPathAsync("photos2015");
+            var task = new DeleteFolderTask(env.Account, "", 0, new AsyncTask[0], folder);
+            man.Add(task);
+            // throws exception becouse directory isn't exists
+            await env.GetFolderByFullPathAsync("photos2015");
+        }
     }
 }

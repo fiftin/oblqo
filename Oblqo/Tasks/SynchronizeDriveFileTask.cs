@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 namespace Oblqo.Tasks
 {
+    [AccountFileStateChange(AccountFileStates.SyncronizedWithDrive)]
     public class SynchronizeDriveFileTask : AsyncTask
     {
         public AccountFile File { get; set; }

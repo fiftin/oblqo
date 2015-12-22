@@ -128,11 +128,12 @@ namespace Oblqo
         /// <summary>
         /// Upload folder of file to storage and drive.
         /// </summary>
-        public async Task UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
+        public async Task<AccountFile> UploadFileAsync(string pathName, AccountFile destFolder, CancellationToken token, Action<TransferProgress> progressCallback)
         {
             var uploadedFile = await Storage.UploadFileAsync(pathName, destFolder.StorageFile, token, progressCallback);
             var tasks = Drives.Select(drive => drive.UploadFileAsync(pathName, destFolder.GetDriveFile(drive), false, uploadedFile.Id, token));
-            await Task.WhenAll(tasks);
+            var uploadedDriveFiles = await Task.WhenAll(tasks);
+            return new AccountFile(this, uploadedFile, uploadedDriveFiles, destFolder);
         }
 
         internal void Disconnect()

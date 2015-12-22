@@ -13,7 +13,6 @@ using System.Xml;
 using Oblqo.Properties;
 using Oblqo.Tasks;
 using System.Collections;
-// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
 
 namespace Oblqo
 {
@@ -49,7 +48,8 @@ namespace Oblqo
         private int loadingFolderImageAngle;
         private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
         private int indicateErrorNo;
-        private Font unsyncFileFont;
+
+        private readonly Font UnsyncronizedFileItemFont;
 
 
         public MainForm()
@@ -71,7 +71,7 @@ namespace Oblqo
             taskManager.TaskProgress += taskManager_TaskProgress;
             InitUI();
             splitContainer2.SplitterWidth = 7;
-            unsyncFileFont = new Font(Font, FontStyle.Strikeout);
+            UnsyncronizedFileItemFont = new Font(Font, FontStyle.Strikeout);
             btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
         }
 
@@ -167,6 +167,50 @@ namespace Oblqo
             driveStrip1.Visible = true;
         }
 
+        private AccountFileStates GetFileState(AccountFile file)
+        {
+            AccountFileStates ret = 0;
+            var isDrivesSyncronized = file.Account.Drives.Select(x => file.GetDriveFile(x)).All(x => x != null);
+            if (!isDrivesSyncronized)
+            {
+                ret |= AccountFileStates.UnsyncronizedWithDrive;
+            }
+            if (string.IsNullOrEmpty(file.StorageFileId))
+            {
+                ret |= AccountFileStates.UnsyncronizedWithStorage;
+            }
+            return ret;
+        }
+
+        private void UpdateFileListItem(AccountFileStates newFileState, ListViewItem fileItem)
+        {
+            if ((newFileState & AccountFileStates.Deleted) != 0)
+            {
+                fileItem.Remove();
+                return;
+            }
+            if ((newFileState & AccountFileStates.New) != 0)
+            {
+                fileItem.ForeColor = Color.Green;
+            }
+            if ((newFileState & AccountFileStates.UnsyncronizedWithDrive) != 0)
+            {
+                fileItem.ForeColor = Color.Red;
+            }
+            if ((newFileState & AccountFileStates.UnsyncronizedWithStorage) != 0)
+            {
+                fileItem.Font = UnsyncronizedFileItemFont;
+            }
+            if ((newFileState & AccountFileStates.SyncronizedWithDrive) != 0)
+            {
+                fileItem.ForeColor = SystemColors.ControlText;
+            }
+            if ((newFileState & AccountFileStates.SyncronizedWithStorage) != 0)
+            {
+                fileItem.Font = Font;
+            }
+        }
+
         private void UpdateFileList()
         {
             lock (updateListCancellationTokenSourceLocker)
@@ -219,14 +263,13 @@ namespace Oblqo
                     int numberOfUnsyncFiles = 0;
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
-                        bool isSyncronizedFile = string.IsNullOrEmpty(file.StorageFile?.Id);
+                        var fileState = GetFileState(file);
 
                         if (!currentDirectoryInfoPanel.IsValid(file.Name))
                         {
                             continue;
                         }
-
-                        if (isSyncronizedFile)
+                        if ((fileState & AccountFileStates.UnsyncronizedWithStorage) != 0)
                         {
                             numberOfUnsyncFiles++;
                         }
@@ -234,7 +277,6 @@ namespace Oblqo
                         {
                             continue;
                         }
-
 
                         numberOfFiles++;
 
@@ -253,17 +295,7 @@ namespace Oblqo
                         }
 
                         var item = fileListView.Items.Add("", file.Name, key);
-                        var isDrivesSyncronized = account.Drives.Select(x => file.GetDriveFile(x)).All(x => x != null);
-                        if (!isDrivesSyncronized)
-                        {
-                            item.ForeColor = Color.Red;
-                        }
-
-                        if (string.IsNullOrEmpty(file.StorageFileId))
-                        {
-                            item.Font = unsyncFileFont;
-                        }
-
+                        UpdateFileListItem(fileState, item);
                         item.Tag = new NodeInfo(file, info.AccountName);
                         item.SubItems.Add(file.ModifiedDate.ToShortDateString());
                         item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
@@ -274,6 +306,15 @@ namespace Oblqo
                     loadingFileListProgressBar.Visible = false;
                 }));
             });
+        }
+
+        private void UpdateTaskList()
+        {
+            taskListView.Items.Clear();
+            foreach (var task in taskManager.ToArray().Where(task => displayingTaskListStates.Contains(task.State)))
+            {
+                AddTask(task);
+            }
         }
 
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
@@ -362,15 +403,6 @@ namespace Oblqo
                     taskListView.Items.RemoveAt(i);
                     break;
                 }
-            }
-        }
-
-        private void UpdateTaskList()
-        {
-            taskListView.Items.Clear();
-            foreach (var task in taskManager.ToArray().Where(task => displayingTaskListStates.Contains(task.State)))
-            {
-                AddTask(task);
             }
         }
 
@@ -526,6 +558,29 @@ namespace Oblqo
                     }
                 }
                 
+                if (e.Task.State == AsyncTaskState.Completed)
+                {
+                    var attrs = e.Task.GetType().GetCustomAttributes(typeof(AccountFileStateChangeAttribute), true);
+                    if (attrs.Length != 0)
+                    {
+                        var attr = (AccountFileStateChangeAttribute)attrs[0];
+                        var prop = e.Task.GetType().GetProperty(attr.FilePropertyName);
+                        var file = (AccountFile)prop.GetValue(e.Task);
+                        if (file.IsFile)
+                        {
+                            foreach (ListViewItem x in fileListView.Items)
+                            {
+                                var info = (NodeInfo)x.Tag;
+                                if (info.File == file)
+                                {
+                                    UpdateFileListItem(attr.NewState, x);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (item == null) return;
                 switch (e.Task.State)
                 {

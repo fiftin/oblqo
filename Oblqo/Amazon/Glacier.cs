@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.Glacier;
 using Amazon.Glacier.Model;
-using System.Collections.Generic;
-using Oblqo.Core;
+using UnidecodeSharpFork;
 
 namespace Oblqo.Amazon
 {
@@ -85,7 +84,7 @@ namespace Oblqo.Amazon
                 percent = currentPercent;
                 progressCallback(new TransferProgress(percent));
             };
-            var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
+            var req = new UploadArchiveRequest(Vault, filePathName.Unidecode(), checksum, observed);
             var result = await client.UploadArchiveAsync(req, token);
             return new GlacierFile(this, result.ArchiveId, false, fn);
         }

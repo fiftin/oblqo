@@ -72,6 +72,7 @@ namespace Oblqo
             InitUI();
             splitContainer2.SplitterWidth = 7;
             unsyncFileFont = new Font(Font, FontStyle.Strikeout);
+            btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
         }
 
         private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
@@ -825,9 +826,9 @@ namespace Oblqo
                         IndicateError();
                     }));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    OnError(ex);
+                    // Ignore
                 }
             }
         }
@@ -1340,6 +1341,13 @@ namespace Oblqo
             {
                 aboutForm.ShowDialog();
             }
+        }
+
+        private void fileListView_SizeChanged(object sender, EventArgs e)
+        {
+            btnNewConnection.Left = fileListView.Width / 4 - btnNewConnection.Width / 4;
+            btnNewConnection.Top = fileListView.Height/ 3;
+            // btnNewConnection.Visible = fileListView.Width > btnNewConnection.Width && fileListView.Height > 100;
         }
     }
 

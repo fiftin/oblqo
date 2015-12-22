@@ -1333,6 +1333,14 @@ namespace Oblqo
         private void synchronizeFolder_Click(object sender, EventArgs e)
         {
         }
+
+        private void aboutStripButton_Click(object sender, EventArgs e)
+        {
+            using (var aboutForm = new AboutForm())
+            {
+                aboutForm.ShowDialog();
+            }
+        }
     }
 
 }

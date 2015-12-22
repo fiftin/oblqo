@@ -117,6 +117,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DriveFileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -249,6 +255,9 @@
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="Core\TransferProgress.cs" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -319,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="oblqo-o.ico" />
+    <None Include="Resources\oblqo.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

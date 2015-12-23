@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Xml.Serialization;
 using Amazon;
+using System.IO;
 
 namespace Oblqo
 {
@@ -32,5 +34,16 @@ namespace Oblqo
 
         [XmlArray]
         public List<DriveInfo> Drives { get; set; } = new List<DriveInfo>();
+
+        public AccountInfo Clone()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var serializer = new XmlSerializer(typeof(AccountInfo));
+                serializer.Serialize(new StreamWriter(stream), this);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (AccountInfo)serializer.Deserialize(stream);
+            }
+        }
     }
 }

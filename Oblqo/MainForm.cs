@@ -1494,7 +1494,26 @@ namespace Oblqo
         {
             btnNewConnection.Left = fileListView.Width / 4 - btnNewConnection.Width / 4;
             btnNewConnection.Top = fileListView.Height/ 3;
-            // btnNewConnection.Visible = fileListView.Width > btnNewConnection.Width && fileListView.Height > 100;
+        }
+
+        private void cloneAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedNode = treeView1.SelectedNode;
+            if (selectedNode == null)
+                return;
+            var nodeInfo = (NodeInfo)selectedNode.Tag;
+            var info = nodeInfo.AccountInfo.Clone();
+            info.AccountName += " Copy";
+            while (accountManager.Get(info.AccountName) != null)
+            {
+                info.AccountName += " Copy";
+            }
+            accountManager.Add(info);
+            var newNode = treeView1.Nodes.Add("", info.AccountName, AccountImageKey);
+            newNode.SelectedImageKey = AccountImageKey;
+            newNode.Tag = new NodeInfo(info);
+            DisconnectAccount(newNode);
+            accountManager.Save();
         }
     }
 

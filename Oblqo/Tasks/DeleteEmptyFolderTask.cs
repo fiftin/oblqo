@@ -6,6 +6,8 @@ namespace Oblqo.Tasks
     {
         public DeleteEmptyFolderTask() { }
 
+        public override bool Visible => false;
+
         public DeleteEmptyFolderTask(Account account, string accountName, int priority, AsyncTask[] parents, AccountFile folder) 
             : base(account, accountName, priority, parents, folder)
         {

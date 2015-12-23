@@ -150,7 +150,7 @@ namespace Oblqo.Google
         {
             Debug.Assert(System.IO.File.Exists(pathName) &&
                          !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
-            using (var stream = new System.IO.FileStream(pathName, System.IO.FileMode.Open))
+            using (var stream = System.IO.File.OpenRead(pathName))
             {
                 return await UploadFileAsync(stream, System.IO.Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
             }

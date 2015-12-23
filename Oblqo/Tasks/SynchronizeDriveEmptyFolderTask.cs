@@ -21,10 +21,9 @@ namespace Oblqo.Tasks
 
         protected async override Task OnStartAsync()
         {
-            var token = CancellationTokenSource.Token;
             var tasks = (from drive in Account.Drives
                          where Folder.GetDriveFile(drive) == null
-                         select Folder.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token)
+                         select Folder.GetFileAndCreateIfFolderIsNotExistsAsync(drive, CancellationTokenSource.Token)
                          ).Cast<Task>().ToList();
             await Task.WhenAll(tasks);
         }

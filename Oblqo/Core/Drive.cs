@@ -43,9 +43,9 @@ namespace Oblqo
         {
             var xScale = 1f;
             var yScale = 1f;
-            if (image.Width > ImageMaxSize.Width)
+            if (ImageMaxSize.Width > 0 && image.Width > ImageMaxSize.Width)
                 xScale = ImageMaxSize.Width / (float)image.Width;
-            if (image.Height > ImageMaxSize.Height)
+            if (ImageMaxSize.Height > 0 && image.Height > ImageMaxSize.Height)
                 yScale = ImageMaxSize.Height / (float)image.Height;
             var scale = Math.Min(xScale, yScale);
             var ret = new Bitmap((int)(image.Width * scale), (int)(image.Height * scale));

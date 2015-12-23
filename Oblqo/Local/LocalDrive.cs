@@ -104,41 +104,39 @@ namespace Oblqo.Local
             return ((LocalFile)file).File.OpenRead();
         }
 
-        public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
+        public override async Task<DriveFile> UploadFileAsync(Stream stream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
-            ImageFormat imageType;
             Stream scaled;
-            Image image;
+            var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + fileName);
+            var localFile = LocalFileFactory.Instance.Create(this, f, false);
+            ImageFormat imageType;
             if (TryGetImageType(fileName, out imageType))
             {
-                image = Image.FromStream(stream);
-                scaled = await ScaleImageAsync(image, imageType, token);
+                using (var image = Image.FromStream(stream))
+                {
+                    scaled = await ScaleImageAsync(image, imageType, token);
+                    await localFile.SetAttributeAsync("OriginalImageHeight", image.Height.ToString(), token);
+                    await localFile.SetAttributeAsync("OriginalImageWidth", image.Width.ToString(), token);
+                }
             }
             else
             {
-                image = null;
                 scaled = stream;
             }
             var observed = new ObserverStream(scaled);
             observed.PositionChanged += (sender, e) => { };
-            var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + fileName);
             using (var outStream = f.Create())
             {
                 await scaled.CopyToAsync(outStream);
             }
-            var localFile = LocalFileFactory.Instance.Create(this, f, false);
-            //var originFile = new FileInfo(pathName);
-            await localFile.SetAttributeAsync("StorageFileId", storageFileId, token);
-            //await localFile.SetAttributeAsync(nameof(localFile.OriginalSize), originFile.Length.ToString(), token);
-            await localFile.SetAttributeAsync("OriginalImageHeight", image?.Height.ToString(), token);
-            await localFile.SetAttributeAsync("OriginalImageWidth", image?.Width.ToString(), token);
+            await localFile.SetStorageFileIdAsync(storageFileId, token);
             return localFile;
 
         }
 
         public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
         {
-            using (var stream = new FileStream(pathName, System.IO.FileMode.Open))
+            using (var stream = File.OpenRead(pathName))
             {
                 return await UploadFileAsync(stream, Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
             }

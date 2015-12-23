@@ -211,6 +211,30 @@ namespace Oblqo
             }
         }
 
+        private void AddFile(AccountFile file, string accountName)
+        {
+            var fileState = GetFileState(file);
+            var key = "file";
+            if (!string.IsNullOrWhiteSpace(file.MimeType))
+            {
+                var mimeTypeParts = file.MimeType.Split('/');
+                if (mimeTypeParts.Length == 2)
+                {
+                    var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
+                    if (smallImageList.Images.ContainsKey(tmpKey))
+                    {
+                        key = tmpKey;
+                    }
+                }
+            }
+
+            var item = fileListView.Items.Add("", file.Name, key);
+            UpdateFileListItem(fileState, item);
+            item.Tag = new NodeInfo(file, accountName);
+            item.SubItems.Add(file.ModifiedDate.ToShortDateString());
+            item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
+        }
+
         private void UpdateFileList()
         {
             lock (updateListCancellationTokenSourceLocker)
@@ -264,7 +288,6 @@ namespace Oblqo
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
                         var fileState = GetFileState(file);
-
                         if (!currentDirectoryInfoPanel.IsValid(file.Name))
                         {
                             continue;
@@ -277,28 +300,8 @@ namespace Oblqo
                         {
                             continue;
                         }
-
                         numberOfFiles++;
-
-                        var key = "file";
-                        if (!string.IsNullOrWhiteSpace(file.MimeType))
-                        {
-                            var mimeTypeParts = file.MimeType.Split('/');
-                            if (mimeTypeParts.Length == 2)
-                            {
-                                var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
-                                if (smallImageList.Images.ContainsKey(tmpKey))
-                                {
-                                    key = tmpKey;
-                                }
-                            }
-                        }
-
-                        var item = fileListView.Items.Add("", file.Name, key);
-                        UpdateFileListItem(fileState, item);
-                        item.Tag = new NodeInfo(file, info.AccountName);
-                        item.SubItems.Add(file.ModifiedDate.ToShortDateString());
-                        item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
+                        AddFile(file, info.AccountName);
                     }
                     currentDirectoryInfoPanel.NumberOfFiles = numberOfFiles;
                     currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = numberOfUnsyncFiles;
@@ -368,6 +371,53 @@ namespace Oblqo
                         UpdateFileList();
                 }));
             });
+        }
+
+        private IEnumerable<TreeNode> GetAllTreeViewNodes(TreeView treeView)
+        {
+            var ret = new List<TreeNode>();
+            foreach (TreeNode node in treeView.Nodes)
+            {
+                ret.Add(node);
+                ret.AddRange(GetAllTreeViewNodes(node));
+            }
+            return ret;
+        }
+
+        private IEnumerable<TreeNode> GetAllTreeViewNodes(TreeNode root)
+        {
+            var ret = new List<TreeNode>();
+            foreach (TreeNode node in root.Nodes)
+            {
+                ret.Add(node);
+                ret.AddRange(GetAllTreeViewNodes(node));
+            }
+            return ret;
+        }
+
+        private void UpdateTeeViewNode(AccountFileStates newFileState, TreeNode node)
+        {
+            if ((newFileState & AccountFileStates.Deleted) != 0)
+            {
+                node.Remove();
+                return;
+            }
+            if ((newFileState & AccountFileStates.New) != 0)
+            {
+                node.ForeColor = Color.Green;
+            }
+        }
+
+
+        private void AddNode(AccountFile file, TreeNode parentNode, string accountName)
+        {
+
+            var newNode = parentNode.Nodes.Add("", file.Name, FolderImageKey);
+
+            newNode.SelectedImageKey = FolderImageKey;
+            newNode.Tag = new NodeInfo(file, accountName);
+            if (file.HasChildren)
+                newNode.Nodes.Add("", "", "");
         }
 
         private async void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -564,17 +614,53 @@ namespace Oblqo
                     if (attrs.Length != 0)
                     {
                         var attr = (AccountFileStateChangeAttribute)attrs[0];
-                        var prop = e.Task.GetType().GetProperty(attr.FilePropertyName);
-                        var file = (AccountFile)prop.GetValue(e.Task);
+                        var fileProp = e.Task.GetType().GetProperty(attr.FilePropertyName);
+                        var file = (AccountFile)fileProp.GetValue(e.Task);
+                        var parentFileProp = attr.ParentFilePropertyName == null ? null : e.Task.GetType().GetProperty(attr.ParentFilePropertyName);
+                        var parentFile = parentFileProp == null ? null :(AccountFile)parentFileProp.GetValue(e.Task);
+
                         if (file.IsFile)
                         {
-                            foreach (ListViewItem x in fileListView.Items)
+                            if (attr.NewState == AccountFileStates.New)
                             {
-                                var info = (NodeInfo)x.Tag;
-                                if (info.File == file)
+                                AddFile(file, accounts.GetName(file.Account));
+                            }
+                            else
+                            {
+                                foreach (ListViewItem x in fileListView.Items)
                                 {
-                                    UpdateFileListItem(attr.NewState, x);
-                                    break;
+                                    var info = (NodeInfo)x.Tag;
+                                    if (info.File == file)
+                                    {
+                                        UpdateFileListItem(attr.NewState, x);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else // IsFolder
+                        {
+                            if (attr.NewState == AccountFileStates.New)
+                            {
+                                foreach (var x in GetAllTreeViewNodes(treeView1))
+                                {
+                                    var info = (NodeInfo)x.Tag;
+                                    if (info.File == parentFile)
+                                    {
+                                        AddNode(file, x, info.AccountName);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var x in GetAllTreeViewNodes(treeView1))
+                                {
+                                    var info = (NodeInfo)x.Tag;
+                                    if (info.File == file)
+                                    {
+                                        UpdateTeeViewNode(attr.NewState, x);
+                                    }
                                 }
                             }
                         }

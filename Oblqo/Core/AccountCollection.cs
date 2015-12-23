@@ -48,7 +48,7 @@ namespace Oblqo
             accounts.Add(name, account);
         }
 
-        private string GetName(Account account)
+        public string GetName(Account account)
         {
             return (from x in accounts where x.Value == account select x.Key).First();
         }

@@ -12,19 +12,26 @@ namespace Oblqo.Tasks
         // See the attribute guidelines at 
         //  http://go.microsoft.com/fwlink/?LinkId=85236
         readonly string filePropertyName;
+        readonly string parentFilePropertyName;
 
         readonly AccountFileStates newState;
 
         // This is a positional argument
-        public AccountFileStateChangeAttribute(AccountFileStates newState, string filePropertyName = "File")
+        public AccountFileStateChangeAttribute(AccountFileStates newState, string filePropertyName = "File", string parentFilePropertyName = null)
         {
             this.filePropertyName = filePropertyName;
             this.newState = newState;
+            this.parentFilePropertyName = parentFilePropertyName;
         }
 
         public string FilePropertyName
         {
             get { return filePropertyName; }
+        }
+
+        public string ParentFilePropertyName
+        {
+            get { return parentFilePropertyName; }
         }
 
         // This is a named argument

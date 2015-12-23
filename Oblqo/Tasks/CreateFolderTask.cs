@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace Oblqo.Tasks
 {
-    [AccountFileStateChange(AccountFileStates.New, "CreatedFolder")]
+    [AccountFileStateChange(AccountFileStates.New, "CreatedFolder", "DestFolder")]
     public class CreateFolderTask : AsyncTask
     {
         public string FolderName { get; set; }

@@ -30,7 +30,7 @@ namespace Oblqo.Tasks
             using (var stream = await bestFile.Drive.ReadFileAsync(bestFile, token))
             {
                 var folder = await File.Parent.GetFileAndCreateIfFolderIsNotExistsAsync(drive, token);
-                return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId != null, bestFile.StorageFileId, token);
+                return await drive.UploadFileAsync(stream, File.Name, folder, bestFile.StorageFileId, token);
             }
         }
 

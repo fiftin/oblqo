@@ -100,7 +100,7 @@ namespace Oblqo.Google
         }
 
         internal async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName,
-            GoogleFile destFolder, bool scaleRequired, IList<Property> props, CancellationToken token)
+            GoogleFile destFolder, IList<Property> props, CancellationToken token)
         {
             var service = await GetServiceAsync(token);
             var file = new File
@@ -113,7 +113,7 @@ namespace Oblqo.Google
                         }
             };
             ImageFormat imageType;
-            var scaled = scaleRequired && TryGetImageType(fileName, out imageType)
+            var scaled = TryGetImageType(fileName, out imageType)
                 ? await ScaleImageAsync(stream, imageType, token)
                 : stream;
             var observed = new ObserverStream(scaled);
@@ -127,7 +127,7 @@ namespace Oblqo.Google
         }
         
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
-            DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
+            DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             var props = new List<Property>
             {
@@ -142,19 +142,10 @@ namespace Oblqo.Google
             var storageFileIdParts = Common.SplitBy(storageFileId ?? "", storageFileIdPropertyValueLen);
             if (storageFileIdParts.Length > 9) throw new Exception("Storage file ID is too long");
             props.AddRange(storageFileIdParts.Select((t, i) => new Property { Key = string.Format(StorageFileIdFormat, Storage.Kind, i), Value = t, Visibility = "PRIVATE" }));
-            return await UploadFileAsync(stream, fileName, (GoogleFile)destFolder, scaleRequired, props, token);
+            return await UploadFileAsync(stream, fileName, (GoogleFile)destFolder, props, token);
         }
 
-        public override async Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder,
-            bool scaleRequired, string storageFileId, CancellationToken token)
-        {
-            Debug.Assert(System.IO.File.Exists(pathName) &&
-                         !System.IO.File.GetAttributes(pathName).HasFlag(System.IO.FileAttributes.Directory));
-            using (var stream = System.IO.File.OpenRead(pathName))
-            {
-                return await UploadFileAsync(stream, System.IO.Path.GetFileName(pathName), destFolder, scaleRequired, storageFileId, token);
-            }
-        }
+
 
         public override async Task<System.IO.Stream> ReadFileAsync(DriveFile file, CancellationToken token)
         {

@@ -82,13 +82,8 @@ namespace OblqoTest
         {
             return new MemoryStream(((MockDriveFile)file).content);
         }
-
-        public override Task<DriveFile> UploadFileAsync(string pathName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override async Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, bool scaleRequired, string storageFileId, CancellationToken token)
+        
+        public override async Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)
         {
             var file = new MockDriveFile(this, fileName, false);
             file.content = new byte[fileStream.Length];

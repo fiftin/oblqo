@@ -26,5 +26,6 @@ namespace Oblqo
         public abstract bool IsSupportFolders { get; }
         public abstract Task ClearAsync(CancellationToken token);
         public abstract Task<StorageFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token);
+        public abstract Task InitAsync(CancellationToken token);
     }
 }

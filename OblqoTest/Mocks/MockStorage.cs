@@ -89,5 +89,10 @@ namespace OblqoTest
             var f = (MockStorageFile)file;
             await stream.WriteAsync(f.content, 0, f.content.Length);
         }
+
+        public override Task InitAsync(CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

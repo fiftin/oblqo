@@ -132,6 +132,7 @@ namespace Oblqo
         {
             var token = new CancellationToken();
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
+            await storage.InitAsync(token);
             var account = new Account(storage);
             foreach (var d in info.Drives)
             {

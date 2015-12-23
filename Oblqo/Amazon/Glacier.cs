@@ -58,10 +58,6 @@ namespace Oblqo.Amazon
 
         public override StorageFile GetFile(DriveFileCollection driveFiles)
         {
-            foreach (var x in driveFiles)
-            {
-                
-            }
             return new GlacierFile(this, driveFiles.StorageFileId, driveFiles.IsFolder, driveFiles.Name);
         }
 
@@ -103,37 +99,6 @@ namespace Oblqo.Amazon
             {
                 return await UploadFileAsync(fileStream, fn, destFolder, token, progressCallback);
             }
-            /*
-            public override async Task<StorageFile> UploadFileAsync(string pathName, StorageFile destFolder,
-                CancellationToken token, Action<TransferProgress> progressCallback)
-            {
-                Debug.Assert(destFolder.IsFolder);
-                if (File.GetAttributes(pathName).HasFlag(FileAttributes.Directory))
-                    throw new NotSupportedException("Uploading directories now not implemented");
-                var fn = Path.GetFileName(pathName);
-                var path = ((GlacierFile) destFolder).FolderPath;
-                if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
-                    path += "/";
-                var filePathName = path + fn;
-                using (var fileStream = File.OpenRead(pathName))
-                {
-                    var fileLen = fileStream.Length;
-                    var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
-                    var observed = new ObserverStream(fileStream);
-                    var percent = 0;
-                    observed.PositionChanged += (sender, e) =>
-                    {
-                        var currentPercent = (int) (100 * ((Stream) sender).Position/(float) fileLen);
-                        if (currentPercent == percent) return;
-                        percent = currentPercent;
-                        progressCallback(new TransferProgress(percent));
-                    };
-                    var req = new UploadArchiveRequest(Vault, filePathName, checksum, observed);
-                    var result = await client.UploadArchiveAsync(req, token);
-
-                    return new GlacierFile(this, result.ArchiveId, false, fn);
-
-                }*/
         }
 
         public override async Task DownloadFileAsync(StorageFile file, Stream output, CancellationToken token, Action<TransferProgress> progressCallback)
@@ -222,6 +187,11 @@ namespace Oblqo.Amazon
                 ret.JobId = xml.Attribute("jobId").Value;
             }
             return ret;
+        }
+
+        public override async Task InitAsync(CancellationToken token)
+        {
+            await CreateVaultAsync(token);
         }
 
         public override string Kind

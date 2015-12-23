@@ -42,7 +42,12 @@ namespace Oblqo
                 var serializer = new XmlSerializer(typeof(AccountInfo));
                 serializer.Serialize(new StreamWriter(stream), this);
                 stream.Seek(0, SeekOrigin.Begin);
-                return (AccountInfo)serializer.Deserialize(stream);
+                var ret = (AccountInfo)serializer.Deserialize(stream);
+                foreach (var drive in ret.Drives)
+                {
+                    drive.DriveId = Guid.NewGuid().ToString();
+                }
+                return ret;
             }
         }
     }

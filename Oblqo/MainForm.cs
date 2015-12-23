@@ -209,6 +209,7 @@ namespace Oblqo
             {
                 fileItem.Font = Font;
             }
+
         }
 
         private void AddFile(AccountFile file, string accountName)
@@ -633,6 +634,11 @@ namespace Oblqo
                                     if (info.File == file)
                                     {
                                         UpdateFileListItem(attr.NewState, x);
+
+                                        if (driveStrip1.File == file)
+                                        {
+                                            driveStrip1.RefreshData();
+                                        }
                                         break;
                                     }
                                 }

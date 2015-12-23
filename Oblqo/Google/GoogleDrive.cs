@@ -118,14 +118,16 @@ namespace Oblqo.Google
                 : stream;
             var observed = new ObserverStream(scaled);
             observed.PositionChanged += (sender, e) => { };
-            var request = await service.Files.Insert(file, observed, "").UploadAsync(token);
-            if (request.Status == UploadStatus.Failed)
+            var request = service.Files.Insert(file, observed, "");
+            var result = await request.UploadAsync(token);
+            if (result.Status == UploadStatus.Failed)
             {
-                throw new Exception(request.Exception.Message);
+                throw new Exception(result.Exception.Message);
             }
-            return new GoogleFile(this, file);
+            return new GoogleFile(this, request.ResponseBody);
         }
         
+
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
             DriveFile destFolder, string storageFileId, CancellationToken token)
         {

@@ -39,8 +39,9 @@ namespace Oblqo.Tasks
             var tasks = (from drive in Account.Drives
                          where File.GetDriveFile(drive) == null
                          select UploadFileAsync(drive)
-                         ).Cast<Task>().ToList();
-            await Task.WhenAll(tasks);
+                         ).ToList();
+            var files = await Task.WhenAll(tasks);
+            File.DriveFiles.AddRange(files);
         }
         
         private DriveFile GetBestFile()

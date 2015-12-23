@@ -45,6 +45,11 @@ namespace Oblqo.Controls
             }
         }
 
+        public void RefreshData()
+        {
+            OnFileChanged();
+        }
+
         protected virtual void OnFileChanged()
         {
             // Adds tabs for new drives

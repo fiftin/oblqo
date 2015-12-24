@@ -33,6 +33,7 @@
             // 
             // driveAccountControl1
             // 
+            this.driveAccountControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.driveAccountControl1.DriveImageResolution = new System.Drawing.Size(1600, 1200);
             this.driveAccountControl1.DriveRootPath = "";
             this.driveAccountControl1.DriveType = Oblqo.DriveType.GoogleDrive;

@@ -89,16 +89,19 @@ namespace Oblqo
         public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type, CancellationToken token)
 #pragma warning restore 1998
         {
-            var newImage = ScaleImage(image);
             var output = new MemoryStream();
-            newImage.Save(output, type);
+            await Task.Run(() =>
+            {
+                var newImage = ScaleImage(image);
+                newImage.Save(output, type);
+            });
             output.Position = 0;
             return output;
         }
 
         public async Task<Stream> ScaleImageAsync(Stream input, ImageFormat type, CancellationToken token)
         {
-            var image = Image.FromStream(input);
+            var image = await Task.Run(() => Image.FromStream(input));
             return await ScaleImageAsync(image, type, token);
         }
 
@@ -106,7 +109,7 @@ namespace Oblqo
         {
             using (var stream = await ReadFileAsync(file, token))
             {
-                return Image.FromStream(stream);
+                return await Task.Run(() => Image.FromStream(stream));
             }
         }
         

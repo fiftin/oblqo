@@ -60,7 +60,6 @@ namespace Oblqo.Google
             var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
             var currentPath = "";
-            //GoogleFile parentFolder = null;
             foreach (var f in folders)
             {
                 currentPath += "/" + f;
@@ -71,12 +70,10 @@ namespace Oblqo.Google
                     var newFolder =
                         (GoogleFile) await CreateFolderAsync(f, new GoogleFile(this, file), token);
                     file = newFolder.File;
-                    //parentFolder = newFolder;
                 }
                 else
                 {
                     file = existsingFile;
-                    //parentFolder = new GoogleFile(this, existsingFile);
                 }
             }
             return new GoogleFile(this, file);

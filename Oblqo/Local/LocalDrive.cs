@@ -15,19 +15,12 @@ namespace Oblqo.Local
     {
 		private DriveFile rootFolder;
 
-        public LocalDrive(Account account, string id, string rootPath)
-            : base(account, id)
+        public LocalDrive(Account account, string id, string rootPath) : base(account, id)
         {
-			rootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
+            rootFolder = LocalFileFactory.Instance.Create(this, new DirectoryInfo(rootPath), true);
         }
 
-		public override DriveFile RootFolder 
-		{ 
-			get 
-			{ 
-				return rootFolder;
-			}
-		}
+        public override DriveFile RootFolder => rootFolder;
 
         public override string ShortName => "Local";
 
@@ -42,12 +35,12 @@ namespace Oblqo.Local
 
         public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
         {
-            ((LocalFile)driveFile).File.Delete();
+            await Task.Run(() => ((LocalFile)driveFile).File.Delete());
         }
 
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
-            ((LocalFile)driveFolder).Directory.Delete();
+            await Task.Run(() => ((LocalFile)driveFolder).Directory.Delete());
         }
 
         public override async Task DownloadFileAsync(DriveFile driveFile, Stream output, CancellationToken token)
@@ -69,10 +62,13 @@ namespace Oblqo.Local
 
         public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
         {
-            foreach (var file in ((LocalFile)driveFolder).Directory.EnumerateFiles())
+            await Task.Run(() =>
             {
-                action(LocalFileFactory.Instance.Create(this, file, false));
-            }
+                foreach (var file in ((LocalFile)driveFolder).Directory.EnumerateFiles())
+                {
+                    action(LocalFileFactory.Instance.Create(this, file, false));
+                }
+            });
         }
 
         public override async Task<DriveFile> GetFileAsync(XElement xml, CancellationToken token)
@@ -82,21 +78,31 @@ namespace Oblqo.Local
 
         public override async Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
         {
-            return ((LocalFile) folder).Directory.EnumerateFiles()
+            return await Task.Run(() => ((LocalFile)folder).Directory.EnumerateFiles()
                 .Select(file => LocalFileFactory.Instance.Create(this, file, false))
-                .Cast<DriveFile>().ToList();
+                .Cast<DriveFile>().ToList());
         }
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            return ((LocalFile) folder).Directory.EnumerateDirectories()
+            return await Task.Run(() => ((LocalFile) folder).Directory.EnumerateDirectories()
                 .Select(file => LocalFileFactory.Instance.Create(this, file, false))
-                .Cast<DriveFile>().ToList();
+                .Cast<DriveFile>().ToList());
         }
 
         public override async Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
         {
-            return !((LocalFile)file).IsImage ? null : Image.FromStream(((LocalFile)file).File.OpenRead());
+            if (!((LocalFile)file).IsImage)
+            {
+                return null;
+            }
+            return await Task.Run(() =>
+            {
+                using (var stream = ((LocalFile)file).File.OpenRead())
+                {
+                    return Image.FromStream(stream);
+                }
+            });
         }
 
         public override async Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)

@@ -191,5 +191,35 @@ namespace Oblqo
         {
 
         }
+
+        /// <summary>
+        /// How to add user for Amazon Glacier
+        /// </summary>
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/fiftin/oblqo/wiki/How-to-add-user-for-Amazon-Glacier");
+        }
+
+        /// <summary>
+        /// Amazon Glacier link
+        /// </summary>
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://aws.amazon.com/glacier");
+
+        }
+
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://docs.aws.amazon.com/general/latest/gr/rande.html");
+        }
+
+        /// <summary>
+        /// Read how to fill Access Key ID / Secret Key
+        /// </summary>
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/fiftin/oblqo/wiki/How-configure-connection-with-using-Credentials-file");
+        }
     }
 }

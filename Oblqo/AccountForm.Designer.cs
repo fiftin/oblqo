@@ -40,10 +40,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.storageTabControl = new System.Windows.Forms.TabControl();
             this.glacierTabPage = new System.Windows.Forms.TabPage();
-            this.label11 = new System.Windows.Forms.Label();
+            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label10 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.regionComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.glacierVaultTextBox = new System.Windows.Forms.TextBox();
@@ -54,6 +54,8 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label9 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
             this.driveTabControl = new Oblqo.DraggableTabControl();
             this.addDriveTabPage = new System.Windows.Forms.TabPage();
@@ -71,7 +73,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(732, 404);
+            this.cancelButton.Location = new System.Drawing.Point(732, 420);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(87, 31);
             this.cancelButton.TabIndex = 10;
@@ -82,7 +84,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(639, 404);
+            this.okButton.Location = new System.Drawing.Point(639, 420);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(87, 31);
             this.okButton.TabIndex = 9;
@@ -113,7 +115,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storageAccessKeyIdTextBox.Location = new System.Drawing.Point(13, 36);
             this.storageAccessKeyIdTextBox.Name = "storageAccessKeyIdTextBox";
-            this.storageAccessKeyIdTextBox.Size = new System.Drawing.Size(362, 20);
+            this.storageAccessKeyIdTextBox.Size = new System.Drawing.Size(361, 20);
             this.storageAccessKeyIdTextBox.TabIndex = 1;
             // 
             // label2
@@ -131,7 +133,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.secretAccessKeyTextBox.Location = new System.Drawing.Point(13, 104);
             this.secretAccessKeyTextBox.Name = "secretAccessKeyTextBox";
-            this.secretAccessKeyTextBox.Size = new System.Drawing.Size(359, 20);
+            this.secretAccessKeyTextBox.Size = new System.Drawing.Size(361, 20);
             this.secretAccessKeyTextBox.TabIndex = 2;
             // 
             // label3
@@ -139,9 +141,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(10, 87);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 14);
+            this.label3.Size = new System.Drawing.Size(133, 14);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Secret Acc. Key:";
+            this.label3.Text = "Secret Access Key:";
             // 
             // storageTabControl
             // 
@@ -150,15 +152,15 @@
             this.storageTabControl.Location = new System.Drawing.Point(0, 43);
             this.storageTabControl.Name = "storageTabControl";
             this.storageTabControl.SelectedIndex = 0;
-            this.storageTabControl.Size = new System.Drawing.Size(396, 299);
+            this.storageTabControl.Size = new System.Drawing.Size(395, 315);
             this.storageTabControl.TabIndex = 11;
             // 
             // glacierTabPage
             // 
-            this.glacierTabPage.Controls.Add(this.label11);
+            this.glacierTabPage.Controls.Add(this.linkLabel5);
+            this.glacierTabPage.Controls.Add(this.linkLabel3);
+            this.glacierTabPage.Controls.Add(this.linkLabel2);
             this.glacierTabPage.Controls.Add(this.label10);
-            this.glacierTabPage.Controls.Add(this.label7);
-            this.glacierTabPage.Controls.Add(this.label6);
             this.glacierTabPage.Controls.Add(this.label2);
             this.glacierTabPage.Controls.Add(this.regionComboBox);
             this.glacierTabPage.Controls.Add(this.label3);
@@ -170,50 +172,54 @@
             this.glacierTabPage.Location = new System.Drawing.Point(4, 23);
             this.glacierTabPage.Name = "glacierTabPage";
             this.glacierTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.glacierTabPage.Size = new System.Drawing.Size(388, 272);
+            this.glacierTabPage.Size = new System.Drawing.Size(387, 288);
             this.glacierTabPage.TabIndex = 0;
             this.glacierTabPage.Text = "Amazon Glacier";
             this.glacierTabPage.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // linkLabel5
             // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.Color.DimGray;
-            this.label11.Location = new System.Drawing.Point(85, 236);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(105, 14);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "Access Key ID:";
+            this.linkLabel5.AutoSize = true;
+            this.linkLabel5.Location = new System.Drawing.Point(85, 261);
+            this.linkLabel5.Name = "linkLabel5";
+            this.linkLabel5.Size = new System.Drawing.Size(231, 14);
+            this.linkLabel5.TabIndex = 26;
+            this.linkLabel5.TabStop = true;
+            this.linkLabel5.Text = "Read documentation about regions";
+            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Location = new System.Drawing.Point(10, 127);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(245, 14);
+            this.linkLabel3.TabIndex = 25;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "Read how to fill Secret Access Key";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(10, 59);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(217, 14);
+            this.linkLabel2.TabIndex = 24;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Read how to fill Access Key ID";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.ForeColor = System.Drawing.Color.DimGray;
-            this.label10.Location = new System.Drawing.Point(85, 178);
+            this.label10.Location = new System.Drawing.Point(13, 193);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(105, 14);
+            this.label10.Size = new System.Drawing.Size(361, 31);
             this.label10.TabIndex = 13;
-            this.label10.Text = "Access Key ID:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.Color.DimGray;
-            this.label7.Location = new System.Drawing.Point(13, 127);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(105, 14);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Access Key ID:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.DimGray;
-            this.label6.Location = new System.Drawing.Point(13, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(105, 14);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Access Key ID:";
+            this.label10.Text = "Name of your Glacier vault. The vault will be created if it does not exist";
             // 
             // regionComboBox
             // 
@@ -221,15 +227,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.regionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.regionComboBox.FormattingEnabled = true;
-            this.regionComboBox.Location = new System.Drawing.Point(88, 211);
+            this.regionComboBox.Location = new System.Drawing.Point(88, 236);
             this.regionComboBox.Name = "regionComboBox";
-            this.regionComboBox.Size = new System.Drawing.Size(284, 22);
+            this.regionComboBox.Size = new System.Drawing.Size(283, 22);
             this.regionComboBox.TabIndex = 4;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 214);
+            this.label5.Location = new System.Drawing.Point(10, 239);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 14);
             this.label5.TabIndex = 10;
@@ -239,15 +245,15 @@
             // 
             this.glacierVaultTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.glacierVaultTextBox.Location = new System.Drawing.Point(88, 155);
+            this.glacierVaultTextBox.Location = new System.Drawing.Point(13, 171);
             this.glacierVaultTextBox.Name = "glacierVaultTextBox";
-            this.glacierVaultTextBox.Size = new System.Drawing.Size(284, 20);
+            this.glacierVaultTextBox.Size = new System.Drawing.Size(361, 20);
             this.glacierVaultTextBox.TabIndex = 3;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 159);
+            this.label4.Location = new System.Drawing.Point(10, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(49, 14);
             this.label4.TabIndex = 8;
@@ -279,10 +285,10 @@
             this.label9.ForeColor = System.Drawing.Color.DimGray;
             this.label9.Location = new System.Drawing.Point(0, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(403, 43);
+            this.label9.Size = new System.Drawing.Size(404, 43);
             this.label9.TabIndex = 21;
-            this.label9.Text = "Your files storages. Storage can be folder in your computer drive or Google Drive" +
-    ".";
+            this.label9.Text = "Your files storages. Storage can be folder on your computer or folder on Google D" +
+    "rive.";
             // 
             // splitContainer1
             // 
@@ -294,6 +300,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.linkLabel4);
+            this.splitContainer1.Panel1.Controls.Add(this.linkLabel1);
             this.splitContainer1.Panel1.Controls.Add(this.storageTabControl);
             this.splitContainer1.Panel1.Controls.Add(this.label8);
             // 
@@ -301,10 +309,32 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.driveTabControl);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
-            this.splitContainer1.Size = new System.Drawing.Size(807, 342);
-            this.splitContainer1.SplitterDistance = 396;
+            this.splitContainer1.Size = new System.Drawing.Size(807, 358);
+            this.splitContainer1.SplitterDistance = 395;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 22;
+            // 
+            // linkLabel4
+            // 
+            this.linkLabel4.AutoSize = true;
+            this.linkLabel4.Location = new System.Drawing.Point(34, 0);
+            this.linkLabel4.Name = "linkLabel4";
+            this.linkLabel4.Size = new System.Drawing.Size(105, 14);
+            this.linkLabel4.TabIndex = 24;
+            this.linkLabel4.TabStop = true;
+            this.linkLabel4.Text = "Amazon Glacier";
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(122, 47);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(245, 14);
+            this.linkLabel1.TabIndex = 23;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "How to add user for Amazon Glacier";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label8
             // 
@@ -312,10 +342,10 @@
             this.label8.ForeColor = System.Drawing.Color.DimGray;
             this.label8.Location = new System.Drawing.Point(0, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(396, 43);
+            this.label8.Size = new System.Drawing.Size(395, 43);
             this.label8.TabIndex = 21;
-            this.label8.Text = "Your backup account. Here files stores for long time. You should have amazon acco" +
-    "unt and configured privacy.";
+            this.label8.Text = "Your Amazon Glacier account settings. You should have amazon account and configur" +
+    "ed user.";
             // 
             // driveTabControl
             // 
@@ -326,7 +356,7 @@
             this.driveTabControl.Location = new System.Drawing.Point(0, 43);
             this.driveTabControl.Name = "driveTabControl";
             this.driveTabControl.SelectedIndex = 0;
-            this.driveTabControl.Size = new System.Drawing.Size(403, 299);
+            this.driveTabControl.Size = new System.Drawing.Size(404, 315);
             this.driveTabControl.TabIndex = 19;
             this.driveTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.driveTabControl_Selecting);
             this.driveTabControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.driveTabControl_MouseClick);
@@ -338,7 +368,7 @@
             this.addDriveTabPage.Location = new System.Drawing.Point(4, 23);
             this.addDriveTabPage.Name = "addDriveTabPage";
             this.addDriveTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.addDriveTabPage.Size = new System.Drawing.Size(395, 272);
+            this.addDriveTabPage.Size = new System.Drawing.Size(396, 288);
             this.addDriveTabPage.TabIndex = 0;
             this.addDriveTabPage.Text = "Add";
             this.addDriveTabPage.UseVisualStyleBackColor = true;
@@ -349,7 +379,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(831, 447);
+            this.ClientSize = new System.Drawing.Size(831, 463);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.accountNameTextBox);
             this.Controls.Add(this.label1);
@@ -370,6 +400,7 @@
             this.glacierTabPage.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -401,13 +432,15 @@
         private System.Windows.Forms.TabPage addDriveTabPage;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem deleteAccountToolStripMenuItem;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabel4;
+        private System.Windows.Forms.LinkLabel linkLabel5;
     }
 
 }

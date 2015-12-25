@@ -55,7 +55,7 @@
             // 
             this.driveRootPathBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.driveRootPathBrowseButton.Enabled = false;
-            this.driveRootPathBrowseButton.Location = new System.Drawing.Point(356, 121);
+            this.driveRootPathBrowseButton.Location = new System.Drawing.Point(356, 153);
             this.driveRootPathBrowseButton.Name = "driveRootPathBrowseButton";
             this.driveRootPathBrowseButton.Size = new System.Drawing.Size(101, 31);
             this.driveRootPathBrowseButton.TabIndex = 21;
@@ -89,7 +89,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 82);
+            this.label6.Location = new System.Drawing.Point(3, 81);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(58, 13);
             this.label6.TabIndex = 22;
@@ -108,15 +108,14 @@
             // 
             this.driveRootPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.driveRootPathTextBox.Location = new System.Drawing.Point(127, 79);
+            this.driveRootPathTextBox.Location = new System.Drawing.Point(6, 97);
             this.driveRootPathTextBox.Name = "driveRootPathTextBox";
-            this.driveRootPathTextBox.Size = new System.Drawing.Size(330, 20);
+            this.driveRootPathTextBox.Size = new System.Drawing.Size(451, 20);
             this.driveRootPathTextBox.TabIndex = 20;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.driveRootPathTextBox);
@@ -125,21 +124,24 @@
             this.panel1.Controls.Add(this.driveKindComboBox);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.imageResolutionComboBox);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(464, 171);
+            this.panel1.Size = new System.Drawing.Size(464, 218);
             this.panel1.TabIndex = 25;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.ForeColor = System.Drawing.Color.Gray;
-            this.label2.Location = new System.Drawing.Point(124, 102);
+            this.label2.Location = new System.Drawing.Point(3, 120);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 13);
+            this.label2.Size = new System.Drawing.Size(454, 30);
             this.label2.TabIndex = 26;
-            this.label2.Text = "Path to folder with files";
+            this.label2.Text = "Path to folder with files, for example d:\\photos. For Google Drive it can be phot" +
+    "os/trevel.";
             // 
             // label1
             // 
@@ -157,7 +159,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Name = "DriveAccountControl";
-            this.Size = new System.Drawing.Size(464, 171);
+            this.Size = new System.Drawing.Size(464, 218);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

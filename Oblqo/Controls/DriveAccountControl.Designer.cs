@@ -37,8 +37,8 @@
             this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,6 +131,17 @@
             this.panel1.Size = new System.Drawing.Size(464, 218);
             this.panel1.TabIndex = 25;
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.ForeColor = System.Drawing.Color.Gray;
+            this.label1.Location = new System.Drawing.Point(124, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(333, 36);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "If photo\'s size more than this, the picture automatically scaled";
+            // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -142,16 +153,6 @@
             this.label2.TabIndex = 26;
             this.label2.Text = "Path to folder with files, for example d:\\photos. For Google Drive it can be phot" +
     "os/trevel.";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(124, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 13);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "Max image dimensions to scale";
             // 
             // DriveAccountControl
             // 

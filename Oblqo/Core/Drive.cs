@@ -41,6 +41,10 @@ namespace Oblqo
 
         public Image ScaleImage(Image image)
         {
+            if (ImageMaxSize.IsEmpty) // scale is Origin and scaling not required
+            {
+                return image;
+            }
             var xScale = 1f;
             var yScale = 1f;
             if (ImageMaxSize.Width > 0 && image.Width > ImageMaxSize.Width)
@@ -48,6 +52,10 @@ namespace Oblqo
             if (ImageMaxSize.Height > 0 && image.Height > ImageMaxSize.Height)
                 yScale = ImageMaxSize.Height / (float)image.Height;
             var scale = Math.Min(xScale, yScale);
+            if (scale == 1) // scaling not required
+            {
+                return image;
+            }
             var ret = new Bitmap((int)(image.Width * scale), (int)(image.Height * scale));
             using (var g = Graphics.FromImage(ret))
             {

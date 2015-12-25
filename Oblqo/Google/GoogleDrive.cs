@@ -57,7 +57,7 @@ namespace Oblqo.Google
         /// </summary>
         public async Task<GoogleFile> GetFolderByPathAsync(string path, CancellationToken token, bool createIfNotExists = false)
         {
-            var folders = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+            var folders = path.Replace('\\', '/').Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             var file = new File {Id = RootId, MimeType = GoogleMimeTypes.Folder};
             var currentPath = "";
             foreach (var f in folders)

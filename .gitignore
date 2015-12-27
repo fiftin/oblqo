@@ -11,5 +11,7 @@ Oblqo/bin/
 Oblqo/obj/
 OblqoTest/bin/
 OblqoTest/obj/
+OblqoSetup/bin/
+OblqoSetup/obj/
 *.suo
 *~

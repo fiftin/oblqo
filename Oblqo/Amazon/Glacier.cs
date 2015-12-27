@@ -64,13 +64,12 @@ namespace Oblqo.Amazon
         public override async Task<StorageFile> UploadFileAsync(Stream fileStream, string fn, StorageFile destFolder,
             CancellationToken token, Action<TransferProgress> progressCallback)
         {
-            Debug.Assert(destFolder.IsFolder);
             var path = ((GlacierFile)destFolder).FolderPath;
             if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
                 path += "/";
             var filePathName = path + fn;
             var fileLen = fileStream.CanSeek ? fileStream.Length : 0;
-            var checksum = TreeHashGenerator.CalculateTreeHash(fileStream);
+            var checksum = await Task.Run(() => TreeHashGenerator.CalculateTreeHash(fileStream));
             var observed = new ObserverStream(fileStream);
             var percent = 0;
             observed.PositionChanged += (sender, e) =>

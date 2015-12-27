@@ -421,11 +421,12 @@ namespace Oblqo
                 newNode.Nodes.Add("", "", "");
         }
 
-        private async void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var accountForm = new AccountForm(true))
             {
                 if (accountForm.ShowDialog() != DialogResult.OK) return;
+                btnNewConnection.Visible = false;
                 var info = new AccountInfo
                 {
                     AccountName = accountForm.AccountName,
@@ -441,7 +442,7 @@ namespace Oblqo
                 node.SelectedImageKey = AccountImageKey;
                 node.Tag = new NodeInfo(info);
                 accountManager.Save();
-                await ConnectAccountAsync(info.AccountName, node);
+                DisconnectAccount(node);
             }
         }
 

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="OblqoSetup" Language="1033" Version="1.0.0.0" Manufacturer="Denis" UpgradeCode="2dd0b955-8b4d-4a73-a9bc-eeb4593690f0">
+	<Product Id="*" Name="Oblqo" Language="1033" Version="1.0.0.0" Manufacturer="Denis" UpgradeCode="2dd0b955-8b4d-4a73-a9bc-eeb4593690f0">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of Oblqo is already installed." />
 		<MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="OblqoSetup" Level="1">
+		<Feature Id="ProductFeature" Title="Oblqo" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
-
+    
+    <UIRef Id="WixUI_MinimalNoUla" />
+    
 	</Product>
 
 	<Fragment>

@@ -23,6 +23,7 @@ namespace Oblqo
             Controls.Add(driveAccountControl1);
             this.PerformLayout();
             Text = Common.CamelcaseToHumanReadable(driveAccountControl1.DriveType.ToString());
+            DriveId = string.IsNullOrEmpty(drive.DriveId) ? Guid.NewGuid().ToString() : drive.DriveId;
         }
 
         public DriveAccountTabPage()
@@ -31,6 +32,7 @@ namespace Oblqo
             Controls.Add(driveAccountControl1);
             this.PerformLayout();
             Text = Common.CamelcaseToHumanReadable(driveAccountControl1.DriveType.ToString());
+            DriveId = Guid.NewGuid().ToString();
         }
 
         public DriveAccountControl DriveControl => driveAccountControl1;
@@ -51,6 +53,6 @@ namespace Oblqo
             Text = Common.CamelcaseToHumanReadable(driveAccountControl1.DriveType.ToString());
         }
 
-        public string DriveId { get; set; }
+        public string DriveId { get; }
     }
 }

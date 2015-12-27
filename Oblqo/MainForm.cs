@@ -1521,6 +1521,18 @@ namespace Oblqo
         {
             System.Diagnostics.Process.Start("https://github.com/fiftin/oblqo/wiki");
         }
+
+        private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                var account = accounts[info.AccountName];
+                if (account == null)
+                    continue;
+                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File, true) { Tag = item });
+            }
+        }
     }
 
 }

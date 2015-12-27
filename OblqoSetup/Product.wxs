@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="OblqoSetup" Language="1033" Version="1.0.0.0" Manufacturer="Denis" UpgradeCode="2dd0b955-8b4d-4a73-a9bc-eeb4593690f0">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of Oblqo is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="OblqoSetup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="Oblqo" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent">
+        <File Source="$(var.Oblqo.TargetPath)" />
+			</Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Zlib.Portable.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\UnidecodeSharpFork.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Primitives.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Extensions.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Newtonsoft.Json.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.Desktop.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\log4net.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.GData.Client.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.PlatformServices.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Drive.v2.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Core.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.PlatformServices.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\BouncyCastle.Crypto.dll" /></Component>
+      <Component><File Source="$(var.Oblqo.TargetDir)\AWSSDK.dll" /></Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

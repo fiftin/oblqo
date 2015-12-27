@@ -78,7 +78,8 @@ namespace Oblqo
 
         public DriveFile GetDriveFile(Drive drive)
         {
-            return DriveFiles.FirstOrDefault(file => file.Drive == drive);
+            return GetDriveFile(drive.Id);
+            // return DriveFiles.FirstOrDefault(file => file.Drive == drive);
         }
 
         public DriveFile GetDriveFile(string driveId)

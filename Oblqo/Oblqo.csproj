@@ -333,7 +333,9 @@
     <None Include="Resources\no_image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="oblqo-o.ico" />
+    <Content Include="oblqo-o.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\oblqo.png" />
   </ItemGroup>
   <ItemGroup />

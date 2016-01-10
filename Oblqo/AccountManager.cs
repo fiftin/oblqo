@@ -130,8 +130,17 @@ namespace Oblqo
 
         public async Task ClearAuthAsync(AccountInfo info)
         {
-            var dataStore = new IsolatedDataStore("accounts/" + info.AccountName + "/google_credential");
-            await dataStore.ClearAsync();
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                await Task.Run(() =>
+                {
+                    var dirs = store.GetDirectoryNames("accounts/" + info.AccountName + "/drive-credentials/*");
+                    foreach (var dir in dirs)
+                    {
+                        DeleteAllFilesInDirectory(store, "accounts/" + info.AccountName + "/drive-credentials/" + dir);
+                    }
+                });
+            }
         }
 
         public async Task<Account> CreateAccountAsync(AccountInfo info)
@@ -140,7 +149,7 @@ namespace Oblqo
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             await storage.InitAsync(token);
             var account = new Account(storage);
-            var accountCredPath = "accounts/" + info.AccountName + "/google_credential";
+            var accountCredPath = "accounts/" + info.AccountName + "/drive-credentials/";
             foreach (var d in info.Drives)
             {
                 switch (d.DriveType)
@@ -152,7 +161,7 @@ namespace Oblqo
                                 GoogleDrive.CreateInstance(account, d.DriveId,
                                     GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
                                     d.DriveRootPath,
-                                    accountCredPath,
+                                    accountCredPath + d.DriveId,
                                     token);
 
                         drive.ImageMaxSize = d.DriveImageMaxSize;

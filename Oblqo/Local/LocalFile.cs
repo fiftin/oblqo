@@ -162,5 +162,13 @@ namespace Oblqo.Local
                 await stream.WriteAsync(bytes, 0, bytes.Length, token);
             }
         }
+
+        public string FullName
+        {
+            get
+            {
+                return file.FullName;
+            }
+        }
     }
 }

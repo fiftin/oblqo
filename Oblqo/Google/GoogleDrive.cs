@@ -110,9 +110,17 @@ namespace Oblqo.Google
                         }
             };
             ImageFormat imageType;
-            var scaled = TryGetImageType(fileName, out imageType)
-                ? await ScaleImageAsync(stream, imageType, token)
-                : stream;
+            System.IO.Stream scaled;
+
+            if (!ImageMaxSize.IsEmpty && TryGetImageType(fileName, out imageType))
+            {
+                var image = await Task.Run(() => Image.FromStream(stream));
+                scaled = await ScaleImageAsync(image, imageType, token);
+            } else
+            {
+                scaled = stream;
+            }
+
             var observed = new ObserverStream(scaled);
             observed.PositionChanged += (sender, e) => { };
             var request = service.Files.Insert(file, observed, "");
@@ -121,6 +129,7 @@ namespace Oblqo.Google
             {
                 throw new Exception(result.Exception.Message);
             }
+            Console.WriteLine("UPLOADED: " + fileName);
             return new GoogleFile(this, request.ResponseBody);
         }
         

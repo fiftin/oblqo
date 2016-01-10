@@ -72,21 +72,21 @@ namespace Oblqo
         /// <summary>
         /// Scale image to required size.
         /// </summary>
-        public async Task ScaleImageAsync(CancellationToken token)
-		{
-			ImageFormat type;
-			if (!Drive.TryGetImageType (Name, out type)) {
-				return;
-			}
-            using (var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token))
-            {
-                using (var memStream = new MemoryStream())
-                {
-                    await stream.CopyToAsync(memStream);
-                    await WriteAsync(memStream.ToArray(), token);
-                }
-            }
-        }
+  //      public async Task ScaleImageAsync(CancellationToken token)
+		//{
+		//	ImageFormat type;
+		//	if (!Drive.TryGetImageType (Name, out type)) {
+		//		return;
+		//	}
+  //          using (var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token))
+  //          {
+  //              using (var memStream = new MemoryStream())
+  //              {
+  //                  await stream.CopyToAsync(memStream);
+  //                  await WriteAsync(memStream.ToArray(), token);
+  //              }
+  //          }
+  //      }
 
         /// <summary>
         /// Generate unique ID for new source.

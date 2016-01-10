@@ -26,15 +26,54 @@ namespace Oblqo
 
         class FileListSorder : IComparer
         {
+            private int order = 1;
 
-            public FileListSorder(ListView listView)
+            public const int ASC_ORDER = 1;
+            public const int DESC_ORDER = -1;
+            private ColumnHeader column;
+
+            public FileListSorder(ColumnHeader column, int order = ASC_ORDER)
             {
+                this.column = column;
+                this.order = order;
             }
-
+            
             public int Compare(object x, object y)
             {
-                // TODO: Implement
-                return -1;
+                ListViewItem item1 = (ListViewItem)x;
+                ListViewItem item2 = (ListViewItem)y;
+                NodeInfo info1 = (NodeInfo)item1.Tag;
+                NodeInfo info2 = (NodeInfo)item2.Tag;
+                int ret = 0;
+                if (info1 != null && info2 != null)
+                {
+                    switch (column.Text)
+                    {
+                        case "Name":
+                            ret = info1.File.Name.CompareTo(info2.File.Name);
+                            break;
+                        case "Date":
+                            ret = info1.File.ModifiedDate.CompareTo(info2.File.ModifiedDate);
+                            break;
+                        case "Size":
+                            ret = info1.File.Size.CompareTo(info2.File.Size);
+                            break;
+                    }
+                }
+                return ret * order;
+            }
+
+            public void ToggleOrder(ColumnHeader newColumn)
+            {
+                if (column == newColumn)
+                {
+                    order = -order;
+                }
+                else
+                {
+                    order = ASC_ORDER;
+                    column = newColumn;
+                }
             }
         }
 
@@ -50,7 +89,6 @@ namespace Oblqo
         private int indicateErrorNo;
 
         private readonly Font UnsyncronizedFileItemFont;
-
 
         public MainForm()
         {
@@ -73,6 +111,7 @@ namespace Oblqo
             splitContainer2.SplitterWidth = 7;
             UnsyncronizedFileItemFont = new Font(Font, FontStyle.Strikeout);
             btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
+            fileListView.ListViewItemSorter = new FileListSorder(fileNameColumnHeader);
         }
 
         private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
@@ -1328,7 +1367,9 @@ namespace Oblqo
 
         private void fileListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            fileListView.ListViewItemSorter = new FileListSorder(fileListView);
+            FileListSorder sorter = (FileListSorder)fileListView.ListViewItemSorter;
+            sorter.ToggleOrder(fileListView.Columns[e.Column]);
+            fileListView.Sort();
         }
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
@@ -1532,7 +1573,9 @@ namespace Oblqo
                     continue;
                 taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File, true) { Tag = item });
             }
+            
         }
+        
     }
 
 }

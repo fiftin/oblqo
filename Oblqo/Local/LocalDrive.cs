@@ -85,7 +85,12 @@ namespace Oblqo.Local
 
         public override async Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
         {
-            return await Task.Run(() => ((LocalFile) folder).Directory.EnumerateDirectories()
+            var dir = ((LocalFile)folder).Directory;
+            if (!dir.Exists)
+            {
+                dir.Create();
+            }
+            return await Task.Run(() => dir.EnumerateDirectories()
                 .Select(file => LocalFileFactory.Instance.Create(this, file, false))
                 .Cast<DriveFile>().ToList());
         }
@@ -116,7 +121,7 @@ namespace Oblqo.Local
             var f = new FileInfo(((LocalFile)destFolder).file.FullName + Path.DirectorySeparatorChar + fileName);
             var localFile = LocalFileFactory.Instance.Create(this, f, false);
             ImageFormat imageType;
-            if (TryGetImageType(fileName, out imageType))
+            if (!ImageMaxSize.IsEmpty && TryGetImageType(fileName, out imageType))
             {
                 using (var image = Image.FromStream(stream))
                 {

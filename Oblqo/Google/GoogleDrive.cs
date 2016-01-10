@@ -110,7 +110,7 @@ namespace Oblqo.Google
                         }
             };
             ImageFormat imageType;
-            var scaled = TryGetImageType(fileName, out imageType)
+            var scaled = !ImageMaxSize.IsEmpty && TryGetImageType(fileName, out imageType)
                 ? await ScaleImageAsync(stream, imageType, token)
                 : stream;
             var observed = new ObserverStream(scaled);
@@ -121,6 +121,7 @@ namespace Oblqo.Google
             {
                 throw new Exception(result.Exception.Message);
             }
+            Console.WriteLine("UPLOADED: " + fileName);
             return new GoogleFile(this, request.ResponseBody);
         }
         

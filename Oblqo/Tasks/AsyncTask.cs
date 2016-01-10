@@ -132,6 +132,10 @@ namespace Oblqo
 
         public async Task StartAsync()
         {
+            if (State != AsyncTaskState.Waiting)
+            {
+                throw new InvalidOperationException("Can't start finished task");
+            }
             State = AsyncTaskState.Running;
             OnStateChanged();
             try

@@ -26,10 +26,10 @@ namespace Oblqo
 
         class FileListSorder : IComparer
         {
-            private int order = 1;
-
             public const int ASC_ORDER = 1;
             public const int DESC_ORDER = -1;
+
+            private int order;
             private ColumnHeader column;
 
             public FileListSorder(ColumnHeader column, int order = ASC_ORDER)
@@ -859,7 +859,8 @@ namespace Oblqo
                 return;
             using (var accountForm = new AccountForm(false))
             {
-                var account = accountManager.Get(((NodeInfo) node.Tag).AccountInfo.AccountName);
+                var nodeInfo = ((NodeInfo)node.Tag);
+                var account = accountManager.Get(nodeInfo.AccountInfo.AccountName);
                 accountForm.AccountName = account.AccountName;
                 accountForm.StorageAccessTokenId = account.StorageAccessKeyId;
                 accountForm.StorageSecretAccessKey = account.StorageSecretAccessKey;
@@ -875,7 +876,8 @@ namespace Oblqo
                 account.StorageRegionSystemName = accountForm.StorageRegionSystemName;
                 account.StorageVault = accountForm.GlacierVault;
                 node.Text = account.AccountName;
-
+                node.Tag = new NodeInfo(account);
+               
                 account.Drives.Clear();
                 account.Drives.AddRange(accountForm.GetDrives());
 

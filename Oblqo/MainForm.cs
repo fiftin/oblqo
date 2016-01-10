@@ -1629,6 +1629,16 @@ namespace Oblqo
         {
             OpenSelectedFileIfItLocal();
         }
+
+        private async void clearAuthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var node = treeView1.SelectedNode;
+            if (node == null)
+                return;
+            var nodeInfo = (NodeInfo)node.Tag;
+            await accountManager.ClearAuthAsync(nodeInfo.AccountInfo);
+        }
+        
     }
 
 }

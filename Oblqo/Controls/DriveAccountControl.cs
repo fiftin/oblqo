@@ -82,5 +82,6 @@ namespace Oblqo
         }
 
         public event EventHandler DriveTypeChanged;
+        
     }
 }

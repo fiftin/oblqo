@@ -13,26 +13,33 @@ using Google.Apis.Drive.v2.Data;
 using Google.Apis.Auth.OAuth2.Responses;
 using Oblqo.Core;
 using System.Drawing.Imaging;
+using Google.Apis.Util.Store;
 
 namespace Oblqo.Google
 {
     public class GoogleDrive : Drive
     {
+        public static readonly string[] Scopes = new[] { DriveService.Scope.Drive };
+
         public string AccessKeyId { get; set; }
         public string AccessSecretKey { get; set; }
         public ClientSecrets Secrets { get; set; }
+        public string CredentialPath { get; set; }
+
         public const string RootId = "root";
         private GoogleFile rootFolder;
 
-        protected GoogleDrive(Account account, string id, ClientSecrets secrets)
+        protected GoogleDrive(Account account, string id, ClientSecrets secrets, string credentialPath)
             : base(account, id)
         {
             Secrets = secrets;
+            CredentialPath = credentialPath;
         }
 
-        public static async Task<GoogleDrive> CreateInstance(Account account, string id, ClientSecrets secrets, string rootPath, CancellationToken token)
+        public static async Task<GoogleDrive> CreateInstance(Account account, string id, ClientSecrets secrets, string rootPath,
+            string credentialPath, CancellationToken token)
         {
-            var ret = new GoogleDrive(account, id, secrets);
+            var ret = new GoogleDrive(account, id, secrets, credentialPath);
             var rootFolder = await ret.GetFolderByPathAsync(rootPath, token, true);
             ret.rootFolder = rootFolder;
             return ret;
@@ -83,7 +90,9 @@ namespace Oblqo.Google
         {
             try
             {
-                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(Secrets, new[] { DriveService.Scope.Drive }, "user", token);
+                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(Secrets,
+                    Scopes, "user", token,
+                    new IsolatedDataStore(CredentialPath));
                 return new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
@@ -129,10 +138,8 @@ namespace Oblqo.Google
             {
                 throw new Exception(result.Exception.Message);
             }
-            Console.WriteLine("UPLOADED: " + fileName);
             return new GoogleFile(this, request.ResponseBody);
         }
-        
 
         public override async Task<DriveFile> UploadFileAsync(System.IO.Stream stream, string fileName, 
             DriveFile destFolder, string storageFileId, CancellationToken token)
@@ -226,7 +233,6 @@ namespace Oblqo.Google
 
         public override async Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
-            Debug.Assert(driveFolder.IsFolder);
             var service = await GetServiceAsync(token);
             if (driveFolder.Id == RootId)
             {
@@ -257,14 +263,12 @@ namespace Oblqo.Google
 
         public override async Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
         {
-            Debug.Assert(!driveFile.IsFolder);
             var service = await GetServiceAsync(token);
             await service.Files.Delete(driveFile.Id).ExecuteAsync(token);
         }
 
         public override async Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
         {
-            Debug.Assert(driveFolder.IsFolder);
             var files = await GetFilesAsync(driveFolder, token);
             foreach (var file in files)
             {
@@ -280,7 +284,6 @@ namespace Oblqo.Google
 
         public override async Task DownloadFileAsync(DriveFile driveFile, System.IO.Stream fileStream, CancellationToken token)
         {
-            Debug.Assert(!driveFile.IsFolder);
             var url = ((GoogleFile)driveFile).File.DownloadUrl;
             if (url == null)
                 throw new TaskException("Can't download this file");

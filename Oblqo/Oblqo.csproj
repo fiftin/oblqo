@@ -189,6 +189,7 @@
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\IsolatedConfigurationStorage.cs" />
+    <Compile Include="Google\IsolatedDataStore.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
     <Compile Include="Local\LocalFileFactory.cs" />

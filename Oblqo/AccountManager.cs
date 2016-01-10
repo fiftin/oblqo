@@ -128,22 +128,33 @@ namespace Oblqo
             }
         }
 
+        public async Task ClearAuthAsync(AccountInfo info)
+        {
+            var dataStore = new IsolatedDataStore("accounts/" + info.AccountName + "/google_credential");
+            await dataStore.ClearAsync();
+        }
+
         public async Task<Account> CreateAccountAsync(AccountInfo info)
         {
             var token = new CancellationToken();
             var storage = new Glacier(info.StorageVault, info.StorageRootPath, info.StorageAccessKeyId, info.StorageSecretAccessKey, info.StorageRegionEndpoint);
             await storage.InitAsync(token);
             var account = new Account(storage);
+            var accountCredPath = "accounts/" + info.AccountName + "/google_credential";
             foreach (var d in info.Drives)
             {
                 switch (d.DriveType)
                 {
                     case DriveType.GoogleDrive:
+
                         var drive =
                             await
                                 GoogleDrive.CreateInstance(account, d.DriveId,
                                     GoogleClientSecrets.Load(new MemoryStream(Resources.client_secret)).Secrets,
-                                    d.DriveRootPath, token);
+                                    d.DriveRootPath,
+                                    accountCredPath,
+                                    token);
+
                         drive.ImageMaxSize = d.DriveImageMaxSize;
                         await drive.GetServiceAsync(token);
                         account.Drives.Add(drive);

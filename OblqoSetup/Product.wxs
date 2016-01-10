@@ -8,6 +8,7 @@
 
 		<Feature Id="ProductFeature" Title="Oblqo" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="ProgramMenuDir" />
 		</Feature>
     
     <UIRef Id="WixUI_MinimalNoUla" />
@@ -15,36 +16,114 @@
 	</Product>
 
 	<Fragment>
+    
 		<Directory Id="TARGETDIR" Name="SourceDir">
+      
+      
+      <Directory Id="DesktopFolder" Name="Desktop" />
+        
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Oblqo">
+          <Component Id="ProgramMenuDir" Guid="5d7d297e-2743-44b4-9541-198ec8ad896d">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\Oblqo\Oblqo" Type="integer" Value="1" Name="installed" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+      
 			<Directory Id="ProgramFilesFolder">
 				<Directory Id="INSTALLFOLDER" Name="Oblqo" />
 			</Directory>
+    
+    
 		</Directory>
+  
 	</Fragment>
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<Component Id="ProductComponent">
-        <File Source="$(var.Oblqo.TargetPath)" />
-			</Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Zlib.Portable.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\UnidecodeSharpFork.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Primitives.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Extensions.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Newtonsoft.Json.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.Desktop.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\log4net.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.GData.Client.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.PlatformServices.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Drive.v2.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Core.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.PlatformServices.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\BouncyCastle.Crypto.dll" /></Component>
-      <Component><File Source="$(var.Oblqo.TargetDir)\AWSSDK.dll" /></Component>
-		</ComponentGroup>
-	</Fragment>
+      
+  <Fragment>
+    
+    <Icon Id="Icon.exe" SourceFile="$(var.Oblqo.TargetDir)\oblqo-o.ico" />
+   
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent">
+        <File Source="$(var.Oblqo.TargetDir)\Oblqo.exe">
+          
+          <Shortcut Id="DesktopApplicationShortcut" Advertise="yes" Directory="DesktopFolder"
+                    Icon="Icon.exe" IconIndex="0" Name="Oblqo" WorkingDirectory="INSTALLFOLDER">
+          </Shortcut>
+          
+          <Shortcut Id="StartMenuApplicationShortcut" Directory="ApplicationProgramsFolder"
+                    Name="Oblqo" WorkingDirectory="INSTALLFOLDER"
+                    Icon="Icon.exe" IconIndex="0" Advertise="yes">
+          </Shortcut>
+        
+        </File>
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Zlib.Portable.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\oblqo-o.ico" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Oblqo.exe.config" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\UnidecodeSharpFork.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Primitives.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\System.Net.Http.Extensions.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Newtonsoft.Json.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Microsoft.Threading.Tasks.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\log4net.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.GData.Client.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.PlatformServices.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.Drive.v2.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.Core.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.PlatformServices.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\Google.Apis.Auth.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\BouncyCastle.Crypto.dll" />
+      </Component>
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\AWSSDK.dll" />
+      </Component>
+  
+    </ComponentGroup>
+  </Fragment>
+
+
+
 </Wix>

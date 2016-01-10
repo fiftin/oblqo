@@ -39,7 +39,7 @@ namespace Oblqo
             Id = id;
         }
 
-        public Image ScaleImage(Image image)
+        private Image ScaleImage(Image image)
         {
             if (ImageMaxSize.IsEmpty) // scale is Origin and scaling not required
             {
@@ -88,14 +88,8 @@ namespace Oblqo
             }
             return true;
         }
-
-        public async Task<Stream> ScaleImageAsync(Image image, CancellationToken token)
-        {
-            return await ScaleImageAsync(image, image.RawFormat, token);
-        }
-#pragma warning disable 1998
+        
         public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type, CancellationToken token)
-#pragma warning restore 1998
         {
             var output = new MemoryStream();
             await Task.Run(() =>
@@ -105,12 +99,6 @@ namespace Oblqo
             });
             output.Position = 0;
             return output;
-        }
-
-        public async Task<Stream> ScaleImageAsync(Stream input, ImageFormat type, CancellationToken token)
-        {
-            var image = await Task.Run(() => Image.FromStream(input));
-            return await ScaleImageAsync(image, type, token);
         }
 
         public virtual async Task<Image> GetImageAsync(DriveFile file, CancellationToken token)

@@ -13,6 +13,7 @@ using System.Xml;
 using Oblqo.Properties;
 using Oblqo.Tasks;
 using System.Collections;
+using Oblqo.Local;
 
 namespace Oblqo
 {
@@ -1577,7 +1578,57 @@ namespace Oblqo
             }
             
         }
-        
+
+        private void fileListView_DoubleClick(object sender, EventArgs e)
+        {
+            OpenSelectedFileIfItLocal();
+        }
+
+        private void OpenSelectedFileIfItLocal()
+        {
+            if (fileListView.SelectedItems.Count > 0)
+            {
+                var selectedFile = fileListView.SelectedItems[0];
+                var nodeInfo = (NodeInfo)selectedFile.Tag;
+                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
+                if (localFile != null)
+                {
+                    System.Diagnostics.Process.Start(localFile.FullName);
+                }
+            }
+        }
+
+        private void OpenSelectedFileContainingFolderIfItLocal()
+        {
+            if (fileListView.SelectedItems.Count > 0)
+            {
+                var selectedFile = fileListView.SelectedItems[0];
+                var nodeInfo = (NodeInfo)selectedFile.Tag;
+                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
+                if (localFile != null)
+                {
+                    System.Diagnostics.Process.Start(Path.GetDirectoryName(localFile.FullName));
+                }
+            }
+        }
+
+        private void fileListView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                OpenSelectedFileIfItLocal();
+            }
+        }
+
+        private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFileContainingFolderIfItLocal();
+        }
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFileIfItLocal();
+        }
     }
 
 }

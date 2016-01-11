@@ -219,6 +219,8 @@
     <Compile Include="Core\DriveFile.cs" />
     <Compile Include="Core\DriveType.cs" />
     <Compile Include="Amazon\Glacier.cs" />
+    <Compile Include="Tasks\DeleteFileFromArchiveTask.cs" />
+    <Compile Include="Tasks\DeleteFileTaskBase.cs" />
     <Compile Include="Tasks\EmptyTask.cs" />
     <Compile Include="Tasks\ExceptionEventArgs.cs" />
     <Compile Include="ExceptionForm.cs">

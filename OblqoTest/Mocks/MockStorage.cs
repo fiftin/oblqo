@@ -94,5 +94,10 @@ namespace OblqoTest
         {
             throw new NotImplementedException();
         }
+
+        public override bool IsValidStorageFileId(string s)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

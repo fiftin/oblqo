@@ -215,9 +215,13 @@ namespace Oblqo
             {
                 ret |= AccountFileStates.UnsyncronizedWithDrive;
             }
-            if (string.IsNullOrEmpty(file.StorageFileId))
+            if (file.StorageFileId == null)
             {
                 ret |= AccountFileStates.UnsyncronizedWithStorage;
+            }
+            else if (!file.HasValidStorageFileId)
+            {
+                ret |= AccountFileStates.Error;
             }
             return ret;
         }
@@ -249,7 +253,10 @@ namespace Oblqo
             {
                 fileItem.Font = Font;
             }
-
+            if ((newFileState & AccountFileStates.Error) != 0)
+            {
+                fileItem.BackColor = Color.Red;
+            }
         }
 
         private void AddFile(AccountFile file, string accountName)
@@ -1339,7 +1346,7 @@ namespace Oblqo
         {
             e.DrawDefault = true;
             var info = (NodeInfo)e.Item.Tag;
-            if (string.IsNullOrWhiteSpace(info.File.StorageFileId))
+            if (info.File.StorageFileId == null)
             {
                 e.Graphics.DrawLine(Pens.Black, e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2,
                     e.Bounds.Right, e.Bounds.Y + e.Bounds.Height / 2);
@@ -1574,7 +1581,7 @@ namespace Oblqo
                 var account = accounts[info.AccountName];
                 if (account == null)
                     continue;
-                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File, true) { Tag = item });
+                taskManager.Add(new DeleteFileFromArchiveTask(account, info.AccountName, 0, null, info.File) { Tag = item });
             }
             
         }

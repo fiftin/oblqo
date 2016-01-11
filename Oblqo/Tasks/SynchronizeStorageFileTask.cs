@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 namespace Oblqo.Tasks
 {
     [AccountFileStateChange(AccountFileStates.SyncronizedWithStorage, "SourceFile")]
-    public class SynchronizeFileTask : AsyncTask
+    public class SynchronizeStorageFileTask : AsyncTask
     {
         public AccountFile SourceFile {  get; private set; }
 
-        public SynchronizeFileTask()
+        public SynchronizeStorageFileTask()
         {
 
         }
-        public SynchronizeFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile sourceFile)
+        public SynchronizeStorageFileTask(Account account, string accountName, int priority, AsyncTask[] parent, AccountFile sourceFile)
             : base(account, accountName, priority, parent)
         {
             SourceFile = sourceFile;
@@ -55,11 +55,11 @@ namespace Oblqo.Tasks
             SourceFile.DriveFiles.OriginalImageHeight = SourceFile.ImageHeight;
             SourceFile.DriveFiles.OriginalImageWidth = SourceFile.ImageWidth;
             SourceFile.DriveFiles.OriginalSize = SourceFile.Size;
-            //if (SourceFile.IsImage)
-            //{
+            if (SourceFile.IsImage)
+            {
                 //TODO: Uncomment
                 //await SourceFile.DriveFile.ScaleImageAsync(CancellationTokenSource.Token);
-            //}
+            }
         }
 
 

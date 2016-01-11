@@ -143,9 +143,10 @@ namespace Oblqo
                 if (srcStr == null) return null;
                 var sources = srcStr.Split(';').Where((x) => x.StartsWith(Drive.Storage.Kind));
                 // Source - is kind of storage. For example 'gl-1'
-                return (from src in sources
-                        where Drive.Storage.Id == GetAttribute(string.Format("{0}.sid", src))
-                        select GetAttribute(string.Format("{0}.id", src))).FirstOrDefault();
+                var ret = (from src in sources
+                           where Drive.Storage.Id == GetAttribute(string.Format("{0}.sid", src))
+                           select GetAttribute(string.Format("{0}.id", src))).FirstOrDefault();
+                return ret;
             }
         }
     }

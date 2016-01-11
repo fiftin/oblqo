@@ -14,5 +14,6 @@ namespace Oblqo
         UnsyncronizedWithStorage = 8,
         SyncronizedWithDrive = 16,
         SyncronizedWithStorage = 32,
+        Error = 64
     }
 }

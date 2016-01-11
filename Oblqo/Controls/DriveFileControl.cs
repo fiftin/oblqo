@@ -98,6 +98,7 @@ namespace Oblqo.Controls
                         }));
                     }
                     catch (OperationCanceledException) { }
+                    catch (System.IO.FileNotFoundException) { }
                 }
                 catch (Exception ex)
                 {

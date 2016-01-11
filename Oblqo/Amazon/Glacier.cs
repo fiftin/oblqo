@@ -203,5 +203,9 @@ namespace Oblqo.Amazon
             get { return string.Format("{0}:{1}", Region.SystemName, Vault); }
         }
 
+        public override bool IsValidStorageFileId(string s)
+        {
+            return !string.IsNullOrWhiteSpace(s);
+        }
     }
 }

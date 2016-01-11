@@ -27,5 +27,6 @@ namespace Oblqo
         public abstract Task ClearAsync(CancellationToken token);
         public abstract Task<StorageFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token);
         public abstract Task InitAsync(CancellationToken token);
+        public abstract bool IsValidStorageFileId(string s);
     }
 }

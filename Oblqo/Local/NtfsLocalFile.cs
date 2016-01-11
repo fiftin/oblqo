@@ -57,7 +57,12 @@ namespace Oblqo.Local
                 {
                     using (var reader = new StreamReader(stream))
                     {
-                        return reader.ReadToEnd();
+                        var ret = reader.ReadToEnd();
+                        if (string.IsNullOrEmpty(ret))
+                        {
+                            return null;
+                        }
+                        return ret;
                     }
                 }
             }
@@ -70,7 +75,7 @@ namespace Oblqo.Local
                 FileAccess.Write,
                 FileShare.ReadWrite,
                 IntPtr.Zero,
-                FileMode.OpenOrCreate,
+                FileMode.Create,
                 0,
                 IntPtr.Zero))
             {

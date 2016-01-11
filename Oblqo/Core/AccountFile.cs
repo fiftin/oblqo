@@ -21,9 +21,14 @@ namespace Oblqo
         public Storage Storage => StorageFile.Storage;
 
         public Drive Drive => Drives.First();
-
-        // public DriveFileCollection DriveFile => DriveFiles;
-
+        
+        public bool HasValidStorageFileId
+        {
+            get
+            {
+                return Storage.IsValidStorageFileId(StorageFileId);
+            }
+        }
 
         public string StorageFileId
         {

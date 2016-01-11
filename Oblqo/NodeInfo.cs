@@ -10,7 +10,7 @@
     }
 
     /// <summary>
-    /// 
+    /// Information about file or directory associated with tree vew node and file list view item.
     /// </summary>
     public class NodeInfo
     {

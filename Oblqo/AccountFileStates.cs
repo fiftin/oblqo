@@ -2,6 +2,9 @@
 
 namespace Oblqo
 {
+    /// <summary>
+    /// Task execution result - delete file, new file and others.
+    /// </summary>
     [Flags]
     public enum AccountFileStates
     {

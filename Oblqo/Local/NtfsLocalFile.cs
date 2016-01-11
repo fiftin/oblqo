@@ -95,7 +95,7 @@ namespace Oblqo.Local
 
         public override async Task SetAttributeAsync(string name, string value, CancellationToken token)
         {
-            SetAttribute(name, value);
+            await Task.Run(() => SetAttribute(name, value));
         }
     }
 }

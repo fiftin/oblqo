@@ -986,11 +986,11 @@ namespace Oblqo
 
         private void OnError(Exception exception)
         {
-            if (exception is Core.ConnectionException)
+            if (exception is ConnectionException)
             {
                 Invoke(new MethodInvoker(() =>
                 {
-                    var acc = ((Core.ConnectionException)exception).Account;
+                    var acc = ((ConnectionException)exception).Account;
                     if (acc.Tag is TreeNode)
                     {
                         DisconnectAccount((TreeNode)acc.Tag);

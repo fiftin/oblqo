@@ -11,9 +11,7 @@ using Google.Apis.Services;
 using Google.Apis.Upload;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Auth.OAuth2.Responses;
-using Oblqo.Core;
 using System.Drawing.Imaging;
-using Google.Apis.Util.Store;
 
 namespace Oblqo.Google
 {

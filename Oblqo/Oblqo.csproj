@@ -125,13 +125,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutForm.cs">
+    <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutForm.Designer.cs">
+    <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AccountFileStates.cs" />
+    <Compile Include="Core Classes\AccountFileStates.cs" />
     <Compile Include="Controls\DriveFileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,29 +144,29 @@
     <Compile Include="Controls\DriveStrip.Designer.cs">
       <DependentUpon>DriveStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\AccountCollection.cs" />
+    <Compile Include="Core Classes\AccountCollection.cs" />
     <Compile Include="Amazon\GlacierFileIdentity.cs" />
-    <Compile Include="Core\CamelcaseWrapper.cs" />
-    <Compile Include="Core\ConfigurationStorage.cs" />
-    <Compile Include="Core\Account.cs" />
-    <Compile Include="Core\AccountFile.cs" />
-    <Compile Include="AccountInfo.cs" />
-    <Compile Include="AccountForm.cs">
+    <Compile Include="Core Classes\CamelcaseWrapper.cs" />
+    <Compile Include="Core Classes\ConfigurationStorage.cs" />
+    <Compile Include="Core Classes\Account.cs" />
+    <Compile Include="Core Classes\AccountFile.cs" />
+    <Compile Include="Forms\AccountInfo.cs" />
+    <Compile Include="Forms\AccountForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AccountForm.Designer.cs">
+    <Compile Include="Forms\AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AccountManager.cs" />
-    <Compile Include="Core\ActionIfFileExists.cs" />
+    <Compile Include="Forms\AccountManager.cs" />
+    <Compile Include="Core Classes\ActionIfFileExists.cs" />
     <Compile Include="Amazon\GlacierFile.cs" />
-    <Compile Include="Core\ConnectionException.cs" />
-    <Compile Include="Core\DriveCollection.cs" />
-    <Compile Include="Core\DriveFileCollection.cs" />
-    <Compile Include="Core\IDrive.cs" />
-    <Compile Include="Core\IDriveFile.cs" />
-    <Compile Include="Core\MimeTypes.cs" />
-    <Compile Include="Core\StorageFileIdentity.cs" />
+    <Compile Include="Core Classes\ConnectionException.cs" />
+    <Compile Include="Core Classes\DriveCollection.cs" />
+    <Compile Include="Core Classes\DriveFileCollection.cs" />
+    <Compile Include="Core Classes\IDrive.cs" />
+    <Compile Include="Core Classes\IDriveFile.cs" />
+    <Compile Include="Core Classes\MimeTypes.cs" />
+    <Compile Include="Core Classes\StorageFileIdentity.cs" />
     <Compile Include="Controls\DraggableTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -179,7 +179,7 @@
     <Compile Include="Controls\DriveAccountControl.Designer.cs">
       <DependentUpon>DriveAccountControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="DriveInfo.cs" />
+    <Compile Include="Forms\DriveInfo.cs" />
     <Compile Include="Controls\DriveAccountTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -192,45 +192,45 @@
     <Compile Include="Controls\FileListStatusBar.Designer.cs">
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\IsolatedConfigurationStorage.cs" />
+    <Compile Include="Core Classes\IsolatedConfigurationStorage.cs" />
     <Compile Include="Google\IsolatedDataStore.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
     <Compile Include="Local\LocalFileFactory.cs" />
     <Compile Include="Local\NtfsLocalFile.cs" />
-    <Compile Include="Core\Resolution.cs" />
-    <Compile Include="NodeInfo.cs" />
+    <Compile Include="Core Classes\Resolution.cs" />
+    <Compile Include="Forms\NodeInfo.cs" />
     <Compile Include="Tasks\AccountFileStateChangeAttribute.cs" />
     <Compile Include="Tasks\AsyncTask.cs" />
     <Compile Include="Tasks\AsyncTaskEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskManager.cs" />
     <Compile Include="Tasks\AsyncTaskProgressEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskState.cs" />
-    <Compile Include="AuthenticationForm.cs">
+    <Compile Include="Forms\AuthenticationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthenticationForm.Designer.cs">
+    <Compile Include="Forms\AuthenticationForm.Designer.cs">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Common.cs" />
-    <Compile Include="CreateDirectoryForm.cs">
+    <Compile Include="Core Classes\Common.cs" />
+    <Compile Include="Forms\CreateDirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateDirectoryForm.Designer.cs">
+    <Compile Include="Forms\CreateDirectoryForm.Designer.cs">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Drive.cs" />
-    <Compile Include="Core\DriveFile.cs" />
-    <Compile Include="Core\DriveType.cs" />
+    <Compile Include="Core Classes\Drive.cs" />
+    <Compile Include="Core Classes\DriveFile.cs" />
+    <Compile Include="Core Classes\DriveType.cs" />
     <Compile Include="Amazon\Glacier.cs" />
     <Compile Include="Tasks\DeleteFileFromArchiveTask.cs" />
     <Compile Include="Tasks\DeleteFileTaskBase.cs" />
     <Compile Include="Tasks\EmptyTask.cs" />
     <Compile Include="Tasks\ExceptionEventArgs.cs" />
-    <Compile Include="ExceptionForm.cs">
+    <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExceptionForm.Designer.cs">
+    <Compile Include="Forms\ExceptionForm.Designer.cs">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Google\GoogleDrive.cs" />
@@ -238,18 +238,18 @@
     <Compile Include="Google\GoogleItemKinds.cs" />
     <Compile Include="Google\GoogleFileList.cs" />
     <Compile Include="Google\GoogleMimeTypes.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\ObserverStream.cs" />
-    <Compile Include="Core\TaskException.cs" />
+    <Compile Include="Core Classes\ObserverStream.cs" />
+    <Compile Include="Core Classes\TaskException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Storage.cs" />
-    <Compile Include="Core\StorageFile.cs" />
+    <Compile Include="Core Classes\Storage.cs" />
+    <Compile Include="Core Classes\StorageFile.cs" />
     <Compile Include="Tasks\AsyncTaskParentsMode.cs" />
     <Compile Include="Tasks\CreateFolderTask.cs" />
     <Compile Include="Tasks\DeleteEmptyFolderTask.cs" />
@@ -267,15 +267,15 @@
     <Compile Include="Tasks\SynchronizeDriveEmptyFolderTask.cs" />
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
-    <Compile Include="Core\TransferProgress.cs" />
-    <EmbeddedResource Include="AboutForm.resx">
+    <Compile Include="Core Classes\TransferProgress.cs" />
+    <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AccountForm.resx">
+    <EmbeddedResource Include="Forms\AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AuthenticationForm.resx">
+    <EmbeddedResource Include="Forms\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DriveFileControl.resx">
@@ -284,7 +284,7 @@
     <EmbeddedResource Include="Controls\DriveStrip.resx">
       <DependentUpon>DriveStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateDirectoryForm.resx">
+    <EmbeddedResource Include="Forms\CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DriveAccountControl.resx">
@@ -293,13 +293,13 @@
     <EmbeddedResource Include="Controls\DriveAccountTabPage.resx">
       <DependentUpon>DriveAccountTabPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExceptionForm.resx">
+    <EmbeddedResource Include="Forms\ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FileListStatusBar.resx">
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

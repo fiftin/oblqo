@@ -54,6 +54,7 @@ namespace Oblqo.Controls
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.fileListMenu.SuspendLayout();
             this.fileMenu.SuspendLayout();
             this.SuspendLayout();
@@ -267,5 +268,7 @@ namespace Oblqo.Controls
                 item.Selected = true;
             }
         }
+
+        private FolderBrowserDialog folderBrowserDialog1;
     }
 }

@@ -11,6 +11,7 @@ using System.Collections;
 using Oblqo.Local;
 using System.IO;
 using System.Threading;
+using Oblqo.Tasks;
 
 namespace Oblqo.Controls
 {
@@ -69,6 +70,9 @@ namespace Oblqo.Controls
             }
         }
 
+        AccountCollection accounts;
+        AsyncTaskManager taskManager;
+
         private FileListStatusBar currentDirectoryInfoPanel;
         private ImageList smallImageList;
 
@@ -76,6 +80,32 @@ namespace Oblqo.Controls
         private readonly object updateListCancellationTokenSourceLocker = new object();
 
         private readonly Font UnsyncronizedFileItemFont;
+
+        [Browsable(false)]
+        public AccountCollection Accounts
+        {
+            get
+            {
+                return accounts;
+            }
+            set
+            {
+                accounts = value;
+            }
+        }
+
+        [Browsable(false)]
+        public AsyncTaskManager TaskManager
+        {
+            get
+            {
+                return taskManager;
+            }
+            set
+            {
+                taskManager = value;
+            }
+        }
 
         public ImageList SmallImageList
         {
@@ -172,9 +202,35 @@ namespace Oblqo.Controls
             }
         }
 
+        private void downloadFileFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+            foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
+                taskManager.Add(new DownloadFileFromDriveTask(accounts[info.AccountName], info.AccountName,
+                    AsyncTask.NormalPriority, null, info.File, folderBrowserDialog1.SelectedPath));
+        }
+
+        private void downloadFileFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+            foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
+            {
+                var task = new DownloadFileFromStorageTask(
+                    accounts[info.AccountName],
+                    info.AccountName,
+                    0, null, info.File,
+                    folderBrowserDialog1.SelectedPath);
+                taskManager.Add(task);
+            }
+        }
+
+
+
+
         #endregion
 
 
+        [Browsable(false)]
         public ListView.SelectedListViewItemCollection SelectedItems
         {
             get
@@ -183,6 +239,7 @@ namespace Oblqo.Controls
             }
         }
 
+        [Browsable(false)]
         public ListView.ListViewItemCollection Items
         {
             get

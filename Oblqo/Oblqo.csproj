@@ -125,6 +125,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FileList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FileList.Designer.cs">
+      <DependentUpon>FileList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskListView.Designer.cs">
+      <DependentUpon>TaskListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core Classes\Util.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,6 +281,12 @@
     <Compile Include="Tasks\UploadFileTask.cs" />
     <Compile Include="Tasks\UploadFolderTask.cs" />
     <Compile Include="Core Classes\TransferProgress.cs" />
+    <EmbeddedResource Include="Controls\FileList.resx">
+      <DependentUpon>FileList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TaskListView.resx">
+      <DependentUpon>TaskListView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

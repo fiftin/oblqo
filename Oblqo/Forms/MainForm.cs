@@ -24,65 +24,10 @@ namespace Oblqo
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
-
-        class FileListSorder : IComparer
-        {
-            public const int ASC_ORDER = 1;
-            public const int DESC_ORDER = -1;
-
-            private int order;
-            private ColumnHeader column;
-
-            public FileListSorder(ColumnHeader column, int order = ASC_ORDER)
-            {
-                this.column = column;
-                this.order = order;
-            }
-            
-            public int Compare(object x, object y)
-            {
-                ListViewItem item1 = (ListViewItem)x;
-                ListViewItem item2 = (ListViewItem)y;
-                NodeInfo info1 = (NodeInfo)item1.Tag;
-                NodeInfo info2 = (NodeInfo)item2.Tag;
-                int ret = 0;
-                if (info1 != null && info2 != null)
-                {
-                    switch (column.Text)
-                    {
-                        case "Name":
-                            ret = info1.File.Name.CompareTo(info2.File.Name);
-                            break;
-                        case "Date":
-                            ret = info1.File.ModifiedDate.CompareTo(info2.File.ModifiedDate);
-                            break;
-                        case "Size":
-                            ret = info1.File.Size.CompareTo(info2.File.Size);
-                            break;
-                    }
-                }
-                return ret * order;
-            }
-
-            public void ToggleOrder(ColumnHeader newColumn)
-            {
-                if (column == newColumn)
-                {
-                    order = -order;
-                }
-                else
-                {
-                    order = ASC_ORDER;
-                    column = newColumn;
-                }
-            }
-        }
-
+        
         private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
         private readonly AsyncTaskManager taskManager = new AsyncTaskManager(new IsolatedConfigurationStorage());
-        private CancellationTokenSource updateListCancellationTokenSource;
-        private readonly object updateListCancellationTokenSourceLocker = new object();
         private readonly List<TreeNode> loadingNodes = new List<TreeNode>();
         private ExceptionForm exceptionForm;
         private int loadingFolderImageAngle;
@@ -106,13 +51,12 @@ namespace Oblqo
             taskManager.TaskStateChanged += taskManager_TaskStateChanged;
             taskManager.TaskAdded += taskManager_TaskAdded;
             taskManager.TaskRemoved += taskManager_TaskRemoved;
-            taskManager.Exception += taskManager_Exception;
+            taskManager.Exception += xxx_Exception;
             taskManager.TaskProgress += taskManager_TaskProgress;
             InitUI();
             splitContainer2.SplitterWidth = 7;
             UnsyncronizedFileItemFont = new Font(Font, FontStyle.Strikeout);
             btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
-            fileListView.ListViewItemSorter = new FileListSorder(fileNameColumnHeader);
         }
 
         private void taskManager_TaskProgress(object sender, AsyncTaskEventArgs<AsyncTaskProgressEventArgs> e)
@@ -131,7 +75,7 @@ namespace Oblqo
             }
         }
 
-        void taskManager_Exception(object sender, ExceptionEventArgs e)
+        void xxx_Exception(object sender, ExceptionEventArgs e)
         {
             OnError(e.Exception);
         }
@@ -206,157 +150,18 @@ namespace Oblqo
             fileInfoPanel.Show();
             driveStrip1.Visible = true;
         }
-
-        private AccountFileStates GetFileState(AccountFile file)
-        {
-            AccountFileStates ret = 0;
-            var isDrivesSyncronized = file.Account.Drives.Select(x => file.GetDriveFile(x)).All(x => x != null);
-            if (!isDrivesSyncronized)
-            {
-                ret |= AccountFileStates.UnsyncronizedWithDrive;
-            }
-            if (file.StorageFileId == null)
-            {
-                ret |= AccountFileStates.UnsyncronizedWithStorage;
-            }
-            else if (!file.HasValidStorageFileId)
-            {
-                ret |= AccountFileStates.Error;
-            }
-            return ret;
-        }
-
-        private void UpdateFileListItem(AccountFileStates newFileState, ListViewItem fileItem)
-        {
-            if ((newFileState & AccountFileStates.Deleted) != 0)
-            {
-                fileItem.Remove();
-                return;
-            }
-            if ((newFileState & AccountFileStates.New) != 0)
-            {
-                fileItem.ForeColor = Color.Green;
-            }
-            if ((newFileState & AccountFileStates.UnsyncronizedWithDrive) != 0)
-            {
-                fileItem.ForeColor = Color.Red;
-            }
-            if ((newFileState & AccountFileStates.UnsyncronizedWithStorage) != 0)
-            {
-                fileItem.Font = UnsyncronizedFileItemFont;
-            }
-            if ((newFileState & AccountFileStates.SyncronizedWithDrive) != 0)
-            {
-                fileItem.ForeColor = SystemColors.ControlText;
-            }
-            if ((newFileState & AccountFileStates.SyncronizedWithStorage) != 0)
-            {
-                fileItem.Font = Font;
-            }
-            if ((newFileState & AccountFileStates.Error) != 0)
-            {
-                fileItem.BackColor = Color.Red;
-            }
-        }
-
-        private void AddFile(AccountFile file, string accountName)
-        {
-            var fileState = GetFileState(file);
-            var key = "file";
-            if (!string.IsNullOrWhiteSpace(file.MimeType))
-            {
-                var mimeTypeParts = file.MimeType.Split('/');
-                if (mimeTypeParts.Length == 2)
-                {
-                    var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
-                    if (smallImageList.Images.ContainsKey(tmpKey))
-                    {
-                        key = tmpKey;
-                    }
-                }
-            }
-
-            var item = fileListView.Items.Add("", file.Name, key);
-            UpdateFileListItem(fileState, item);
-            item.Tag = new NodeInfo(file, accountName);
-            item.SubItems.Add(file.ModifiedDate.ToShortDateString());
-            item.SubItems.Add(Common.NumberOfBytesToString(file.Size));
-        }
-
+        
         private void UpdateFileList()
         {
-            lock (updateListCancellationTokenSourceLocker)
-            {
-                updateListCancellationTokenSource?.Cancel();
-                updateListCancellationTokenSource = new CancellationTokenSource();
-            }
             var node = treeView1.SelectedNode;
             if (node == null) return;
             HideFileInfoPanel();
             var info = (NodeInfo) node.Tag;
-            ICollection<AccountFile> files;
             Account account;
             if (!accounts.TryGetValue(info.AccountName, out account))
                 return;
-            fileListView.Enabled = false;
             loadingFileListProgressBar.Visible = true;
-            Task.Run(async delegate
-            {
-                try
-                {
-                    switch (info.Type)
-                    {
-                        case NodeType.Account:
-                            files = await accounts[info.AccountName].GetFilesAsync(accounts[info.AccountName].RootFolder,
-                                updateListCancellationTokenSource.Token);
-                            break;
-                        case NodeType.Folder:
-                            files = await accounts[info.AccountName].GetFilesAsync(info.File,
-                                updateListCancellationTokenSource.Token);
-                            break;
-                        default:
-                            throw new Exception("Unsupported node type");
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    // file getting is cancelled
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                    return;
-                }
-                Invoke(new MethodInvoker(delegate
-                {
-                    fileListView.Items.Clear();
-                    int numberOfFiles = 0;
-                    int numberOfUnsyncFiles = 0;
-                    foreach (var file in files.Where(file => !file.IsFolder))
-                    {
-                        var fileState = GetFileState(file);
-                        if (!currentDirectoryInfoPanel.IsValid(file.Name))
-                        {
-                            continue;
-                        }
-                        if ((fileState & AccountFileStates.UnsyncronizedWithStorage) != 0)
-                        {
-                            numberOfUnsyncFiles++;
-                        }
-                        else if (currentDirectoryInfoPanel.ShowOnlyUnsyncronizedFiles)
-                        {
-                            continue;
-                        }
-                        numberOfFiles++;
-                        AddFile(file, info.AccountName);
-                    }
-                    currentDirectoryInfoPanel.NumberOfFiles = numberOfFiles;
-                    currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = numberOfUnsyncFiles;
-                    fileListView.Enabled = true;
-                    loadingFileListProgressBar.Visible = false;
-                }));
-            });
+            fileListView.UpdateFileList(info, account);
         }
 
         private void UpdateTaskList()
@@ -672,7 +477,7 @@ namespace Oblqo
                         {
                             if (attr.NewState == AccountFileStates.New)
                             {
-                                AddFile(file, accounts.GetName(file.Account));
+                                fileListView.AddFile(file, accounts.GetName(file.Account));
                             }
                             else
                             {
@@ -681,7 +486,7 @@ namespace Oblqo
                                     var info = (NodeInfo)x.Tag;
                                     if (info.File == file)
                                     {
-                                        UpdateFileListItem(attr.NewState, x);
+                                        fileListView.UpdateFileListItem(attr.NewState, x);
 
                                         if (driveStrip1.File == file)
                                         {
@@ -1134,35 +939,6 @@ namespace Oblqo
             driveStrip1.Top = loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
         }
 
-        /// <summary>
-        /// Show context menu for File List View.
-        /// </summary>
-        private void fileListView_MouseUp(object sender, MouseEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case MouseButtons.Right:
-                    if (fileListView.SelectedItems.Count > 0)
-                    {
-                        downloadFileFromStorageToolStripMenuItem.Enabled = true;
-                        if (fileListView.SelectedItems.Count == 1)
-                        {
-                            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-                            if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
-                            {
-                                downloadFileFromStorageToolStripMenuItem.Enabled = false;
-                            }
-                        }
-                        fileMenu.Show(Cursor.Position);
-                    }
-                    else
-                    {
-                        fileListMenu.Show(Cursor.Position);
-                    }
-                    break;
-            }
-        }
-
         private void downloadFileFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
@@ -1223,7 +999,7 @@ namespace Oblqo
             node.ImageKey = DisconnectedAccountImageKey;
             node.SelectedImageKey = DisconnectedAccountImageKey;
             accounts.Remove(node.Text);
-            fileListView.Items.Clear();
+            fileListView.Clear();
             UpdateToolBarAndMenu();
             // TODO: Break unfinished tasks
         }
@@ -1341,18 +1117,7 @@ namespace Oblqo
                 indicateErrorTimer.Stop();
             }
         }
-
-        private void fileListView_DrawItem(object sender, DrawListViewItemEventArgs e)
-        {
-            e.DrawDefault = true;
-            var info = (NodeInfo)e.Item.Tag;
-            if (info.File.StorageFileId == null)
-            {
-                e.Graphics.DrawLine(Pens.Black, e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2,
-                    e.Bounds.Right, e.Bounds.Y + e.Bounds.Height / 2);
-            }
-        }
-
+        
         private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in fileListView.SelectedItems)
@@ -1369,18 +1134,9 @@ namespace Oblqo
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in fileListView.Items)
-            {
-                item.Selected = true;
-            }
+            fileListView.SelectAll();
         }
 
-        private void fileListView_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            FileListSorder sorter = (FileListSorder)fileListView.ListViewItemSorter;
-            sorter.ToggleOrder(fileListView.Columns[e.Column]);
-            fileListView.Sort();
-        }
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -1585,58 +1341,7 @@ namespace Oblqo
             }
             
         }
-
-        private void fileListView_DoubleClick(object sender, EventArgs e)
-        {
-            OpenSelectedFileIfItLocal();
-        }
-
-        private void OpenSelectedFileIfItLocal()
-        {
-            if (fileListView.SelectedItems.Count > 0)
-            {
-                var selectedFile = fileListView.SelectedItems[0];
-                var nodeInfo = (NodeInfo)selectedFile.Tag;
-                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
-                if (localFile != null)
-                {
-                    System.Diagnostics.Process.Start(localFile.FullName);
-                }
-            }
-        }
-
-        private void OpenSelectedFileContainingFolderIfItLocal()
-        {
-            if (fileListView.SelectedItems.Count > 0)
-            {
-                var selectedFile = fileListView.SelectedItems[0];
-                var nodeInfo = (NodeInfo)selectedFile.Tag;
-                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
-                if (localFile != null)
-                {
-                    System.Diagnostics.Process.Start(Path.GetDirectoryName(localFile.FullName));
-                }
-            }
-        }
-
-        private void fileListView_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                OpenSelectedFileIfItLocal();
-            }
-        }
-
-        private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenSelectedFileContainingFolderIfItLocal();
-        }
-
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenSelectedFileIfItLocal();
-        }
-
+      
         private async void clearAuthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;

@@ -35,13 +35,7 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.smallImageList = new System.Windows.Forms.ImageList(this.components);
             this.btnNewConnection = new System.Windows.Forms.Button();
-            this.fileListView = new System.Windows.Forms.ListView();
-            this.fileNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fileDateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fileSizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tasksTabPage = new System.Windows.Forms.TabPage();
             this.taskListView = new System.Windows.Forms.ListView();
@@ -61,6 +55,9 @@
             this.logListView = new System.Windows.Forms.ListView();
             this.logDataTimeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.logMessageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileDateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileSizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mainTool = new System.Windows.Forms.ToolStrip();
             this.newAccountStripButton = new System.Windows.Forms.ToolStripButton();
             this.uploadToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -123,6 +120,9 @@
             this.uploadFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.driveStrip1 = new Oblqo.Controls.DriveStrip();
             this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
+            this.fileListView = new Oblqo.Controls.FileList();
+            this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -131,8 +131,6 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.fileInfoPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tasksTabPage.SuspendLayout();
             this.taskMenu.SuspendLayout();
@@ -144,6 +142,8 @@
             this.folderMenu.SuspendLayout();
             this.logMenu.SuspendLayout();
             this.fileListMenu.SuspendLayout();
+            this.fileInfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -163,7 +163,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2, 0, 0, 1);
             this.splitContainer1.Size = new System.Drawing.Size(997, 566);
-            this.splitContainer1.SplitterDistance = 267;
+            this.splitContainer1.SplitterDistance = 262;
             this.splitContainer1.SplitterWidth = 9;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -187,7 +187,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(997, 267);
+            this.splitContainer2.Size = new System.Drawing.Size(997, 262);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 0;
@@ -204,7 +204,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(248, 267);
+            this.treeView1.Size = new System.Drawing.Size(248, 262);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -262,83 +262,15 @@
             this.btnNewConnection.UseVisualStyleBackColor = false;
             this.btnNewConnection.Click += new System.EventHandler(this.addNewAccountToolStripMenuItem_Click);
             // 
-            // fileListView
-            // 
-            this.fileListView.AllowColumnReorder = true;
-            this.fileListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.fileNameColumnHeader,
-            this.fileDateColumnHeader,
-            this.fileSizeColumnHeader});
-            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileListView.FullRowSelect = true;
-            this.fileListView.Location = new System.Drawing.Point(0, 0);
-            this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(457, 267);
-            this.fileListView.SmallImageList = this.smallImageList;
-            this.fileListView.TabIndex = 1;
-            this.fileListView.UseCompatibleStateImageBehavior = false;
-            this.fileListView.View = System.Windows.Forms.View.Details;
-            this.fileListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.fileListView_ColumnClick);
-            this.fileListView.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.fileListView_DrawItem);
-            this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
-            this.fileListView.SizeChanged += new System.EventHandler(this.fileListView_SizeChanged);
-            this.fileListView.DoubleClick += new System.EventHandler(this.fileListView_DoubleClick);
-            this.fileListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fileListView_KeyDown);
-            this.fileListView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.fileListView_MouseUp);
-            this.fileListView.Move += new System.EventHandler(this.listView1_Move);
-            this.fileListView.Resize += new System.EventHandler(this.listView1_Resize);
-            // 
-            // fileNameColumnHeader
-            // 
-            this.fileNameColumnHeader.Text = "Name";
-            this.fileNameColumnHeader.Width = 250;
-            // 
-            // fileDateColumnHeader
-            // 
-            this.fileDateColumnHeader.Text = "Date";
-            this.fileDateColumnHeader.Width = 100;
-            // 
-            // fileSizeColumnHeader
-            // 
-            this.fileSizeColumnHeader.Text = "Size";
-            // 
             // splitter1
             // 
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(457, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(8, 267);
+            this.splitter1.Size = new System.Drawing.Size(8, 262);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             this.splitter1.Visible = false;
-            // 
-            // fileInfoPanel
-            // 
-            this.fileInfoPanel.Controls.Add(this.pictureBox1);
-            this.fileInfoPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.fileInfoPanel.Location = new System.Drawing.Point(465, 0);
-            this.fileInfoPanel.MinimumSize = new System.Drawing.Size(272, 0);
-            this.fileInfoPanel.Name = "fileInfoPanel";
-            this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.fileInfoPanel.Size = new System.Drawing.Size(272, 267);
-            this.fileInfoPanel.TabIndex = 2;
-            this.fileInfoPanel.Visible = false;
-            this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.fileInfoPanel_Error);
-            this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
-            this.fileInfoPanel.ImageLoaded += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoaded);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(270, 267);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // tabControl1
             // 
@@ -349,7 +281,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(995, 289);
+            this.tabControl1.Size = new System.Drawing.Size(995, 294);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Deselecting);
             // 
@@ -360,7 +292,7 @@
             this.tasksTabPage.Location = new System.Drawing.Point(4, 24);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.tasksTabPage.Size = new System.Drawing.Size(987, 261);
+            this.tasksTabPage.Size = new System.Drawing.Size(987, 266);
             this.tasksTabPage.TabIndex = 0;
             this.tasksTabPage.Text = "Tasks";
             this.tasksTabPage.UseVisualStyleBackColor = true;
@@ -378,7 +310,7 @@
             this.taskListView.HideSelection = false;
             this.taskListView.Location = new System.Drawing.Point(0, 2);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(985, 233);
+            this.taskListView.Size = new System.Drawing.Size(985, 238);
             this.taskListView.SmallImageList = this.smallImageList;
             this.taskListView.TabIndex = 0;
             this.taskListView.UseCompatibleStateImageBehavior = false;
@@ -436,7 +368,7 @@
             this.finishedTasksStripButton,
             this.cancelledTasksStripButton,
             this.queuedTasksStripButton});
-            this.tasksToolStrip.Location = new System.Drawing.Point(0, 235);
+            this.tasksToolStrip.Location = new System.Drawing.Point(0, 240);
             this.tasksToolStrip.Name = "tasksToolStrip";
             this.tasksToolStrip.Padding = new System.Windows.Forms.Padding(0, 2, 1, 0);
             this.tasksToolStrip.Size = new System.Drawing.Size(985, 25);
@@ -488,10 +420,10 @@
             // logTabPage
             // 
             this.logTabPage.Controls.Add(this.logListView);
-            this.logTabPage.Location = new System.Drawing.Point(4, 23);
+            this.logTabPage.Location = new System.Drawing.Point(4, 24);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.logTabPage.Size = new System.Drawing.Size(987, 262);
+            this.logTabPage.Size = new System.Drawing.Size(987, 266);
             this.logTabPage.TabIndex = 2;
             this.logTabPage.Text = "Log";
             this.logTabPage.UseVisualStyleBackColor = true;
@@ -506,7 +438,7 @@
             this.logListView.Location = new System.Drawing.Point(0, 2);
             this.logListView.MultiSelect = false;
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(985, 259);
+            this.logListView.Size = new System.Drawing.Size(985, 264);
             this.logListView.SmallImageList = this.smallImageList;
             this.logListView.TabIndex = 2;
             this.logListView.UseCompatibleStateImageBehavior = false;
@@ -523,6 +455,20 @@
             // 
             this.logMessageColumnHeader.Text = "Message";
             this.logMessageColumnHeader.Width = 600;
+            // 
+            // fileNameColumnHeader
+            // 
+            this.fileNameColumnHeader.Text = "Name";
+            this.fileNameColumnHeader.Width = 250;
+            // 
+            // fileDateColumnHeader
+            // 
+            this.fileDateColumnHeader.Text = "Date";
+            this.fileDateColumnHeader.Width = 100;
+            // 
+            // fileSizeColumnHeader
+            // 
+            this.fileSizeColumnHeader.Text = "Size";
             // 
             // mainTool
             // 
@@ -847,14 +793,12 @@
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.openFileToolStripMenuItem.Text = "Open File";
-            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openContainingFolderToolStripMenuItem
             // 
             this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
             this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
-            this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
@@ -1011,6 +955,49 @@
             this.currentDirectoryInfoPanel.TabIndex = 7;
             this.currentDirectoryInfoPanel.FilterChanged += new System.EventHandler<System.EventArgs>(this.currentDirectoryInfoPanel_FilterChanged);
             // 
+            // fileListView
+            // 
+            this.fileListView.CurrentDirectoryInfoPanel = null;
+            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileListView.Location = new System.Drawing.Point(0, 0);
+            this.fileListView.Name = "fileListView";
+            this.fileListView.Size = new System.Drawing.Size(457, 262);
+            this.fileListView.SmallImageList = this.smallImageList;
+            this.fileListView.TabIndex = 1;
+            this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
+            this.fileListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
+            this.fileListView.SizeChanged += new System.EventHandler(this.fileListView_SizeChanged);
+            this.fileListView.Move += new System.EventHandler(this.listView1_Move);
+            this.fileListView.Resize += new System.EventHandler(this.listView1_Resize);
+            // 
+            // fileInfoPanel
+            // 
+            this.fileInfoPanel.Controls.Add(this.pictureBox1);
+            this.fileInfoPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.fileInfoPanel.Location = new System.Drawing.Point(465, 0);
+            this.fileInfoPanel.MinimumSize = new System.Drawing.Size(272, 0);
+            this.fileInfoPanel.Name = "fileInfoPanel";
+            this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.fileInfoPanel.Size = new System.Drawing.Size(272, 262);
+            this.fileInfoPanel.TabIndex = 2;
+            this.fileInfoPanel.Visible = false;
+            this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.fileInfoPanel_Error);
+            this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
+            this.fileInfoPanel.ImageLoaded += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoaded);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
+            this.pictureBox1.Size = new System.Drawing.Size(270, 262);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1035,8 +1022,6 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.fileInfoPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tasksTabPage.ResumeLayout(false);
             this.tasksTabPage.PerformLayout();
@@ -1051,6 +1036,8 @@
             this.folderMenu.ResumeLayout(false);
             this.logMenu.ResumeLayout(false);
             this.fileListMenu.ResumeLayout(false);
+            this.fileInfoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1061,7 +1048,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ListView fileListView;
+        private Controls.FileList fileListView;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tasksTabPage;
         private System.Windows.Forms.ListView taskListView;

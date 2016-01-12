@@ -16,5 +16,10 @@ namespace Oblqo.Controls
         {
             InitializeComponent();
         }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

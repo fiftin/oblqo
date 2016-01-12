@@ -146,14 +146,12 @@ namespace Oblqo.Amazon
                 await DownloadFileAsync(file, output, token, progressCallback);
             }
         }
-
-#pragma warning disable 1998
-        public override async Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token)
-#pragma warning restore 1998
+        
+        public override Task<StorageFile> CreateFolderAsync(string folderName, StorageFile destFolder, CancellationToken token)
         { 
             var path = destFolder == null ? "/" : ((GlacierFile) destFolder).FolderPath;
             var newFolderPath = path + folderName + "/";
-            return new GlacierFile(this, "", true, newFolderPath);
+            return Task.FromResult<StorageFile>(new GlacierFile(this, "", true, newFolderPath));
         }
 
         public override StorageFile RootFolder
@@ -172,7 +170,7 @@ namespace Oblqo.Amazon
             await CreateVaultAsync(token);
         }
 
-        public override async Task<StorageFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
+        public override Task<StorageFile> GetFileAsync(System.Xml.Linq.XElement xml, CancellationToken token)
         {
             var ret = new GlacierFile(
                 this,
@@ -185,7 +183,7 @@ namespace Oblqo.Amazon
             {
                 ret.JobId = xml.Attribute("jobId").Value;
             }
-            return ret;
+            return Task.FromResult<StorageFile>(ret);
         }
 
         public override async Task InitAsync(CancellationToken token)

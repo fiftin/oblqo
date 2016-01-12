@@ -41,7 +41,7 @@ namespace Oblqo
 
         private Image ScaleImage(Image image)
         {
-            if (ImageMaxSize.IsEmpty) // scale is Origin and scaling not required
+            if (ImageMaxSize.IsEmpty) // scaling not required
             {
                 return image;
             }

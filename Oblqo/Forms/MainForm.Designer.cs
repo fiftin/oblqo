@@ -36,6 +36,7 @@
             this.smallImageList = new System.Windows.Forms.ImageList(this.components);
             this.btnNewConnection = new System.Windows.Forms.Button();
             this.fileListView = new Oblqo.Controls.FileList();
+            this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -90,20 +91,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadingFileListProgressBar = new System.Windows.Forms.ProgressBar();
             this.loadingImageProgressBar = new System.Windows.Forms.ProgressBar();
-            this.fileMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.downloadFileFromStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.downloadFileFromDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.synchronizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.synchronizeOnDrivesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteFromArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.downloadFolderFromDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadFolderFromStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,12 +104,7 @@
             this.logMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showDescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indicateErrorTimer = new System.Windows.Forms.Timer(this.components);
-            this.fileListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.newFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.uploadFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.uploadFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.driveStrip1 = new Oblqo.Controls.DriveStrip();
-            this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -140,10 +122,8 @@
             this.logTabPage.SuspendLayout();
             this.mainTool.SuspendLayout();
             this.accountMenu.SuspendLayout();
-            this.fileMenu.SuspendLayout();
             this.folderMenu.SuspendLayout();
             this.logMenu.SuspendLayout();
-            this.fileListMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -163,7 +143,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2, 0, 0, 1);
             this.splitContainer1.Size = new System.Drawing.Size(997, 566);
-            this.splitContainer1.SplitterDistance = 257;
+            this.splitContainer1.SplitterDistance = 242;
             this.splitContainer1.SplitterWidth = 9;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -187,7 +167,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(997, 257);
+            this.splitContainer2.Size = new System.Drawing.Size(997, 242);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 0;
@@ -204,7 +184,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(248, 257);
+            this.treeView1.Size = new System.Drawing.Size(248, 242);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -268,21 +248,33 @@
             this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fileListView.Location = new System.Drawing.Point(0, 0);
             this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(457, 257);
+            this.fileListView.Size = new System.Drawing.Size(457, 242);
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TabIndex = 1;
+            this.fileListView.TaskManager = null;
             this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
+            this.fileListView.FileLoaded += new System.EventHandler(this.fileListView_FileLoaded);
             this.fileListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
             this.fileListView.SizeChanged += new System.EventHandler(this.fileListView_SizeChanged);
             this.fileListView.Move += new System.EventHandler(this.listView1_Move);
             this.fileListView.Resize += new System.EventHandler(this.listView1_Resize);
+            // 
+            // currentDirectoryInfoPanel
+            // 
+            this.currentDirectoryInfoPanel.Location = new System.Drawing.Point(297, 21);
+            this.currentDirectoryInfoPanel.Name = "currentDirectoryInfoPanel";
+            this.currentDirectoryInfoPanel.NumberOfFiles = 0;
+            this.currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
+            this.currentDirectoryInfoPanel.Size = new System.Drawing.Size(548, 22);
+            this.currentDirectoryInfoPanel.TabIndex = 7;
+            this.currentDirectoryInfoPanel.FilterChanged += new System.EventHandler<System.EventArgs>(this.currentDirectoryInfoPanel_FilterChanged);
             // 
             // splitter1
             // 
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(457, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(8, 257);
+            this.splitter1.Size = new System.Drawing.Size(8, 242);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             this.splitter1.Visible = false;
@@ -295,7 +287,7 @@
             this.fileInfoPanel.MinimumSize = new System.Drawing.Size(272, 0);
             this.fileInfoPanel.Name = "fileInfoPanel";
             this.fileInfoPanel.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.fileInfoPanel.Size = new System.Drawing.Size(272, 257);
+            this.fileInfoPanel.Size = new System.Drawing.Size(272, 242);
             this.fileInfoPanel.TabIndex = 2;
             this.fileInfoPanel.Visible = false;
             this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.fileInfoPanel_Error);
@@ -311,7 +303,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(270, 257);
+            this.pictureBox1.Size = new System.Drawing.Size(270, 242);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -324,7 +316,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(995, 299);
+            this.tabControl1.Size = new System.Drawing.Size(995, 314);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Deselecting);
             // 
@@ -335,7 +327,7 @@
             this.tasksTabPage.Location = new System.Drawing.Point(4, 24);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.tasksTabPage.Size = new System.Drawing.Size(987, 271);
+            this.tasksTabPage.Size = new System.Drawing.Size(987, 286);
             this.tasksTabPage.TabIndex = 0;
             this.tasksTabPage.Text = "Tasks";
             this.tasksTabPage.UseVisualStyleBackColor = true;
@@ -353,7 +345,7 @@
             this.taskListView.HideSelection = false;
             this.taskListView.Location = new System.Drawing.Point(0, 2);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(985, 243);
+            this.taskListView.Size = new System.Drawing.Size(985, 258);
             this.taskListView.SmallImageList = this.smallImageList;
             this.taskListView.TabIndex = 0;
             this.taskListView.UseCompatibleStateImageBehavior = false;
@@ -411,7 +403,7 @@
             this.finishedTasksStripButton,
             this.cancelledTasksStripButton,
             this.queuedTasksStripButton});
-            this.tasksToolStrip.Location = new System.Drawing.Point(0, 245);
+            this.tasksToolStrip.Location = new System.Drawing.Point(0, 260);
             this.tasksToolStrip.Name = "tasksToolStrip";
             this.tasksToolStrip.Padding = new System.Windows.Forms.Padding(0, 2, 1, 0);
             this.tasksToolStrip.Size = new System.Drawing.Size(985, 25);
@@ -466,7 +458,7 @@
             this.logTabPage.Location = new System.Drawing.Point(4, 23);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.Padding = new System.Windows.Forms.Padding(0, 2, 2, 1);
-            this.logTabPage.Size = new System.Drawing.Size(987, 272);
+            this.logTabPage.Size = new System.Drawing.Size(987, 287);
             this.logTabPage.TabIndex = 2;
             this.logTabPage.Text = "Log";
             this.logTabPage.UseVisualStyleBackColor = true;
@@ -481,7 +473,7 @@
             this.logListView.Location = new System.Drawing.Point(0, 2);
             this.logListView.MultiSelect = false;
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(985, 269);
+            this.logListView.Size = new System.Drawing.Size(985, 284);
             this.logListView.SmallImageList = this.smallImageList;
             this.logListView.TabIndex = 2;
             this.logListView.UseCompatibleStateImageBehavior = false;
@@ -753,109 +745,6 @@
             this.loadingImageProgressBar.Value = 10;
             this.loadingImageProgressBar.Visible = false;
             // 
-            // fileMenu
-            // 
-            this.fileMenu.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.fileMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.downloadFileFromStorageToolStripMenuItem,
-            this.downloadFileFromDriveToolStripMenuItem,
-            this.toolStripSeparator7,
-            this.synchronizeToolStripMenuItem,
-            this.synchronizeOnDrivesToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.deleteFileToolStripMenuItem,
-            this.deleteFromArchiveToolStripMenuItem,
-            this.toolStripSeparator8,
-            this.openFileToolStripMenuItem,
-            this.openContainingFolderToolStripMenuItem,
-            this.toolStripSeparator9,
-            this.selectAllToolStripMenuItem});
-            this.fileMenu.Name = "fileContextMenuStrip";
-            this.fileMenu.Size = new System.Drawing.Size(229, 226);
-            // 
-            // downloadFileFromStorageToolStripMenuItem
-            // 
-            this.downloadFileFromStorageToolStripMenuItem.Name = "downloadFileFromStorageToolStripMenuItem";
-            this.downloadFileFromStorageToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.downloadFileFromStorageToolStripMenuItem.Text = "Download from Ar&chive";
-            this.downloadFileFromStorageToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromStorageToolStripMenuItem_Click);
-            // 
-            // downloadFileFromDriveToolStripMenuItem
-            // 
-            this.downloadFileFromDriveToolStripMenuItem.Name = "downloadFileFromDriveToolStripMenuItem";
-            this.downloadFileFromDriveToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.downloadFileFromDriveToolStripMenuItem.Text = "Download from D&rive";
-            this.downloadFileFromDriveToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromDriveToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(225, 6);
-            // 
-            // synchronizeToolStripMenuItem
-            // 
-            this.synchronizeToolStripMenuItem.Name = "synchronizeToolStripMenuItem";
-            this.synchronizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.synchronizeToolStripMenuItem.Text = "&Sync Archive";
-            this.synchronizeToolStripMenuItem.Click += new System.EventHandler(this.synchronizeToolStripMenuItem_Click);
-            // 
-            // synchronizeOnDrivesToolStripMenuItem
-            // 
-            this.synchronizeOnDrivesToolStripMenuItem.Name = "synchronizeOnDrivesToolStripMenuItem";
-            this.synchronizeOnDrivesToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.synchronizeOnDrivesToolStripMenuItem.Text = "Sync Drives";
-            this.synchronizeOnDrivesToolStripMenuItem.Click += new System.EventHandler(this.synchronizeOnDrivesToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(225, 6);
-            // 
-            // deleteFileToolStripMenuItem
-            // 
-            this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
-            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.deleteFileToolStripMenuItem.Text = "&Delete";
-            this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
-            // 
-            // deleteFromArchiveToolStripMenuItem
-            // 
-            this.deleteFromArchiveToolStripMenuItem.Name = "deleteFromArchiveToolStripMenuItem";
-            this.deleteFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.deleteFromArchiveToolStripMenuItem.Text = "Delete from Archive";
-            this.deleteFromArchiveToolStripMenuItem.Click += new System.EventHandler(this.deleteFromArchiveToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
-            // 
-            // openFileToolStripMenuItem
-            // 
-            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.openFileToolStripMenuItem.Text = "Open File";
-            // 
-            // openContainingFolderToolStripMenuItem
-            // 
-            this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
-            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(225, 6);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.selectAllToolStripMenuItem.Text = "Select &all";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
-            // 
             // folderMenu
             // 
             this.folderMenu.Font = new System.Drawing.Font("Courier New", 8.25F);
@@ -948,37 +837,6 @@
             this.indicateErrorTimer.Interval = 150;
             this.indicateErrorTimer.Tick += new System.EventHandler(this.indicateErrorTimer_Tick);
             // 
-            // fileListMenu
-            // 
-            this.fileListMenu.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.fileListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newFolderToolStripMenuItem1,
-            this.uploadFolderToolStripMenuItem1,
-            this.uploadFilesToolStripMenuItem});
-            this.fileListMenu.Name = "fileListMenu";
-            this.fileListMenu.Size = new System.Drawing.Size(166, 70);
-            // 
-            // newFolderToolStripMenuItem1
-            // 
-            this.newFolderToolStripMenuItem1.Name = "newFolderToolStripMenuItem1";
-            this.newFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
-            this.newFolderToolStripMenuItem1.Text = "New folder";
-            this.newFolderToolStripMenuItem1.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
-            // 
-            // uploadFolderToolStripMenuItem1
-            // 
-            this.uploadFolderToolStripMenuItem1.Name = "uploadFolderToolStripMenuItem1";
-            this.uploadFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
-            this.uploadFolderToolStripMenuItem1.Text = "Upload folder";
-            this.uploadFolderToolStripMenuItem1.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
-            // 
-            // uploadFilesToolStripMenuItem
-            // 
-            this.uploadFilesToolStripMenuItem.Name = "uploadFilesToolStripMenuItem";
-            this.uploadFilesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.uploadFilesToolStripMenuItem.Text = "Upload files";
-            this.uploadFilesToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
-            // 
             // driveStrip1
             // 
             this.driveStrip1.Location = new System.Drawing.Point(702, 360);
@@ -987,16 +845,6 @@
             this.driveStrip1.TabIndex = 8;
             this.driveStrip1.Visible = false;
             this.driveStrip1.SelectedDriveChanged += new System.EventHandler(this.driveStrip1_SelectedDriveChanged);
-            // 
-            // currentDirectoryInfoPanel
-            // 
-            this.currentDirectoryInfoPanel.Location = new System.Drawing.Point(297, 21);
-            this.currentDirectoryInfoPanel.Name = "currentDirectoryInfoPanel";
-            this.currentDirectoryInfoPanel.NumberOfFiles = 0;
-            this.currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
-            this.currentDirectoryInfoPanel.Size = new System.Drawing.Size(548, 22);
-            this.currentDirectoryInfoPanel.TabIndex = 7;
-            this.currentDirectoryInfoPanel.FilterChanged += new System.EventHandler<System.EventArgs>(this.currentDirectoryInfoPanel_FilterChanged);
             // 
             // MainForm
             // 
@@ -1034,10 +882,8 @@
             this.mainTool.ResumeLayout(false);
             this.mainTool.PerformLayout();
             this.accountMenu.ResumeLayout(false);
-            this.fileMenu.ResumeLayout(false);
             this.folderMenu.ResumeLayout(false);
             this.logMenu.ResumeLayout(false);
-            this.fileListMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1075,15 +921,11 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ProgressBar loadingFileListProgressBar;
         private System.Windows.Forms.ProgressBar loadingImageProgressBar;
-        private System.Windows.Forms.ContextMenuStrip fileMenu;
         private System.Windows.Forms.ContextMenuStrip folderMenu;
-        private System.Windows.Forms.ToolStripMenuItem downloadFileFromDriveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFolderFromDriveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteFolderToolStripMenuItem;
         private System.Windows.Forms.TabPage logTabPage;
         private System.Windows.Forms.ListView logListView;
-        private System.Windows.Forms.ToolStripMenuItem downloadFileFromStorageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFolderFromStorageToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader logDataTimeColumnHeader;
         private System.Windows.Forms.ColumnHeader logMessageColumnHeader;
@@ -1095,25 +937,18 @@
         private System.Windows.Forms.ToolStripMenuItem showDescriptionToolStripMenuItem;
         private System.Windows.Forms.Timer indicateErrorTimer;
         private System.Windows.Forms.ColumnHeader taskTypeColumnHeader;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem uploadFolderToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem uploadFilesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip fileListMenu;
-        private System.Windows.Forms.ToolStripMenuItem uploadFolderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem uploadFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem uploadFolderToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem uploadFilesToolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem synchronizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFromArchiveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private FileListStatusBar currentDirectoryInfoPanel;
         private System.Windows.Forms.ToolStripButton newAccountStripButton;
         private System.Windows.Forms.ToolStrip tasksToolStrip;
@@ -1121,8 +956,6 @@
         private System.Windows.Forms.ToolStripButton queuedTasksStripButton;
         private System.Windows.Forms.ToolStripButton finishedTasksStripButton;
         private System.Windows.Forms.ToolStripButton cancelledTasksStripButton;
-        private System.Windows.Forms.ToolStripMenuItem synchronizeOnDrivesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem taskDetailsToolStripMenuItem;
         private Controls.DriveFileControl fileInfoPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -1131,11 +964,6 @@
         private System.Windows.Forms.Button btnNewConnection;
         private System.Windows.Forms.ToolStripMenuItem cloneAccountToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem deleteFromArchiveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem clearAuthToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
     }

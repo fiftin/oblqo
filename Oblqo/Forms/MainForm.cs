@@ -34,8 +34,6 @@ namespace Oblqo
         private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
         private int indicateErrorNo;
 
-        private readonly Font UnsyncronizedFileItemFont;
-
         public MainForm()
         {
             InitializeComponent();
@@ -50,7 +48,6 @@ namespace Oblqo
             }
 
             fileListView.TaskManager = taskManager;
-            fileListView.Accounts = accounts;
 
             taskManager.TaskStateChanged += taskManager_TaskStateChanged;
             taskManager.TaskAdded += taskManager_TaskAdded;
@@ -59,7 +56,6 @@ namespace Oblqo
             taskManager.TaskProgress += taskManager_TaskProgress;
             InitUI();
             splitContainer2.SplitterWidth = 7;
-            UnsyncronizedFileItemFont = new Font(Font, FontStyle.Strikeout);
             btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
         }
 
@@ -165,7 +161,7 @@ namespace Oblqo
             if (!accounts.TryGetValue(info.AccountName, out account))
                 return;
             loadingFileListProgressBar.Visible = true;
-            fileListView.UpdateFileList(info, account);
+            fileListView.UpdateFileList(node, account);
         }
 
         private void UpdateTaskList()
@@ -863,47 +859,17 @@ namespace Oblqo
 
         private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            var selectedNode = treeView1.SelectedNode;
-            if (selectedNode == null) return;
-            var nodeInfo = (NodeInfo) selectedNode.Tag;
-            foreach (var fileName in openFileDialog1.FileNames)
-                taskManager.Add(new UploadFileTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName, AsyncTask.NormalPriority, null,
-                    fileName, nodeInfo.File) { Tag = selectedNode });
+            fileListView.UploadFile();
         }
 
         private void uploadFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
-            var node = treeView1.SelectedNode;
-            if (node == null)
-                return;
-            var info = (NodeInfo)node.Tag;
-            taskManager.Add(new UploadFolderTask(accounts[info.AccountName],
-                info.AccountName,
-                0,
-                null,
-                folderBrowserDialog1.SelectedPath,
-                info.File) {Tag = node});
+            fileListView.UploadFolder();
         }
 
         private void newFolderToolStripButton_Click(object sender, EventArgs e)
         {
-            var node = treeView1.SelectedNode;
-            if (node == null)
-                return;
-            var nodeInfo = (NodeInfo) node.Tag;
-            using (var dialog = new CreateFolderForm())
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var syncDestFolderTask = new SynchronizeDriveEmptyFolderTask(accounts[nodeInfo.AccountName],
-                        nodeInfo.AccountName, AsyncTask.NormalPriority, null, nodeInfo.File);
-                    taskManager.Add(syncDestFolderTask);
-                    taskManager.Add(new CreateFolderTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName,
-                        AsyncTask.NormalPriority, new AsyncTask[] { syncDestFolderTask }, dialog.DirecotryName, nodeInfo.File) {Tag = node});
-                }
-            }
+            fileListView.CreateFolder();
         }
 
         /// <summary>
@@ -942,15 +908,7 @@ namespace Oblqo
             driveStrip1.Width = loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
             driveStrip1.Top = loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
         }
-
-        private void downloadFileFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void downloadFileFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void downloadFolderFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DownloadFolderFromDrive();
@@ -1036,19 +994,7 @@ namespace Oblqo
                 nodeInfo.File, folderBrowserDialog1.SelectedPath));
 
         }
-
-        private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in fileListView.SelectedItems)
-            {
-                var info = (NodeInfo) item.Tag;
-                var account = accounts[info.AccountName];
-                if (account == null)
-                    continue;
-                taskManager.Add(new DeleteFileTask(account, info.AccountName, 0, null, info.File) { Tag = item });
-            }
-        }
-
+        
         private void cancelTaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (var task in from ListViewItem item in taskListView.SelectedItems select (AsyncTask) item.Tag)
@@ -1107,26 +1053,6 @@ namespace Oblqo
                 indicateErrorTimer.Stop();
             }
         }
-        
-        private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in fileListView.SelectedItems)
-            {
-                var info = (NodeInfo)item.Tag;
-                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
-                if (info.File.DriveFiles.StorageFileId == null)
-                {
-                    taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
-                        info.AccountName, 0, new AsyncTask[0], info.File));
-                }
-            }
-        }
-
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fileListView.SelectAll();
-        }
-
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -1184,37 +1110,7 @@ namespace Oblqo
 
         #endregion
 
-        private void synchronizeOnDrivesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
-            var syncFolderTask = new SynchronizeDriveEmptyFolderTask(accounts[folderInfo.AccountName],
-                folderInfo.AccountName, 0, new AsyncTask[0], folderInfo.File);
-            taskManager.Add(syncFolderTask);
-            foreach (ListViewItem item in fileListView.SelectedItems)
-            {
-                var info = (NodeInfo)item.Tag;
-                var account = accounts[info.AccountName];
-                if (info.File.DriveFiles.Count < account.Drives.Count)
-                {
-                    taskManager.Add(new SynchronizeDriveFileTask(account, info.AccountName, 0, new AsyncTask[] { syncFolderTask }, info.File));
-                }
-            }
-        }
-
-        private void synchronizeAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in fileListView.SelectedItems)
-            {
-                var info = (NodeInfo)item.Tag;
-                var folderInfo = (NodeInfo)treeView1.SelectedNode.Tag;
-                if (info.File.DriveFiles.StorageFileId == null)
-                {
-                    taskManager.Add(new SynchronizeFileTask(accounts[info.AccountName],
-                        info.AccountName, 0, new AsyncTask[0], info.File));
-                }
-            }
-        }
-
+        
         private void taskDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (taskListView.SelectedItems.Count == 0)
@@ -1276,10 +1172,6 @@ namespace Oblqo
             fileInfoPanel.DriveFile = driveStrip1.DriveFile;
         }
 
-        private void synchronizeFolder_Click(object sender, EventArgs e)
-        {
-        }
-
         private void aboutStripButton_Click(object sender, EventArgs e)
         {
             using (var aboutForm = new AboutForm())
@@ -1318,43 +1210,23 @@ namespace Oblqo
         {
             System.Diagnostics.Process.Start("https://github.com/fiftin/oblqo/wiki");
         }
-
-        private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in fileListView.SelectedItems)
-            {
-                var info = (NodeInfo)item.Tag;
-                var account = accounts[info.AccountName];
-                if (account == null)
-                    continue;
-                taskManager.Add(new DeleteFileFromArchiveTask(account, info.AccountName, 0, null, info.File) { Tag = item });
-            }
-            
-        }
-      
+              
         private async void clearAuthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
             if (node == null)
+            {
                 return;
+            }
             var nodeInfo = (NodeInfo)node.Tag;
             await accountManager.ClearAuthAsync(nodeInfo.AccountInfo);
         }
-
-        private void fileListView_DoubleClick(object sender, EventArgs e)
+        
+        private void fileListView_FileLoaded(object sender, EventArgs e)
         {
-
+            loadingFileListProgressBar.Visible = false;
         }
-
-        private void fileListView_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void fileListView_MouseUp(object sender, MouseEventArgs e)
-        {
-
-        }
+        
     }
 
 }

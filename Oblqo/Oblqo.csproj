@@ -131,6 +131,7 @@
     <Compile Include="Controls\FileList.Designer.cs">
       <DependentUpon>FileList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FileListSorder.cs" />
     <Compile Include="Controls\TaskListView.cs">
       <SubType>UserControl</SubType>
     </Compile>

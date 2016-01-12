@@ -17,129 +17,17 @@ namespace Oblqo.Controls
 {
     public partial class FileList : UserControl
     {
-        class FileListSorder : IComparer
-        {
-            public const int ASC_ORDER = 1;
-            public const int DESC_ORDER = -1;
-
-            private int order;
-            private ColumnHeader column;
-
-            public FileListSorder(ColumnHeader column, int order = ASC_ORDER)
-            {
-                this.column = column;
-                this.order = order;
-            }
-
-            public int Compare(object x, object y)
-            {
-                ListViewItem item1 = (ListViewItem)x;
-                ListViewItem item2 = (ListViewItem)y;
-                NodeInfo info1 = (NodeInfo)item1.Tag;
-                NodeInfo info2 = (NodeInfo)item2.Tag;
-                int ret = 0;
-                if (info1 != null && info2 != null)
-                {
-                    switch (column.Text)
-                    {
-                        case "Name":
-                            ret = info1.File.Name.CompareTo(info2.File.Name);
-                            break;
-                        case "Date":
-                            ret = info1.File.ModifiedDate.CompareTo(info2.File.ModifiedDate);
-                            break;
-                        case "Size":
-                            ret = info1.File.Size.CompareTo(info2.File.Size);
-                            break;
-                    }
-                }
-                return ret * order;
-            }
-
-            public void ToggleOrder(ColumnHeader newColumn)
-            {
-                if (column == newColumn)
-                {
-                    order = -order;
-                }
-                else
-                {
-                    order = ASC_ORDER;
-                    column = newColumn;
-                }
-            }
-        }
-
-        AccountCollection accounts;
-        AsyncTaskManager taskManager;
-
-        private FileListStatusBar currentDirectoryInfoPanel;
-        private ImageList smallImageList;
-
         private CancellationTokenSource updateListCancellationTokenSource;
         private readonly object updateListCancellationTokenSourceLocker = new object();
-
         private readonly Font UnsyncronizedFileItemFont;
-
-        [Browsable(false)]
-        public AccountCollection Accounts
-        {
-            get
-            {
-                return accounts;
-            }
-            set
-            {
-                accounts = value;
-            }
-        }
-
-        [Browsable(false)]
-        public AsyncTaskManager TaskManager
-        {
-            get
-            {
-                return taskManager;
-            }
-            set
-            {
-                taskManager = value;
-            }
-        }
-
-        public ImageList SmallImageList
-        {
-            get
-            {
-                return smallImageList;
-            }
-            set
-            {
-                smallImageList = value;
-            }
-        }
-
-        public FileListStatusBar CurrentDirectoryInfoPanel
-        {
-            get
-            {
-                return currentDirectoryInfoPanel;
-            }
-            set
-            {
-                currentDirectoryInfoPanel = value;
-            }
-        }
-
 
         public FileList()
         {
             InitializeComponent();
-            UnsyncronizedFileItemFont = new Font(Font, FontStyle.Strikeout);
+            UnsyncronizedFileItemFont = new Font("Courier New", Font.Size, FontStyle.Strikeout);
             fileListView.ListViewItemSorter = new FileListSorder(fileNameColumnHeader);
             
         }
-
 
         #region Event Handlers
 
@@ -204,31 +92,135 @@ namespace Oblqo.Controls
 
         private void downloadFileFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
-                taskManager.Add(new DownloadFileFromDriveTask(accounts[info.AccountName], info.AccountName,
-                    AsyncTask.NormalPriority, null, info.File, folderBrowserDialog1.SelectedPath));
+            {
+                TaskManager.Add(new DownloadFileFromDriveTask(Account, FolderInfo.AccountName, AsyncTask.NormalPriority, null, info.File, folderBrowserDialog1.SelectedPath));
+            }
         }
 
         private void downloadFileFromStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             foreach (var info in from ListViewItem item in fileListView.SelectedItems select (NodeInfo)item.Tag)
             {
-                var task = new DownloadFileFromStorageTask(
-                    accounts[info.AccountName],
-                    info.AccountName,
-                    0, null, info.File,
-                    folderBrowserDialog1.SelectedPath);
-                taskManager.Add(task);
+                var task = new DownloadFileFromStorageTask(Account, FolderInfo.AccountName, 0, null, info.File, folderBrowserDialog1.SelectedPath);
+                TaskManager.Add(task);
             }
         }
 
+        
+        private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UploadFile();
+        }
 
+        private void uploadFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UploadFolder();
+        }
+
+        private void newFolderToolStripButton_Click(object sender, EventArgs e)
+        {
+            CreateFolder();
+        }
+
+
+        private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                if (info.File.DriveFiles.StorageFileId == null)
+                {
+                    TaskManager.Add(new SynchronizeFileTask(Account,
+                        FolderInfo.AccountName, 0, new AsyncTask[0], info.File));
+                }
+            }
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAll();
+        }
 
 
         #endregion
 
+        public void UploadFile()
+        {
+
+            if (openFileDialog1.ShowDialog() != DialogResult.OK || FolderNode == null)
+            {
+                return;
+            }
+            foreach (var fileName in openFileDialog1.FileNames)
+            {
+                TaskManager.Add(new UploadFileTask(Account, FolderInfo.AccountName, AsyncTask.NormalPriority, null,
+                    fileName, FolderInfo.File)
+                { Tag = FolderNode });
+            }
+        }
+
+        public void UploadFolder()
+        {
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK || FolderNode == null)
+            {
+                return;
+            }
+            TaskManager.Add(new UploadFolderTask(Account,
+                FolderInfo.AccountName,
+                0,
+                null,
+                folderBrowserDialog1.SelectedPath,
+                FolderInfo.File)
+            { Tag = FolderNode });
+        }
+
+        public void CreateFolder()
+        {
+            if (FolderNode == null)
+            {
+                return;
+            }
+            using (var dialog = new CreateFolderForm())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var syncDestFolderTask = new SynchronizeDriveEmptyFolderTask(Account,
+                        FolderInfo.AccountName, AsyncTask.NormalPriority, null, FolderInfo.File);
+                    TaskManager.Add(syncDestFolderTask);
+                    TaskManager.Add(new CreateFolderTask(Account, FolderInfo.AccountName,
+                        AsyncTask.NormalPriority, new AsyncTask[] { syncDestFolderTask }, dialog.DirecotryName, FolderInfo.File)
+                    { Tag = FolderNode });
+                }
+            }
+        }
+
+        public ImageList SmallImageList
+        {
+            get
+            {
+                return fileListView.SmallImageList;
+            }
+            set
+            {
+                fileListView.SmallImageList = value;
+            }
+        }
+
+        public FileListStatusBar CurrentDirectoryInfoPanel { get; set; }
+
+        [Browsable(false)]
+        public AsyncTaskManager TaskManager { get; set; }
 
         [Browsable(false)]
         public ListView.SelectedListViewItemCollection SelectedItems
@@ -247,9 +239,16 @@ namespace Oblqo.Controls
                 return fileListView.Items;
             }
         }
-        
-        public void UpdateFileList(NodeInfo info, Account account)
+
+        private NodeInfo FolderInfo => (NodeInfo)FolderNode.Tag;
+        private TreeNode FolderNode { get; set; }
+        private Account Account { get; set; }
+
+        public void UpdateFileList(TreeNode node, Account account)
         {
+            FolderNode = node;
+            Account = account;
+
             lock (updateListCancellationTokenSourceLocker)
             {
                 updateListCancellationTokenSource?.Cancel();
@@ -261,14 +260,14 @@ namespace Oblqo.Controls
             {
                 try
                 {
-                    switch (info.Type)
+                    switch (FolderInfo.Type)
                     {
                         case NodeType.Account:
-                            files = await account.GetFilesAsync(account.RootFolder,
+                            files = await Account.GetFilesAsync(Account.RootFolder,
                                 updateListCancellationTokenSource.Token);
                             break;
                         case NodeType.Folder:
-                            files = await account.GetFilesAsync(info.File,
+                            files = await Account.GetFilesAsync(FolderInfo.File,
                                 updateListCancellationTokenSource.Token);
                             break;
                         default:
@@ -293,7 +292,7 @@ namespace Oblqo.Controls
                     foreach (var file in files.Where(file => !file.IsFolder))
                     {
                         var fileState = Util.GetFileState(file);
-                        if (!currentDirectoryInfoPanel.IsValid(file.Name))
+                        if (!CurrentDirectoryInfoPanel.IsValid(file.Name))
                         {
                             continue;
                         }
@@ -301,15 +300,15 @@ namespace Oblqo.Controls
                         {
                             numberOfUnsyncFiles++;
                         }
-                        else if (currentDirectoryInfoPanel.ShowOnlyUnsyncronizedFiles)
+                        else if (CurrentDirectoryInfoPanel.ShowOnlyUnsyncronizedFiles)
                         {
                             continue;
                         }
                         numberOfFiles++;
-                        AddFile(file, info.AccountName);
+                        AddFile(file, FolderInfo.AccountName);
                     }
-                    currentDirectoryInfoPanel.NumberOfFiles = numberOfFiles;
-                    currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = numberOfUnsyncFiles;
+                    CurrentDirectoryInfoPanel.NumberOfFiles = numberOfFiles;
+                    CurrentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = numberOfUnsyncFiles;
                     fileListView.Enabled = true;
                     OnFileLoaded();
                 }));
@@ -397,7 +396,7 @@ namespace Oblqo.Controls
                 if (mimeTypeParts.Length == 2)
                 {
                     var tmpKey = string.Format("file_{0}_{1}", mimeTypeParts[0], mimeTypeParts[1]);
-                    if (smallImageList.Images.ContainsKey(tmpKey))
+                    if (SmallImageList.Images.ContainsKey(tmpKey))
                     {
                         key = tmpKey;
                     }
@@ -416,12 +415,54 @@ namespace Oblqo.Controls
             SelectedIndexChanged?.Invoke(sender, e);
         }
 
-
-
-
+        
         public event EventHandler SelectedIndexChanged;
         public event EventHandler FileLoaded;
         public event EventHandler<ExceptionEventArgs> Error;
 
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFileIfItLocal();
+        }
+
+        private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFileContainingFolderIfItLocal();
+        }
+
+        private void synchronizeOnDrivesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var syncFolderTask = new SynchronizeDriveEmptyFolderTask(Account,
+                FolderInfo.AccountName, 0, new AsyncTask[0], FolderInfo.File);
+            TaskManager.Add(syncFolderTask);
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                if (info.File.DriveFiles.Count < Account.Drives.Count)
+                {
+                    TaskManager.Add(new SynchronizeDriveFileTask(Account, info.AccountName, 0, new AsyncTask[] { syncFolderTask }, info.File));
+                }
+            }
+        }
+
+
+        private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                TaskManager.Add(new DeleteFileTask(Account, info.AccountName, 0, null, info.File) { Tag = item });
+            }
+        }
+
+        private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileListView.SelectedItems)
+            {
+                var info = (NodeInfo)item.Tag;
+                TaskManager.Add(new DeleteFileFromArchiveTask(Account, info.AccountName, 0, null, info.File) { Tag = item });
+            }
+
+        }
     }
 }

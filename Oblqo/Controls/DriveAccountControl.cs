@@ -82,6 +82,15 @@ namespace Oblqo
         }
 
         public event EventHandler DriveTypeChanged;
-        
+
+        private void btnAuth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClearAuth_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

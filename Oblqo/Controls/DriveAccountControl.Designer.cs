@@ -39,6 +39,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnAuth = new System.Windows.Forms.Button();
+            this.btnClearAuth = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,6 +118,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.btnClearAuth);
+            this.panel1.Controls.Add(this.btnAuth);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.driveRootPathTextBox);
@@ -154,6 +158,26 @@
             this.label2.Text = "Path to folder with files, for example d:\\photos. For Google Drive it can be phot" +
     "os/trevel.";
             // 
+            // btnAuth
+            // 
+            this.btnAuth.Location = new System.Drawing.Point(6, 153);
+            this.btnAuth.Name = "btnAuth";
+            this.btnAuth.Size = new System.Drawing.Size(73, 31);
+            this.btnAuth.TabIndex = 27;
+            this.btnAuth.Text = "Auth";
+            this.btnAuth.UseVisualStyleBackColor = true;
+            this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
+            // 
+            // btnClearAuth
+            // 
+            this.btnClearAuth.Location = new System.Drawing.Point(85, 153);
+            this.btnClearAuth.Name = "btnClearAuth";
+            this.btnClearAuth.Size = new System.Drawing.Size(73, 31);
+            this.btnClearAuth.TabIndex = 28;
+            this.btnClearAuth.Text = "Clear";
+            this.btnClearAuth.UseVisualStyleBackColor = true;
+            this.btnClearAuth.Click += new System.EventHandler(this.btnClearAuth_Click);
+            // 
             // DriveAccountControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,5 +204,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnClearAuth;
+        private System.Windows.Forms.Button btnAuth;
     }
 }

@@ -15,13 +15,13 @@ namespace Oblqo.Controls
     public partial class TaskList : UserControl
     {
         private AsyncTaskManager taskManager;
+        private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
 
         public TaskList()
         {
             InitializeComponent();
         }
 
-        private AsyncTaskState[] displayingTaskListStates = new AsyncTaskState[] { AsyncTaskState.Running };
 
         public ImageList SmallImageList
         {
@@ -188,9 +188,7 @@ namespace Oblqo.Controls
                     break;
             }
             return taskListView.Items.Add(taskItem);
-
         }
-
 
         private void taskManager_TaskStateChanged(object sender, AsyncTaskEventArgs e)
         {

@@ -125,11 +125,11 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVI9L0VBED2EKCS0CjqFikL8AyT8JNGIXyBB
-        QnT+g0RC1ERUGhqhEo3n4z0f9+6uM3vnurubfdyTnLz75szMzp5Z5OEGATtFzpGz5GQVa4ViBSivgLd3
+        QlR+hERC1ERUGhqhEo3n4z0f9+6uM3vnurubfdyTnLz75szMzp5Z5OEGATtFzpGz5GQVa4ViBSivgLd3
         4MxUlO/ygtqSJuVgRwFzQLp/uMvcES0KERZ3ejzttvkf8tDyd1+LasjYUSKbySnlOtDrJJqyWNViMUfu
         HCXsqUi4GeqXiS48pTbABHFbTIrEoIHADbHJGtB9aXI+nxgfpyirEqf/alDDTgPf91XOdckGExLknts0
         kHHdPBs8pA34SNpcwWwAzx9Nzu8VvInnjZA2sAt9TDxmrZgoKBYTUddoNuNTQxbLWlzD7OgjofjaZcJN
-        XFDT+7WtRSH8iRw9VxRxi6MPa1EO/lWeVCaJ03cF8PXI2FFm7H7wK6PDsiahHatiKYAfAPYwZd7Khm4A
+        XFDT+7WtRSH8iRw9VxRxi6MPa1EO/lWeVCaJ03cF8PXI2FFm7H7wK6PDsiahHatiKYAf/NgwY/lQVQoA
         AAAASUVORK5CYII=
 </value>
   </data>
@@ -149,12 +149,12 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFHSURBVDhPdZLNSgNBEITLBJ8g6iEkqKdArr6YyAZFNHrT
-        B/GRFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
+        9/CVFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
         i+6bhK/zYA48l3jbHvsvC99Iq7pQilvpx5p4DIVuNnY0fEv38BH8kGiP8Ah+jhoYhzthMczOPLLGcJ/A
         xBvuuHbonnImzeFtm8BuOIZttxd43wM9sOvrwVJ6M0+CbqWBwYzoexa0QuujTXMfqG/gY4edrVj30O5S
         j6PaAKNdWDxzP05ia6Z4jT5HN5zNH0kQCZx4wM48peET63gnRfTNpRncsQlaLM7jBwIT+Jjwe9QW0id8
-        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/o69GgppF
-        rWgAAAAASUVORK5CYII=
+        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/oG9GgY1u
+        2gkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="queuedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -169,4 +169,7 @@
         h3VNAoZOqdaj7HCcTwxAiYTXktAbAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="taskMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>639, 56</value>
+  </metadata>
 </root>

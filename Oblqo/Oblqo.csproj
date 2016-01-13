@@ -132,11 +132,11 @@
       <DependentUpon>FileList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\FileListSorder.cs" />
-    <Compile Include="Controls\TaskListView.cs">
+    <Compile Include="Controls\TaskList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TaskListView.Designer.cs">
-      <DependentUpon>TaskListView.cs</DependentUpon>
+    <Compile Include="Controls\TaskList.Designer.cs">
+      <DependentUpon>TaskList.cs</DependentUpon>
     </Compile>
     <Compile Include="Core Classes\Util.cs" />
     <Compile Include="Forms\AboutForm.cs">
@@ -285,8 +285,8 @@
     <EmbeddedResource Include="Controls\FileList.resx">
       <DependentUpon>FileList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TaskListView.resx">
-      <DependentUpon>TaskListView.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\TaskList.resx">
+      <DependentUpon>TaskList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAYgBBAGIAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAZgBBAGYAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -279,67 +279,10 @@
         Af8BwAEfAfwBPwH8AT8C/wHgAT8B/AE/AfwBPws=
 </value>
   </data>
-  <metadata name="tasksToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>169, 95</value>
-  </metadata>
-  <metadata name="taskMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>534, 56</value>
-  </metadata>
-  <metadata name="tasksToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>169, 95</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="activeTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVI9L0VBED2EKCS0CjqFikL8AyT8JNGIXyBB
-        QvgbEglRE1FpaIRKNJ6P93zcu7vO7J3r7m72cU9y8u6bMzM7e2aRhxsE7BQ5R86Sk1WsFYoVoLwC3t6B
-        M1NRvssLakualIMdBcwB6f7hLnNHtChEWNzp8bTb5n/IQ8vffS2qIWNHiWwmp5TrQK+TaMpiVYvFHLlz
-        lLCnIuFmqF8muvCU2gATxG0xKRKDBgI3xCZrQPelyfl8YnycoqxKnP6rQQ07DXzfVznXJRtMSJB7btNA
-        xnXzbPCQNuAjaXMFswE8fzQ5v1fwJp43QtrALvQx8Zi1YqKgWExEXaPZjE8NWSxrcQ2zo4+E4muXCTdx
-        QU3v17YWhfAncvRcUcQtjj6sRTn4V3lSmSRO3xXA1yNjR5mx+8GvjA7LmoR2rIqlAH4A6I0wWQ9bwNQA
-        AAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="finishedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFRSURBVDhPjVI9SwQxFBwFERS0tVCstbgDf4MK+pNs7jcI
-        KigHFnYWFhbL6maxsfEQS2vLRVEQ7Pw4Z16yd/E2Jzcwm83Lm/eSSZBEB9PIsYISbTi0cINli00Ehx0K
-        H8gP8jtQ/z2ubYWsBK4wz6Qu2f+XDkfIMBtUESYRix38sMhJUAX4bacFQ76Sj9F814tljj9znPyXOV7Y
-        ZB33mOHoLFbYdwrBbZmk5Hcu75F5mPfpzROusWbNLjHHWM/iDs8ssqizt0k5LcGZJapTiXPrHIsLlqsL
-        l/ji9S7p/C1OfIECb5xvmMDfyqr9+84XltMooEcyPIJYDboKzc6egyN4E+8ai9pJurOnipqJQoHNRFLF
-        IreJeM1tL67hcGiPJJ0cU34dBFUEPU+H45HkJh327ZbGQq9Sj0U+yOlTfHKsyIwc2fY4yBw5rGsSMyxY
-        rAHgF1WiFq+fm7pFAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="cancelledTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFHSURBVDhPdZLNSgNBEITLBJ8g6iEkqKdArr6YyAZFNHrT
-        p/CpFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
-        i+6bhK/zYA48l3jbHvsvC99Iq7pQilvpx5p4DIVuNnY0fEv38BH8kGiP8Ah+jhoYhzthMczOPLLGcJ/A
-        xBvuuHbonnImzeFtm8BuOIZttxd43wM9sOvrwVJ6M0+CbqWBwYzoexa0QuujTXMfqG/gY4edrVj30O5S
-        j6PaAKNdWDxzP05ia6Z4jT5HN5zNH0kQCZx4wM48peET63gnRfTNpRncsQlaLM7jBwIT+Jjwe9QW0id8
-        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/kC9GfHXc
-        dlYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="queuedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFaSURBVDhPpZK9SgNBFIU3glgI2ooovoEWgtilUUFfIt12
-        S4r93wVjJbaCCoovYaMI+gCK5jFUUgcEjT/fSSbJsCvx78Jh7t5z7t2ZM+N8FY1GYyzP8/k4jpfSNF2M
-        omhONUOPjizLNkETtKvV6pugHNwybN3IyuH7/iSiU/DxDY48z5swbcOA+Emz8A5OTFsvKGjbtuiM7e6y
-        voA2+TbrheG6SJJkq9sscyjozANSBkJVwjB8wMh75dRXbA1Dr1V3JKYgkwYkjbMargF83ynnj8u2BrQY
-        Pu3oqozTvx3QCYJgxtE9/2uAHgkffz+CTIS8sUl8WTDmPoIm/TJxtc8bXKqu4TJyrUhytL1arfZar9ef
-        yXfkuq3hpxvd5n4gOITQI7EHlWD8OjBtw9DzZMhxsaEINPuu646btnIg0qu8Ai3Q0TFYn9jyeWnbI6Ii
-        h3VNAoZOqdaj7HCcTwxAiYTXktAbAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="mainTool.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>242, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="newAccountStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

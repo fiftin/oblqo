@@ -1,6 +1,6 @@
 ﻿namespace Oblqo.Controls
 {
-    partial class TaskListView
+    partial class TaskList
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,55 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskListView));
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.taskColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.taskTypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.sizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PercentColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskList));
             this.tasksToolStrip = new System.Windows.Forms.ToolStrip();
             this.activeTasksStripButton = new System.Windows.Forms.ToolStripButton();
             this.finishedTasksStripButton = new System.Windows.Forms.ToolStripButton();
             this.cancelledTasksStripButton = new System.Windows.Forms.ToolStripButton();
             this.queuedTasksStripButton = new System.Windows.Forms.ToolStripButton();
+            this.taskListView = new System.Windows.Forms.ListView();
+            this.taskColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.taskTypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PercentColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.taskMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cancelTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.taskDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tasksToolStrip.SuspendLayout();
+            this.taskMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.taskColumnHeader,
-            this.taskTypeColumnHeader,
-            this.sizeColumnHeader,
-            this.PercentColumnHeader});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(581, 333);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseUp);
-            // 
-            // taskColumnHeader
-            // 
-            this.taskColumnHeader.Text = "File/Folder";
-            this.taskColumnHeader.Width = 180;
-            // 
-            // taskTypeColumnHeader
-            // 
-            this.taskTypeColumnHeader.Text = "Task";
-            this.taskTypeColumnHeader.Width = 120;
-            // 
-            // sizeColumnHeader
-            // 
-            this.sizeColumnHeader.Text = "Size";
-            // 
-            // PercentColumnHeader
-            // 
-            this.PercentColumnHeader.Text = "%";
             // 
             // tasksToolStrip
             // 
@@ -104,6 +73,7 @@
             this.activeTasksStripButton.Name = "activeTasksStripButton";
             this.activeTasksStripButton.Size = new System.Drawing.Size(69, 20);
             this.activeTasksStripButton.Text = "Active";
+            this.activeTasksStripButton.Click += new System.EventHandler(this.activeTasksStripButton_Click);
             // 
             // finishedTasksStripButton
             // 
@@ -113,6 +83,7 @@
             this.finishedTasksStripButton.Name = "finishedTasksStripButton";
             this.finishedTasksStripButton.Size = new System.Drawing.Size(83, 20);
             this.finishedTasksStripButton.Text = "Finished";
+            this.finishedTasksStripButton.Click += new System.EventHandler(this.finishedTasksStripButton_Click);
             // 
             // cancelledTasksStripButton
             // 
@@ -122,6 +93,7 @@
             this.cancelledTasksStripButton.Name = "cancelledTasksStripButton";
             this.cancelledTasksStripButton.Size = new System.Drawing.Size(90, 20);
             this.cancelledTasksStripButton.Text = "Cancelled";
+            this.cancelledTasksStripButton.Click += new System.EventHandler(this.cancelledTasksStripButton_Click);
             // 
             // queuedTasksStripButton
             // 
@@ -132,33 +104,94 @@
             this.queuedTasksStripButton.Size = new System.Drawing.Size(69, 20);
             this.queuedTasksStripButton.Text = "Queued";
             this.queuedTasksStripButton.ToolTipText = "Queued Tasks";
+            this.queuedTasksStripButton.Click += new System.EventHandler(this.queuedTasksStripButton_Click);
             // 
-            // TaskListView
+            // taskListView
+            // 
+            this.taskListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.taskColumnHeader,
+            this.taskTypeColumnHeader,
+            this.sizeColumnHeader,
+            this.PercentColumnHeader});
+            this.taskListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.taskListView.FullRowSelect = true;
+            this.taskListView.HideSelection = false;
+            this.taskListView.Location = new System.Drawing.Point(0, 0);
+            this.taskListView.Name = "taskListView";
+            this.taskListView.Size = new System.Drawing.Size(581, 333);
+            this.taskListView.TabIndex = 4;
+            this.taskListView.UseCompatibleStateImageBehavior = false;
+            this.taskListView.View = System.Windows.Forms.View.Details;
+            // 
+            // taskColumnHeader
+            // 
+            this.taskColumnHeader.Text = "File/Folder";
+            this.taskColumnHeader.Width = 180;
+            // 
+            // taskTypeColumnHeader
+            // 
+            this.taskTypeColumnHeader.Text = "Task";
+            this.taskTypeColumnHeader.Width = 120;
+            // 
+            // sizeColumnHeader
+            // 
+            this.sizeColumnHeader.Text = "Size";
+            // 
+            // PercentColumnHeader
+            // 
+            this.PercentColumnHeader.Text = "%";
+            // 
+            // taskMenu
+            // 
+            this.taskMenu.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.taskMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cancelTaskToolStripMenuItem,
+            this.taskDetailsToolStripMenuItem});
+            this.taskMenu.Name = "taskMenu";
+            this.taskMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // cancelTaskToolStripMenuItem
+            // 
+            this.cancelTaskToolStripMenuItem.Name = "cancelTaskToolStripMenuItem";
+            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cancelTaskToolStripMenuItem.Text = "Cancel";
+            this.cancelTaskToolStripMenuItem.Click += new System.EventHandler(this.cancelTaskToolStripMenuItem_Click);
+            // 
+            // taskDetailsToolStripMenuItem
+            // 
+            this.taskDetailsToolStripMenuItem.Name = "taskDetailsToolStripMenuItem";
+            this.taskDetailsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.taskDetailsToolStripMenuItem.Text = "Details";
+            // 
+            // TaskList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.taskListView);
             this.Controls.Add(this.tasksToolStrip);
-            this.Name = "TaskListView";
+            this.Name = "TaskList";
             this.Size = new System.Drawing.Size(581, 358);
             this.tasksToolStrip.ResumeLayout(false);
             this.tasksToolStrip.PerformLayout();
+            this.taskMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader taskColumnHeader;
-        private System.Windows.Forms.ColumnHeader taskTypeColumnHeader;
-        private System.Windows.Forms.ColumnHeader sizeColumnHeader;
-        private System.Windows.Forms.ColumnHeader PercentColumnHeader;
         private System.Windows.Forms.ToolStrip tasksToolStrip;
         private System.Windows.Forms.ToolStripButton activeTasksStripButton;
         private System.Windows.Forms.ToolStripButton finishedTasksStripButton;
         private System.Windows.Forms.ToolStripButton cancelledTasksStripButton;
         private System.Windows.Forms.ToolStripButton queuedTasksStripButton;
+        private System.Windows.Forms.ListView taskListView;
+        private System.Windows.Forms.ColumnHeader taskColumnHeader;
+        private System.Windows.Forms.ColumnHeader taskTypeColumnHeader;
+        private System.Windows.Forms.ColumnHeader sizeColumnHeader;
+        private System.Windows.Forms.ColumnHeader PercentColumnHeader;
+        private System.Windows.Forms.ContextMenuStrip taskMenu;
+        private System.Windows.Forms.ToolStripMenuItem cancelTaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem taskDetailsToolStripMenuItem;
     }
 }

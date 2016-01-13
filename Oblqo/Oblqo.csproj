@@ -138,6 +138,7 @@
     <Compile Include="Controls\TaskList.Designer.cs">
       <DependentUpon>TaskList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlUtil.cs" />
     <Compile Include="Core Classes\Util.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>

@@ -145,7 +145,6 @@ namespace Oblqo
             fileListView.UpdateFileList(node, account);
         }
 
-
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
         {
             var token = new CancellationToken();
@@ -199,47 +198,10 @@ namespace Oblqo
             });
         }
 
-        private IEnumerable<TreeNode> GetAllTreeViewNodes(TreeView treeView)
-        {
-            var ret = new List<TreeNode>();
-            foreach (TreeNode node in treeView.Nodes)
-            {
-                ret.Add(node);
-                ret.AddRange(GetAllTreeViewNodes(node));
-            }
-            return ret;
-        }
-
-        private IEnumerable<TreeNode> GetAllTreeViewNodes(TreeNode root)
-        {
-            var ret = new List<TreeNode>();
-            foreach (TreeNode node in root.Nodes)
-            {
-                ret.Add(node);
-                ret.AddRange(GetAllTreeViewNodes(node));
-            }
-            return ret;
-        }
-
-        private void UpdateTeeViewNode(AccountFileStates newFileState, TreeNode node)
-        {
-            if ((newFileState & AccountFileStates.Deleted) != 0)
-            {
-                node.Remove();
-                return;
-            }
-            if ((newFileState & AccountFileStates.New) != 0)
-            {
-                node.ForeColor = Color.Green;
-            }
-        }
-
 
         private void AddNode(AccountFile file, TreeNode parentNode, string accountName)
         {
-
             var newNode = parentNode.Nodes.Add("", file.Name, FolderImageKey);
-
             newNode.SelectedImageKey = FolderImageKey;
             newNode.Tag = new NodeInfo(file, accountName);
             if (file.HasChildren)
@@ -314,7 +276,7 @@ namespace Oblqo
                         {
                             if (attr.NewState == AccountFileStates.New)
                             {
-                                foreach (var x in GetAllTreeViewNodes(treeView1))
+                                foreach (var x in Oblqo.Controls.ControlUtil.GetAllTreeViewNodes(treeView1))
                                 {
                                     var info = (NodeInfo)x.Tag;
                                     if (info.File == parentFile)
@@ -326,12 +288,12 @@ namespace Oblqo
                             }
                             else
                             {
-                                foreach (var x in GetAllTreeViewNodes(treeView1))
+                                foreach (var x in Oblqo.Controls.ControlUtil.GetAllTreeViewNodes(treeView1))
                                 {
                                     var info = (NodeInfo)x.Tag;
                                     if (info.File == file)
                                     {
-                                        UpdateTeeViewNode(attr.NewState, x);
+                                        Oblqo.Controls.ControlUtil.UpdateTeeViewNode(attr.NewState, x);
                                     }
                                 }
                             }
@@ -484,7 +446,6 @@ namespace Oblqo
                 await ConnectAccountAsync(node);
             }
         }
-
 
         private async void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -652,6 +613,8 @@ namespace Oblqo
             fileListView.CreateFolder();
         }
 
+        #region Recalculate Layout
+
         /// <summary>
         /// Resize File List View Progress Bar.
         /// </summary>
@@ -685,7 +648,9 @@ namespace Oblqo
             driveStrip1.Width = loadingImageProgressBar.Width = fileInfoPanel.Width - 1;
             driveStrip1.Top = loadingImageProgressBar.Top = loadingFileListProgressBar.Top;
         }
-        
+
+        #endregion
+
         private void downloadFolderFromDriveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DownloadFolderFromDrive();
@@ -771,7 +736,6 @@ namespace Oblqo
                 nodeInfo.File, folderBrowserDialog1.SelectedPath));
 
         }
-        
 
         private void showDescriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -838,16 +802,10 @@ namespace Oblqo
             UpdateFileList();
         }
 
-
         private void currentDirectoryInfoPanel_FilterChanged(object sender, EventArgs e)
         {
             fileListView.Focus();
             UpdateFileList();
-        }
-
-        private void fileInfoPanel_Error(object sender, ExceptionEventArgs e)
-        {
-            OnError(e.Exception);
         }
 
         private void fileInfoPanel_ImageLoading(object sender, EventArgs e)
@@ -875,12 +833,6 @@ namespace Oblqo
             }
         }
 
-        private void fileListView_SizeChanged(object sender, EventArgs e)
-        {
-            btnNewConnection.Left = fileListView.Width / 4 - btnNewConnection.Width / 4;
-            btnNewConnection.Top = fileListView.Height/ 3;
-        }
-
         private void cloneAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = treeView1.SelectedNode;
@@ -905,7 +857,7 @@ namespace Oblqo
         {
             System.Diagnostics.Process.Start("https://github.com/fiftin/oblqo/wiki");
         }
-              
+
         private async void clearAuthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
@@ -916,7 +868,13 @@ namespace Oblqo
             var nodeInfo = (NodeInfo)node.Tag;
             await accountManager.ClearAuthAsync(nodeInfo.AccountInfo);
         }
-        
+
+        private void fileListView_SizeChanged(object sender, EventArgs e)
+        {
+            btnNewConnection.Left = fileListView.Width / 4 - btnNewConnection.Width / 4;
+            btnNewConnection.Top = fileListView.Height / 3;
+        }
+
         private void fileListView_FileLoaded(object sender, EventArgs e)
         {
             loadingFileListProgressBar.Visible = false;

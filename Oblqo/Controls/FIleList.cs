@@ -445,7 +445,6 @@ namespace Oblqo.Controls
             }
         }
 
-
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in fileListView.SelectedItems)

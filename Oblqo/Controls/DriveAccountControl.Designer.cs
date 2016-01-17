@@ -37,10 +37,10 @@
             this.driveRootPathTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClearAuth = new System.Windows.Forms.Button();
+            this.btnAuth = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnAuth = new System.Windows.Forms.Button();
-            this.btnClearAuth = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -135,6 +135,26 @@
             this.panel1.Size = new System.Drawing.Size(464, 218);
             this.panel1.TabIndex = 25;
             // 
+            // btnClearAuth
+            // 
+            this.btnClearAuth.Location = new System.Drawing.Point(85, 153);
+            this.btnClearAuth.Name = "btnClearAuth";
+            this.btnClearAuth.Size = new System.Drawing.Size(73, 31);
+            this.btnClearAuth.TabIndex = 28;
+            this.btnClearAuth.Text = "Clear";
+            this.btnClearAuth.UseVisualStyleBackColor = true;
+            this.btnClearAuth.Click += new System.EventHandler(this.btnClearAuth_Click);
+            // 
+            // btnAuth
+            // 
+            this.btnAuth.Location = new System.Drawing.Point(6, 153);
+            this.btnAuth.Name = "btnAuth";
+            this.btnAuth.Size = new System.Drawing.Size(73, 31);
+            this.btnAuth.TabIndex = 27;
+            this.btnAuth.Text = "Auth";
+            this.btnAuth.UseVisualStyleBackColor = true;
+            this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
+            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -157,26 +177,6 @@
             this.label2.TabIndex = 26;
             this.label2.Text = "Path to folder with files, for example d:\\photos. For Google Drive it can be phot" +
     "os/trevel.";
-            // 
-            // btnAuth
-            // 
-            this.btnAuth.Location = new System.Drawing.Point(6, 153);
-            this.btnAuth.Name = "btnAuth";
-            this.btnAuth.Size = new System.Drawing.Size(73, 31);
-            this.btnAuth.TabIndex = 27;
-            this.btnAuth.Text = "Auth";
-            this.btnAuth.UseVisualStyleBackColor = true;
-            this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
-            // 
-            // btnClearAuth
-            // 
-            this.btnClearAuth.Location = new System.Drawing.Point(85, 153);
-            this.btnClearAuth.Name = "btnClearAuth";
-            this.btnClearAuth.Size = new System.Drawing.Size(73, 31);
-            this.btnClearAuth.TabIndex = 28;
-            this.btnClearAuth.Text = "Clear";
-            this.btnClearAuth.UseVisualStyleBackColor = true;
-            this.btnClearAuth.Click += new System.EventHandler(this.btnClearAuth_Click);
             // 
             // DriveAccountControl
             // 

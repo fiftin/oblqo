@@ -74,7 +74,7 @@ namespace Oblqo.Tasks
         {
             var xml = base.ToXml();
             var sourceFileXml = SourceFile.ToXml("sourceFile");
-            xml.Add();
+            xml.Add(sourceFileXml);
             return xml;
         }
     }

@@ -121,6 +121,7 @@
     <Compile Include="AsyncTaskManagerTest.cs" />
     <Compile Include="AsyncTaskTest.cs" />
     <Compile Include="Mocks\MockConfigurationStorage.cs" />
+    <Compile Include="SynchronizeFileTaskTest.cs" />
     <Compile Include="TestEnvironment.cs" />
     <Compile Include="Mocks\MockDrive.cs" />
     <Compile Include="Mocks\MockDriveFile.cs" />

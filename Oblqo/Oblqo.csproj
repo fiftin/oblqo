@@ -106,6 +106,9 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\AWSSDK.2.3.54.2\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>..\packages\Mono.Posix.4.0.0.0\lib\net40\Mono.Posix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\FileListSorder.cs" />
@@ -327,6 +330,7 @@
     <EmbeddedResource Include="Controls\FIleList.resx">
       <DependentUpon>FIleList.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Local\UnixLocalFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

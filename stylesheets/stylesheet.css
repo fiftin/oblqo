@@ -243,3 +243,20 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.menu {
+  text-align: center;
+}
+
+.menu-item {
+  list-style: none;
+  display: inline;
+}
+
+.page  {
+  display: none;
+}
+
+.page-active {
+  display: block;
+}

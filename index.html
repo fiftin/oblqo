@@ -21,17 +21,43 @@
       <a href="https://github.com/fiftin/oblqo/releases/download/0.4.8/oblqo-0.4.8-portable.zip"
          class="btn">Download Portable (for Windows, Linux &amp; Mac)</a>
     </section>
-    <section class="main-content">
-      <p>
-         This tool helps you to store and sync your files across multiple
-         storages: local disk, Amazon Glacier, Google Drive. If you lose files
-         from one storage you always can get their from another.
-       </p>
-      <p>
-        Also this tool allow you scale your images to smaller dimensions and
-        save space on your Google Drive. You can store original photos on
-        Amazon Glacier and use Google Drive for view and share your photos.
-      </p>
+    <section class="main-menu">
+      <ul class="menu">
+        <li class="menu-item">
+          <a href="#" onclick="return showPage('home')">Home</a>
+        </li>
+        <li class="menu-item">
+          <a href="#" onclick="return showPage('screenshots')">Screenshots</a>
+        </li>
+      </ul>
     </section>
+    <section class="main-content">
+      <div id="home" class="page page-active">
+        <p>
+           This tool helps you to store and sync your files across multiple
+           storages: local disk, Amazon Glacier, Google Drive. If you lose files
+           from one storage you always can get their from another.
+         </p>
+        <p>
+           Also this tool allow you scale your images to smaller dimensions and
+           save space on your Google Drive. You can store original photos on
+           Amazon Glacier and use Google Drive for view and share your photos.
+        </p>
+      </div>
+      <div id="screenshots" class="page">
+        <p>
+          <img src="" />
+        </p>
+        <p>
+          <img src="" />
+        </p>
+      </div>
+    </section>
+    <script type="text/javascript">
+      function showPage(pageId) {
+        var page = document.getElementById(pageId);
+        page.className = "page";
+      }
+    </script>
   </body>
 </html>

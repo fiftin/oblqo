@@ -1,6 +1,0 @@
-{
-  "name": "Oblqo",
-  "tagline": "Tool for uploading photos to Glacier and sync it with Google Drive",
-  "body": "![oblqo](https://github.com/fiftin/oblqo/raw/master/Oblqo/oblqo.png)\r\n\r\nThis tool helps you to store and sync your files across multiple storages: local disk, Amazon Glacier, Google Drive. If you lose files from one storage you always can get their from another.\r\n\r\nAlso this tool allow you scale your images to smaller dimensions and save space on your Google Drive. You can store original photos on Amazon Glacier and use Google Drive for view and share your photos.",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}

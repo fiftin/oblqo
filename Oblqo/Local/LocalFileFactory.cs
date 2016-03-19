@@ -15,7 +15,8 @@ namespace Oblqo.Local
                 if (instance == null)
                 {
                     instance = new LocalFileFactory();
-                    instance.Register(PlatformID.Win32NT, (drive, file, isRoot) => new NtfsLocalFile(drive, file));
+					instance.Register(PlatformID.Win32NT, (drive, file, isRoot) => new NtfsLocalFile(drive, file));
+					instance.Register(PlatformID.Unix, (drive, file, isRoot) => new UnixLocalFile(drive, file));
                 }
                 return instance;
             }
@@ -31,8 +32,8 @@ namespace Oblqo.Local
 
         public LocalFile Create(LocalDrive drive, FileSystemInfo file, bool isRoot)
         {
-            var creator = creators[Environment.OSVersion.Platform];
-            if (creator == null)
+			Func<LocalDrive, FileSystemInfo, bool, LocalFile> creator;
+			if (!creators.TryGetValue(Environment.OSVersion.Platform, out creator))
             {
                 throw new PlatformNotSupportedException();
             }

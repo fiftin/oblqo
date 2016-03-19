@@ -47,7 +47,32 @@ namespace Oblqo
         public async Task RestoreAsync(Account account, string accountName, CancellationToken token)
         {
             var tasks = await config.GetTasksAsync(account, accountName, token);
+            foreach (var task in tasks.Where((x) => x.Account == account))
+            {
+                task.Pause();
+            }
             AddRange(tasks);
+        }
+
+        public int CountTasksOf(Account account)
+        {
+            return tasks.Count((x) => x.Account == account);
+        }
+
+        public void ResumeAllTasksOf(Account account)
+        {
+            foreach (var task in tasks.Where((x) => x.Account == account))
+            {
+                task.Resume();
+            }
+        }
+
+        public void CancelAllTasksOf(Account account)
+        {
+            foreach (var task in tasks.Where((x) => x.Account == account))
+            {
+                task.Cancel();
+            }
         }
 
         public void SaveAll()
@@ -91,6 +116,14 @@ namespace Oblqo
         {
             Add(task);
             Save(task);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return tasks.Count;
+            }
         }
 
         void task_Progress(object sender, AsyncTaskProgressEventArgs e)

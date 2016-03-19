@@ -91,7 +91,7 @@ namespace Oblqo
             ID = Guid.NewGuid().ToString();
         }
 
-        public virtual async Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
+        public virtual Task LoadAsync(Account account, string id, XElement xml, CancellationToken token)
         {
             Account = account;
             AccountName = xml.Attribute("accountName").Value;
@@ -99,6 +99,7 @@ namespace Oblqo
             Priority = int.Parse(xml.Attribute("priority").Value);
             ParentsMode = (AsyncTaskParentsMode)Enum.Parse(typeof(AsyncTaskParentsMode), xml.Attribute("parentsMode").Value);
             ID = id;
+            return Task.FromResult(0);
         }
 
         public virtual XElement ToXml()
@@ -158,6 +159,26 @@ namespace Oblqo
         }
 
         protected abstract Task OnStartAsync();
+
+        public void Pause()
+        {
+            if (State != AsyncTaskState.Waiting)
+            {
+                throw new InvalidOperationException("You can pause task only in waiting state");
+            }
+            State = AsyncTaskState.Paused;
+            OnStateChanged();
+        }
+
+        public void Resume()
+        {
+            if (State != AsyncTaskState.Paused)
+            {
+                throw new InvalidOperationException("You can resume only paused task");
+            }
+            State = AsyncTaskState.Waiting;
+            OnStateChanged();
+        }
 
         public void Cancel()
         {

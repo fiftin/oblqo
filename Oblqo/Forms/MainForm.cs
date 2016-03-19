@@ -70,11 +70,27 @@ namespace Oblqo
                 node.Tag = new NodeInfo(x);
             }
         }
+        
+        private async Task ConnectAccountAsync(TreeNode node)
+        {
+            var nodeInfo = (NodeInfo)node.Tag;
+            try
+            {
+                await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, node);
+                UpdateNode(node);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
 
         private async Task<Account> ConnectAccountAsync(string name, TreeNode node)
         {
             if (loadingNodes.Contains(node))
+            {
                 return null;
+            }
             var nodeImageKey = node.ImageKey;
             loadingNodes.Add(node);
             try
@@ -98,21 +114,6 @@ namespace Oblqo
             {
                 loadingNodes.Remove(node);
                 UpdateToolBarAndMenu();
-            }
-        }
-
-
-        private async Task ConnectAccountAsync(TreeNode node)
-        {
-            var nodeInfo = (NodeInfo)node.Tag;
-            try
-            {
-                await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, node);
-                UpdateNode(node);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
             }
         }
 
@@ -160,7 +161,9 @@ namespace Oblqo
                     switch (info.Type)
                     {
                         case NodeType.Account:
-                            folders = await accounts[info.AccountName].GetSubfoldersAsync(accounts[info.AccountName].RootFolder, token);
+                            folders = 
+                                await accounts[info.AccountName].GetSubfoldersAsync(accounts[info.AccountName].RootFolder,
+                                                                                    token);
                             break;
                         case NodeType.Folder:
                             folders = await accounts[info.AccountName].GetSubfoldersAsync(info.File, token);
@@ -361,15 +364,28 @@ namespace Oblqo
                 switch (nodeInfo.Type)
                 {
                     case NodeType.Account:
-                        // is not connected
-                        if (!accounts.ContainsKey(nodeInfo.AccountInfo.AccountName))
+                        if (!accounts.ContainsKey(nodeInfo.AccountInfo.AccountName)) // if is not connected
                         {
                             var account = await ConnectAccountAsync(nodeInfo.AccountInfo.AccountName, e.Node);
                             UpdateNode(e.Node, true, true);
-                            await Task.Run(async delegate
+                            await taskManager.RestoreAsync(account, nodeInfo.AccountInfo.AccountName, CancellationToken.None);
+                            if (taskManager.CountTasksOf(account) > 0)
                             {
-                                await taskManager.RestoreAsync(account, nodeInfo.AccountInfo.AccountName, CancellationToken.None);
-                            });
+                                var answer = MessageBox.Show(this, 
+                                                             "You have uncompleted tasks. Do you want to continue this tasks?",
+                                                             "Restore tasks",
+                                                             MessageBoxButtons.YesNo,
+                                                             MessageBoxIcon.Question);
+                                switch (answer)
+                                {
+                                    case DialogResult.Yes:
+                                        taskManager.ResumeAllTasksOf(account);
+                                        break;
+                                    case DialogResult.No:
+                                        taskManager.CancelAllTasksOf(account);
+                                        break;
+                                }
+                            }
                         }
                         break;
                 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Oblqo by fiftin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="pragma" content="no-cache" />
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
@@ -81,17 +82,13 @@
     </section>
     <script type="text/javascript">
 
-      // window.onscroll = function() {
-      // };
-
-      function selectMenuItem(menuItem) {
+      function selectMenuItem(pageId) {
         var $menus = $('.menu');
         $menus.each(function() {
           var $items = $(this).find('.menu__item');
           $items.removeClass('menu__item--active');
-          var href = $(menuItem).find('a').prop('href').match(/(#\w+)$/)[1];
           var $activeItem =
-            $(this).find('.menu__item-link[href="'+ href +'"]').parent();
+            $(this).find('.menu__item-link[href="#'+ pageId +'"]').parent();
           $activeItem.addClass('menu__item--active');
         });
       }
@@ -107,12 +104,21 @@
       }
 
       function showPage(menuItemLink) {
-        var pageId = menuItemLink.href.match(/#(\w+)$/)[1];
+        if (typeof menuItemLink === 'string') {
+          pageId = menuItemLink;
+        } else {
+          var pageId = menuItemLink.href.match(/#(\w+)$/)[1];
+        }
         selectPage(pageId);
-        selectMenuItem(menuItemLink.parentElement);
+        selectMenuItem(pageId);
       }
 
       $(function() {
+        var m = document.location.href.match(/#(\w+)$/);
+        if (m) {
+          showPage(m[1]);
+        }
+
         $(window).scroll(function() {
           var headerHeight = $('#page-header').innerHeight();
           if (document.body.scrollTop > headerHeight - 60) {
@@ -126,6 +132,7 @@
             $('#fixed-menu').css({ opacity: 0.0, zIndex: -1 });
           }
         });
+
         // smooth scrolling to anchor
         $('a[href*="#"]:not([href="#"])').click(function() {
           if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -135,11 +142,16 @@
               $('html, body').animate({
                 scrollTop: target.offset().top
               }, 800);
+              history.pushState({ href: this.href }, document.title, this.href);
               return false;
             }
           }
         });
       });
+
+      window.onpopstate = function(event) {
+        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+      };
 
     </script>
   </body>

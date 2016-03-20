@@ -142,7 +142,8 @@
               $('html, body').animate({
                 scrollTop: target.offset().top
               }, 800);
-              history.pushState({ href: this.href }, document.title, this.href);
+              var pageId = document.location.href.match(/#(\w+)$/)[1];
+              history.pushState({ pageId: pageId }, document.title, this.href);
               return false;
             }
           }
@@ -150,7 +151,9 @@
       });
 
       window.onpopstate = function(event) {
-        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+        if (event.state && event.state.pageId) {
+          showPage(event.state.pageId);
+        }
       };
 
     </script>

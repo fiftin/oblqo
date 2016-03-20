@@ -245,7 +245,7 @@ a {
     font-size: 0.9rem; } }
 
 .main-content {
-  padding-top: 0;
+  padding-top: 1px;
 }
 
 .main-menu {

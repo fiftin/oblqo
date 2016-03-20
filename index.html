@@ -140,13 +140,21 @@
             var target = $(this.hash);
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) {
+              var hashMatch = document.location.href.match(/#(\w+)$/);
+              if (hashMatch !== null) {
+                var pageId = hashMatch[1];
+                history.replaceState(
+                  { pageId: pageId, scrollTop: document.body.scrollTop },
+                  document.title,
+                  this.href);
+              }
               $('html, body').animate({
                 scrollTop: target.offset().top
               }, 800);
               var hashMatch = this.href.match(/#(\w+)$/);
               if (hashMatch !== null) {
                 var pageId = hashMatch[1];
-                history.pushState({ pageId: pageId, scrollTop: document.body.scrollTop }, document.title, this.href);
+                history.pushState({ pageId: pageId }, document.title, this.href);
               }
               return false;
             }

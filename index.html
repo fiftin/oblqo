@@ -93,7 +93,7 @@
         });
       }
 
-      function selectPage(pageId) {
+      function selectPage(pageId, scrollTop) {
         var pages = document.getElementById('main-content').children;
         var activePage = document.getElementById(pageId);
         for (var i in pages) {
@@ -101,9 +101,10 @@
           page.className = 'page';
         }
         activePage.className = 'page page--active';
+        $('html, body').animate({ scrollTop: scrollTop }, 800);
       }
 
-      function showPage(menuItemLink) {
+      function showPage(menuItemLink, scrollTop) {
         if (typeof menuItemLink === 'string') {
           pageId = menuItemLink;
         } else {
@@ -145,7 +146,7 @@
               var hashMatch = this.href.match(/#(\w+)$/);
               if (hashMatch !== null) {
                 var pageId = hashMatch[1];
-                history.pushState({ pageId: pageId }, document.title, this.href);
+                history.pushState({ pageId: pageId, scrollTop: document.body.scrollTop }, document.title, this.href);
               }
               return false;
             }
@@ -155,7 +156,7 @@
 
       window.onpopstate = function(event) {
         if (event.state && event.state.pageId) {
-          showPage(event.state.pageId);
+          showPage(event.state.pageId, event.state.scrollTop);
         } else {
           showPage('home');
         }

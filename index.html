@@ -26,7 +26,15 @@
     </section>
 
     <section class="main-menu">
-      <ul id="main-menu" class="menu">
+      <ul class="menu">
+        <li class="menu__item menu__item--active">
+          <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Home</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__item-link" href="#screenshots" onclick="return showPage(this)">Screenshots</a>
+        </li>
+      </ul>
+      <ul id="fixed-menu" class="menu menu--fixed" style="opacity: 0.0; display: none; z-index: -1">
         <li class="menu__item menu__item--active">
           <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Home</a>
         </li>
@@ -63,25 +71,19 @@
     </section>
     <script type="text/javascript">
 
-      window.onscroll = function() {
-        var headerHeight = $('#page-header').innerHeight();
-        if (document.body.scrollTop > headerHeight) {
-          document.getElementById('main-menu').className = "menu menu--fixed";
-        } else {
-          document.getElementById('main-menu').className = "menu";
-        }
-      };
+      // window.onscroll = function() {
+      // };
 
       function selectMenuItem(menuItem) {
-        var menuItems = document.getElementById('main-menu').children;
-        for (var i in menuItems) {
-          var item = menuItems[i];
-          if (menuItem === item) {
-            item.className = 'menu__item menu__item--active';
-          } else {
-            item.className = 'menu__item';
-          }
-        }
+        var $menus = $('.menu');
+        $menus.each(function() {
+          var $items = $(this).find('.menu__item');
+          $items.removeClass('menu__item--active');
+          var href = $(menuItem).find('a').prop('href').match(/(#\w+)$/)[1];
+          var $activeItem =
+            $(this).find('.menu__item-link[href="'+ href +'"]').parent();
+          $activeItem.addClass('menu__item--active');
+        });
       }
 
       function selectPage(pageId) {
@@ -101,6 +103,19 @@
       }
 
       $(function() {
+        $(window).scroll(function() {
+          var headerHeight = $('#page-header').innerHeight();
+          if (document.body.scrollTop > headerHeight - 60) {
+            $('#fixed-menu').show();
+          } else {
+            $('#fixed-menu').hide();
+          }
+          if (document.body.scrollTop > headerHeight) {
+            $('#fixed-menu').css({ opacity: 0.9, zIndex: 10 });
+          } else {
+            $('#fixed-menu').css({ opacity: 0.0, zIndex: -1 });
+          }
+        });
         // smooth scrolling to anchor
         $('a[href*="#"]:not([href="#"])').click(function() {
           if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {

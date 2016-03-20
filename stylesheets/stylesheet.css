@@ -258,12 +258,12 @@ a {
   left: 0;
   right: 0;
   top: 0;
-  background: white;
   margin: 0;
   padding: 16px;
 }
 
 .menu--fixed {
+  background: white;
   position: fixed;
   box-shadow: 0px 3px 5px rgb(180, 180, 180);
   opacity: 0.9;

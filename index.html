@@ -165,7 +165,7 @@
       window.onpopstate = function(event) {
         if (event.state && event.state.pageId) {
           showPage(event.state.pageId);
-          $('html, body').animate({ scrollTop: scrollTop }, 800);
+          $('html, body').animate({ scrollTop: event.state.scrollTop }, 800);
         } else {
           showPage('home');
         }

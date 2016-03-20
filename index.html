@@ -156,6 +156,8 @@
       window.onpopstate = function(event) {
         if (event.state && event.state.pageId) {
           showPage(event.state.pageId);
+        } else {
+          showPage('home');
         }
       };
 

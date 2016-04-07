@@ -52,7 +52,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(282, 109);
+            this.pictureBox1.Size = new System.Drawing.Size(310, 109);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -82,10 +82,10 @@
             this.linkLabel2.ContextMenuStrip = this.contextMenuStrip1;
             this.linkLabel2.Location = new System.Drawing.Point(87, 131);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(42, 15);
+            this.linkLabel2.Size = new System.Drawing.Size(49, 15);
             this.linkLabel2.TabIndex = 4;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Denis";
+            this.linkLabel2.Text = "FiftiN";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // contextMenuStrip1
@@ -118,10 +118,10 @@
             this.linkLabel1.ContextMenuStrip = this.contextMenuStrip2;
             this.linkLabel1.Location = new System.Drawing.Point(87, 163);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(168, 15);
+            this.linkLabel1.Size = new System.Drawing.Size(210, 15);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "github.com/fiftin/oblqo";
+            this.linkLabel1.Text = "http://fiftin.github.io/oblqo";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // contextMenuStrip2
@@ -142,7 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 203);
+            this.ClientSize = new System.Drawing.Size(310, 207);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.linkLabel2);

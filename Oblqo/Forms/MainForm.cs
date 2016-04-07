@@ -24,7 +24,7 @@ namespace Oblqo
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
-        
+
         private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
         private readonly AsyncTaskManager taskManager = new AsyncTaskManager(new IsolatedConfigurationStorage());
@@ -63,7 +63,7 @@ namespace Oblqo
 
         private void InitUI()
         {
-            foreach (var x in accountManager. Accounts)
+            foreach (var x in accountManager.Accounts)
             {
                 var node = treeView1.Nodes.Add("", x.AccountName, DisconnectedAccountImageKey);
                 node.SelectedImageKey = DisconnectedAccountImageKey;
@@ -88,7 +88,7 @@ namespace Oblqo
                 info.File = ret.RootFolder;
                 return ret;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 node.ImageKey = nodeImageKey;
                 node.SelectedImageKey = nodeImageKey;
@@ -131,13 +131,13 @@ namespace Oblqo
             fileInfoPanel.Show();
             driveStrip1.Visible = true;
         }
-        
+
         private void UpdateFileList()
         {
             var node = treeView1.SelectedNode;
             if (node == null) return;
             HideFileInfoPanel();
-            var info = (NodeInfo) node.Tag;
+            var info = (NodeInfo)node.Tag;
             Account account;
             if (!accounts.TryGetValue(info.AccountName, out account))
                 return;
@@ -148,7 +148,7 @@ namespace Oblqo
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
         {
             var token = new CancellationToken();
-            var info = (NodeInfo) node.Tag;
+            var info = (NodeInfo)node.Tag;
             node.Nodes.Clear();
             var nodeImageKey = node.ImageKey;
             loadingNodes.Add(node);
@@ -246,7 +246,7 @@ namespace Oblqo
                         var fileProp = e.Task.GetType().GetProperty(attr.FilePropertyName);
                         var file = (AccountFile)fileProp.GetValue(e.Task);
                         var parentFileProp = attr.ParentFilePropertyName == null ? null : e.Task.GetType().GetProperty(attr.ParentFilePropertyName);
-                        var parentFile = parentFileProp == null ? null :(AccountFile)parentFileProp.GetValue(e.Task);
+                        var parentFile = parentFileProp == null ? null : (AccountFile)parentFileProp.GetValue(e.Task);
 
                         if (file.IsFile)
                         {
@@ -300,7 +300,7 @@ namespace Oblqo
                         }
                     }
                 }
-                
+
                 switch (e.Task.State)
                 {
                     case AsyncTaskState.Completed:
@@ -391,7 +391,7 @@ namespace Oblqo
         /// </summary>
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            var nodeInfo = (NodeInfo) e.Node.Tag; 
+            var nodeInfo = (NodeInfo)e.Node.Tag;
             switch (e.Button)
             {
                 case MouseButtons.Right:
@@ -436,7 +436,7 @@ namespace Oblqo
                 account.StorageVault = accountForm.GlacierVault;
                 node.Text = account.AccountName;
                 node.Tag = new NodeInfo(account);
-               
+
                 account.Drives.Clear();
                 account.Drives.AddRange(accountForm.GetDrives());
 
@@ -513,7 +513,7 @@ namespace Oblqo
 
         private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
         {
-            var info = (NodeInfo) e.Node.Tag;
+            var info = (NodeInfo)e.Node.Tag;
             if (info.Type != NodeType.Folder) return;
             if (e.Node.Nodes[0].Name == "")
                 UpdateNode(e.Node);
@@ -587,7 +587,7 @@ namespace Oblqo
             var node = treeView1.SelectedNode;
             if (node == null)
                 return;
-            var nodeInfo = (NodeInfo) node.Tag;
+            var nodeInfo = (NodeInfo)node.Tag;
             accountManager.Remove(nodeInfo.AccountName);
             if (accounts.ContainsKey(nodeInfo.AccountName))
             {
@@ -693,7 +693,7 @@ namespace Oblqo
             UpdateToolBarAndMenu();
             // TODO: Break unfinished tasks
         }
-        
+
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeView1.SelectedNode;
@@ -763,7 +763,7 @@ namespace Oblqo
         private void logListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (exceptionForm == null)
-                return;            var selectedItem = logListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
+                return; var selectedItem = logListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
             if (selectedItem == null)
                 return;
             exceptionForm.Exception = (Exception)selectedItem.Tag;
@@ -812,12 +812,14 @@ namespace Oblqo
         {
             loadingImageProgressBar.Visible = true;
             driveStrip1.Visible = false;
+            UpdateImageViewer(loading: true);
         }
 
         private void fileInfoPanel_ImageLoaded(object sender, EventArgs e)
         {
             loadingImageProgressBar.Visible = false;
             driveStrip1.Visible = true;
+            UpdateImageViewer();
         }
 
         private void driveStrip1_SelectedDriveChanged(object sender, EventArgs e)
@@ -879,7 +881,57 @@ namespace Oblqo
         {
             loadingFileListProgressBar.Visible = false;
         }
-        
-    }
 
+        private void fileInfoPanel_ZoomClicked(object sender, EventArgs e)
+        {
+            UpdateImageViewer();
+            imageViewer1.Bounds = ClientRectangle;
+            imageViewer1.Show();
+            imageViewer1.BringToFront();
+        }
+
+        public void UpdateImageViewer(bool loading = false)
+        {
+            if (loading)
+            {
+                imageViewer1.Picture = Resources.loading;
+            }
+            else
+            {
+                imageViewer1.Picture = fileInfoPanel.Picture;
+            }
+            imageViewer1.FileName = fileInfoPanel.FileName;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            imageViewer1.Bounds = ClientRectangle;
+        }
+
+        private void imageViewer1_SlideBack(object sender, EventArgs e)
+        {
+            fileListView.SelectPrev();
+        }
+
+        private void imageViewer1_SlideFront(object sender, EventArgs e)
+        {
+            fileListView.SelectNext();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                imageViewer1.Hide();
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                fileListView.SelectPrev();
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                fileListView.SelectNext();
+            }
+        }
+    }
 }

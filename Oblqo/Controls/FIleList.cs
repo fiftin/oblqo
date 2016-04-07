@@ -51,11 +51,10 @@ namespace Oblqo.Controls
                 case MouseButtons.Right:
                     if (fileListView.SelectedItems.Count > 0)
                     {
-                        downloadFileFromStorageToolStripMenuItem.Enabled = true;
-                        synchronizeToolStripMenuItem.Enabled = true;
-                        synchronizeOnDrivesToolStripMenuItem.Enabled = true;
-                        deleteFromArchiveToolStripMenuItem.Enabled = true;
-                        openFileToolStripMenuItem.Enabled = true;
+                        foreach (ToolStripItem menuItem in fileMenu.Items)
+                        {
+                            menuItem.Enabled = true;
+                        }
 
                         // Calc number of items stored in archive among selected items
                         // and set menu items states.
@@ -80,9 +79,19 @@ namespace Oblqo.Controls
                             synchronizeToolStripMenuItem.Enabled = false;
                         }
 
-                        if (fileListView.SelectedItems.Count != 1)
+                        if (fileListView.SelectedItems.Count == 1)
+                        {
+                            var nodeInfo = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                            if (nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive) == null)
+                            {
+                                openFileToolStripMenuItem.Enabled = false;
+                                openContainingFolderToolStripMenuItem.Enabled = false;
+                            }
+                        }
+                        else
                         {
                             openFileToolStripMenuItem.Enabled = false;
+                            openContainingFolderToolStripMenuItem.Enabled = false;
                         }
 
 
@@ -255,6 +264,44 @@ namespace Oblqo.Controls
             {
                 return fileListView.SelectedItems;
             }
+        }
+
+        private void SelectItem(bool next)
+        {
+            if (SelectedItems.Count == 0)
+            {
+                return;
+            }
+            var item = SelectedItems[0];
+            fileListView.SelectedIndices.Clear();
+            var index = item.Index;
+            if (next)
+            {
+                index++;
+                if (index == fileListView.Items.Count - 1)
+                {
+                    index = 0;
+                }
+            }
+            else
+            {
+                index--;
+                if (index == 0)
+                {
+                    index = fileListView.Items.Count - 1;
+                }
+            }
+            fileListView.SelectedIndices.Add(index);
+        }
+
+        public void SelectNext()
+        {
+            SelectItem(true);
+        }
+
+        public void SelectPrev()
+        {
+            SelectItem(false);
         }
 
         [Browsable(false)]

@@ -106,14 +106,36 @@ namespace Oblqo.Controls
                 }
             });
         }
+        public string FileName
+        {
+            get
+            {
+                return fileNameLabel.Text;
+            }
+        }
+
+        public Image Picture
+        {
+            get
+            {
+                return pictureBox1.BackgroundImage;
+            }
+        }
 
         private void OnError(Exception ex)
         {
             Error(this, new ExceptionEventArgs(ex));
         }
 
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            ZoomClicked?.Invoke(this, new EventArgs());
+        }
+
         public event EventHandler<ExceptionEventArgs> Error;
         public event EventHandler<EventArgs> ImageLoading;
         public event EventHandler<EventArgs> ImageLoaded;
+        public event EventHandler ZoomClicked;
+
     }
 }

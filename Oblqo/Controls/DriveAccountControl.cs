@@ -15,12 +15,12 @@ namespace Oblqo
         public DriveAccountControl()
         {
             InitializeComponent();
+
             imageResolutionComboBox.Items.Add(new Dimensions(1024, 768));
             imageResolutionComboBox.Items.Add(new Dimensions(1280, 1024));
             imageResolutionComboBox.Items.Add(new Dimensions(1600, 1200));
             imageResolutionComboBox.Items.Add(new Dimensions(Size.Empty));
-
-            imageResolutionComboBox.SelectedIndex = 2;
+            imageResolutionComboBox.SelectedIndex = 3;
 
             foreach (var driveType in Enum.GetValues(typeof(DriveType)))
             {

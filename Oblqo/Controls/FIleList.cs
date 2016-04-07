@@ -52,14 +52,40 @@ namespace Oblqo.Controls
                     if (fileListView.SelectedItems.Count > 0)
                     {
                         downloadFileFromStorageToolStripMenuItem.Enabled = true;
-                        if (fileListView.SelectedItems.Count == 1)
+                        synchronizeToolStripMenuItem.Enabled = true;
+                        synchronizeOnDrivesToolStripMenuItem.Enabled = true;
+                        deleteFromArchiveToolStripMenuItem.Enabled = true;
+                        openFileToolStripMenuItem.Enabled = true;
+
+                        // Calc number of items stored in archive among selected items
+                        // and set menu items states.
+
+                        var nSelectedItemsInArchive = 0;
+                        foreach (ListViewItem item in fileListView.SelectedItems)
                         {
-                            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-                            if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
+                            var info = (NodeInfo)item.Tag;
+                            if (info.File.StorageFile != null && info.File.StorageFile.Id != null)
                             {
-                                downloadFileFromStorageToolStripMenuItem.Enabled = false;
+                                nSelectedItemsInArchive++;
                             }
                         }
+                        if (nSelectedItemsInArchive == 0)
+                        {
+                            downloadFileFromStorageToolStripMenuItem.Enabled = false;
+                            synchronizeOnDrivesToolStripMenuItem.Enabled = false;
+                            deleteFromArchiveToolStripMenuItem.Enabled = false;
+                        }
+                        else if (nSelectedItemsInArchive == fileListView.SelectedItems.Count)
+                        {
+                            synchronizeToolStripMenuItem.Enabled = false;
+                        }
+
+                        if (fileListView.SelectedItems.Count != 1)
+                        {
+                            openFileToolStripMenuItem.Enabled = false;
+                        }
+
+
                         fileMenu.Show(Cursor.Position);
                     }
                     else

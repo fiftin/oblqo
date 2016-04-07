@@ -13,7 +13,7 @@ namespace Oblqo
         public Size Size { get; private set; }
         public override string ToString()
         {
-            return Size.IsEmpty ? "Origin" : String.Format("{0} x {1}", Size.Width, Size.Height);
+            return Size.IsEmpty ? "Original" : String.Format("{0} x {1}", Size.Width, Size.Height);
         }
 
         public override bool Equals(object obj)

@@ -110,18 +110,21 @@ namespace Oblqo.Controls
             this.newFolderToolStripMenuItem1.Name = "newFolderToolStripMenuItem1";
             this.newFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
             this.newFolderToolStripMenuItem1.Text = "New folder";
+            this.newFolderToolStripMenuItem1.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
             // uploadFolderToolStripMenuItem1
             // 
             this.uploadFolderToolStripMenuItem1.Name = "uploadFolderToolStripMenuItem1";
             this.uploadFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
             this.uploadFolderToolStripMenuItem1.Text = "Upload folder";
+            this.uploadFolderToolStripMenuItem1.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFilesToolStripMenuItem
             // 
             this.uploadFilesToolStripMenuItem.Name = "uploadFilesToolStripMenuItem";
             this.uploadFilesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.uploadFilesToolStripMenuItem.Text = "Upload files";
+            this.uploadFilesToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // fileMenu
             // 

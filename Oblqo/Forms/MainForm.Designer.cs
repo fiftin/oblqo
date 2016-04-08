@@ -35,9 +35,14 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.smallImageList = new System.Windows.Forms.ImageList(this.components);
             this.btnNewConnection = new System.Windows.Forms.Button();
+            this.fileListView = new Oblqo.Controls.FileList();
+            this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tasksTabPage = new System.Windows.Forms.TabPage();
+            this.taskListView = new Oblqo.Controls.TaskList();
             this.logTabPage = new System.Windows.Forms.TabPage();
             this.logListView = new System.Windows.Forms.ListView();
             this.logDataTimeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -93,11 +98,6 @@
             this.indicateErrorTimer = new System.Windows.Forms.Timer(this.components);
             this.imageViewer1 = new Oblqo.Controls.ImageViewer();
             this.driveStrip1 = new Oblqo.Controls.DriveStrip();
-            this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
-            this.fileListView = new Oblqo.Controls.FileList();
-            this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.taskListView = new Oblqo.Controls.TaskList();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,6 +106,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.fileInfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tasksTabPage.SuspendLayout();
             this.logTabPage.SuspendLayout();
@@ -113,8 +115,6 @@
             this.accountMenu.SuspendLayout();
             this.folderMenu.SuspendLayout();
             this.logMenu.SuspendLayout();
-            this.fileInfoPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -211,11 +211,51 @@
             this.btnNewConnection.UseVisualStyleBackColor = false;
             this.btnNewConnection.Click += new System.EventHandler(this.addNewAccountToolStripMenuItem_Click);
             // 
+            // fileListView
+            // 
+            this.fileListView.CurrentDirectoryInfoPanel = this.currentDirectoryInfoPanel;
+            resources.ApplyResources(this.fileListView, "fileListView");
+            this.fileListView.Name = "fileListView";
+            this.fileListView.SmallImageList = this.smallImageList;
+            this.fileListView.TaskManager = null;
+            this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
+            this.fileListView.FileLoaded += new System.EventHandler(this.fileListView_FileLoaded);
+            this.fileListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
+            this.fileListView.SizeChanged += new System.EventHandler(this.fileListView_SizeChanged);
+            this.fileListView.Move += new System.EventHandler(this.listView1_Move);
+            this.fileListView.Resize += new System.EventHandler(this.listView1_Resize);
+            // 
+            // currentDirectoryInfoPanel
+            // 
+            resources.ApplyResources(this.currentDirectoryInfoPanel, "currentDirectoryInfoPanel");
+            this.currentDirectoryInfoPanel.Name = "currentDirectoryInfoPanel";
+            this.currentDirectoryInfoPanel.NumberOfFiles = 0;
+            this.currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
+            this.currentDirectoryInfoPanel.FilterChanged += new System.EventHandler<System.EventArgs>(this.currentDirectoryInfoPanel_FilterChanged);
+            // 
             // splitter1
             // 
             resources.ApplyResources(this.splitter1, "splitter1");
             this.splitter1.Name = "splitter1";
             this.splitter1.TabStop = false;
+            // 
+            // fileInfoPanel
+            // 
+            this.fileInfoPanel.Controls.Add(this.pictureBox1);
+            resources.ApplyResources(this.fileInfoPanel, "fileInfoPanel");
+            this.fileInfoPanel.Name = "fileInfoPanel";
+            this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
+            this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
+            this.fileInfoPanel.ImageLoaded += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoaded);
+            this.fileInfoPanel.ZoomClicked += new System.EventHandler(this.fileInfoPanel_ZoomClicked);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
             // 
             // tabControl1
             // 
@@ -233,6 +273,13 @@
             resources.ApplyResources(this.tasksTabPage, "tasksTabPage");
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.UseVisualStyleBackColor = true;
+            // 
+            // taskListView
+            // 
+            resources.ApplyResources(this.taskListView, "taskListView");
+            this.taskListView.Name = "taskListView";
+            this.taskListView.SmallImageList = this.smallImageList;
+            this.taskListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
             // 
             // logTabPage
             // 
@@ -582,53 +629,6 @@
             this.driveStrip1.Name = "driveStrip1";
             this.driveStrip1.SelectedDriveChanged += new System.EventHandler(this.driveStrip1_SelectedDriveChanged);
             // 
-            // currentDirectoryInfoPanel
-            // 
-            resources.ApplyResources(this.currentDirectoryInfoPanel, "currentDirectoryInfoPanel");
-            this.currentDirectoryInfoPanel.Name = "currentDirectoryInfoPanel";
-            this.currentDirectoryInfoPanel.NumberOfFiles = 0;
-            this.currentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
-            this.currentDirectoryInfoPanel.FilterChanged += new System.EventHandler<System.EventArgs>(this.currentDirectoryInfoPanel_FilterChanged);
-            // 
-            // fileListView
-            // 
-            this.fileListView.CurrentDirectoryInfoPanel = this.currentDirectoryInfoPanel;
-            resources.ApplyResources(this.fileListView, "fileListView");
-            this.fileListView.Name = "fileListView";
-            this.fileListView.SmallImageList = this.smallImageList;
-            this.fileListView.TaskManager = null;
-            this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
-            this.fileListView.FileLoaded += new System.EventHandler(this.fileListView_FileLoaded);
-            this.fileListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
-            this.fileListView.SizeChanged += new System.EventHandler(this.fileListView_SizeChanged);
-            this.fileListView.Move += new System.EventHandler(this.listView1_Move);
-            this.fileListView.Resize += new System.EventHandler(this.listView1_Resize);
-            // 
-            // fileInfoPanel
-            // 
-            this.fileInfoPanel.Controls.Add(this.pictureBox1);
-            resources.ApplyResources(this.fileInfoPanel, "fileInfoPanel");
-            this.fileInfoPanel.Name = "fileInfoPanel";
-            this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
-            this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
-            this.fileInfoPanel.ImageLoaded += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoaded);
-            this.fileInfoPanel.ZoomClicked += new System.EventHandler(this.fileInfoPanel_ZoomClicked);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            // 
-            // taskListView
-            // 
-            resources.ApplyResources(this.taskListView, "taskListView");
-            this.taskListView.Name = "taskListView";
-            this.taskListView.SmallImageList = this.smallImageList;
-            this.taskListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
-            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -653,6 +653,8 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.fileInfoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tasksTabPage.ResumeLayout(false);
             this.logTabPage.ResumeLayout(false);
@@ -661,8 +663,6 @@
             this.accountMenu.ResumeLayout(false);
             this.folderMenu.ResumeLayout(false);
             this.logMenu.ResumeLayout(false);
-            this.fileInfoPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

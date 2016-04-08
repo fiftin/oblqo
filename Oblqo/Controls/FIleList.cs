@@ -99,7 +99,10 @@ namespace Oblqo.Controls
                     }
                     else
                     {
-                        fileListMenu.Show(Cursor.Position);
+                        if (Account != null)
+                        {
+                            fileListMenu.Show(Cursor.Position);
+                        }
                     }
                     break;
             }
@@ -317,6 +320,15 @@ namespace Oblqo.Controls
                 updateListCancellationTokenSource?.Cancel();
                 updateListCancellationTokenSource = new CancellationTokenSource();
             }
+
+            if (account == null)
+            {
+                fileListView.Items.Clear();
+                CurrentDirectoryInfoPanel.NumberOfFiles = 0;
+                CurrentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
+                return;
+            }
+
             ICollection<AccountFile> files;
             fileListView.Enabled = false;
             Task.Run(async delegate
@@ -510,6 +522,10 @@ namespace Oblqo.Controls
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive & Drives?", "Delete file(s) from Archive & Drives", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo)item.Tag;
@@ -519,6 +535,10 @@ namespace Oblqo.Controls
 
         private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive?", "Delete file(s) from Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo)item.Tag;

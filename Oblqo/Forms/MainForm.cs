@@ -139,10 +139,17 @@ namespace Oblqo
             HideFileInfoPanel();
             var info = (NodeInfo)node.Tag;
             Account account;
-            if (!accounts.TryGetValue(info.AccountName, out account))
-                return;
-            loadingFileListProgressBar.Visible = true;
-            fileListView.UpdateFileList(node, account);
+            if (accounts.TryGetValue(info.AccountName, out account))
+            {
+                loadingFileListProgressBar.Visible = true;
+                fileListView.UpdateFileList(node, account);
+                currentDirectoryInfoPanel.Enabled = true;
+            }
+            else
+            {
+                fileListView.UpdateFileList(node, null);
+                currentDirectoryInfoPanel.Enabled = false;
+            }
         }
 
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
@@ -696,6 +703,10 @@ namespace Oblqo
 
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this filder?", "Delete folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             var node = treeView1.SelectedNode;
             if (node == null)
                 return;
@@ -888,16 +899,21 @@ namespace Oblqo
             {
                 return;
             }
-            UpdateImageViewer();
             imageViewer1.Bounds = ClientRectangle;
             imageViewer1.Show();
             imageViewer1.BringToFront();
+            UpdateImageViewer();
         }
 
         private Controls.SlideDirection? prevSlidingDirection;
 
         public void UpdateImageViewer(bool loadingState = false)
         {
+            if (!imageViewer1.Visible)
+            {
+                return;
+            }
+
             if (loadingState)
             {
                 imageViewer1.Picture = Resources.loading;
@@ -913,6 +929,7 @@ namespace Oblqo
                     fileListView.SelectNextFile(prevSlidingDirection.Value);
                 }
             }
+
             imageViewer1.FileName = fileInfoPanel.FileName;
         }
 

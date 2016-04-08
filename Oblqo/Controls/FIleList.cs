@@ -266,7 +266,7 @@ namespace Oblqo.Controls
             }
         }
 
-        private void SelectItem(bool next)
+        public void SelectNextFile(SlideDirection direction)
         {
             if (SelectedItems.Count == 0)
             {
@@ -275,7 +275,7 @@ namespace Oblqo.Controls
             var item = SelectedItems[0];
             fileListView.SelectedIndices.Clear();
             var index = item.Index;
-            if (next)
+            if (direction == SlideDirection.Front)
             {
                 index++;
                 if (index == fileListView.Items.Count - 1)
@@ -292,16 +292,6 @@ namespace Oblqo.Controls
                 }
             }
             fileListView.SelectedIndices.Add(index);
-        }
-
-        public void SelectNext()
-        {
-            SelectItem(true);
-        }
-
-        public void SelectPrev()
-        {
-            SelectItem(false);
         }
 
         [Browsable(false)]

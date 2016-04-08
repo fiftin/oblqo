@@ -56,9 +56,9 @@ namespace Oblqo.Controls
                     pictureCancellationTokenSource?.Cancel();
                     pictureCancellationTokenSource = new CancellationTokenSource();
                 }
-                
                 ImageLoaded?.Invoke(this, new EventArgs());
                 pictureBox1.BackgroundImage = Resources.no_image;
+                Picture = null;
                 return;
             }
 
@@ -76,6 +76,7 @@ namespace Oblqo.Controls
                     }
 
                     pictureBox1.BackgroundImage = Resources.loading;
+                    Picture = null;
                     int cn = controlNumber;
                     Image image;
                     try
@@ -91,6 +92,7 @@ namespace Oblqo.Controls
                             widthAndHeightLabel.Visible = true;
                             widthAndHeightLabel.Text = string.Format("{0} x {1}", DriveFile.ImageWidth, DriveFile.ImageHeight);
                             pictureBox1.BackgroundImage = image;
+                            Picture = image;
                             pictureBox1.Image = null;
                             ImageLoaded?.Invoke(this, new EventArgs());
                             if (widthAndHeightLabel.Text == "0 x 0")
@@ -114,13 +116,15 @@ namespace Oblqo.Controls
             }
         }
 
-        public Image Picture
+        public bool IsPicture
         {
             get
             {
-                return pictureBox1.BackgroundImage;
+                return DriveFile.IsImage;
             }
         }
+
+        public Image Picture { get; private set; }
 
         private void OnError(Exception ex)
         {
@@ -129,6 +133,10 @@ namespace Oblqo.Controls
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
         {
+            if (Picture == null)
+            {
+                return;
+            }
             ZoomClicked?.Invoke(this, new EventArgs());
         }
 

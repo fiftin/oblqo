@@ -149,7 +149,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAARQBBQEUAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAASQBBQEkAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 182</value>
+    <value>248, 177</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -350,6 +350,9 @@
   </data>
   <data name="btnNewConnection.Font" type="System.Drawing.Font, System.Drawing">
     <value>Arial Black, 9.75pt, style=Bold</value>
+  </data>
+  <data name="btnNewConnection.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="btnNewConnection.Location" type="System.Drawing.Point, System.Drawing">
     <value>39, 68</value>
@@ -403,7 +406,7 @@
     <value>0, 0</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>457, 182</value>
+    <value>412, 177</value>
   </data>
   <data name="fileListView.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -423,11 +426,14 @@
   <data name="splitter1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
   </data>
+  <data name="splitter1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>457, 0</value>
+    <value>412, 0</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 182</value>
+    <value>8, 177</value>
   </data>
   <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -453,6 +459,9 @@
   <data name="pictureBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="pictureBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -460,7 +469,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 182</value>
+    <value>315, 177</value>
   </data>
   <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -481,16 +490,16 @@
     <value>Right</value>
   </data>
   <data name="fileInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>465, 0</value>
+    <value>420, 0</value>
   </data>
   <data name="fileInfoPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>272, 0</value>
+    <value>317, 0</value>
   </data>
   <data name="fileInfoPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 2, 0</value>
   </data>
   <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>272, 182</value>
+    <value>317, 177</value>
   </data>
   <data name="fileInfoPanel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -526,7 +535,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 182</value>
+    <value>997, 177</value>
   </data>
   <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
     <value>250</value>
@@ -568,7 +577,7 @@
     <value>0, 2</value>
   </data>
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 343</value>
+    <value>985, 348</value>
   </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -592,7 +601,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 346</value>
+    <value>987, 351</value>
   </data>
   <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -631,7 +640,7 @@
     <value>0, 2</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 339</value>
+    <value>985, 349</value>
   </data>
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -649,13 +658,13 @@
     <value>0</value>
   </data>
   <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+    <value>4, 23</value>
   </data>
   <data name="logTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 2, 2, 1</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>989, 342</value>
+    <value>987, 352</value>
   </data>
   <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -682,7 +691,7 @@
     <value>2, 0</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 374</value>
+    <value>995, 379</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -718,7 +727,7 @@
     <value>997, 566</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>182</value>
+    <value>177</value>
   </data>
   <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1050,6 +1059,9 @@
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>
+  <data name="loadingFileListProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="loadingFileListProgressBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>297, 373</value>
   </data>
@@ -1073,6 +1085,9 @@
   </data>
   <data name="&gt;&gt;loadingFileListProgressBar.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="loadingImageProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="loadingImageProgressBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>702, 373</value>
@@ -1500,6 +1515,9 @@
         AAAAAP//AAAAAAAA//8AAAAAAAD//wAAAAAAAP//AAAAAAAA//8AAAAAAAD//wAAAAAAAP//AAAAAAAA
         //8AAAAAAAD//wAAAAAAAP//AAAAAAAA//8=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Oblqo</value>

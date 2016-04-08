@@ -812,7 +812,7 @@ namespace Oblqo
         {
             loadingImageProgressBar.Visible = true;
             driveStrip1.Visible = false;
-            UpdateImageViewer(loading: true);
+            UpdateImageViewer(loadingState: true);
         }
 
         private void fileInfoPanel_ImageLoaded(object sender, EventArgs e)
@@ -884,21 +884,34 @@ namespace Oblqo
 
         private void fileInfoPanel_ZoomClicked(object sender, EventArgs e)
         {
+            if (!fileInfoPanel.IsPicture)
+            {
+                return;
+            }
             UpdateImageViewer();
             imageViewer1.Bounds = ClientRectangle;
             imageViewer1.Show();
             imageViewer1.BringToFront();
         }
 
-        public void UpdateImageViewer(bool loading = false)
+        private Controls.SlideDirection? prevSlidingDirection;
+
+        public void UpdateImageViewer(bool loadingState = false)
         {
-            if (loading)
+            if (loadingState)
             {
                 imageViewer1.Picture = Resources.loading;
             }
             else
             {
-                imageViewer1.Picture = fileInfoPanel.Picture;
+                if (fileInfoPanel.IsPicture)
+                {
+                    imageViewer1.Picture = fileInfoPanel.Picture;
+                }
+                else if (prevSlidingDirection.HasValue)
+                {
+                    fileListView.SelectNextFile(prevSlidingDirection.Value);
+                }
             }
             imageViewer1.FileName = fileInfoPanel.FileName;
         }
@@ -907,17 +920,7 @@ namespace Oblqo
         {
             imageViewer1.Bounds = ClientRectangle;
         }
-
-        private void imageViewer1_SlideBack(object sender, EventArgs e)
-        {
-            fileListView.SelectPrev();
-        }
-
-        private void imageViewer1_SlideFront(object sender, EventArgs e)
-        {
-            fileListView.SelectNext();
-        }
-
+        
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -926,12 +929,20 @@ namespace Oblqo
             }
             else if (e.KeyCode == Keys.Left)
             {
-                fileListView.SelectPrev();
+                prevSlidingDirection = Oblqo.Controls.SlideDirection.Back;
+                fileListView.SelectNextFile(Oblqo.Controls.SlideDirection.Back);
             }
             else if (e.KeyCode == Keys.Right)
             {
-                fileListView.SelectNext();
+                prevSlidingDirection = Oblqo.Controls.SlideDirection.Front;
+                fileListView.SelectNextFile(Oblqo.Controls.SlideDirection.Front);
             }
+        }
+
+        private void imageViewer1_Slide(object sender, Controls.SlideEventArgs e)
+        {
+            prevSlidingDirection = e.Direction;
+            fileListView.SelectNextFile(e.Direction);
         }
     }
 }

@@ -113,7 +113,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ImageViewer";
             this.Size = new System.Drawing.Size(738, 438);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImageViewer_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

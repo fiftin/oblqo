@@ -118,6 +118,8 @@
     <Compile Include="Controls\ImageViewer.Designer.cs">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SlideDirection.cs" />
+    <Compile Include="Controls\SlideEventArgs.cs" />
     <Compile Include="Controls\TaskList.cs">
       <SubType>UserControl</SubType>
     </Compile>

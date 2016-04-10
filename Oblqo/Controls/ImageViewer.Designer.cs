@@ -49,7 +49,7 @@
             this.picImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picImage.Location = new System.Drawing.Point(0, 0);
             this.picImage.Name = "picImage";
-            this.picImage.Size = new System.Drawing.Size(738, 362);
+            this.picImage.Size = new System.Drawing.Size(738, 364);
             this.picImage.TabIndex = 1;
             this.picImage.TabStop = false;
             this.picImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picImage_MouseDown);
@@ -68,12 +68,12 @@
             this.tableLayoutPanel1.Controls.Add(this.lblFileName, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 362);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 364);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(738, 76);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(738, 74);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // btnBack
@@ -81,7 +81,7 @@
             this.btnBack.BackgroundImage = global::Oblqo.Properties.Resources.back;
             this.btnBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBack.Location = new System.Drawing.Point(322, 29);
+            this.btnBack.Location = new System.Drawing.Point(322, 27);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(44, 44);
             this.btnBack.TabIndex = 0;
@@ -93,7 +93,7 @@
             this.btnFront.BackgroundImage = global::Oblqo.Properties.Resources.front;
             this.btnFront.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnFront.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnFront.Location = new System.Drawing.Point(372, 29);
+            this.btnFront.Location = new System.Drawing.Point(372, 27);
             this.btnFront.Name = "btnFront";
             this.btnFront.Size = new System.Drawing.Size(44, 44);
             this.btnFront.TabIndex = 1;
@@ -108,7 +108,7 @@
             this.lblFileName.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblFileName.Location = new System.Drawing.Point(53, 0);
             this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(632, 26);
+            this.lblFileName.Size = new System.Drawing.Size(632, 24);
             this.lblFileName.TabIndex = 2;
             this.lblFileName.Text = "label1";
             this.lblFileName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -118,7 +118,7 @@
             this.pictureBox1.BackgroundImage = global::Oblqo.Properties.Resources.close;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(691, 29);
+            this.pictureBox1.Location = new System.Drawing.Point(691, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(44, 44);
             this.pictureBox1.TabIndex = 3;

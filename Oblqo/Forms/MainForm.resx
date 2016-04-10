@@ -149,7 +149,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAZQBBQGUAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAZwBBQGcAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 107</value>
+    <value>248, 102</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -409,7 +409,7 @@
     <value>0, 0</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 107</value>
+    <value>412, 102</value>
   </data>
   <data name="fileListView.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -436,7 +436,7 @@
     <value>412, 0</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 107</value>
+    <value>8, 102</value>
   </data>
   <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -583,7 +583,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 107</value>
+    <value>997, 102</value>
   </data>
   <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
     <value>250</value>
@@ -625,7 +625,7 @@
     <value>0, 2</value>
   </data>
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 418</value>
+    <value>985, 423</value>
   </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -649,7 +649,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 421</value>
+    <value>987, 426</value>
   </data>
   <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -688,7 +688,7 @@
     <value>0, 2</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 418</value>
+    <value>985, 423</value>
   </data>
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -712,7 +712,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 421</value>
+    <value>987, 426</value>
   </data>
   <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -739,7 +739,7 @@
     <value>2, 0</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 449</value>
+    <value>995, 454</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -775,7 +775,7 @@
     <value>997, 566</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>107</value>
+    <value>102</value>
   </data>
   <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>9</value>

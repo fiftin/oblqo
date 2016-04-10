@@ -259,6 +259,7 @@
             this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
             this.fileInfoPanel.ImageLoaded += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoaded);
             this.fileInfoPanel.ZoomClicked += new System.EventHandler(this.fileInfoPanel_ZoomClicked);
+            this.fileInfoPanel.PictureRightMouseDown += new System.EventHandler(this.fileInfoPanel_PictureRightMouseDown);
             // 
             // pictureBox1
             // 
@@ -636,6 +637,7 @@
             this.imageViewer1.FileName = "label1";
             resources.ApplyResources(this.imageViewer1, "imageViewer1");
             this.imageViewer1.Name = "imageViewer1";
+            this.imageViewer1.PictureRightMouseDown += new System.EventHandler(this.imageViewer1_PictureRightMouseDown);
             this.imageViewer1.SelectedDriveChanged += new System.EventHandler(this.imageViewer1_SelectedDriveChanged);
             this.imageViewer1.Slide += new System.EventHandler<Oblqo.Controls.SlideEventArgs>(this.imageViewer1_Slide);
             // 

@@ -1015,5 +1015,15 @@ namespace Oblqo
                 fileListView.OpenSelectedFileIfItLocal();
             }
         }
+
+        private void imageViewer1_PictureRightMouseDown(object sender, EventArgs e)
+        {
+            fileListView.ShowMenu(false);
+        }
+
+        private void fileInfoPanel_PictureRightMouseDown(object sender, EventArgs e)
+        {
+            fileListView.ShowMenu(false);
+        }
     }
 }

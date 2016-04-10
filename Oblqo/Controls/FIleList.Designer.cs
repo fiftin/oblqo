@@ -52,7 +52,7 @@ namespace Oblqo.Controls
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItemSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -141,7 +141,7 @@ namespace Oblqo.Controls
             this.toolStripSeparator8,
             this.openFileToolStripMenuItem,
             this.openContainingFolderToolStripMenuItem,
-            this.toolStripSeparator9,
+            this.selectAllToolStripMenuItemSeparator,
             this.selectAllToolStripMenuItem});
             this.fileMenu.Name = "fileContextMenuStrip";
             this.fileMenu.Size = new System.Drawing.Size(271, 226);
@@ -218,10 +218,10 @@ namespace Oblqo.Controls
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
             this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
-            // toolStripSeparator9
+            // selectAllToolStripMenuItemSeparator
             // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(267, 6);
+            this.selectAllToolStripMenuItemSeparator.Name = "selectAllToolStripMenuItemSeparator";
+            this.selectAllToolStripMenuItemSeparator.Size = new System.Drawing.Size(267, 6);
             // 
             // selectAllToolStripMenuItem
             // 
@@ -270,7 +270,7 @@ namespace Oblqo.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator selectAllToolStripMenuItemSeparator;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
 
         public void Clear()

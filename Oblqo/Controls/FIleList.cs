@@ -49,62 +49,69 @@ namespace Oblqo.Controls
             switch (e.Button)
             {
                 case MouseButtons.Right:
-                    if (fileListView.SelectedItems.Count > 0)
-                    {
-                        foreach (ToolStripItem menuItem in fileMenu.Items)
-                        {
-                            menuItem.Enabled = true;
-                        }
-
-                        // Calc number of items stored in archive among selected items
-                        // and set menu items states.
-
-                        var nSelectedItemsInArchive = 0;
-                        foreach (ListViewItem item in fileListView.SelectedItems)
-                        {
-                            var info = (NodeInfo)item.Tag;
-                            if (info.File.StorageFile != null && info.File.StorageFile.Id != null)
-                            {
-                                nSelectedItemsInArchive++;
-                            }
-                        }
-                        if (nSelectedItemsInArchive == 0)
-                        {
-                            downloadFileFromStorageToolStripMenuItem.Enabled = false;
-                            synchronizeOnDrivesToolStripMenuItem.Enabled = false;
-                            deleteFromArchiveToolStripMenuItem.Enabled = false;
-                        }
-                        else if (nSelectedItemsInArchive == fileListView.SelectedItems.Count)
-                        {
-                            synchronizeToolStripMenuItem.Enabled = false;
-                        }
-
-                        if (fileListView.SelectedItems.Count == 1)
-                        {
-                            var nodeInfo = (NodeInfo)fileListView.SelectedItems[0].Tag;
-                            if (nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive) == null)
-                            {
-                                openFileToolStripMenuItem.Enabled = false;
-                                openContainingFolderToolStripMenuItem.Enabled = false;
-                            }
-                        }
-                        else
-                        {
-                            openFileToolStripMenuItem.Enabled = false;
-                            openContainingFolderToolStripMenuItem.Enabled = false;
-                        }
-
-
-                        fileMenu.Show(Cursor.Position);
-                    }
-                    else
-                    {
-                        if (Account != null)
-                        {
-                            fileListMenu.Show(Cursor.Position);
-                        }
-                    }
+                    ShowMenu(true);
                     break;
+            }
+        }
+
+        public void ShowMenu(bool showSelectAll)
+        {
+            selectAllToolStripMenuItemSeparator.Visible = showSelectAll;
+            selectAllToolStripMenuItem.Visible = showSelectAll;
+
+            if (fileListView.SelectedItems.Count > 0)
+            {
+                foreach (ToolStripItem menuItem in fileMenu.Items)
+                {
+                    menuItem.Enabled = true;
+                }
+
+                // Calc number of items stored in archive among selected items
+                // and set menu items states.
+
+                var nSelectedItemsInArchive = 0;
+                foreach (ListViewItem item in fileListView.SelectedItems)
+                {
+                    var info = (NodeInfo)item.Tag;
+                    if (info.File.StorageFile != null && info.File.StorageFile.Id != null)
+                    {
+                        nSelectedItemsInArchive++;
+                    }
+                }
+                if (nSelectedItemsInArchive == 0)
+                {
+                    downloadFileFromStorageToolStripMenuItem.Enabled = false;
+                    synchronizeOnDrivesToolStripMenuItem.Enabled = false;
+                    deleteFromArchiveToolStripMenuItem.Enabled = false;
+                }
+                else if (nSelectedItemsInArchive == fileListView.SelectedItems.Count)
+                {
+                    synchronizeToolStripMenuItem.Enabled = false;
+                }
+
+                if (fileListView.SelectedItems.Count == 1)
+                {
+                    var nodeInfo = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                    if (nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive) == null)
+                    {
+                        openFileToolStripMenuItem.Enabled = false;
+                        openContainingFolderToolStripMenuItem.Enabled = false;
+                    }
+                }
+                else
+                {
+                    openFileToolStripMenuItem.Enabled = false;
+                    openContainingFolderToolStripMenuItem.Enabled = false;
+                }
+
+                fileMenu.Show(Cursor.Position);
+            }
+            else
+            {
+                if (Account != null)
+                {
+                    fileListMenu.Show(Cursor.Position);
+                }
             }
         }
 

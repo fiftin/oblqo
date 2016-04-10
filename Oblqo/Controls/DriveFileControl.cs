@@ -140,10 +140,19 @@ namespace Oblqo.Controls
             ZoomClicked?.Invoke(this, new EventArgs());
         }
 
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                PictureRightMouseDown?.Invoke(this, new EventArgs());
+            }
+        }
+
         public event EventHandler<ExceptionEventArgs> Error;
         public event EventHandler<EventArgs> ImageLoading;
         public event EventHandler<EventArgs> ImageLoaded;
         public event EventHandler ZoomClicked;
+        public event EventHandler PictureRightMouseDown;
 
     }
 }

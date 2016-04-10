@@ -13,7 +13,6 @@ namespace Oblqo.Controls
             UpdateDriveStripBounds();
         }
 
-        public event EventHandler SelectedDriveChanged;
 
         [DefaultValue(null), Browsable(false)]
         public Drive SelectedDrive
@@ -51,6 +50,7 @@ namespace Oblqo.Controls
             set
             {
                 lblFileName.Text = value;
+                UpdateDriveStripBounds();
             }
         }
 
@@ -67,7 +67,8 @@ namespace Oblqo.Controls
             }
         }
 
-
+        public event EventHandler PictureRightMouseDown;
+        public event EventHandler SelectedDriveChanged;
         public event EventHandler<SlideEventArgs> Slide;
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -103,8 +104,15 @@ namespace Oblqo.Controls
                 fileNameSize = g.MeasureString(lblFileName.Text, lblFileName.Font);
             }
             driveStrip1.Top = picImage.Bottom;
-            driveStrip1.Left = (int)(Width + fileNameSize.Width) / 2 + 30;
-            // driveStrip1.Left = Width - driveStrip1.Width - 7;
+            driveStrip1.Left = (int)(Width + fileNameSize.Width) / 2 + 5;
+        }
+
+        private void picImage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                PictureRightMouseDown?.Invoke(this, new EventArgs());
+            }
         }
     }
 }

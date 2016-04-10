@@ -52,6 +52,7 @@
             this.picImage.Size = new System.Drawing.Size(738, 362);
             this.picImage.TabIndex = 1;
             this.picImage.TabStop = false;
+            this.picImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picImage_MouseDown);
             // 
             // tableLayoutPanel1
             // 
@@ -129,7 +130,7 @@
             this.driveStrip1.AlignToRight = true;
             this.driveStrip1.AutoSize = true;
             this.driveStrip1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.driveStrip1.Location = new System.Drawing.Point(301, 212);
+            this.driveStrip1.Location = new System.Drawing.Point(477, 313);
             this.driveStrip1.Name = "driveStrip1";
             this.driveStrip1.SelectedDrive = null;
             this.driveStrip1.Size = new System.Drawing.Size(102, 25);

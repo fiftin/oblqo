@@ -38,8 +38,10 @@
             this.fileListView = new Oblqo.Controls.FileList();
             this.currentDirectoryInfoPanel = new Oblqo.FileListStatusBar();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.fileInfoPanel = new Oblqo.Controls.DriveFileControl();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.multipleFileView1 = new Oblqo.Controls.MultipleFileView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tasksTabPage = new System.Windows.Forms.TabPage();
             this.taskListView = new Oblqo.Controls.TaskList();
@@ -106,6 +108,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.fileInfoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -148,7 +151,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.btnNewConnection);
             this.splitContainer2.Panel2.Controls.Add(this.fileListView);
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
-            this.splitContainer2.Panel2.Controls.Add(this.fileInfoPanel);
+            this.splitContainer2.Panel2.Controls.Add(this.panel1);
             resources.ApplyResources(this.splitContainer2.Panel2, "splitContainer2.Panel2");
             this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
             // 
@@ -218,6 +221,7 @@
             this.fileListView.Name = "fileListView";
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TaskManager = null;
+            this.fileListView.FileDoubleClick += new System.EventHandler(this.fileListView_FileDoubleClick);
             this.fileListView.SelectedIndexChanged += new System.EventHandler(this.fileListView_SelectedIndexChanged);
             this.fileListView.FileLoaded += new System.EventHandler(this.fileListView_FileLoaded);
             this.fileListView.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
@@ -239,6 +243,13 @@
             this.splitter1.Name = "splitter1";
             this.splitter1.TabStop = false;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.fileInfoPanel);
+            this.panel1.Controls.Add(this.multipleFileView1);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
+            // 
             // fileInfoPanel
             // 
             this.fileInfoPanel.Controls.Add(this.pictureBox1);
@@ -256,6 +267,11 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
+            // 
+            // multipleFileView1
+            // 
+            resources.ApplyResources(this.multipleFileView1, "multipleFileView1");
+            this.multipleFileView1.Name = "multipleFileView1";
             // 
             // tabControl1
             // 
@@ -620,13 +636,14 @@
             this.imageViewer1.FileName = "label1";
             resources.ApplyResources(this.imageViewer1, "imageViewer1");
             this.imageViewer1.Name = "imageViewer1";
-            this.imageViewer1.Picture = null;
+            this.imageViewer1.SelectedDriveChanged += new System.EventHandler(this.imageViewer1_SelectedDriveChanged);
             this.imageViewer1.Slide += new System.EventHandler<Oblqo.Controls.SlideEventArgs>(this.imageViewer1_Slide);
             // 
             // driveStrip1
             // 
             resources.ApplyResources(this.driveStrip1, "driveStrip1");
             this.driveStrip1.Name = "driveStrip1";
+            this.driveStrip1.SelectedDrive = null;
             this.driveStrip1.SelectedDriveChanged += new System.EventHandler(this.driveStrip1_SelectedDriveChanged);
             // 
             // MainForm
@@ -634,14 +651,15 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.imageViewer1);
-            this.Controls.Add(this.loadingImageProgressBar);
             this.Controls.Add(this.driveStrip1);
+            this.Controls.Add(this.loadingImageProgressBar);
             this.Controls.Add(this.loadingFileListProgressBar);
             this.Controls.Add(this.currentDirectoryInfoPanel);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mainTool);
             this.KeyPreview = true;
             this.Name = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -653,6 +671,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.fileInfoPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -738,6 +757,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearAuthToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private Controls.ImageViewer imageViewer1;
+        private System.Windows.Forms.Panel panel1;
+        private Controls.MultipleFileView multipleFileView1;
     }
 }
 

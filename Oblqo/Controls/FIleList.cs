@@ -40,7 +40,7 @@ namespace Oblqo.Controls
 
         private void fileListView_DoubleClick(object sender, EventArgs e)
         {
-            OpenSelectedFileIfItLocal();
+            FileDoubleClick?.Invoke(this, new EventArgs());
         }
 
 
@@ -110,10 +110,9 @@ namespace Oblqo.Controls
 
         private void fileListView_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter)
             {
-                OpenSelectedFileIfItLocal();
+                FileDoubleClick?.Invoke(this, new EventArgs());
             }
         }
 
@@ -433,20 +432,6 @@ namespace Oblqo.Controls
             }
         }
 
-        private void OpenSelectedFileIfItLocal()
-        {
-            if (fileListView.SelectedItems.Count > 0)
-            {
-                var selectedFile = fileListView.SelectedItems[0];
-                var nodeInfo = (NodeInfo)selectedFile.Tag;
-                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
-                if (localFile != null)
-                {
-                    System.Diagnostics.Process.Start(localFile.FullName);
-                }
-            }
-        }
-
         private void OpenSelectedFileContainingFolderIfItLocal()
         {
             if (fileListView.SelectedItems.Count > 0)
@@ -490,7 +475,8 @@ namespace Oblqo.Controls
             SelectedIndexChanged?.Invoke(sender, e);
         }
 
-        
+
+        public event EventHandler FileDoubleClick;
         public event EventHandler SelectedIndexChanged;
         public event EventHandler FileLoaded;
         public event EventHandler<ExceptionEventArgs> Error;
@@ -500,6 +486,20 @@ namespace Oblqo.Controls
             OpenSelectedFileIfItLocal();
         }
 
+
+        public void OpenSelectedFileIfItLocal()
+        {
+            if (SelectedItems.Count > 0)
+            {
+                var selectedFile = SelectedItems[0];
+                var nodeInfo = (NodeInfo)selectedFile.Tag;
+                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
+                if (localFile != null)
+                {
+                    System.Diagnostics.Process.Start(localFile.FullName);
+                }
+            }
+        }
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenSelectedFileContainingFolderIfItLocal();

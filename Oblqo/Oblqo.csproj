@@ -118,6 +118,12 @@
     <Compile Include="Controls\ImageViewer.Designer.cs">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MultipleFileView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MultipleFileView.Designer.cs">
+      <DependentUpon>MultipleFileView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SlideDirection.cs" />
     <Compile Include="Controls\SlideEventArgs.cs" />
     <Compile Include="Controls\TaskList.cs">
@@ -274,6 +280,9 @@
     <EmbeddedResource Include="Controls\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MultipleFileView.resx">
+      <DependentUpon>MultipleFileView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TaskList.resx">
       <DependentUpon>TaskList.cs</DependentUpon>
     </EmbeddedResource>
@@ -364,6 +373,7 @@
   <ItemGroup>
     <None Include="back.png" />
     <None Include="front.png" />
+    <None Include="close.png" />
     <Content Include="oblqo-o.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

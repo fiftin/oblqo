@@ -118,17 +118,32 @@ namespace Oblqo
 
         public void HideFileInfoPanel()
         {
-            if (!fileInfoPanel.Visible) return;
+            if (!panel1.Visible) return;
             splitter1.Hide();
-            fileInfoPanel.Hide();
+            panel1.Hide();
+            driveStrip1.Visible = false;
+        }
+
+
+        public void ShowMultipleFileView()
+        {
+            if (!panel1.Visible)
+            {
+                splitter1.Show();
+                panel1.Show();
+            }
+            multipleFileView1.BringToFront();
             driveStrip1.Visible = false;
         }
 
         public void ShowFileInfoPanel()
         {
-            if (fileInfoPanel.Visible) return;
-            splitter1.Show();
-            fileInfoPanel.Show();
+            if (!panel1.Visible)
+            {
+                splitter1.Show();
+                panel1.Show();
+            }
+            fileInfoPanel.BringToFront();
             driveStrip1.Visible = true;
         }
 
@@ -528,13 +543,22 @@ namespace Oblqo
 
         private void fileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fileListView.SelectedItems.Count == 0 || fileListView.SelectedItems.Count > 1)
+            if (fileListView.SelectedItems.Count == 0)
             {
                 return;
             }
-            ShowFileInfoPanel();
-            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-            driveStrip1.File = info.File;
+            else if (fileListView.SelectedItems.Count == 1)
+            {
+                ShowFileInfoPanel();
+                var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                driveStrip1.File = info.File;
+                imageViewer1.File = info.File;
+            }
+            else
+            {
+                multipleFileView1.Items = fileListView.SelectedItems;
+                ShowMultipleFileView();
+            }
         }
 
         private void OnError(Exception exception)
@@ -895,14 +919,20 @@ namespace Oblqo
 
         private void fileInfoPanel_ZoomClicked(object sender, EventArgs e)
         {
+            OpenImageViewerIfImageSelected();
+        }
+
+        private bool OpenImageViewerIfImageSelected()
+        {
             if (!fileInfoPanel.IsPicture)
             {
-                return;
+                return false;
             }
             imageViewer1.Bounds = ClientRectangle;
             imageViewer1.Show();
             imageViewer1.BringToFront();
             UpdateImageViewer();
+            return true;
         }
 
         private Controls.SlideDirection? prevSlidingDirection;
@@ -960,6 +990,30 @@ namespace Oblqo
         {
             prevSlidingDirection = e.Direction;
             fileListView.SelectNextFile(e.Direction);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (imageViewer1.Visible && e.CloseReason == CloseReason.UserClosing)
+            {
+                if (MessageBox.Show("You really want close Oblqo?", "Close Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void imageViewer1_SelectedDriveChanged(object sender, EventArgs e)
+        {
+            driveStrip1.SelectedDrive = imageViewer1.SelectedDrive;
+        }
+
+        private void fileListView_FileDoubleClick(object sender, EventArgs e)
+        {
+            if (!OpenImageViewerIfImageSelected())
+            {
+                fileListView.OpenSelectedFileIfItLocal();
+            }
         }
     }
 }

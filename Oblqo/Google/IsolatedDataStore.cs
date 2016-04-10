@@ -50,7 +50,7 @@ namespace Oblqo
                 }
                 return await Task.Run(() =>
                 {
-                    using (var stream = store.OpenFile(path, System.IO.FileMode.Open))
+                    using (var stream = store.OpenFile(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
                     {
                         System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
                         return (T)ser.Deserialize(stream);

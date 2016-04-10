@@ -149,7 +149,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAASwBBQEsAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAXQBBQF0AQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 172</value>
+    <value>248, 127</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -409,7 +409,7 @@
     <value>0, 0</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 172</value>
+    <value>412, 127</value>
   </data>
   <data name="fileListView.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -436,7 +436,7 @@
     <value>412, 0</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 172</value>
+    <value>8, 127</value>
   </data>
   <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -472,7 +472,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 172</value>
+    <value>315, 137</value>
   </data>
   <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -490,25 +490,19 @@
     <value>2</value>
   </data>
   <data name="fileInfoPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
+    <value>Fill</value>
   </data>
   <data name="fileInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>420, 0</value>
-  </data>
-  <data name="fileInfoPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>317, 0</value>
+    <value>0, 0</value>
   </data>
   <data name="fileInfoPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 2, 0</value>
   </data>
   <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 172</value>
+    <value>317, 137</value>
   </data>
   <data name="fileInfoPanel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="fileInfoPanel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;fileInfoPanel.Name" xml:space="preserve">
     <value>fileInfoPanel</value>
@@ -517,9 +511,60 @@
     <value>Oblqo.Controls.DriveFileControl, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;fileInfoPanel.Parent" xml:space="preserve">
-    <value>splitContainer2.Panel2</value>
+    <value>panel1</value>
   </data>
   <data name="&gt;&gt;fileInfoPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="multipleFileView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="multipleFileView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 137</value>
+  </data>
+  <data name="multipleFileView1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;multipleFileView1.Name" xml:space="preserve">
+    <value>multipleFileView1</value>
+  </data>
+  <data name="&gt;&gt;multipleFileView1.Type" xml:space="preserve">
+    <value>Oblqo.Controls.MultipleFileView, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;multipleFileView1.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;multipleFileView1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>420, 0</value>
+  </data>
+  <data name="panel1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>317, 137</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 137</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>splitContainer2.Panel2</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="splitContainer2.Panel2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
@@ -538,7 +583,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 172</value>
+    <value>997, 127</value>
   </data>
   <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
     <value>250</value>
@@ -580,7 +625,7 @@
     <value>0, 2</value>
   </data>
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 353</value>
+    <value>985, 398</value>
   </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -604,7 +649,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 356</value>
+    <value>987, 401</value>
   </data>
   <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -643,7 +688,7 @@
     <value>0, 2</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 349</value>
+    <value>985, 398</value>
   </data>
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -667,7 +712,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>989, 352</value>
+    <value>987, 401</value>
   </data>
   <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -694,7 +739,7 @@
     <value>2, 0</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 384</value>
+    <value>995, 429</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -730,7 +775,7 @@
     <value>997, 566</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>172</value>
+    <value>127</value>
   </data>
   <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1114,7 +1159,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;loadingImageProgressBar.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="folderMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>256, 56</value>
@@ -1224,11 +1269,14 @@
   <data name="&gt;&gt;imageViewer1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="driveStrip1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="driveStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>702, 360</value>
   </data>
   <data name="driveStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 21</value>
+    <value>209, 25</value>
   </data>
   <data name="driveStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1246,7 +1294,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;driveStrip1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

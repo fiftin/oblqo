@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Oblqo.Controls
@@ -14,13 +9,43 @@ namespace Oblqo.Controls
     {
         private AccountFile file;
 
-        public Drive SelectedDrive { get; private set; }
+        private Drive selectedDrive;
+
+        public Drive SelectedDrive
+        {
+            get
+            {
+                return selectedDrive;
+            }
+            set
+            {
+                foreach (ToolStripButton x in toolStrip1.Items)
+                {
+                    x.Checked = x.Name == value.Id;
+                }
+                selectedDrive = value;
+                OnSelectedDriveChanged();
+            }
+        }
 
         public event EventHandler SelectedDriveChanged;
 
         public DriveStrip()
         {
             InitializeComponent();
+        }
+
+        [DefaultValue(false)]
+        public bool AlignToRight
+        {
+            get
+            {
+                return toolStrip1.RightToLeft == RightToLeft.Yes;
+            }
+            set
+            {
+                toolStrip1.RightToLeft = value ? RightToLeft.Yes : RightToLeft.No;
+            }
         }
 
         [DefaultValue(null), Browsable(false)]
@@ -85,7 +110,7 @@ namespace Oblqo.Controls
             if (!hasSelectedItem)
             {
                 ((ToolStripButton)toolStrip1.Items[0]).Checked = true;
-                SelectedDrive = File.Account.Drives.FindById(toolStrip1.Items[0].Name);
+                selectedDrive = File.Account.Drives.FindById(toolStrip1.Items[0].Name);
             }
             OnSelectedDriveChanged();
         }
@@ -105,7 +130,7 @@ namespace Oblqo.Controls
                 x.Checked = false;
             }
             item.Checked = true;
-            SelectedDrive = File.Account.Drives.FindById(item.Name);
+            selectedDrive = File.Account.Drives.FindById(item.Name);
             OnSelectedDriveChanged();
         }
 

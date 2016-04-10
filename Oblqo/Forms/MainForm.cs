@@ -24,7 +24,7 @@ namespace Oblqo
         public const string FolderImageKey = "folder";
         public const string FileImageKey = "file";
         public const string ProgressImageKey = "process";
-        
+
         private readonly AccountCollection accounts = new AccountCollection();
         private readonly AccountManager accountManager;
         private readonly AsyncTaskManager taskManager = new AsyncTaskManager(new IsolatedConfigurationStorage());
@@ -63,7 +63,7 @@ namespace Oblqo
 
         private void InitUI()
         {
-            foreach (var x in accountManager. Accounts)
+            foreach (var x in accountManager.Accounts)
             {
                 var node = treeView1.Nodes.Add("", x.AccountName, DisconnectedAccountImageKey);
                 node.SelectedImageKey = DisconnectedAccountImageKey;
@@ -104,7 +104,7 @@ namespace Oblqo
                 info.File = ret.RootFolder;
                 return ret;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 node.ImageKey = nodeImageKey;
                 node.SelectedImageKey = nodeImageKey;
@@ -119,37 +119,59 @@ namespace Oblqo
 
         public void HideFileInfoPanel()
         {
-            if (!fileInfoPanel.Visible) return;
+            if (!panel1.Visible) return;
             splitter1.Hide();
-            fileInfoPanel.Hide();
+            panel1.Hide();
+            driveStrip1.Visible = false;
+        }
+
+
+        public void ShowMultipleFileView()
+        {
+            if (!panel1.Visible)
+            {
+                splitter1.Show();
+                panel1.Show();
+            }
+            multipleFileView1.BringToFront();
             driveStrip1.Visible = false;
         }
 
         public void ShowFileInfoPanel()
         {
-            if (fileInfoPanel.Visible) return;
-            splitter1.Show();
-            fileInfoPanel.Show();
+            if (!panel1.Visible)
+            {
+                splitter1.Show();
+                panel1.Show();
+            }
+            fileInfoPanel.BringToFront();
             driveStrip1.Visible = true;
         }
-        
+
         private void UpdateFileList()
         {
             var node = treeView1.SelectedNode;
             if (node == null) return;
             HideFileInfoPanel();
-            var info = (NodeInfo) node.Tag;
+            var info = (NodeInfo)node.Tag;
             Account account;
-            if (!accounts.TryGetValue(info.AccountName, out account))
-                return;
-            loadingFileListProgressBar.Visible = true;
-            fileListView.UpdateFileList(node, account);
+            if (accounts.TryGetValue(info.AccountName, out account))
+            {
+                loadingFileListProgressBar.Visible = true;
+                fileListView.UpdateFileList(node, account);
+                currentDirectoryInfoPanel.Enabled = true;
+            }
+            else
+            {
+                fileListView.UpdateFileList(node, null);
+                currentDirectoryInfoPanel.Enabled = false;
+            }
         }
 
         private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
         {
             var token = new CancellationToken();
-            var info = (NodeInfo) node.Tag;
+            var info = (NodeInfo)node.Tag;
             node.Nodes.Clear();
             var nodeImageKey = node.ImageKey;
             loadingNodes.Add(node);
@@ -249,7 +271,7 @@ namespace Oblqo
                         var fileProp = e.Task.GetType().GetProperty(attr.FilePropertyName);
                         var file = (AccountFile)fileProp.GetValue(e.Task);
                         var parentFileProp = attr.ParentFilePropertyName == null ? null : e.Task.GetType().GetProperty(attr.ParentFilePropertyName);
-                        var parentFile = parentFileProp == null ? null :(AccountFile)parentFileProp.GetValue(e.Task);
+                        var parentFile = parentFileProp == null ? null : (AccountFile)parentFileProp.GetValue(e.Task);
 
                         if (file.IsFile)
                         {
@@ -303,7 +325,7 @@ namespace Oblqo
                         }
                     }
                 }
-                
+
                 switch (e.Task.State)
                 {
                     case AsyncTaskState.Completed:
@@ -407,7 +429,7 @@ namespace Oblqo
         /// </summary>
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            var nodeInfo = (NodeInfo) e.Node.Tag; 
+            var nodeInfo = (NodeInfo)e.Node.Tag;
             switch (e.Button)
             {
                 case MouseButtons.Right:
@@ -452,7 +474,7 @@ namespace Oblqo
                 account.StorageVault = accountForm.GlacierVault;
                 node.Text = account.AccountName;
                 node.Tag = new NodeInfo(account);
-               
+
                 account.Drives.Clear();
                 account.Drives.AddRange(accountForm.GetDrives());
 
@@ -529,7 +551,7 @@ namespace Oblqo
 
         private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
         {
-            var info = (NodeInfo) e.Node.Tag;
+            var info = (NodeInfo)e.Node.Tag;
             if (info.Type != NodeType.Folder) return;
             if (e.Node.Nodes[0].Name == "")
                 UpdateNode(e.Node);
@@ -537,13 +559,22 @@ namespace Oblqo
 
         private void fileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fileListView.SelectedItems.Count == 0 || fileListView.SelectedItems.Count > 1)
+            if (fileListView.SelectedItems.Count == 0)
             {
                 return;
             }
-            ShowFileInfoPanel();
-            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-            driveStrip1.File = info.File;
+            else if (fileListView.SelectedItems.Count == 1)
+            {
+                ShowFileInfoPanel();
+                var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                driveStrip1.File = info.File;
+                imageViewer1.File = info.File;
+            }
+            else
+            {
+                multipleFileView1.Items = fileListView.SelectedItems;
+                ShowMultipleFileView();
+            }
         }
 
         private void OnError(Exception exception)
@@ -603,7 +634,7 @@ namespace Oblqo
             var node = treeView1.SelectedNode;
             if (node == null)
                 return;
-            var nodeInfo = (NodeInfo) node.Tag;
+            var nodeInfo = (NodeInfo)node.Tag;
             accountManager.Remove(nodeInfo.AccountName);
             if (accounts.ContainsKey(nodeInfo.AccountName))
             {
@@ -709,9 +740,13 @@ namespace Oblqo
             UpdateToolBarAndMenu();
             // TODO: Break unfinished tasks
         }
-        
+
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this filder?", "Delete folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             var node = treeView1.SelectedNode;
             if (node == null)
                 return;
@@ -779,7 +814,7 @@ namespace Oblqo
         private void logListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (exceptionForm == null)
-                return;            var selectedItem = logListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
+                return; var selectedItem = logListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
             if (selectedItem == null)
                 return;
             exceptionForm.Exception = (Exception)selectedItem.Tag;
@@ -828,12 +863,14 @@ namespace Oblqo
         {
             loadingImageProgressBar.Visible = true;
             driveStrip1.Visible = false;
+            UpdateImageViewer(loadingState: true);
         }
 
         private void fileInfoPanel_ImageLoaded(object sender, EventArgs e)
         {
             loadingImageProgressBar.Visible = false;
             driveStrip1.Visible = true;
+            UpdateImageViewer();
         }
 
         private void driveStrip1_SelectedDriveChanged(object sender, EventArgs e)
@@ -895,7 +932,114 @@ namespace Oblqo
         {
             loadingFileListProgressBar.Visible = false;
         }
-        
-    }
 
+        private void fileInfoPanel_ZoomClicked(object sender, EventArgs e)
+        {
+            OpenImageViewerIfImageSelected();
+        }
+
+        private bool OpenImageViewerIfImageSelected()
+        {
+            if (!fileInfoPanel.IsPicture)
+            {
+                return false;
+            }
+            imageViewer1.Bounds = ClientRectangle;
+            imageViewer1.Show();
+            imageViewer1.BringToFront();
+            UpdateImageViewer();
+            return true;
+        }
+
+        private Controls.SlideDirection? prevSlidingDirection;
+
+        public void UpdateImageViewer(bool loadingState = false)
+        {
+            if (!imageViewer1.Visible)
+            {
+                return;
+            }
+
+            if (loadingState)
+            {
+                imageViewer1.Picture = Resources.loading;
+            }
+            else
+            {
+                if (fileInfoPanel.IsPicture)
+                {
+                    imageViewer1.Picture = fileInfoPanel.Picture;
+                }
+                else if (prevSlidingDirection.HasValue)
+                {
+                    fileListView.SelectNextFile(prevSlidingDirection.Value);
+                }
+            }
+
+            imageViewer1.FileName = fileInfoPanel.FileName;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            imageViewer1.Bounds = ClientRectangle;
+        }
+        
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                imageViewer1.Hide();
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                prevSlidingDirection = Oblqo.Controls.SlideDirection.Back;
+                fileListView.SelectNextFile(Oblqo.Controls.SlideDirection.Back);
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                prevSlidingDirection = Oblqo.Controls.SlideDirection.Front;
+                fileListView.SelectNextFile(Oblqo.Controls.SlideDirection.Front);
+            }
+        }
+
+        private void imageViewer1_Slide(object sender, Controls.SlideEventArgs e)
+        {
+            prevSlidingDirection = e.Direction;
+            fileListView.SelectNextFile(e.Direction);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (imageViewer1.Visible && e.CloseReason == CloseReason.UserClosing)
+            {
+                if (MessageBox.Show("You really want close Oblqo?", "Close Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void imageViewer1_SelectedDriveChanged(object sender, EventArgs e)
+        {
+            driveStrip1.SelectedDrive = imageViewer1.SelectedDrive;
+        }
+
+        private void fileListView_FileDoubleClick(object sender, EventArgs e)
+        {
+            if (!OpenImageViewerIfImageSelected())
+            {
+                fileListView.OpenSelectedFileIfItLocal();
+            }
+        }
+
+        private void imageViewer1_PictureRightMouseDown(object sender, EventArgs e)
+        {
+            fileListView.ShowMenu(false);
+        }
+
+        private void fileInfoPanel_PictureRightMouseDown(object sender, EventArgs e)
+        {
+            fileListView.ShowMenu(false);
+        }
+    }
 }

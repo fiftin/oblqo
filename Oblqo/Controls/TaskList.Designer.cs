@@ -153,7 +153,7 @@
             // cancelTaskToolStripMenuItem
             // 
             this.cancelTaskToolStripMenuItem.Name = "cancelTaskToolStripMenuItem";
-            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.cancelTaskToolStripMenuItem.Text = "Cancel";
             this.cancelTaskToolStripMenuItem.Click += new System.EventHandler(this.cancelTaskToolStripMenuItem_Click);
             // 
@@ -162,6 +162,7 @@
             this.taskDetailsToolStripMenuItem.Name = "taskDetailsToolStripMenuItem";
             this.taskDetailsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.taskDetailsToolStripMenuItem.Text = "Details";
+            this.taskDetailsToolStripMenuItem.Click += new System.EventHandler(this.taskDetailsToolStripMenuItem_Click_1);
             // 
             // TaskList
             // 

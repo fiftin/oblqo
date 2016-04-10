@@ -42,7 +42,6 @@
             this.fileListFilterTextBox.Name = "fileListFilterTextBox";
             this.fileListFilterTextBox.Size = new System.Drawing.Size(130, 20);
             this.fileListFilterTextBox.TabIndex = 8;
-            this.fileListFilterTextBox.Text = "Filter";
             this.fileListFilterTextBox.Enter += new System.EventHandler(this.fileListFilterTextBox_Enter);
             this.fileListFilterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fileListFilterTextBox_KeyDown);
             this.fileListFilterTextBox.Leave += new System.EventHandler(this.fileListFilterTextBox_Leave);

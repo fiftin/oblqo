@@ -317,7 +317,9 @@ namespace Oblqo.Controls
         private void cancelTaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (var task in from ListViewItem item in taskListView.SelectedItems select (AsyncTask)item.Tag)
+            {
                 task.Cancel();
+            }
         }
 
 
@@ -399,5 +401,10 @@ namespace Oblqo.Controls
         #endregion
 
         public event EventHandler<ExceptionEventArgs> Error;
+
+        private void taskDetailsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

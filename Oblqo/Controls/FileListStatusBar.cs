@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Oblqo
@@ -21,6 +15,8 @@ namespace Oblqo
         public FileListStatusBar()
         {
             InitializeComponent();
+            fileListFilterTextBox.Text = Properties.Resources.FileListStatusBar_Filter;
+            fileListNumberOfFilesLabel.Text = string.Format(Properties.Resources.FileListStatusBar_Status, 0, 0);
         }
 
         public int NumberOfFiles
@@ -29,7 +25,7 @@ namespace Oblqo
             set
             {
                 numberOfFiles = value;
-                fileListNumberOfFilesLabel.Text = string.Format("{0} files, {1} unsync", numberOfFiles, numberOfUnsyncronizedFiles);
+                fileListNumberOfFilesLabel.Text = string.Format(Properties.Resources.FileListStatusBar_Status, numberOfFiles, numberOfUnsyncronizedFiles);
             }
         }
 
@@ -42,7 +38,7 @@ namespace Oblqo
             set
             {
                 numberOfUnsyncronizedFiles = value;
-                fileListNumberOfFilesLabel.Text = string.Format("{0} files, {1} unsync", numberOfFiles, numberOfUnsyncronizedFiles);
+                fileListNumberOfFilesLabel.Text = string.Format(Properties.Resources.FileListStatusBar_Status, numberOfFiles, numberOfUnsyncronizedFiles);
             }
         }
 
@@ -77,7 +73,7 @@ namespace Oblqo
             {
                 IsFiltered = false;
                 fileListFilterTextBox.ForeColor = Color.DarkGray;
-                fileListFilterTextBox.Text = "Filter";
+                fileListFilterTextBox.Text = Properties.Resources.FileListStatusBar_Filter;
                 if (filter != "")
                 {
                     filter = "";

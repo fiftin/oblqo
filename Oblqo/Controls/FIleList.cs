@@ -40,7 +40,7 @@ namespace Oblqo.Controls
 
         private void fileListView_DoubleClick(object sender, EventArgs e)
         {
-            OpenSelectedFileIfItLocal();
+            FileDoubleClick?.Invoke(this, new EventArgs());
         }
 
 
@@ -49,33 +49,77 @@ namespace Oblqo.Controls
             switch (e.Button)
             {
                 case MouseButtons.Right:
-                    if (fileListView.SelectedItems.Count > 0)
-                    {
-                        downloadFileFromStorageToolStripMenuItem.Enabled = true;
-                        if (fileListView.SelectedItems.Count == 1)
-                        {
-                            var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
-                            if (info.File.StorageFile == null || info.File.StorageFile.Id == null)
-                            {
-                                downloadFileFromStorageToolStripMenuItem.Enabled = false;
-                            }
-                        }
-                        fileMenu.Show(Cursor.Position);
-                    }
-                    else
-                    {
-                        fileListMenu.Show(Cursor.Position);
-                    }
+                    ShowMenu(true);
                     break;
+            }
+        }
+
+        public void ShowMenu(bool showSelectAll)
+        {
+            selectAllToolStripMenuItemSeparator.Visible = showSelectAll;
+            selectAllToolStripMenuItem.Visible = showSelectAll;
+
+            if (fileListView.SelectedItems.Count > 0)
+            {
+                foreach (ToolStripItem menuItem in fileMenu.Items)
+                {
+                    menuItem.Enabled = true;
+                }
+
+                // Calc number of items stored in archive among selected items
+                // and set menu items states.
+
+                var nSelectedItemsInArchive = 0;
+                foreach (ListViewItem item in fileListView.SelectedItems)
+                {
+                    var info = (NodeInfo)item.Tag;
+                    if (info.File.StorageFile != null && info.File.StorageFile.Id != null)
+                    {
+                        nSelectedItemsInArchive++;
+                    }
+                }
+                if (nSelectedItemsInArchive == 0)
+                {
+                    downloadFileFromStorageToolStripMenuItem.Enabled = false;
+                    synchronizeOnDrivesToolStripMenuItem.Enabled = false;
+                    deleteFromArchiveToolStripMenuItem.Enabled = false;
+                }
+                else if (nSelectedItemsInArchive == fileListView.SelectedItems.Count)
+                {
+                    synchronizeToolStripMenuItem.Enabled = false;
+                }
+
+                if (fileListView.SelectedItems.Count == 1)
+                {
+                    var nodeInfo = (NodeInfo)fileListView.SelectedItems[0].Tag;
+                    if (nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive) == null)
+                    {
+                        openFileToolStripMenuItem.Enabled = false;
+                        openContainingFolderToolStripMenuItem.Enabled = false;
+                    }
+                }
+                else
+                {
+                    openFileToolStripMenuItem.Enabled = false;
+                    openContainingFolderToolStripMenuItem.Enabled = false;
+                }
+
+                fileMenu.Show(Cursor.Position);
+            }
+            else
+            {
+                if (Account != null)
+                {
+                    fileListMenu.Show(Cursor.Position);
+                }
             }
         }
 
         private void fileListView_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter)
             {
-                OpenSelectedFileIfItLocal();
+                FileDoubleClick?.Invoke(this, new EventArgs());
             }
         }
 
@@ -231,6 +275,34 @@ namespace Oblqo.Controls
             }
         }
 
+        public void SelectNextFile(SlideDirection direction)
+        {
+            if (SelectedItems.Count == 0)
+            {
+                return;
+            }
+            var item = SelectedItems[0];
+            fileListView.SelectedIndices.Clear();
+            var index = item.Index;
+            if (direction == SlideDirection.Front)
+            {
+                index++;
+                if (index == fileListView.Items.Count - 1)
+                {
+                    index = 0;
+                }
+            }
+            else
+            {
+                index--;
+                if (index == 0)
+                {
+                    index = fileListView.Items.Count - 1;
+                }
+            }
+            fileListView.SelectedIndices.Add(index);
+        }
+
         [Browsable(false)]
         public ListView.ListViewItemCollection Items
         {
@@ -254,6 +326,15 @@ namespace Oblqo.Controls
                 updateListCancellationTokenSource?.Cancel();
                 updateListCancellationTokenSource = new CancellationTokenSource();
             }
+
+            if (account == null)
+            {
+                fileListView.Items.Clear();
+                CurrentDirectoryInfoPanel.NumberOfFiles = 0;
+                CurrentDirectoryInfoPanel.NumberOfUnsyncronizedFiles = 0;
+                return;
+            }
+
             ICollection<AccountFile> files;
             fileListView.Enabled = false;
             Task.Run(async delegate
@@ -358,20 +439,6 @@ namespace Oblqo.Controls
             }
         }
 
-        private void OpenSelectedFileIfItLocal()
-        {
-            if (fileListView.SelectedItems.Count > 0)
-            {
-                var selectedFile = fileListView.SelectedItems[0];
-                var nodeInfo = (NodeInfo)selectedFile.Tag;
-                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
-                if (localFile != null)
-                {
-                    System.Diagnostics.Process.Start(localFile.FullName);
-                }
-            }
-        }
-
         private void OpenSelectedFileContainingFolderIfItLocal()
         {
             if (fileListView.SelectedItems.Count > 0)
@@ -415,7 +482,8 @@ namespace Oblqo.Controls
             SelectedIndexChanged?.Invoke(sender, e);
         }
 
-        
+
+        public event EventHandler FileDoubleClick;
         public event EventHandler SelectedIndexChanged;
         public event EventHandler FileLoaded;
         public event EventHandler<ExceptionEventArgs> Error;
@@ -425,6 +493,20 @@ namespace Oblqo.Controls
             OpenSelectedFileIfItLocal();
         }
 
+
+        public void OpenSelectedFileIfItLocal()
+        {
+            if (SelectedItems.Count > 0)
+            {
+                var selectedFile = SelectedItems[0];
+                var nodeInfo = (NodeInfo)selectedFile.Tag;
+                var localFile = (LocalFile)nodeInfo.File.DriveFiles.FirstOrDefault(x => x.Drive is LocalDrive);
+                if (localFile != null)
+                {
+                    System.Diagnostics.Process.Start(localFile.FullName);
+                }
+            }
+        }
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenSelectedFileContainingFolderIfItLocal();
@@ -447,6 +529,10 @@ namespace Oblqo.Controls
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive & Drives?", "Delete file(s) from Archive & Drives", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo)item.Tag;
@@ -456,6 +542,10 @@ namespace Oblqo.Controls
 
         private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive?", "Delete file(s) from Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             foreach (ListViewItem item in fileListView.SelectedItems)
             {
                 var info = (NodeInfo)item.Tag;

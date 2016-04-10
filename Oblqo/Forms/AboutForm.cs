@@ -40,7 +40,7 @@ namespace Oblqo
             {
                 return;
             }
-            Process.Start("https://github.com/fiftin/oblqo");
+            Process.Start("http://fiftin.github.io/oblqo");
         }
 
         private void contextMenuStrip1_Opened(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace Oblqo
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetData(DataFormats.Text, "https://github.com/fiftin/oblqo");
+            Clipboard.SetData(DataFormats.Text, "http://fiftin.github.io/oblqo");
         }
     }
 }

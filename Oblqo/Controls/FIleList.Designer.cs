@@ -47,12 +47,12 @@ namespace Oblqo.Controls
             this.synchronizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.synchronizeOnDrivesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFromArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItemSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -110,18 +110,21 @@ namespace Oblqo.Controls
             this.newFolderToolStripMenuItem1.Name = "newFolderToolStripMenuItem1";
             this.newFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
             this.newFolderToolStripMenuItem1.Text = "New folder";
+            this.newFolderToolStripMenuItem1.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
             // uploadFolderToolStripMenuItem1
             // 
             this.uploadFolderToolStripMenuItem1.Name = "uploadFolderToolStripMenuItem1";
             this.uploadFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
             this.uploadFolderToolStripMenuItem1.Text = "Upload folder";
+            this.uploadFolderToolStripMenuItem1.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFilesToolStripMenuItem
             // 
             this.uploadFilesToolStripMenuItem.Name = "uploadFilesToolStripMenuItem";
             this.uploadFilesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.uploadFilesToolStripMenuItem.Text = "Upload files";
+            this.uploadFilesToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // fileMenu
             // 
@@ -133,98 +136,98 @@ namespace Oblqo.Controls
             this.synchronizeToolStripMenuItem,
             this.synchronizeOnDrivesToolStripMenuItem,
             this.toolStripSeparator1,
-            this.deleteFileToolStripMenuItem,
             this.deleteFromArchiveToolStripMenuItem,
+            this.deleteFileToolStripMenuItem,
             this.toolStripSeparator8,
             this.openFileToolStripMenuItem,
             this.openContainingFolderToolStripMenuItem,
-            this.toolStripSeparator9,
+            this.selectAllToolStripMenuItemSeparator,
             this.selectAllToolStripMenuItem});
             this.fileMenu.Name = "fileContextMenuStrip";
-            this.fileMenu.Size = new System.Drawing.Size(229, 226);
+            this.fileMenu.Size = new System.Drawing.Size(271, 226);
             // 
             // downloadFileFromStorageToolStripMenuItem
             // 
             this.downloadFileFromStorageToolStripMenuItem.Name = "downloadFileFromStorageToolStripMenuItem";
-            this.downloadFileFromStorageToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.downloadFileFromStorageToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.downloadFileFromStorageToolStripMenuItem.Text = "Download from Ar&chive";
             this.downloadFileFromStorageToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromStorageToolStripMenuItem_Click);
             // 
             // downloadFileFromDriveToolStripMenuItem
             // 
             this.downloadFileFromDriveToolStripMenuItem.Name = "downloadFileFromDriveToolStripMenuItem";
-            this.downloadFileFromDriveToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.downloadFileFromDriveToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.downloadFileFromDriveToolStripMenuItem.Text = "Download from D&rive";
             this.downloadFileFromDriveToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromDriveToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(225, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(267, 6);
             // 
             // synchronizeToolStripMenuItem
             // 
             this.synchronizeToolStripMenuItem.Name = "synchronizeToolStripMenuItem";
             this.synchronizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.synchronizeToolStripMenuItem.Text = "&Sync Archive";
+            this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.synchronizeToolStripMenuItem.Text = "&Upload to Archive";
             this.synchronizeToolStripMenuItem.Click += new System.EventHandler(this.synchronizeToolStripMenuItem_Click);
             // 
             // synchronizeOnDrivesToolStripMenuItem
             // 
             this.synchronizeOnDrivesToolStripMenuItem.Name = "synchronizeOnDrivesToolStripMenuItem";
-            this.synchronizeOnDrivesToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.synchronizeOnDrivesToolStripMenuItem.Text = "Sync Drives";
+            this.synchronizeOnDrivesToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.synchronizeOnDrivesToolStripMenuItem.Text = "Sync with All Drives";
             this.synchronizeOnDrivesToolStripMenuItem.Click += new System.EventHandler(this.synchronizeOnDrivesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(225, 6);
-            // 
-            // deleteFileToolStripMenuItem
-            // 
-            this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
-            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.deleteFileToolStripMenuItem.Text = "&Delete";
-            this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // deleteFromArchiveToolStripMenuItem
             // 
             this.deleteFromArchiveToolStripMenuItem.Name = "deleteFromArchiveToolStripMenuItem";
-            this.deleteFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.deleteFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.deleteFromArchiveToolStripMenuItem.Text = "Delete from Archive";
             this.deleteFromArchiveToolStripMenuItem.Click += new System.EventHandler(this.deleteFromArchiveToolStripMenuItem_Click);
+            // 
+            // deleteFileToolStripMenuItem
+            // 
+            this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
+            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.deleteFileToolStripMenuItem.Text = "&Delete from Archive && Drives";
+            this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(267, 6);
             // 
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.openFileToolStripMenuItem.Text = "Open File";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.openFileToolStripMenuItem.Text = "Open Local File";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openContainingFolderToolStripMenuItem
             // 
             this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
-            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
             this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
-            // toolStripSeparator9
+            // selectAllToolStripMenuItemSeparator
             // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(225, 6);
+            this.selectAllToolStripMenuItemSeparator.Name = "selectAllToolStripMenuItemSeparator";
+            this.selectAllToolStripMenuItemSeparator.Size = new System.Drawing.Size(267, 6);
             // 
             // selectAllToolStripMenuItem
             // 
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.selectAllToolStripMenuItem.Text = "Select &all";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
@@ -267,7 +270,7 @@ namespace Oblqo.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator selectAllToolStripMenuItemSeparator;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
 
         public void Clear()

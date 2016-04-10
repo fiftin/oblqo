@@ -143,6 +143,7 @@
             this.btnClearAuth.TabIndex = 28;
             this.btnClearAuth.Text = "Clear";
             this.btnClearAuth.UseVisualStyleBackColor = true;
+            this.btnClearAuth.Visible = false;
             this.btnClearAuth.Click += new System.EventHandler(this.btnClearAuth_Click);
             // 
             // btnAuth
@@ -153,6 +154,7 @@
             this.btnAuth.TabIndex = 27;
             this.btnAuth.Text = "Auth";
             this.btnAuth.UseVisualStyleBackColor = true;
+            this.btnAuth.Visible = false;
             this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
             // 
             // label1

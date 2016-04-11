@@ -149,7 +149,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAZwBBQGcAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAaQBBQGkAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 102</value>
+    <value>248, 97</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -394,7 +394,7 @@
     <value>currentDirectoryInfoPanel</value>
   </data>
   <data name="&gt;&gt;currentDirectoryInfoPanel.Type" xml:space="preserve">
-    <value>Oblqo.FileListStatusBar, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.FileListStatusBar, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;currentDirectoryInfoPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -409,7 +409,7 @@
     <value>0, 0</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 102</value>
+    <value>412, 97</value>
   </data>
   <data name="fileListView.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -418,7 +418,7 @@
     <value>fileListView</value>
   </data>
   <data name="&gt;&gt;fileListView.Type" xml:space="preserve">
-    <value>Oblqo.Controls.FileList, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.FileList, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;fileListView.Parent" xml:space="preserve">
     <value>splitContainer2.Panel2</value>
@@ -436,7 +436,7 @@
     <value>412, 0</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 102</value>
+    <value>8, 97</value>
   </data>
   <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -508,7 +508,7 @@
     <value>fileInfoPanel</value>
   </data>
   <data name="&gt;&gt;fileInfoPanel.Type" xml:space="preserve">
-    <value>Oblqo.Controls.DriveFileControl, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.DriveFileControl, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;fileInfoPanel.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -532,7 +532,7 @@
     <value>multipleFileView1</value>
   </data>
   <data name="&gt;&gt;multipleFileView1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.MultipleFileView, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.MultipleFileView, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;multipleFileView1.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -583,7 +583,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 102</value>
+    <value>997, 97</value>
   </data>
   <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
     <value>250</value>
@@ -625,7 +625,7 @@
     <value>0, 2</value>
   </data>
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 423</value>
+    <value>985, 428</value>
   </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -634,7 +634,7 @@
     <value>taskListView</value>
   </data>
   <data name="&gt;&gt;taskListView.Type" xml:space="preserve">
-    <value>Oblqo.Controls.TaskList, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.TaskList, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;taskListView.Parent" xml:space="preserve">
     <value>tasksTabPage</value>
@@ -649,7 +649,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 426</value>
+    <value>987, 431</value>
   </data>
   <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -688,7 +688,7 @@
     <value>0, 2</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 423</value>
+    <value>985, 428</value>
   </data>
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -712,7 +712,7 @@
     <value>0, 2, 2, 1</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 426</value>
+    <value>987, 431</value>
   </data>
   <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -739,7 +739,7 @@
     <value>2, 0</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 454</value>
+    <value>995, 459</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -775,7 +775,7 @@
     <value>997, 566</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>102</value>
+    <value>97</value>
   </data>
   <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1261,7 +1261,7 @@
     <value>imageViewer1</value>
   </data>
   <data name="&gt;&gt;imageViewer1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.ImageViewer, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.ImageViewer, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;imageViewer1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1288,7 +1288,7 @@
     <value>driveStrip1</value>
   </data>
   <data name="&gt;&gt;driveStrip1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.DriveStrip, Oblqo, Version=0.4.7.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.DriveStrip, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;driveStrip1.Parent" xml:space="preserve">
     <value>$this</value>

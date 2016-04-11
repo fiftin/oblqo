@@ -290,3 +290,10 @@ a {
 .page--active {
   display: block;
 }
+
+.screenshot-description {
+  text-align: center;
+  margin-top: -15px;
+  font-style: italic;
+  padding-bottom: 20px;
+}

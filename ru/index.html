@@ -5,10 +5,10 @@
     <title>Oblqo by fiftin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="pragma" content="no-cache" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/github-light.css" media="screen">
     <script src="https://code.jquery.com/jquery-2.2.2.min.js"
             integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
             crossorigin="anonymous"></script>
@@ -18,38 +18,38 @@
       <h1 class="project-name">
         <p style="margin-bottom: 0;"><img src="https://raw.githubusercontent.com/fiftin/oblqo/gh-pages/oblqo-light.png" alt="oblqo"></p>
       </h1>
-      <h2 class="project-tagline">Tool for sync your photos and videos with Amazon Glacier and Google Drive</h2>
-      <a href="https://github.com/fiftin/oblqo" class="btn">View on GitHub</a>
+      <h2 class="project-tagline">Приложения для сохранения ваших вотографий в Amazon Glacier и Google Drive</h2>
+      <a href="https://github.com/fiftin/oblqo" class="btn">Смотреть на GitHub</a>
       <a href="https://github.com/fiftin/oblqo/releases/download/0.4.9/oblqo-0.4.9.zip"
-         class="btn">Download Installer for Windows</a>
+         class="btn">Скачать установщик для Windows</a>
       <a href="https://github.com/fiftin/oblqo/releases/download/0.4.9/oblqo-0.4.9-portable.zip"
-         class="btn">Download Portable (for Windows, Linux &amp; Mac)</a>
+         class="btn">Скачать exe'шник (для Windows, Linux и Mac)</a>
     </section>
 
     <section class="main-menu">
       <ul class="menu">
 
         <li class="menu__item menu__item--active">
-          <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Home</a>
+          <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Домашняя</a>
         </li>
         <li class="menu__item">
-          <a class="menu__item-link" href="#screenshots" onclick="return showPage(this)">Screenshots</a>
+          <a class="menu__item-link" href="#screenshots" onclick="return showPage(this)">Скриншоты</a>
         </li>
         <li class="menu__item">
-          <a class="menu__item-link" href="https://github.com/fiftin/oblqo/wiki">Docs</a>
+          <a class="menu__item-link" href="https://github.com/fiftin/oblqo/wiki">Доки</a>
         </li>
 
       </ul>
       <ul id="fixed-menu" class="menu menu--fixed" style="opacity: 0.0; display: none; z-index: -1">
 
         <li class="menu__item menu__item--active">
-          <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Home</a>
+          <a class="menu__item-link menu__item-link" href="#home" onclick="return showPage(this)">Домашняя</a>
         </li>
         <li class="menu__item">
-          <a class="menu__item-link" href="#screenshots" onclick="return showPage(this)">Screenshots</a>
+          <a class="menu__item-link" href="#screenshots" onclick="return showPage(this)">Скриншоты</a>
         </li>
         <li class="menu__item">
-          <a class="menu__item-link" href="https://github.com/fiftin/oblqo/wiki">Docs</a>
+          <a class="menu__item-link" href="https://github.com/fiftin/oblqo/wiki">Доки</a>
         </li>
 
       </ul>
@@ -58,32 +58,43 @@
     <section id="main-content" class="main-content">
       <div id="home" class="page page--active">
         <p>
-           This tool helps you to store and sync your files across multiple
-           storages: local disk, Amazon Glacier, Google Drive. If you lose files
-           from one storage you always can get their from another.
+           Oblqo поможет держать ваши фотографии в сохранности благодаря
+           синхронизации их на разных хранилищах - на жестком диске компьютера,
+           в архиве Amazon Glaicer и на облачном диске Google Drive.
+           Вы можете не бояться потерять фотографии на жестком диске вашего
+           компьютера, вы всегда сможите востановить их из архива Amazon Glacier,
+           надежность которого составляет 99.999%.
          </p>
         <p>
-           Also this tool allow you scale your images to smaller dimensions and
-           save space on your Google Drive. You can store original photos on
-           Amazon Glacier and use Google Drive for view and share your photos.
+           Также Oblqo поддереживает множество полезных фич.
+           Например вы можете сохранять в Google Drive уменьшенные копии
+           фотографий для экономии места, а в Amazon Glacier сохранять
+           оригиналы фотографий.
+           <br>
+           Или синхронизировать фотографии между разными аккаунтами
+           Google Drive.
+           <br>
+           Вы можете не хранить фотографии на жеском диске вовсе. Имея
+           уменьшенные копии фотографий в Google Drive по неободимости вы
+           всегда можете скачать оригинал с Amazon Glacier.
         </p>
       </div>
       <div id="screenshots" class="page">
         <p>
           <img src="https://raw.githubusercontent.com/fiftin/oblqo/gh-pages/oblqo-screen-2.png" />
-          <div class="screenshot-description">Local Files Browsing</div>
+          <div class="screenshot-description">Простотр файлов</div>
         </p>
         <p>
           <img src="https://raw.githubusercontent.com/fiftin/oblqo/gh-pages/oblqo-screen-6.png" />
-          <div class="screenshot-description">File Sync with Amazon Glacier</div>
+          <div class="screenshot-description">Синхронизация файлов с Amazon Glacier</div>
         </p>
         <p>
           <img src="https://raw.githubusercontent.com/fiftin/oblqo/gh-pages/image-viewer-2.png" />
-          <div class="screenshot-description">Image Viewer</div>
+          <div class="screenshot-description">Просмотр фотографий</div>
         </p>
         <p>
           <img src="https://raw.githubusercontent.com/fiftin/oblqo/gh-pages/settings-2.png" />
-          <div class="screenshot-description">Connection Settings</div>
+          <div class="screenshot-description">Настройка подключения</div>
         </p>
       </div>
     </section>

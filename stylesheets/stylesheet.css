@@ -309,4 +309,9 @@ a {
   color: #1e6bb8;
   border-radius: 50%;
   padding: 20px;
+  font-size: 40px;
+}
+
+.lang-switcher a:hover {
+  text-decoration: none;
 }

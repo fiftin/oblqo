@@ -126,6 +126,33 @@
   <data name="B" xml:space="preserve">
     <value>{0}B</value>
   </data>
+  <data name="CloseApp_Caption" xml:space="preserve">
+    <value>Close Application</value>
+  </data>
+  <data name="CloseApp_Message" xml:space="preserve">
+    <value>You really want close Oblqo?</value>
+  </data>
+  <data name="DeleteFileFromArchiveAndDrives_Caption" xml:space="preserve">
+    <value>Delete file(s) from Archive &amp; Drives</value>
+  </data>
+  <data name="DeleteFileFromArchiveAndDrives_Message" xml:space="preserve">
+    <value>Do you really want to Delete this file(s) from Archive &amp; Drives?</value>
+  </data>
+  <data name="DeleteFileFromArchive_Caption" xml:space="preserve">
+    <value>Delete file(s) from Archive</value>
+  </data>
+  <data name="DeleteFileFromArchive_Message" xml:space="preserve">
+    <value>Do you really want to Delete this file(s) from Archive?</value>
+  </data>
+  <data name="DeleteFolder_Caption" xml:space="preserve">
+    <value>Delete folder</value>
+  </data>
+  <data name="DeleteFolder_Message" xml:space="preserve">
+    <value>Do you really want to Delete this filder?</value>
+  </data>
+  <data name="EmptyConnectionName_Message" xml:space="preserve">
+    <value>Connection Name can't be empty</value>
+  </data>
   <data name="ErrorMessageBoxCaption" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -138,6 +165,12 @@
   <data name="GB" xml:space="preserve">
     <value>{0}GB</value>
   </data>
+  <data name="InvalidArchive_Message" xml:space="preserve">
+    <value>Invalid Archive configuration</value>
+  </data>
+  <data name="InvalidConnection_Caption" xml:space="preserve">
+    <value>Illegal configuration</value>
+  </data>
   <data name="KB" xml:space="preserve">
     <value>{0}KB</value>
   </data>
@@ -149,5 +182,11 @@
   </data>
   <data name="Original" xml:space="preserve">
     <value>Original</value>
+  </data>
+  <data name="RestoreTasks_Caption" xml:space="preserve">
+    <value>Restore tasks</value>
+  </data>
+  <data name="RestoreTasks_Message" xml:space="preserve">
+    <value>You have uncompleted tasks. Do you want to continue this tasks?</value>
   </data>
 </root>

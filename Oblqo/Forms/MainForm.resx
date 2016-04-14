@@ -156,8 +156,8 @@
   <data name="uploadFolderToolStripMenuItem3.Text" xml:space="preserve">
     <value>Upload folder</value>
   </data>
-  <data name="tasksTabPage.Text" xml:space="preserve">
-    <value>Tasks</value>
+  <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 22</value>
   </data>
   <data name="PercentColumnHeader.Text" xml:space="preserve">
     <value>%</value>
@@ -370,7 +370,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB+
-        IwAAAk1TRnQBSQFMAgEBHAEAAbwBBQH8AQUBEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAbwBBQEEAQYBEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -645,6 +645,9 @@
   <data name="&gt;&gt;driveStrip1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="tasksTabPage.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>995, 469</value>
   </data>
@@ -753,9 +756,6 @@
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;splitContainer2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel1</value>
-  </data>
   <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
@@ -780,11 +780,11 @@
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="currentDirectoryInfoPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
-  <data name="&gt;&gt;uploadToolStripDropDownButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;splitContainer2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
   </data>
   <data name="newAccountStripButton.Text" xml:space="preserve">
     <value>New connection</value>
@@ -938,6 +938,9 @@
   </data>
   <data name="loadingFileListProgressBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>399, 21</value>
+  </data>
+  <data name="&gt;&gt;uploadToolStripDropDownButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;downloadFromArchiveToolStripMenuItem.Name" xml:space="preserve">
     <value>downloadFromArchiveToolStripMenuItem</value>
@@ -1294,11 +1297,14 @@
   <data name="fileSizeColumnHeader.Text" xml:space="preserve">
     <value>Size</value>
   </data>
+  <data name="pictureBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="&gt;&gt;taskColumnHeader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;imageViewer1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="accountMenu.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt</value>
@@ -1456,9 +1462,6 @@
   <data name="refreshFilesToolStripButton.Text" xml:space="preserve">
     <value>Refresh files</value>
   </data>
-  <data name="uploadFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
   <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1494,9 +1497,6 @@
   </data>
   <data name="&gt;&gt;uploadFilesToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
   </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1558,8 +1558,8 @@
   <data name="&gt;&gt;uploadFilesToolStripMenuItem1.Name" xml:space="preserve">
     <value>uploadFilesToolStripMenuItem1</value>
   </data>
-  <data name="currentDirectoryInfoPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="uploadFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>splitContainer2.Panel2</value>
@@ -1816,8 +1816,8 @@
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 0</value>
   </data>
-  <data name="pictureBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="logMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 26</value>

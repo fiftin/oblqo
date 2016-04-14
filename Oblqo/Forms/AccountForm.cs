@@ -138,14 +138,20 @@ namespace Oblqo
 
             if (string.IsNullOrWhiteSpace(accountNameTextBox.Text))
             {
-                MessageBox.Show("Connection Name can't be empty", "Illegal configuration", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Util.GetString("EmptyConnectionName_Message"),
+                    Util.GetString("InvalidConnection_Caption"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
                 accountNameTextBox.Focus();
             } else if (string.IsNullOrWhiteSpace(storageAccessKeyIdTextBox.Text)
                 || string.IsNullOrWhiteSpace(secretAccessKeyTextBox.Text)
                 || string.IsNullOrWhiteSpace(glacierVaultTextBox.Text))
             {
-                MessageBox.Show("Invalid Archive configuration", "Illegal configuration", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Util.GetString("InvalidArchive_Message"),
+                    Util.GetString("InvalidConnection_Caption"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
                 storageAccessKeyIdTextBox.Focus();
             }

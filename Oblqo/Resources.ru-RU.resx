@@ -126,6 +126,33 @@
   <data name="B" xml:space="preserve">
     <value>{0}Б</value>
   </data>
+  <data name="CloseApp_Caption" xml:space="preserve">
+    <value>Выход из программы</value>
+  </data>
+  <data name="CloseApp_Message" xml:space="preserve">
+    <value>Вы действительно хотите выйти из Oblqo?</value>
+  </data>
+  <data name="DeleteFileFromArchiveAndDrives_Caption" xml:space="preserve">
+    <value>Удаление файла(ов) из архива и с дисков</value>
+  </data>
+  <data name="DeleteFileFromArchiveAndDrives_Message" xml:space="preserve">
+    <value>Вы точно хотите удалить эти файлы из архива и с дисков?</value>
+  </data>
+  <data name="DeleteFileFromArchive_Caption" xml:space="preserve">
+    <value>Удаление файла(ов) из архива</value>
+  </data>
+  <data name="DeleteFileFromArchive_Message" xml:space="preserve">
+    <value>Вы точно хотите удалить эти файлы из архива?</value>
+  </data>
+  <data name="DeleteFolder_Caption" xml:space="preserve">
+    <value>Удаление папки</value>
+  </data>
+  <data name="DeleteFolder_Message" xml:space="preserve">
+    <value>Вы точно хотите удалить эту папку?</value>
+  </data>
+  <data name="EmptyConnectionName_Message" xml:space="preserve">
+    <value>Имя подключения не может быть пустым</value>
+  </data>
   <data name="ErrorMessageBoxCaption" xml:space="preserve">
     <value>Ошибка</value>
   </data>
@@ -141,6 +168,12 @@
   <data name="GoogleDrive" xml:space="preserve">
     <value>Google диск</value>
   </data>
+  <data name="InvalidArchive_Message" xml:space="preserve">
+    <value>Некорректная конфигурация архива</value>
+  </data>
+  <data name="InvalidConnection_Caption" xml:space="preserve">
+    <value>Некорректная конфигурация</value>
+  </data>
   <data name="KB" xml:space="preserve">
     <value>{0}КБ</value>
   </data>
@@ -155,5 +188,11 @@
   </data>
   <data name="Original" xml:space="preserve">
     <value>Оригинал</value>
+  </data>
+  <data name="RestoreTasks_Caption" xml:space="preserve">
+    <value>Продолжение задач</value>
+  </data>
+  <data name="RestoreTasks_Message" xml:space="preserve">
+    <value>У вас есть незавшенные задачи. Продолжить их выполнение?</value>
   </data>
 </root>

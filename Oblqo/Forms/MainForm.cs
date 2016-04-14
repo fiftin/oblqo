@@ -395,8 +395,8 @@ namespace Oblqo
                             if (taskManager.CountTasksOf(account) > 0)
                             {
                                 var answer = MessageBox.Show(this, 
-                                                             "You have uncompleted tasks. Do you want to continue this tasks?",
-                                                             "Restore tasks",
+                                                             Util.GetString("RestoreTasks_Message"),
+                                                             Util.GetString("RestoreTasks_Caption"),
                                                              MessageBoxButtons.YesNo,
                                                              MessageBoxIcon.Question);
                                 switch (answer)
@@ -744,7 +744,7 @@ namespace Oblqo
 
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to Delete this filder?", "Delete folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show(Util.GetString("DeleteFolder_Message"), Util.GetString("DeleteFolder_Caption"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -1013,7 +1013,7 @@ namespace Oblqo
         {
             if (imageViewer1.Visible && e.CloseReason == CloseReason.UserClosing)
             {
-                if (MessageBox.Show("You really want close Oblqo?", "Close Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                if (MessageBox.Show(Util.GetString("CloseApp_Message"), Util.GetString("CloseApp_Caption"), MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 {
                     e.Cancel = true;
                 }

@@ -122,7 +122,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAfwBBQH8AQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAQwBBgEMAQYBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -278,56 +278,40 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 211</value>
+    <value>248, 206</value>
   </data>
   <data name="btnNewConnection.Text" xml:space="preserve">
     <value>Создать новое подключение</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 211</value>
+    <value>412, 206</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 211</value>
+    <value>8, 206</value>
+  </data>
+  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>315, 206</value>
+  </data>
+  <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 206</value>
+  </data>
+  <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 206</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 211</value>
+    <value>317, 206</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 211</value>
+    <value>997, 206</value>
+  </data>
+  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>985, 319</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 317</value>
+    <value>987, 322</value>
   </data>
   <data name="tasksTabPage.Text" xml:space="preserve">
     <value>Задачи</value>
-  </data>
-  <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
-  </data>
-  <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 317</value>
-  </data>
-  <data name="logTabPage.Text" xml:space="preserve">
-    <value>События</value>
-  </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 345</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>211</value>
-  </data>
-  <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 211</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 211</value>
-  </data>
-  <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 211</value>
-  </data>
-  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 314</value>
   </data>
   <data name="logDataTimeColumnHeader.Text" xml:space="preserve">
     <value>Время</value>
@@ -336,7 +320,20 @@
     <value>Сообщение</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 314</value>
+    <value>985, 320</value>
+  </data>
+  <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>987, 323</value>
+  </data>
+  <data name="logTabPage.Text" xml:space="preserve">
+    <value>События</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>995, 350</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>206</value>
   </data>
   <data name="newAccountStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -348,10 +345,22 @@
 </value>
   </data>
   <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 22</value>
+    <value>146, 22</value>
   </data>
   <data name="newAccountStripButton.Text" xml:space="preserve">
-    <value>Нов. подключение</value>
+    <value>Новое подключение</value>
+  </data>
+  <data name="uploadFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 22</value>
+  </data>
+  <data name="uploadFolderToolStripMenuItem.Text" xml:space="preserve">
+    <value>Загрузить папку</value>
+  </data>
+  <data name="uploadFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 22</value>
+  </data>
+  <data name="uploadFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Загрузить файлы</value>
   </data>
   <data name="uploadToolStripDropDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -369,18 +378,6 @@
   <data name="uploadToolStripDropDownButton.Text" xml:space="preserve">
     <value>Загрузить</value>
   </data>
-  <data name="uploadFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 22</value>
-  </data>
-  <data name="uploadFolderToolStripMenuItem.Text" xml:space="preserve">
-    <value>Загрузить папку</value>
-  </data>
-  <data name="uploadFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 22</value>
-  </data>
-  <data name="uploadFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Загрузить файлы</value>
-  </data>
   <data name="newFolderToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -390,8 +387,11 @@
         ri97ckABSfTfV6Hbdem4emeterLKbZSQOT3s8VU5Td6sJIqeOoN4X5JLcEgAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="newFolderToolStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 22</value>
+  </data>
   <data name="newFolderToolStripButton.Text" xml:space="preserve">
-    <value>Нов. папка</value>
+    <value>Новая папка</value>
   </data>
   <data name="refreshFilesToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -464,6 +464,9 @@
   <data name="disconnectToolStripMenuItem.Text" xml:space="preserve">
     <value>Отключиться</value>
   </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 6</value>
+  </data>
   <data name="changeAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 22</value>
   </data>
@@ -481,6 +484,9 @@
   </data>
   <data name="cloneAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Дублировать подключение</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 6</value>
   </data>
   <data name="newFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 22</value>
@@ -500,6 +506,9 @@
   <data name="uploadFilesToolStripMenuItem2.Text" xml:space="preserve">
     <value>Загрузить файлы</value>
   </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 6</value>
+  </data>
   <data name="downloadFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 22</value>
   </data>
@@ -511,6 +520,9 @@
   </data>
   <data name="downloadFromArchiveToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать из архива</value>
+  </data>
+  <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 6</value>
   </data>
   <data name="clearAuthToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 22</value>
@@ -533,6 +545,9 @@
   <data name="downloadFolderFromStorageToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать из архива</value>
   </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 6</value>
+  </data>
   <data name="newFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 22</value>
   </data>
@@ -551,6 +566,9 @@
   <data name="uploadFilesToolStripMenuItem1.Text" xml:space="preserve">
     <value>Загрузить файлы</value>
   </data>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 6</value>
+  </data>
   <data name="deleteFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 22</value>
   </data>
@@ -558,16 +576,16 @@
     <value>Удалить</value>
   </data>
   <data name="folderMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 170</value>
-  </data>
-  <data name="logMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 26</value>
+    <value>194, 148</value>
   </data>
   <data name="showDescriptionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 22</value>
   </data>
   <data name="showDescriptionToolStripMenuItem.Text" xml:space="preserve">
     <value>Детали</value>
+  </data>
+  <data name="logMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 26</value>
   </data>
   <data name="imageViewer1.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 35</value>

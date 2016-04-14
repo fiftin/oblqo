@@ -529,7 +529,9 @@ namespace Oblqo.Controls
 
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive & Drives?", "Delete file(s) from Archive & Drives", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show(Util.GetString("DeleteFileFromArchiveAndDrives_Message"),
+                                Util.GetString("DeleteFileFromArchiveAndDrives_Caption"),
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -542,7 +544,9 @@ namespace Oblqo.Controls
 
         private void deleteFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to Delete this file(s) from Archive?", "Delete file(s) from Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show(Util.GetString("DeleteFileFromArchive_Message"),
+                                Util.GetString("DeleteFileFromArchive_Caption"),
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }

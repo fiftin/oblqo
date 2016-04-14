@@ -117,59 +117,276 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="tasksToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="&gt;&gt;taskListView.Name" xml:space="preserve">
+    <value>taskListView</value>
+  </data>
+  <data name="&gt;&gt;sizeColumnHeader.Name" xml:space="preserve">
+    <value>sizeColumnHeader</value>
+  </data>
+  <data name="&gt;&gt;finishedTasksStripButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 358</value>
+  </data>
+  <data name="&gt;&gt;taskTypeColumnHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;queuedTasksStripButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="finishedTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="cancelledTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="queuedTasksStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="taskColumnHeader.Width" type="System.Int32, mscorlib">
+    <value>180</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tasksToolStrip.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="queuedTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="&gt;&gt;sizeColumnHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cancelTaskToolStripMenuItem.Name" xml:space="preserve">
+    <value>cancelTaskToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TaskList</value>
+  </data>
+  <data name="taskTypeColumnHeader.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="&gt;&gt;cancelledTasksStripButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="queuedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAVpJREFUOE+lkr1KA0EUhTeCWAjaiii+gRaC2KVRQV8i3XZLiv3fBWMltoIKii9h
+        owj6AIrmMVRSBwSNP99JJsmwK/HvwmHu3nPu3Zkz43wVjUZjLM/z+TiOl9I0XYyiaE41Q4+OLMs2QRO0
+        q9Xqm6Ac3DJs3cjK4fv+JKJT8PENjjzPmzBtw4D4SbPwDk5MWy8oaNu26Izt7rK+gDb5NuuF4bpIkmSr
+        2yxzKOjMA1IGQlXCMHzAyHvl1FdsDUOvVXckpiCTBiSNsxquAXzfKeePy7YGtBg+7eiqjNO/HdAJgmDG
+        0T3/a4AeCR9/P4JMhLyxSXxZMOY+gib9MnG1zxtcqq7hMnKtSHK0vVqt9lqv15/Jd+S6reGnG93mfiA4
+        hNAjsQeVYPw6MG3D0PNkyHGxoQg0+67rjpu2ciDSq7wCLdDRMVif2PJ5adsjoiKHdU0Chk6p1qPscJxP
+        DECJhNeS0BsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="&gt;&gt;tasksToolStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cancelledTasksStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tasksToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 333</value>
+  </data>
+  <data name="&gt;&gt;taskListView.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="sizeColumnHeader.Text" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="tasksToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 25</value>
+  </data>
+  <data name="finishedTasksStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="PercentColumnHeader.Text" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="taskTypeColumnHeader.Text" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="&gt;&gt;taskListView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;taskListView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="queuedTasksStripButton.Text" xml:space="preserve">
+    <value>Queued</value>
+  </data>
+  <data name="&gt;&gt;taskColumnHeader.Name" xml:space="preserve">
+    <value>taskColumnHeader</value>
+  </data>
+  <data name="taskListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tasksToolStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 2, 1, 0</value>
+  </data>
+  <data name="cancelledTasksStripButton.Text" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="activeTasksStripButton.Text" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 333</value>
+  </data>
+  <data name="taskMenu.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt</value>
+  </data>
+  <data name="&gt;&gt;taskMenu.Name" xml:space="preserve">
+    <value>taskMenu</value>
+  </data>
+  <data name="cancelTaskToolStripMenuItem.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="activeTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVI9L0VBED2EKCS0CjqFikL8AyT8JNGIXyBB
-        QjT+hERC1ERUGhqhEo3n4z0f9+6uM3vnurubfdyTnLz75szMzp5Z5OEGATtFzpGz5GQVa4ViBSivgLd3
-        4MxUlO/ygtqSJuVgRwFzQLp/uMvcES0KERZ3ejzttvkf8tDyd1+LasjYUSKbySnlOtDrJJqyWNViMUfu
-        HCXsqUi4GeqXiS48pTbABHFbTIrEoIHADbHJGtB9aXI+nxgfpyirEqf/alDDTgPf91XOdckGExLknts0
-        kHHdPBs8pA34SNpcwWwAzx9Nzu8VvInnjZA2sAt9TDxmrZgoKBYTUddoNuNTQxbLWlzD7OgjofjaZcJN
-        XFDT+7WtRSH8iRw9VxRxi6MPa1EO/lWeVCaJ03cF8PXI2FFm7H7wK6PDsiahHatiKYAf+MkwYTxvO/cA
-        AAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAURJREFUOE+NUj0vRUEQPYQoJLQKOoWKQvwDJPwk0YhfIEFCFH6FRELURFQaGqES
+        jefjPR/37q4ze+e6u5t93JOcvPvmzMzOnlnk4QYBO0XOkbPkZBVrhWIFKK+At3fgzFSU7/KC2pIm5WBH
+        AXNAun+4y9wRLQoRFnd6PO22+R/y0PJ3X4tqyNhRIpvJKeU60OskmrJY1WIxR+4cJeypSLgZ6peJLjyl
+        NsAEcVtMisSggcANscka0H1pcj6fGB+nKKsSp/9qUMNOA9/3Vc51yQYTEuSe2zSQcd08GzykDfhI2lzB
+        bADPH03O7xW8ieeNkDawC31MPGatmCgoFhNR12g241NDFstaXMPs6COh+Nplwk1cUNP7ta1FIfyJHD1X
+        FHGLow9rUQ7+VZ5UJonTdwXw9cjYUWbsfvAro8OyJqEdq2IpgB/0ujBfBJtc5AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="finishedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFRSURBVDhPjVI9SwQxFBwFERS0tVCstbgDf4MK+pNs7jcI
-        KigHFnYWFhbL6maxsfEQS2vLRVEQ7Pw4Z16yd/E2Jzcwm83Lm/eSSZBEB9PIsYISbTi0cINli00Ehx0K
-        H8gP8jtQ/z2ubYWsBK4wz6Qu2f+XDkfIMBtUESYRix38sMhJUAX4bacFQ76Sj9F814tljj9znPyXOV7Y
-        ZB33mOHoLFbYdwrBbZmk5Hcu75F5mPfpzROusWbNLjHHWM/iDs8ssqizt0k5LcGZJapTiXPrHIsLlqsL
-        l/ji9S7p/C1OfIECb5xvmMDfyqr9+84XltMooEcyPIJYDboKzc6egyN4E+8ai9pJurOnipqJQoHNRFLF
-        IreJeM1tL67hcGiPJJ0cU34dBFUEPU+H45HkJh327ZbGQq9Sj0U+yOlTfHKsyIwc2fY4yBw5rGsSMyxY
-        rAHgF1WiFq+fm7pFAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAVFJREFUOE+NUj1LBDEUHAURFLS1UKy1uAN/gwr6k2zuNwgqKAcWdhYWFsvqZrGx
+        8RBLa8tFURDs/DhnXrJ38TYnNzCbzcub95JJkEQH08ixghJtOLRwg2WLTQSHHQofyA/yO1D/Pa5thawE
+        rjDPpC7Z/5cOR8gwG1QRJhGLHfywyElQBfhtpwVDvpKP0XzXi2WOP3Oc/Jc5XthkHfeY4egsVth3CsFt
+        maTkdy7vkXmY9+nNE66xZs0uMcdYz+IOzyyyqLO3STktwZklqlOJc+sciwuWqwuX+OL1Lun8LU58gQJv
+        nG+YwN/Kqv37zheW0yigRzI8glgNugrNzp6DI3gT7xqL2km6s6eKmolCgc1EUsUit4l4zW0vruFwaI8k
+        nRxTfh0EVQQ9T4fjkeQmHfbtlsZCr1KPRT7I6VN8cqzIjBzZ9jjIHDmsaxIzLFisAeAXVaIWr5+bukUA
+        AAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="activeTasksStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="queuedTasksStripButton.ToolTipText" xml:space="preserve">
+    <value>Queued Tasks</value>
+  </data>
+  <data name="&gt;&gt;taskMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="finishedTasksStripButton.Text" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="cancelTaskToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 22</value>
+  </data>
+  <data name="&gt;&gt;taskColumnHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;activeTasksStripButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="taskColumnHeader.Text" xml:space="preserve">
+    <value>File/Folder</value>
+  </data>
+  <data name="&gt;&gt;activeTasksStripButton.Name" xml:space="preserve">
+    <value>activeTasksStripButton</value>
+  </data>
+  <data name="&gt;&gt;tasksToolStrip.Name" xml:space="preserve">
+    <value>tasksToolStrip</value>
+  </data>
+  <data name="&gt;&gt;taskDetailsToolStripMenuItem.Name" xml:space="preserve">
+    <value>taskDetailsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;tasksToolStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="taskDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 22</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PercentColumnHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cancelledTasksStripButton.Name" xml:space="preserve">
+    <value>cancelledTasksStripButton</value>
+  </data>
+  <data name="tasksToolStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="taskListView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="activeTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="&gt;&gt;queuedTasksStripButton.Name" xml:space="preserve">
+    <value>queuedTasksStripButton</value>
+  </data>
+  <data name="taskMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 48</value>
+  </data>
+  <data name="&gt;&gt;finishedTasksStripButton.Name" xml:space="preserve">
+    <value>finishedTasksStripButton</value>
+  </data>
+  <data name="&gt;&gt;taskTypeColumnHeader.Name" xml:space="preserve">
+    <value>taskTypeColumnHeader</value>
+  </data>
+  <data name="&gt;&gt;PercentColumnHeader.Name" xml:space="preserve">
+    <value>PercentColumnHeader</value>
+  </data>
+  <data name="tasksToolStrip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 9pt</value>
+  </data>
+  <data name="&gt;&gt;tasksToolStrip.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="cancelledTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFHSURBVDhPdZLNSgNBEITLBJ8g6iEkqKdArr6YyAZFNHrT
-        5/CZFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
-        i+6bhK/zYA48l3jbHvsvC99Iq7pQilvpx5p4DIVuNnY0fEv38BH8kGiP8Ah+jhoYhzthMczOPLLGcJ/A
-        xBvuuHbonnImzeFtm8BuOIZttxd43wM9sOvrwVJ6M0+CbqWBwYzoexa0QuujTXMfqG/gY4edrVj30O5S
-        j6PaAKNdWDxzP05ia6Z4jT5HN5zNH0kQCZx4wM48peET63gnRfTNpRncsQlaLM7jBwIT+Jjwe9QW0id8
-        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/nS9GgHTR
-        /9oAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAUdJREFUOE91ks1KA0EQhMsEnyDqISSop0CuvpjIBkU0etPX8J0UfyEGf8BrIIdE
+        zfr10IOT2d2Goobaqp6e2VFepdReSUP4IAXaAG65rbl+pasPaUmgTPElLeALt1WL7puEr/NgDjyXeNse
+        +y8L30irulCKW+nHmngMhW42djR8S/fwEfyQaI/wCH6OGhiHO2ExzM48ssZwn8DEG+64duiecibN4W2b
+        wG44hm23F3jfAz2w6+vBUnozT4JupYHBjOh7FrRC66NNcx+ob+Bjh52tWPfQ7lKPo9oAo11YPHM/TmJr
+        pniNPkc3nM0fSRAJnHjAzjyl4RPreCdF9M2lGdyxCVoszuMHAhP4mPB71BbSJ3yaaqAgu2GNQyGM7ZEk
+        hlr4Lw+/eq18knFqbsBobee8MJz5I1kL+pkLtzWXTQK2MHczdKo7S3+Z70Z/bsAWYwAAAABJRU5ErkJg
+        gg==
 </value>
   </data>
-  <data name="queuedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFaSURBVDhPpZK9SgNBFIU3glgI2ooovoEWgtilUUFfIt12
-        S4r93wVjJbaCCoovYaMI+gCK5jFUUgcEjT/fSSbJsCvx78Jh7t5z7t2ZM+N8FY1GYyzP8/k4jpfSNF2M
-        omhONUOPjizLNkETtKvV6pugHNwybN3IyuH7/iSiU/DxDY48z5swbcOA+Emz8A5OTFsvKGjbtuiM7e6y
-        voA2+TbrheG6SJJkq9sscyjozANSBkJVwjB8wMh75dRXbA1Dr1V3JKYgkwYkjbMargF83ynnj8u2BrQY
-        Pu3oqozTvx3QCYJgxtE9/2uAHgkffz+CTIS8sUl8WTDmPoIm/TJxtc8bXKqu4TJyrUhytL1arfZar9ef
-        yXfkuq3hpxvd5n4gOITQI7EHlWD8OjBtw9DzZMhxsaEINPuu646btnIg0qu8Ai3Q0TFYn9jyeWnbI6Ii
-        h3VNAoZOqdaj7HCcTwxAiYTXktAbAAAAAElFTkSuQmCC
-</value>
+  <data name="&gt;&gt;cancelTaskToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;taskDetailsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="taskDetailsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="tasksToolStrip.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="taskMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>148, 26</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>ru</value>
+  </metadata>
+  <metadata name="tasksToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
 </root>

@@ -117,136 +117,101 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;okButton.Name" xml:space="preserve">
-    <value>okButton</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 14</value>
+  <data name="activeTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVI9L0VBED2EKCS0CjqFikL8AyT8JNGIXyBB
+        QsTPkEiImohKQyNUovF8vOfj3t11Zu9cd3ezj3uSk3ffnJnZ2TOLPNwgYKfIOXKWnKxirVCsAOUV8PYO
+        nJmK8l1eUFvSpBzsKGAOSPcPd5k7okUhwuJOj6fdNv9DHlr+7mtRDRk7SmQzOaVcB3qdRFMWq1os5sid
+        o4Q9FQk3Q/0y0YWn1AaYIG6LSZEYNBC4ITZZA7ovTc7nE+PjFGVV4vRfDWrYaeD7vsq5LtlgQoLcc5sG
+        Mq6bZ4OHtAEfSZsrmA3g+aPJ+b2CN/G8EdIGdqGPicesFRMFxWIi6hrNZnxqyGJZi2uYHX0kFF+7TLiJ
+        C2p6v7a1KIQ/kaPniiJucfRhLcrBv8qTyiRx+q4Avh4ZO8qM3Q9+ZXRY1iS0Y1UsBfAD7JwwW0uY1dkA
+        AAAASUVORK5CYII=
+</value>
   </data>
-  <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="activeTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
   </data>
-  <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 25</value>
+  <data name="activeTasksStripButton.Text" xml:space="preserve">
+    <value>Активные</value>
   </data>
-  <data name="folderNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 37</value>
+  <data name="finishedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFRSURBVDhPjVI9SwQxFBwFERS0tVCstbgDf4MK+pNs7jcI
+        KigHFnYWFhbL6maxsfEQS2vLRVEQ7Pw4Z16yd/E2Jzcwm83Lm/eSSZBEB9PIsYISbTi0cINli00Ehx0K
+        H8gP8jtQ/z2ubYWsBK4wz6Qu2f+XDkfIMBtUESYRix38sMhJUAX4bacFQ76Sj9F814tljj9znPyXOV7Y
+        ZB33mOHoLFbYdwrBbZmk5Hcu75F5mPfpzROusWbNLjHHWM/iDs8ssqizt0k5LcGZJapTiXPrHIsLlqsL
+        l/ji9S7p/C1OfIECb5xvmMDfyqr9+84XltMooEcyPIJYDboKzc6egyN4E+8ai9pJurOnipqJQoHNRFLF
+        IreJeM1tL67hcGiPJJ0cU34dBFUEPU+H45HkJh327ZbGQq9Sj0U+yOlTfHKsyIwc2fY4yBw5rGsSMyxY
+        rAHgF1WiFq+fm7pFAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 25</value>
+  <data name="finishedTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 20</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="finishedTasksStripButton.Text" xml:space="preserve">
+    <value>Завершенные</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>New folder name:</value>
+  <data name="cancelledTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFHSURBVDhPdZLNSgNBEITLBJ8g6iEkqKdArr6YyAZFNHrT
+        t/ClFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
+        i+6bhK/zYA48l3jbHvsvC99Iq7pQilvpx5p4DIVuNnY0fEv38BH8kGiP8Ah+jhoYhzthMczOPLLGcJ/A
+        xBvuuHbonnImzeFtm8BuOIZttxd43wM9sOvrwVJ6M0+CbqWBwYzoexa0QuujTXMfqG/gY4edrVj30O5S
+        j6PaAKNdWDxzP05ia6Z4jT5HN5zNH0kQCZx4wM48peET63gnRfTNpRncsQlaLM7jBwIT+Jjwe9QW0id8
+        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/k29GfZyX
+        3BcAAAAASUVORK5CYII=
+</value>
   </data>
-  <data name="&gt;&gt;cancelButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="cancelledTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 20</value>
   </data>
-  <data name="&gt;&gt;folderNameTextBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="cancelledTasksStripButton.Text" xml:space="preserve">
+    <value>Отмененные</value>
   </data>
-  <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="queuedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFaSURBVDhPpZK9SgNBFIU3glgI2ooovoEWgtilUUFfIt12
+        S4r93wVjJbaCCoovYaMI+gCK5jFUUgcEjT/fSSbJsCvx78Jh7t5z7t2ZM+N8FY1GYyzP8/k4jpfSNF2M
+        omhONUOPjizLNkETtKvV6pugHNwybN3IyuH7/iSiU/DxDY48z5swbcOA+Emz8A5OTFsvKGjbtuiM7e6y
+        voA2+TbrheG6SJJkq9sscyjozANSBkJVwjB8wMh75dRXbA1Dr1V3JKYgkwYkjbMargF83ynnj8u2BrQY
+        Pu3oqozTvx3QCYJgxtE9/2uAHgkffz+CTIS8sUl8WTDmPoIm/TJxtc8bXKqu4TJyrUhytL1arfZar9ef
+        yXfkuq3hpxvd5n4gOITQI7EHlWD8OjBtw9DzZMhxsaEINPuu646btnIg0qu8Ai3Q0TFYn9jyeWnbI6Ii
+        h3VNAoZOqdaj7HCcTwxAiYTXktAbAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 19</value>
+  <data name="queuedTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>CreateFolderForm</value>
+  <data name="queuedTasksStripButton.Text" xml:space="preserve">
+    <value>В очереди</value>
   </data>
-  <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 85</value>
+  <data name="taskColumnHeader.Text" xml:space="preserve">
+    <value>Файл/Папка</value>
   </data>
-  <data name="&gt;&gt;cancelButton.Name" xml:space="preserve">
-    <value>cancelButton</value>
+  <data name="taskTypeColumnHeader.Text" xml:space="preserve">
+    <value>Задача</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>351, 123</value>
+  <data name="sizeColumnHeader.Text" xml:space="preserve">
+    <value>Размер</value>
   </data>
-  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="cancelTaskToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 22</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="cancelTaskToolStripMenuItem.Text" xml:space="preserve">
+    <value>Отменить</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
+  <data name="taskDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 22</value>
   </data>
-  <data name="folderNameTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="taskDetailsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Детали</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="taskMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 48</value>
   </data>
-  <data name="cancelButton.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;cancelButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 85</value>
-  </data>
-  <data name="&gt;&gt;folderNameTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="okButton.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="&gt;&gt;okButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 14</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;folderNameTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;okButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="okButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="folderNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>322, 20</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 8.25pt</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>New Folder</value>
-  </data>
-  <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;folderNameTextBox.Name" xml:space="preserve">
-    <value>folderNameTextBox</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ru</value>
-  </metadata>
 </root>

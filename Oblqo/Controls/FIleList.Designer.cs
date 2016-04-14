@@ -32,6 +32,7 @@ namespace Oblqo.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileList));
             this.fileListView = new System.Windows.Forms.ListView();
             this.fileNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileDateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -62,17 +63,14 @@ namespace Oblqo.Controls
             // 
             // fileListView
             // 
+            resources.ApplyResources(this.fileListView, "fileListView");
             this.fileListView.AllowColumnReorder = true;
             this.fileListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.fileNameColumnHeader,
             this.fileDateColumnHeader,
             this.fileSizeColumnHeader});
-            this.fileListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fileListView.FullRowSelect = true;
-            this.fileListView.Location = new System.Drawing.Point(0, 0);
             this.fileListView.Name = "fileListView";
-            this.fileListView.Size = new System.Drawing.Size(572, 419);
-            this.fileListView.TabIndex = 2;
             this.fileListView.UseCompatibleStateImageBehavior = false;
             this.fileListView.View = System.Windows.Forms.View.Details;
             this.fileListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.fileListView_ColumnClick);
@@ -83,52 +81,46 @@ namespace Oblqo.Controls
             // 
             // fileNameColumnHeader
             // 
-            this.fileNameColumnHeader.Text = "Name";
-            this.fileNameColumnHeader.Width = 250;
+            resources.ApplyResources(this.fileNameColumnHeader, "fileNameColumnHeader");
             // 
             // fileDateColumnHeader
             // 
-            this.fileDateColumnHeader.Text = "Date";
-            this.fileDateColumnHeader.Width = 100;
+            resources.ApplyResources(this.fileDateColumnHeader, "fileDateColumnHeader");
             // 
             // fileSizeColumnHeader
             // 
-            this.fileSizeColumnHeader.Text = "Size";
+            resources.ApplyResources(this.fileSizeColumnHeader, "fileSizeColumnHeader");
             // 
             // fileListMenu
             // 
-            this.fileListMenu.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.fileListMenu, "fileListMenu");
             this.fileListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newFolderToolStripMenuItem1,
             this.uploadFolderToolStripMenuItem1,
             this.uploadFilesToolStripMenuItem});
             this.fileListMenu.Name = "fileListMenu";
-            this.fileListMenu.Size = new System.Drawing.Size(166, 70);
             // 
             // newFolderToolStripMenuItem1
             // 
+            resources.ApplyResources(this.newFolderToolStripMenuItem1, "newFolderToolStripMenuItem1");
             this.newFolderToolStripMenuItem1.Name = "newFolderToolStripMenuItem1";
-            this.newFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
-            this.newFolderToolStripMenuItem1.Text = "New folder";
             this.newFolderToolStripMenuItem1.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
             // uploadFolderToolStripMenuItem1
             // 
+            resources.ApplyResources(this.uploadFolderToolStripMenuItem1, "uploadFolderToolStripMenuItem1");
             this.uploadFolderToolStripMenuItem1.Name = "uploadFolderToolStripMenuItem1";
-            this.uploadFolderToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
-            this.uploadFolderToolStripMenuItem1.Text = "Upload folder";
             this.uploadFolderToolStripMenuItem1.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFilesToolStripMenuItem
             // 
+            resources.ApplyResources(this.uploadFilesToolStripMenuItem, "uploadFilesToolStripMenuItem");
             this.uploadFilesToolStripMenuItem.Name = "uploadFilesToolStripMenuItem";
-            this.uploadFilesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.uploadFilesToolStripMenuItem.Text = "Upload files";
             this.uploadFilesToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // fileMenu
             // 
-            this.fileMenu.Font = new System.Drawing.Font("Courier New", 8.25F);
+            resources.ApplyResources(this.fileMenu, "fileMenu");
             this.fileMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadFileFromStorageToolStripMenuItem,
             this.downloadFileFromDriveToolStripMenuItem,
@@ -144,104 +136,96 @@ namespace Oblqo.Controls
             this.selectAllToolStripMenuItemSeparator,
             this.selectAllToolStripMenuItem});
             this.fileMenu.Name = "fileContextMenuStrip";
-            this.fileMenu.Size = new System.Drawing.Size(271, 226);
             // 
             // downloadFileFromStorageToolStripMenuItem
             // 
+            resources.ApplyResources(this.downloadFileFromStorageToolStripMenuItem, "downloadFileFromStorageToolStripMenuItem");
             this.downloadFileFromStorageToolStripMenuItem.Name = "downloadFileFromStorageToolStripMenuItem";
-            this.downloadFileFromStorageToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.downloadFileFromStorageToolStripMenuItem.Text = "Download from Ar&chive";
             this.downloadFileFromStorageToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromStorageToolStripMenuItem_Click);
             // 
             // downloadFileFromDriveToolStripMenuItem
             // 
+            resources.ApplyResources(this.downloadFileFromDriveToolStripMenuItem, "downloadFileFromDriveToolStripMenuItem");
             this.downloadFileFromDriveToolStripMenuItem.Name = "downloadFileFromDriveToolStripMenuItem";
-            this.downloadFileFromDriveToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.downloadFileFromDriveToolStripMenuItem.Text = "Download from D&rive";
             this.downloadFileFromDriveToolStripMenuItem.Click += new System.EventHandler(this.downloadFileFromDriveToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
+            resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(267, 6);
             // 
             // synchronizeToolStripMenuItem
             // 
+            resources.ApplyResources(this.synchronizeToolStripMenuItem, "synchronizeToolStripMenuItem");
             this.synchronizeToolStripMenuItem.Name = "synchronizeToolStripMenuItem";
-            this.synchronizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.synchronizeToolStripMenuItem.Text = "&Upload to Archive";
             this.synchronizeToolStripMenuItem.Click += new System.EventHandler(this.synchronizeToolStripMenuItem_Click);
             // 
             // synchronizeOnDrivesToolStripMenuItem
             // 
+            resources.ApplyResources(this.synchronizeOnDrivesToolStripMenuItem, "synchronizeOnDrivesToolStripMenuItem");
             this.synchronizeOnDrivesToolStripMenuItem.Name = "synchronizeOnDrivesToolStripMenuItem";
-            this.synchronizeOnDrivesToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.synchronizeOnDrivesToolStripMenuItem.Text = "Sync with All Drives";
             this.synchronizeOnDrivesToolStripMenuItem.Click += new System.EventHandler(this.synchronizeOnDrivesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // deleteFromArchiveToolStripMenuItem
             // 
+            resources.ApplyResources(this.deleteFromArchiveToolStripMenuItem, "deleteFromArchiveToolStripMenuItem");
             this.deleteFromArchiveToolStripMenuItem.Name = "deleteFromArchiveToolStripMenuItem";
-            this.deleteFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.deleteFromArchiveToolStripMenuItem.Text = "Delete from Archive";
             this.deleteFromArchiveToolStripMenuItem.Click += new System.EventHandler(this.deleteFromArchiveToolStripMenuItem_Click);
             // 
             // deleteFileToolStripMenuItem
             // 
+            resources.ApplyResources(this.deleteFileToolStripMenuItem, "deleteFileToolStripMenuItem");
             this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
-            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.deleteFileToolStripMenuItem.Text = "&Delete from Archive && Drives";
             this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
+            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(267, 6);
             // 
             // openFileToolStripMenuItem
             // 
+            resources.ApplyResources(this.openFileToolStripMenuItem, "openFileToolStripMenuItem");
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.openFileToolStripMenuItem.Text = "Open Local File";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // openContainingFolderToolStripMenuItem
             // 
+            resources.ApplyResources(this.openContainingFolderToolStripMenuItem, "openContainingFolderToolStripMenuItem");
             this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
-            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
             this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
             // selectAllToolStripMenuItemSeparator
             // 
+            resources.ApplyResources(this.selectAllToolStripMenuItemSeparator, "selectAllToolStripMenuItemSeparator");
             this.selectAllToolStripMenuItemSeparator.Name = "selectAllToolStripMenuItemSeparator";
-            this.selectAllToolStripMenuItemSeparator.Size = new System.Drawing.Size(267, 6);
             // 
             // selectAllToolStripMenuItem
             // 
+            resources.ApplyResources(this.selectAllToolStripMenuItem, "selectAllToolStripMenuItem");
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.selectAllToolStripMenuItem.Text = "Select &all";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // folderBrowserDialog1
+            // 
+            resources.ApplyResources(this.folderBrowserDialog1, "folderBrowserDialog1");
             // 
             // openFileDialog1
             // 
+            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             this.openFileDialog1.Multiselect = true;
             // 
             // FileList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.fileListView);
             this.Name = "FileList";
-            this.Size = new System.Drawing.Size(572, 419);
             this.fileListMenu.ResumeLayout(false);
             this.fileMenu.ResumeLayout(false);
             this.ResumeLayout(false);

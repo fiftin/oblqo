@@ -24,7 +24,7 @@ namespace Oblqo
 
             foreach (var driveType in Enum.GetValues(typeof(DriveType)))
             {
-                driveKindComboBox.Items.Add(new CamelcaseWrapper(driveType));
+                driveKindComboBox.Items.Add(new ResourcesWrapper(driveType));
             }
             driveKindComboBox.SelectedIndex = 0;
         }
@@ -33,11 +33,11 @@ namespace Oblqo
         {
             get
             {
-                return (DriveType)((CamelcaseWrapper)driveKindComboBox.SelectedItem).OriginalObject;
+                return (DriveType)((ResourcesWrapper)driveKindComboBox.SelectedItem).OriginalObject;
             }
             set
             {
-                foreach (var item in driveKindComboBox.Items.Cast<CamelcaseWrapper>().Where(item => (DriveType)item.OriginalObject == value))
+                foreach (var item in driveKindComboBox.Items.Cast<ResourcesWrapper>().Where(item => (DriveType)item.OriginalObject == value))
                 {
                     driveKindComboBox.SelectedItem = item;
                 }

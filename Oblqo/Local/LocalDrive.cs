@@ -22,7 +22,7 @@ namespace Oblqo.Local
 
         public override DriveFile RootFolder => rootFolder;
 
-        public override string ShortName => "Local";
+        public override string ShortName => Util.GetString("Local");
 
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

@@ -49,129 +49,101 @@
             // 
             // tasksToolStrip
             // 
-            this.tasksToolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tasksToolStrip.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.tasksToolStrip, "tasksToolStrip");
             this.tasksToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tasksToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.activeTasksStripButton,
             this.finishedTasksStripButton,
             this.cancelledTasksStripButton,
             this.queuedTasksStripButton});
-            this.tasksToolStrip.Location = new System.Drawing.Point(0, 333);
             this.tasksToolStrip.Name = "tasksToolStrip";
-            this.tasksToolStrip.Padding = new System.Windows.Forms.Padding(0, 2, 1, 0);
-            this.tasksToolStrip.Size = new System.Drawing.Size(581, 25);
-            this.tasksToolStrip.TabIndex = 3;
-            this.tasksToolStrip.Text = "toolStrip1";
             // 
             // activeTasksStripButton
             // 
+            resources.ApplyResources(this.activeTasksStripButton, "activeTasksStripButton");
             this.activeTasksStripButton.Checked = true;
             this.activeTasksStripButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.activeTasksStripButton.Image = ((System.Drawing.Image)(resources.GetObject("activeTasksStripButton.Image")));
-            this.activeTasksStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.activeTasksStripButton.Name = "activeTasksStripButton";
-            this.activeTasksStripButton.Size = new System.Drawing.Size(69, 20);
-            this.activeTasksStripButton.Text = "Active";
             this.activeTasksStripButton.Click += new System.EventHandler(this.activeTasksStripButton_Click);
             // 
             // finishedTasksStripButton
             // 
-            this.finishedTasksStripButton.Image = ((System.Drawing.Image)(resources.GetObject("finishedTasksStripButton.Image")));
-            this.finishedTasksStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.finishedTasksStripButton, "finishedTasksStripButton");
             this.finishedTasksStripButton.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.finishedTasksStripButton.Name = "finishedTasksStripButton";
-            this.finishedTasksStripButton.Size = new System.Drawing.Size(83, 20);
-            this.finishedTasksStripButton.Text = "Finished";
             this.finishedTasksStripButton.Click += new System.EventHandler(this.finishedTasksStripButton_Click);
             // 
             // cancelledTasksStripButton
             // 
-            this.cancelledTasksStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelledTasksStripButton.Image")));
-            this.cancelledTasksStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.cancelledTasksStripButton, "cancelledTasksStripButton");
             this.cancelledTasksStripButton.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.cancelledTasksStripButton.Name = "cancelledTasksStripButton";
-            this.cancelledTasksStripButton.Size = new System.Drawing.Size(90, 20);
-            this.cancelledTasksStripButton.Text = "Cancelled";
             this.cancelledTasksStripButton.Click += new System.EventHandler(this.cancelledTasksStripButton_Click);
             // 
             // queuedTasksStripButton
             // 
-            this.queuedTasksStripButton.Image = ((System.Drawing.Image)(resources.GetObject("queuedTasksStripButton.Image")));
-            this.queuedTasksStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.queuedTasksStripButton, "queuedTasksStripButton");
             this.queuedTasksStripButton.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.queuedTasksStripButton.Name = "queuedTasksStripButton";
-            this.queuedTasksStripButton.Size = new System.Drawing.Size(69, 20);
-            this.queuedTasksStripButton.Text = "Queued";
-            this.queuedTasksStripButton.ToolTipText = "Queued Tasks";
             this.queuedTasksStripButton.Click += new System.EventHandler(this.queuedTasksStripButton_Click);
             // 
             // taskListView
             // 
+            resources.ApplyResources(this.taskListView, "taskListView");
             this.taskListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.taskColumnHeader,
             this.taskTypeColumnHeader,
             this.sizeColumnHeader,
             this.PercentColumnHeader});
-            this.taskListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskListView.FullRowSelect = true;
             this.taskListView.HideSelection = false;
-            this.taskListView.Location = new System.Drawing.Point(0, 0);
             this.taskListView.Name = "taskListView";
-            this.taskListView.Size = new System.Drawing.Size(581, 333);
-            this.taskListView.TabIndex = 4;
             this.taskListView.UseCompatibleStateImageBehavior = false;
             this.taskListView.View = System.Windows.Forms.View.Details;
             // 
             // taskColumnHeader
             // 
-            this.taskColumnHeader.Text = "File/Folder";
-            this.taskColumnHeader.Width = 180;
+            resources.ApplyResources(this.taskColumnHeader, "taskColumnHeader");
             // 
             // taskTypeColumnHeader
             // 
-            this.taskTypeColumnHeader.Text = "Task";
-            this.taskTypeColumnHeader.Width = 120;
+            resources.ApplyResources(this.taskTypeColumnHeader, "taskTypeColumnHeader");
             // 
             // sizeColumnHeader
             // 
-            this.sizeColumnHeader.Text = "Size";
+            resources.ApplyResources(this.sizeColumnHeader, "sizeColumnHeader");
             // 
             // PercentColumnHeader
             // 
-            this.PercentColumnHeader.Text = "%";
+            resources.ApplyResources(this.PercentColumnHeader, "PercentColumnHeader");
             // 
             // taskMenu
             // 
-            this.taskMenu.Font = new System.Drawing.Font("Courier New", 8.25F);
+            resources.ApplyResources(this.taskMenu, "taskMenu");
             this.taskMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cancelTaskToolStripMenuItem,
             this.taskDetailsToolStripMenuItem});
             this.taskMenu.Name = "taskMenu";
-            this.taskMenu.Size = new System.Drawing.Size(153, 70);
             // 
             // cancelTaskToolStripMenuItem
             // 
+            resources.ApplyResources(this.cancelTaskToolStripMenuItem, "cancelTaskToolStripMenuItem");
             this.cancelTaskToolStripMenuItem.Name = "cancelTaskToolStripMenuItem";
-            this.cancelTaskToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.cancelTaskToolStripMenuItem.Text = "Cancel";
             this.cancelTaskToolStripMenuItem.Click += new System.EventHandler(this.cancelTaskToolStripMenuItem_Click);
             // 
             // taskDetailsToolStripMenuItem
             // 
+            resources.ApplyResources(this.taskDetailsToolStripMenuItem, "taskDetailsToolStripMenuItem");
             this.taskDetailsToolStripMenuItem.Name = "taskDetailsToolStripMenuItem";
-            this.taskDetailsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.taskDetailsToolStripMenuItem.Text = "Details";
             this.taskDetailsToolStripMenuItem.Click += new System.EventHandler(this.taskDetailsToolStripMenuItem_Click_1);
             // 
             // TaskList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.taskListView);
             this.Controls.Add(this.tasksToolStrip);
             this.Name = "TaskList";
-            this.Size = new System.Drawing.Size(581, 358);
             this.tasksToolStrip.ResumeLayout(false);
             this.tasksToolStrip.PerformLayout();
             this.taskMenu.ResumeLayout(false);

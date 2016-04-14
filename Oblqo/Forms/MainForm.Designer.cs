@@ -128,12 +128,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
             this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             // 
             // splitContainer2
             // 
@@ -143,16 +144,16 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.treeView1);
             resources.ApplyResources(this.splitContainer2.Panel1, "splitContainer2.Panel1");
+            this.splitContainer2.Panel1.Controls.Add(this.treeView1);
             // 
             // splitContainer2.Panel2
             // 
+            resources.ApplyResources(this.splitContainer2.Panel2, "splitContainer2.Panel2");
             this.splitContainer2.Panel2.Controls.Add(this.btnNewConnection);
             this.splitContainer2.Panel2.Controls.Add(this.fileListView);
             this.splitContainer2.Panel2.Controls.Add(this.splitter1);
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
-            resources.ApplyResources(this.splitContainer2.Panel2, "splitContainer2.Panel2");
             this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
             // 
             // treeView1
@@ -204,11 +205,11 @@
             // 
             // btnNewConnection
             // 
+            resources.ApplyResources(this.btnNewConnection, "btnNewConnection");
             this.btnNewConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnNewConnection.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnNewConnection.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.btnNewConnection.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Green;
-            resources.ApplyResources(this.btnNewConnection, "btnNewConnection");
             this.btnNewConnection.ForeColor = System.Drawing.Color.White;
             this.btnNewConnection.Name = "btnNewConnection";
             this.btnNewConnection.UseVisualStyleBackColor = false;
@@ -216,8 +217,8 @@
             // 
             // fileListView
             // 
-            this.fileListView.CurrentDirectoryInfoPanel = this.currentDirectoryInfoPanel;
             resources.ApplyResources(this.fileListView, "fileListView");
+            this.fileListView.CurrentDirectoryInfoPanel = this.currentDirectoryInfoPanel;
             this.fileListView.Name = "fileListView";
             this.fileListView.SmallImageList = this.smallImageList;
             this.fileListView.TaskManager = null;
@@ -245,15 +246,15 @@
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.fileInfoPanel);
             this.panel1.Controls.Add(this.multipleFileView1);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // fileInfoPanel
             // 
-            this.fileInfoPanel.Controls.Add(this.pictureBox1);
             resources.ApplyResources(this.fileInfoPanel, "fileInfoPanel");
+            this.fileInfoPanel.Controls.Add(this.pictureBox1);
             this.fileInfoPanel.Name = "fileInfoPanel";
             this.fileInfoPanel.Error += new System.EventHandler<Oblqo.ExceptionEventArgs>(this.xxx_Exception);
             this.fileInfoPanel.ImageLoading += new System.EventHandler<System.EventArgs>(this.fileInfoPanel_ImageLoading);
@@ -263,8 +264,8 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
@@ -276,9 +277,9 @@
             // 
             // tabControl1
             // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tasksTabPage);
             this.tabControl1.Controls.Add(this.logTabPage);
-            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.ImageList = this.smallImageList;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -286,8 +287,8 @@
             // 
             // tasksTabPage
             // 
-            this.tasksTabPage.Controls.Add(this.taskListView);
             resources.ApplyResources(this.tasksTabPage, "tasksTabPage");
+            this.tasksTabPage.Controls.Add(this.taskListView);
             this.tasksTabPage.Name = "tasksTabPage";
             this.tasksTabPage.UseVisualStyleBackColor = true;
             // 
@@ -300,17 +301,17 @@
             // 
             // logTabPage
             // 
-            this.logTabPage.Controls.Add(this.logListView);
             resources.ApplyResources(this.logTabPage, "logTabPage");
+            this.logTabPage.Controls.Add(this.logListView);
             this.logTabPage.Name = "logTabPage";
             this.logTabPage.UseVisualStyleBackColor = true;
             // 
             // logListView
             // 
+            resources.ApplyResources(this.logListView, "logListView");
             this.logListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.logDataTimeColumnHeader,
             this.logMessageColumnHeader});
-            resources.ApplyResources(this.logListView, "logListView");
             this.logListView.FullRowSelect = true;
             this.logListView.MultiSelect = false;
             this.logListView.Name = "logListView";
@@ -377,23 +378,23 @@
             // 
             // uploadToolStripDropDownButton
             // 
+            resources.ApplyResources(this.uploadToolStripDropDownButton, "uploadToolStripDropDownButton");
             this.uploadToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uploadFolderToolStripMenuItem,
             this.uploadFileToolStripMenuItem});
-            resources.ApplyResources(this.uploadToolStripDropDownButton, "uploadToolStripDropDownButton");
             this.uploadToolStripDropDownButton.Margin = new System.Windows.Forms.Padding(130, 1, 0, 2);
             this.uploadToolStripDropDownButton.Name = "uploadToolStripDropDownButton";
             // 
             // uploadFolderToolStripMenuItem
             // 
-            this.uploadFolderToolStripMenuItem.Name = "uploadFolderToolStripMenuItem";
             resources.ApplyResources(this.uploadFolderToolStripMenuItem, "uploadFolderToolStripMenuItem");
+            this.uploadFolderToolStripMenuItem.Name = "uploadFolderToolStripMenuItem";
             this.uploadFolderToolStripMenuItem.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFileToolStripMenuItem
             // 
-            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
             resources.ApplyResources(this.uploadFileToolStripMenuItem, "uploadFileToolStripMenuItem");
+            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
             this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // newFolderToolStripButton
@@ -410,17 +411,17 @@
             // 
             // aboutStripButton
             // 
+            resources.ApplyResources(this.aboutStripButton, "aboutStripButton");
             this.aboutStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.aboutStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            resources.ApplyResources(this.aboutStripButton, "aboutStripButton");
             this.aboutStripButton.Name = "aboutStripButton";
             this.aboutStripButton.Click += new System.EventHandler(this.aboutStripButton_Click);
             // 
             // helpToolStripButton
             // 
+            resources.ApplyResources(this.helpToolStripButton, "helpToolStripButton");
             this.helpToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            resources.ApplyResources(this.helpToolStripButton, "helpToolStripButton");
             this.helpToolStripButton.Name = "helpToolStripButton";
             this.helpToolStripButton.Click += new System.EventHandler(this.helpToolStripButton_Click);
             // 
@@ -447,92 +448,97 @@
             // 
             // connectToolStripMenuItem
             // 
-            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             resources.ApplyResources(this.connectToolStripMenuItem, "connectToolStripMenuItem");
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // disconnectToolStripMenuItem
             // 
-            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             resources.ApplyResources(this.disconnectToolStripMenuItem, "disconnectToolStripMenuItem");
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
             // 
             // changeAccountToolStripMenuItem
             // 
-            this.changeAccountToolStripMenuItem.Name = "changeAccountToolStripMenuItem";
             resources.ApplyResources(this.changeAccountToolStripMenuItem, "changeAccountToolStripMenuItem");
+            this.changeAccountToolStripMenuItem.Name = "changeAccountToolStripMenuItem";
             this.changeAccountToolStripMenuItem.Click += new System.EventHandler(this.changeAccountToolStripMenuItem_Click);
             // 
             // deleteAccountToolStripMenuItem
             // 
-            this.deleteAccountToolStripMenuItem.Name = "deleteAccountToolStripMenuItem";
             resources.ApplyResources(this.deleteAccountToolStripMenuItem, "deleteAccountToolStripMenuItem");
+            this.deleteAccountToolStripMenuItem.Name = "deleteAccountToolStripMenuItem";
             this.deleteAccountToolStripMenuItem.Click += new System.EventHandler(this.deleteAccountToolStripMenuItem_Click);
             // 
             // cloneAccountToolStripMenuItem
             // 
-            this.cloneAccountToolStripMenuItem.Name = "cloneAccountToolStripMenuItem";
             resources.ApplyResources(this.cloneAccountToolStripMenuItem, "cloneAccountToolStripMenuItem");
+            this.cloneAccountToolStripMenuItem.Name = "cloneAccountToolStripMenuItem";
             this.cloneAccountToolStripMenuItem.Click += new System.EventHandler(this.cloneAccountToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
             resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
             // 
             // newFolderToolStripMenuItem2
             // 
-            this.newFolderToolStripMenuItem2.Name = "newFolderToolStripMenuItem2";
             resources.ApplyResources(this.newFolderToolStripMenuItem2, "newFolderToolStripMenuItem2");
+            this.newFolderToolStripMenuItem2.Name = "newFolderToolStripMenuItem2";
             this.newFolderToolStripMenuItem2.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
             // uploadFolderToolStripMenuItem3
             // 
-            this.uploadFolderToolStripMenuItem3.Name = "uploadFolderToolStripMenuItem3";
             resources.ApplyResources(this.uploadFolderToolStripMenuItem3, "uploadFolderToolStripMenuItem3");
+            this.uploadFolderToolStripMenuItem3.Name = "uploadFolderToolStripMenuItem3";
             this.uploadFolderToolStripMenuItem3.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFilesToolStripMenuItem2
             // 
-            this.uploadFilesToolStripMenuItem2.Name = "uploadFilesToolStripMenuItem2";
             resources.ApplyResources(this.uploadFilesToolStripMenuItem2, "uploadFilesToolStripMenuItem2");
+            this.uploadFilesToolStripMenuItem2.Name = "uploadFilesToolStripMenuItem2";
             this.uploadFilesToolStripMenuItem2.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
             resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
             // 
             // downloadFromDriveToolStripMenuItem
             // 
-            this.downloadFromDriveToolStripMenuItem.Name = "downloadFromDriveToolStripMenuItem";
             resources.ApplyResources(this.downloadFromDriveToolStripMenuItem, "downloadFromDriveToolStripMenuItem");
+            this.downloadFromDriveToolStripMenuItem.Name = "downloadFromDriveToolStripMenuItem";
             this.downloadFromDriveToolStripMenuItem.Click += new System.EventHandler(this.downloadFromDriveToolStripMenuItem_Click);
             // 
             // downloadFromArchiveToolStripMenuItem
             // 
-            this.downloadFromArchiveToolStripMenuItem.Name = "downloadFromArchiveToolStripMenuItem";
             resources.ApplyResources(this.downloadFromArchiveToolStripMenuItem, "downloadFromArchiveToolStripMenuItem");
+            this.downloadFromArchiveToolStripMenuItem.Name = "downloadFromArchiveToolStripMenuItem";
             // 
             // toolStripSeparator10
             // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
             resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
             // 
             // clearAuthToolStripMenuItem
             // 
-            this.clearAuthToolStripMenuItem.Name = "clearAuthToolStripMenuItem";
             resources.ApplyResources(this.clearAuthToolStripMenuItem, "clearAuthToolStripMenuItem");
+            this.clearAuthToolStripMenuItem.Name = "clearAuthToolStripMenuItem";
             this.clearAuthToolStripMenuItem.Click += new System.EventHandler(this.clearAuthToolStripMenuItem_Click);
+            // 
+            // folderBrowserDialog1
+            // 
+            resources.ApplyResources(this.folderBrowserDialog1, "folderBrowserDialog1");
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             this.openFileDialog1.Multiselect = true;
             // 
             // loadingFileListProgressBar
@@ -565,47 +571,47 @@
             // 
             // downloadFolderFromDriveToolStripMenuItem
             // 
-            this.downloadFolderFromDriveToolStripMenuItem.Name = "downloadFolderFromDriveToolStripMenuItem";
             resources.ApplyResources(this.downloadFolderFromDriveToolStripMenuItem, "downloadFolderFromDriveToolStripMenuItem");
+            this.downloadFolderFromDriveToolStripMenuItem.Name = "downloadFolderFromDriveToolStripMenuItem";
             this.downloadFolderFromDriveToolStripMenuItem.Click += new System.EventHandler(this.downloadFolderFromDriveToolStripMenuItem_Click);
             // 
             // downloadFolderFromStorageToolStripMenuItem
             // 
-            this.downloadFolderFromStorageToolStripMenuItem.Name = "downloadFolderFromStorageToolStripMenuItem";
             resources.ApplyResources(this.downloadFolderFromStorageToolStripMenuItem, "downloadFolderFromStorageToolStripMenuItem");
+            this.downloadFolderFromStorageToolStripMenuItem.Name = "downloadFolderFromStorageToolStripMenuItem";
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
             // 
             // newFolderToolStripMenuItem
             // 
-            this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
             resources.ApplyResources(this.newFolderToolStripMenuItem, "newFolderToolStripMenuItem");
+            this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
             this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripButton_Click);
             // 
             // uploadFolderToolStripMenuItem2
             // 
-            this.uploadFolderToolStripMenuItem2.Name = "uploadFolderToolStripMenuItem2";
             resources.ApplyResources(this.uploadFolderToolStripMenuItem2, "uploadFolderToolStripMenuItem2");
+            this.uploadFolderToolStripMenuItem2.Name = "uploadFolderToolStripMenuItem2";
             this.uploadFolderToolStripMenuItem2.Click += new System.EventHandler(this.uploadFolderToolStripMenuItem_Click);
             // 
             // uploadFilesToolStripMenuItem1
             // 
-            this.uploadFilesToolStripMenuItem1.Name = "uploadFilesToolStripMenuItem1";
             resources.ApplyResources(this.uploadFilesToolStripMenuItem1, "uploadFilesToolStripMenuItem1");
+            this.uploadFilesToolStripMenuItem1.Name = "uploadFilesToolStripMenuItem1";
             this.uploadFilesToolStripMenuItem1.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
             resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
             // 
             // deleteFolderToolStripMenuItem
             // 
-            this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
             resources.ApplyResources(this.deleteFolderToolStripMenuItem, "deleteFolderToolStripMenuItem");
+            this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
             this.deleteFolderToolStripMenuItem.Click += new System.EventHandler(this.deleteFolderToolStripMenuItem_Click);
             // 
             // loadingFoldersTimer
@@ -623,8 +629,8 @@
             // 
             // showDescriptionToolStripMenuItem
             // 
-            this.showDescriptionToolStripMenuItem.Name = "showDescriptionToolStripMenuItem";
             resources.ApplyResources(this.showDescriptionToolStripMenuItem, "showDescriptionToolStripMenuItem");
+            this.showDescriptionToolStripMenuItem.Name = "showDescriptionToolStripMenuItem";
             this.showDescriptionToolStripMenuItem.Click += new System.EventHandler(this.showDescriptionToolStripMenuItem_Click);
             // 
             // indicateErrorTimer
@@ -634,8 +640,8 @@
             // 
             // imageViewer1
             // 
-            this.imageViewer1.FileName = "label1";
             resources.ApplyResources(this.imageViewer1, "imageViewer1");
+            this.imageViewer1.FileName = "label1";
             this.imageViewer1.Name = "imageViewer1";
             this.imageViewer1.PictureRightMouseDown += new System.EventHandler(this.imageViewer1_PictureRightMouseDown);
             this.imageViewer1.SelectedDriveChanged += new System.EventHandler(this.imageViewer1_SelectedDriveChanged);

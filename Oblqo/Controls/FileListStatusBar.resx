@@ -117,4 +117,109 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="showSyncFilesOnlyCheckbox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 10, 0</value>
+  </data>
+  <data name="&gt;&gt;showSyncFilesOnlyCheckbox.Name" xml:space="preserve">
+    <value>showSyncFilesOnlyCheckbox</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="showSyncFilesOnlyCheckbox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="fileListFilterTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;showSyncFilesOnlyCheckbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FileListStatusBar</value>
+  </data>
+  <data name="&gt;&gt;fileListFilterTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;fileListNumberOfFilesLabel.Name" xml:space="preserve">
+    <value>fileListNumberOfFilesLabel</value>
+  </data>
+  <data name="&gt;&gt;fileListNumberOfFilesLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fileListNumberOfFilesLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="showSyncFilesOnlyCheckbox.Text" xml:space="preserve">
+    <value>Hide synced</value>
+  </data>
+  <data name="&gt;&gt;fileListFilterTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="fileListFilterTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 20</value>
+  </data>
+  <data name="showSyncFilesOnlyCheckbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 17</value>
+  </data>
+  <data name="showSyncFilesOnlyCheckbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>138, 2</value>
+  </data>
+  <data name="&gt;&gt;showSyncFilesOnlyCheckbox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 10, 0</value>
+  </data>
+  <data name="&gt;&gt;showSyncFilesOnlyCheckbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;fileListFilterTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="showSyncFilesOnlyCheckbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.Text" xml:space="preserve">
+    <value>0 files, 0 unsync</value>
+  </data>
+  <data name="&gt;&gt;fileListNumberOfFilesLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="fileListFilterTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>330, 1</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 13</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="fileListNumberOfFilesLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;fileListFilterTextBox.Name" xml:space="preserve">
+    <value>fileListFilterTextBox</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>501, 23</value>
+  </data>
+  <data name="fileListFilterTextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>ru</value>
+  </metadata>
 </root>

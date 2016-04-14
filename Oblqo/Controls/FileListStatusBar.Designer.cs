@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileListStatusBar));
             this.fileListFilterTextBox = new System.Windows.Forms.TextBox();
             this.showSyncFilesOnlyCheckbox = new System.Windows.Forms.CheckBox();
             this.fileListNumberOfFilesLabel = new System.Windows.Forms.Label();
@@ -36,47 +37,33 @@
             // fileListFilterTextBox
             // 
             this.fileListFilterTextBox.AcceptsReturn = true;
-            this.fileListFilterTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.fileListFilterTextBox, "fileListFilterTextBox");
             this.fileListFilterTextBox.ForeColor = System.Drawing.Color.DarkGray;
-            this.fileListFilterTextBox.Location = new System.Drawing.Point(330, 1);
             this.fileListFilterTextBox.Name = "fileListFilterTextBox";
-            this.fileListFilterTextBox.Size = new System.Drawing.Size(130, 20);
-            this.fileListFilterTextBox.TabIndex = 8;
             this.fileListFilterTextBox.Enter += new System.EventHandler(this.fileListFilterTextBox_Enter);
             this.fileListFilterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fileListFilterTextBox_KeyDown);
             this.fileListFilterTextBox.Leave += new System.EventHandler(this.fileListFilterTextBox_Leave);
             // 
             // showSyncFilesOnlyCheckbox
             // 
-            this.showSyncFilesOnlyCheckbox.AutoSize = true;
-            this.showSyncFilesOnlyCheckbox.Location = new System.Drawing.Point(138, 2);
+            resources.ApplyResources(this.showSyncFilesOnlyCheckbox, "showSyncFilesOnlyCheckbox");
             this.showSyncFilesOnlyCheckbox.Name = "showSyncFilesOnlyCheckbox";
-            this.showSyncFilesOnlyCheckbox.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.showSyncFilesOnlyCheckbox.Size = new System.Drawing.Size(95, 17);
-            this.showSyncFilesOnlyCheckbox.TabIndex = 7;
-            this.showSyncFilesOnlyCheckbox.Text = "Hide synced";
             this.showSyncFilesOnlyCheckbox.UseVisualStyleBackColor = true;
             this.showSyncFilesOnlyCheckbox.CheckedChanged += new System.EventHandler(this.showSyncFilesOnlyCheckbox_CheckedChanged);
             // 
             // fileListNumberOfFilesLabel
             // 
-            this.fileListNumberOfFilesLabel.AutoSize = true;
-            this.fileListNumberOfFilesLabel.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.fileListNumberOfFilesLabel, "fileListNumberOfFilesLabel");
             this.fileListNumberOfFilesLabel.Name = "fileListNumberOfFilesLabel";
-            this.fileListNumberOfFilesLabel.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.fileListNumberOfFilesLabel.Size = new System.Drawing.Size(93, 13);
-            this.fileListNumberOfFilesLabel.TabIndex = 6;
-            this.fileListNumberOfFilesLabel.Text = "0 files, 0 unsync";
             // 
             // FileListStatusBar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.fileListFilterTextBox);
             this.Controls.Add(this.showSyncFilesOnlyCheckbox);
             this.Controls.Add(this.fileListNumberOfFilesLabel);
             this.Name = "FileListStatusBar";
-            this.Size = new System.Drawing.Size(501, 23);
             this.SizeChanged += new System.EventHandler(this.FileListStatusBar_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();

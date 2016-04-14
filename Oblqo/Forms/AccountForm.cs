@@ -23,7 +23,7 @@ namespace Oblqo
         public AccountForm(bool newAccount)
         {
             InitializeComponent();
-            Text = newAccount ? Resources.AccountForm_CreateNewAccount : Resources.AccountForm_ChangeAccount;
+            Text = newAccount ? Util.GetString("AccountForm_CreateNewAccount") : Util.GetString("AccountForm_ChangeAccount");
             foreach (var region in RegionEndpoint.EnumerableAllRegions)
                 regionComboBox.Items.Add(new RegionInfo
                 {

@@ -31,7 +31,7 @@ namespace Oblqo
 
         public readonly object SyncRoot = new object();
 
-        public int MaxNumberOfTasksRunning { get; set; } = 5;
+        public int MaxNumberOfTasksRunning { get; set; } = 10;
 
         public AsyncTaskManager(ConfigurationStorage config)
         {

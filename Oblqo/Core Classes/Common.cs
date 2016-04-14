@@ -15,13 +15,13 @@ namespace Oblqo
         public static String NumberOfBytesToString(long bytes)
         {
             if (bytes < 1000)
-                return string.Format("{0}B", bytes);
+                return string.Format(Util.GetString("B"), bytes);
             else if (bytes < 1000000)
-                return string.Format("{0}KB", bytes / 1000);
+                return string.Format(Util.GetString("KB"), bytes / 1000);
             else if (bytes < 1000000000)
-                return string.Format("{0}MB", bytes / 1000000);
+                return string.Format(Util.GetString("MB"), bytes / 1000000);
             else
-                return string.Format("{0}GB", bytes / 1000000000);
+                return string.Format(Util.GetString("GB"), bytes / 1000000000);
         }
 
 

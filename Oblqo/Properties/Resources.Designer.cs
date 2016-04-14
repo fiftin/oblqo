@@ -61,24 +61,6 @@ namespace Oblqo.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Change Connection.
-        /// </summary>
-        internal static string AccountForm_ChangeAccount {
-            get {
-                return ResourceManager.GetString("AccountForm_ChangeAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Create New Connection.
-        /// </summary>
-        internal static string AccountForm_CreateNewAccount {
-            get {
-                return ResourceManager.GetString("AccountForm_CreateNewAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap back {
@@ -105,33 +87,6 @@ namespace Oblqo.Properties {
             get {
                 object obj = ResourceManager.GetObject("close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Error.
-        /// </summary>
-        internal static string ErrorMessageBoxCaption {
-            get {
-                return ResourceManager.GetString("ErrorMessageBoxCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Filter, for example: .jpg.
-        /// </summary>
-        internal static string FileListStatusBar_Filter {
-            get {
-                return ResourceManager.GetString("FileListStatusBar_Filter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} files, {1} unsync.
-        /// </summary>
-        internal static string FileListStatusBar_Status {
-            get {
-                return ResourceManager.GetString("FileListStatusBar_Status", resourceCulture);
             }
         }
         

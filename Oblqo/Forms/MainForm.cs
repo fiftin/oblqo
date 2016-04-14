@@ -14,6 +14,7 @@ using Oblqo.Properties;
 using Oblqo.Tasks;
 using System.Collections;
 using Oblqo.Local;
+using System.Resources;
 
 namespace Oblqo
 {

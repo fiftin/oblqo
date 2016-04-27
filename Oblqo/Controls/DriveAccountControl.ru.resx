@@ -124,6 +124,9 @@
   <data name="label10.Text" xml:space="preserve">
     <value>Диск:</value>
   </data>
+  <data name="driveRootPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 164</value>
+  </data>
   <data name="driveRootPathBrowseButton.Text" xml:space="preserve">
     <value>Обзор...</value>
   </data>
@@ -139,6 +142,9 @@
   <data name="imageResolutionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>314, 21</value>
   </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 92</value>
+  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 13</value>
   </data>
@@ -151,13 +157,22 @@
   <data name="label7.Text" xml:space="preserve">
     <value>Макс. размер картинки:</value>
   </data>
+  <data name="driveRootPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 108</value>
+  </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>140, 58</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 36</value>
+    <value>317, 47</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Если картинка будет больше этого размера, то она будет автоматически смасштабирована до него</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 131</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Пусть к папке с файлами, например d:\photos. Для Google диска это может быть например photos/trevel.</value>
   </data>
 </root>

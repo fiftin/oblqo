@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
+    <value>toolStripSeparator3</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="multipleFileView1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -124,9 +127,6 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tasksTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 2, 2, 1</value>
-  </data>
-  <data name="deleteAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
     <value>fileInfoPanel</value>
@@ -156,8 +156,8 @@
   <data name="uploadFolderToolStripMenuItem3.Text" xml:space="preserve">
     <value>Upload folder</value>
   </data>
-  <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
+  <data name="tasksTabPage.Text" xml:space="preserve">
+    <value>Tasks</value>
   </data>
   <data name="PercentColumnHeader.Text" xml:space="preserve">
     <value>%</value>
@@ -170,9 +170,6 @@
   </data>
   <data name="&gt;&gt;uploadFilesToolStripMenuItem2.Name" xml:space="preserve">
     <value>uploadFilesToolStripMenuItem2</value>
-  </data>
-  <data name="mainTool.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;sizeColumnHeader.Name" xml:space="preserve">
     <value>sizeColumnHeader</value>
@@ -207,11 +204,11 @@
   <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="downloadFolderFromStorageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
   <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="&gt;&gt;connectToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="deleteFolderToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
@@ -229,7 +226,7 @@
     <value>Download from Drive</value>
   </data>
   <data name="&gt;&gt;currentDirectoryInfoPanel.Type" xml:space="preserve">
-    <value>Oblqo.FileListStatusBar, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.FileListStatusBar, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="fileInfoPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 2, 0</value>
@@ -241,7 +238,7 @@
     <value>newFolderToolStripMenuItem2</value>
   </data>
   <data name="&gt;&gt;driveStrip1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.DriveStrip, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.DriveStrip, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="aboutStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
@@ -266,11 +263,17 @@
   <data name="&gt;&gt;folderMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="driveStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 25</value>
+  </data>
   <data name="&gt;&gt;splitContainer2.Panel2.Name" xml:space="preserve">
     <value>splitContainer2.Panel2</value>
   </data>
   <data name="&gt;&gt;PercentColumnHeader.Name" xml:space="preserve">
     <value>PercentColumnHeader</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
   </data>
   <data name="&gt;&gt;openFileDialog1.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -299,17 +302,14 @@
   <data name="uploadFolderToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
-  <data name="&gt;&gt;tasksTabPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;splitContainer1.Panel2.Parent" xml:space="preserve">
     <value>splitContainer1</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Type" xml:space="preserve">
     <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fileNameColumnHeader.Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="mainTool.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 1, 0</value>
   </data>
   <data name="fileDateColumnHeader.Width" type="System.Int32, mscorlib">
     <value>100</value>
@@ -323,9 +323,6 @@
   <data name="&gt;&gt;taskListView.Name" xml:space="preserve">
     <value>taskListView</value>
   </data>
-  <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 6</value>
-  </data>
   <data name="loadingFileListProgressBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>297, 373</value>
   </data>
@@ -337,9 +334,6 @@
   </data>
   <data name="&gt;&gt;aboutStripButton.Name" xml:space="preserve">
     <value>aboutStripButton</value>
-  </data>
-  <data name="uploadFilesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;splitContainer2.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -370,7 +364,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB+
-        IwAAAk1TRnQBSQFMAgEBHAEAAbwBBQEEAQYBEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAbwBBQEIAQYBEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -528,10 +522,10 @@
     <value>multipleFileView1</value>
   </data>
   <data name="&gt;&gt;imageViewer1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.ImageViewer, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.ImageViewer, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;loadingImageProgressBar.Name" xml:space="preserve">
-    <value>loadingImageProgressBar</value>
+  <data name="&gt;&gt;tasksTabPage.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;loadingImageProgressBar.Parent" xml:space="preserve">
     <value>$this</value>
@@ -548,14 +542,17 @@
   <data name="logTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 2, 2, 1</value>
   </data>
+  <data name="helpToolStripButton.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;loadingFoldersTimer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="driveStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+  <data name="splitter1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
   </data>
   <data name="&gt;&gt;indicateErrorTimer.Name" xml:space="preserve">
     <value>indicateErrorTimer</value>
@@ -563,8 +560,14 @@
   <data name="driveStrip1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;downloadFromArchiveToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fileListView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
+  </data>
+  <data name="loadingImageProgressBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>702, 373</value>
   </data>
   <data name="&gt;&gt;helpToolStripButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -583,6 +586,12 @@
   </data>
   <data name="splitContainer2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="taskColumnHeader.Text" xml:space="preserve">
+    <value>File/Folder</value>
+  </data>
+  <data name="taskTypeColumnHeader.Text" xml:space="preserve">
+    <value>Task</value>
   </data>
   <data name="splitContainer2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -605,11 +614,11 @@
   <data name="&gt;&gt;splitContainer2.Type" xml:space="preserve">
     <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;clearAuthToolStripMenuItem.Name" xml:space="preserve">
-    <value>clearAuthToolStripMenuItem</value>
+  <data name="fileNameColumnHeader.Text" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="loadingImageProgressBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>702, 373</value>
+  <data name="driveStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>7, 15</value>
@@ -619,6 +628,9 @@
   </data>
   <data name="&gt;&gt;splitContainer2.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;loadingImageProgressBar.Name" xml:space="preserve">
+    <value>loadingImageProgressBar</value>
   </data>
   <data name="splitContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -632,6 +644,9 @@
   <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
     <value>toolStripSeparator4</value>
   </data>
+  <data name="downloadFolderFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
   <data name="uploadToolStripDropDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -644,9 +659,6 @@
   </data>
   <data name="&gt;&gt;driveStrip1.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="tasksTabPage.Text" xml:space="preserve">
-    <value>Tasks</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>995, 469</value>
@@ -665,9 +677,6 @@
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -693,17 +702,14 @@
   <data name="&gt;&gt;uploadFolderToolStripMenuItem2.Name" xml:space="preserve">
     <value>uploadFolderToolStripMenuItem2</value>
   </data>
-  <data name="aboutStripButton.Text" xml:space="preserve">
-    <value>About</value>
+  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>315, 137</value>
   </data>
   <data name="&gt;&gt;fileListView.Type" xml:space="preserve">
-    <value>Oblqo.Controls.FileList, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.FileList, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 6</value>
-  </data>
-  <data name="currentDirectoryInfoPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 8.25pt</value>
   </data>
   <data name="newAccountStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -756,11 +762,17 @@
   <data name="logListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;splitContainer2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
   <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Panel1.Parent" xml:space="preserve">
     <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;fileInfoPanel.Name" xml:space="preserve">
+    <value>fileInfoPanel</value>
   </data>
   <data name="logMenu.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt</value>
@@ -780,11 +792,14 @@
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="currentDirectoryInfoPanel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;splitContainer2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel1</value>
+  <data name="&gt;&gt;uploadToolStripDropDownButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="newAccountStripButton.Text" xml:space="preserve">
     <value>New connection</value>
@@ -798,9 +813,6 @@
   <data name="newFolderToolStripButton.Text" xml:space="preserve">
     <value>New folder</value>
   </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>420, 0</value>
-  </data>
   <data name="btnNewConnection.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
@@ -813,15 +825,6 @@
   <data name="cloneAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone Connection</value>
   </data>
-  <data name="&gt;&gt;downloadFolderFromStorageToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="newFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 23</value>
-  </data>
   <data name="&gt;&gt;logMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -830,9 +833,6 @@
   </data>
   <data name="deleteAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Connection</value>
-  </data>
-  <data name="uploadFilesToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Upload files</value>
   </data>
   <data name="loadingFileListProgressBar.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -852,8 +852,17 @@
   <data name="&gt;&gt;downloadFolderFromStorageToolStripMenuItem.Name" xml:space="preserve">
     <value>downloadFolderFromStorageToolStripMenuItem</value>
   </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
   <data name="helpToolStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
+  </data>
+  <data name="uploadToolStripDropDownButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 22</value>
+  </data>
+  <data name="&gt;&gt;btnNewConnection.Name" xml:space="preserve">
+    <value>btnNewConnection</value>
   </data>
   <data name="splitContainer2.Panel1MinSize" type="System.Int32, mscorlib">
     <value>250</value>
@@ -861,8 +870,8 @@
   <data name="&gt;&gt;smallImageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
-    <value>splitContainer1.Panel1</value>
+  <data name="&gt;&gt;newFolderToolStripButton.Name" xml:space="preserve">
+    <value>newFolderToolStripButton</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>412, 87</value>
@@ -871,7 +880,10 @@
     <value>2, 0, 0, 1</value>
   </data>
   <data name="&gt;&gt;multipleFileView1.Type" xml:space="preserve">
-    <value>Oblqo.Controls.MultipleFileView, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.MultipleFileView, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="connectToolStripMenuItem.Text" xml:space="preserve">
+    <value>Connect</value>
   </data>
   <data name="&gt;&gt;folderMenu.Name" xml:space="preserve">
     <value>folderMenu</value>
@@ -885,8 +897,8 @@
   <data name="cloneAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
-  <data name="&gt;&gt;fileSizeColumnHeader.Name" xml:space="preserve">
-    <value>fileSizeColumnHeader</value>
+  <data name="mainTool.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 9pt</value>
   </data>
   <data name="&gt;&gt;loadingFileListProgressBar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -909,17 +921,11 @@
   <data name="&gt;&gt;loadingImageProgressBar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="uploadFilesToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
   <data name="&gt;&gt;deleteFolderToolStripMenuItem.Name" xml:space="preserve">
     <value>deleteFolderToolStripMenuItem</value>
   </data>
   <data name="btnNewConnection.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
-  </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="logDataTimeColumnHeader.Width" type="System.Int32, mscorlib">
     <value>140</value>
@@ -933,14 +939,11 @@
   <data name="logMessageColumnHeader.Text" xml:space="preserve">
     <value>Message</value>
   </data>
-  <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
-    <value>9</value>
+  <data name="newFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="loadingFileListProgressBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>399, 21</value>
-  </data>
-  <data name="&gt;&gt;uploadToolStripDropDownButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;downloadFromArchiveToolStripMenuItem.Name" xml:space="preserve">
     <value>downloadFromArchiveToolStripMenuItem</value>
@@ -954,11 +957,14 @@
   <data name="&gt;&gt;logDataTimeColumnHeader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="imageViewer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 300</value>
+  </data>
   <data name="&gt;&gt;taskColumnHeader.Name" xml:space="preserve">
     <value>taskColumnHeader</value>
   </data>
-  <data name="&gt;&gt;splitContainer2.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;driveStrip1.Name" xml:space="preserve">
+    <value>driveStrip1</value>
   </data>
   <data name="fileListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1231,8 +1237,8 @@
   <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;splitContainer2.Name" xml:space="preserve">
-    <value>splitContainer2</value>
+  <data name="&gt;&gt;toolStripSeparator10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="splitContainer1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1279,11 +1285,14 @@
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>985, 438</value>
   </data>
-  <data name="deleteFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+  <data name="&gt;&gt;mainTool.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;logDataTimeColumnHeader.Name" xml:space="preserve">
-    <value>logDataTimeColumnHeader</value>
+  <data name="&gt;&gt;uploadFileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1294,17 +1303,20 @@
   <data name="loadingImageProgressBar.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="fileSizeColumnHeader.Text" xml:space="preserve">
-    <value>Size</value>
+  <data name="&gt;&gt;currentDirectoryInfoPanel.Name" xml:space="preserve">
+    <value>currentDirectoryInfoPanel</value>
   </data>
-  <data name="pictureBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;deleteAccountToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="treeView1.SelectedImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;taskColumnHeader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;imageViewer1.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;deleteFolderToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="accountMenu.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt</value>
@@ -1324,8 +1336,8 @@
   <data name="newFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
-  <data name="mainTool.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 1, 0</value>
+  <data name="downloadFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="uploadToolStripDropDownButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
@@ -1339,14 +1351,11 @@
   <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 25</value>
   </data>
-  <data name="mainTool.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 9pt</value>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;aboutStripButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator10.Name" xml:space="preserve">
-    <value>toolStripSeparator10</value>
   </data>
   <data name="loadingFileListProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1361,7 +1370,7 @@
     <value>splitContainer2.Panel1</value>
   </data>
   <data name="&gt;&gt;taskListView.Type" xml:space="preserve">
-    <value>Oblqo.Controls.TaskList, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Oblqo.Controls.TaskList, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;helpToolStripButton.Name" xml:space="preserve">
     <value>helpToolStripButton</value>
@@ -1381,9 +1390,6 @@
   <data name="sizeColumnHeader.Text" xml:space="preserve">
     <value>Size</value>
   </data>
-  <data name="&gt;&gt;newFolderToolStripButton.Name" xml:space="preserve">
-    <value>newFolderToolStripButton</value>
-  </data>
   <data name="mainTool.Text" xml:space="preserve">
     <value>toolStrip2</value>
   </data>
@@ -1402,11 +1408,11 @@
   <data name="&gt;&gt;fileInfoPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="aboutStripButton.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="taskListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
-  </data>
-  <data name="downloadFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;btnNewConnection.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1414,8 +1420,8 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
-  <data name="&gt;&gt;currentDirectoryInfoPanel.Name" xml:space="preserve">
-    <value>currentDirectoryInfoPanel</value>
+  <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1435,9 +1441,6 @@
   <data name="uploadFilesToolStripMenuItem1.Text" xml:space="preserve">
     <value>Upload files</value>
   </data>
-  <data name="&gt;&gt;tasksTabPage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1453,17 +1456,20 @@
   <data name="&gt;&gt;uploadFolderToolStripMenuItem2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;taskTypeColumnHeader.Name" xml:space="preserve">
-    <value>taskTypeColumnHeader</value>
+  <data name="fileSizeColumnHeader.Text" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="refreshFilesToolStripButton.Text" xml:space="preserve">
-    <value>Refresh files</value>
+  <data name="&gt;&gt;taskTypeColumnHeader.Name" xml:space="preserve">
+    <value>taskTypeColumnHeader</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="uploadFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="deleteAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;logListView.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1471,23 +1477,17 @@
   <data name="uploadFolderToolStripMenuItem2.Text" xml:space="preserve">
     <value>Upload folder</value>
   </data>
-  <data name="splitter1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
   <data name="&gt;&gt;logTabPage.Name" xml:space="preserve">
     <value>logTabPage</value>
   </data>
-  <data name="treeView1.SelectedImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="uploadFilesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="&gt;&gt;cloneAccountToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 137</value>
   </data>
   <data name="changeAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
@@ -1498,11 +1498,14 @@
   <data name="&gt;&gt;uploadFilesToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 22</value>
+  </data>
   <data name="taskListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="mainTool.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;btnNewConnection.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1510,17 +1513,14 @@
   <data name="downloadFromArchiveToolStripMenuItem.Text" xml:space="preserve">
     <value>Download from Archive</value>
   </data>
-  <data name="imageViewer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 300</value>
+  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="mainTool.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 6</value>
-  </data>
-  <data name="&gt;&gt;multipleFileView1.Parent" xml:space="preserve">
-    <value>panel1</value>
   </data>
   <data name="&gt;&gt;logMessageColumnHeader.Name" xml:space="preserve">
     <value>logMessageColumnHeader</value>
@@ -1558,23 +1558,26 @@
   <data name="&gt;&gt;uploadFilesToolStripMenuItem1.Name" xml:space="preserve">
     <value>uploadFilesToolStripMenuItem1</value>
   </data>
-  <data name="uploadFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>87</value>
+  </data>
+  <data name="&gt;&gt;clearAuthToolStripMenuItem.Name" xml:space="preserve">
+    <value>clearAuthToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>splitContainer2.Panel2</value>
   </data>
-  <data name="&gt;&gt;btnNewConnection.Name" xml:space="preserve">
-    <value>btnNewConnection</value>
+  <data name="currentDirectoryInfoPanel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt</value>
+  </data>
+  <data name="&gt;&gt;folderBrowserDialog1.Name" xml:space="preserve">
+    <value>folderBrowserDialog1</value>
   </data>
   <data name="fileNameColumnHeader.Width" type="System.Int32, mscorlib">
     <value>250</value>
   </data>
   <data name="&gt;&gt;uploadFolderToolStripMenuItem.Name" xml:space="preserve">
     <value>uploadFolderToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;newFolderToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1591,7 +1594,7 @@
   <data name="&gt;&gt;taskListView.Parent" xml:space="preserve">
     <value>tasksTabPage</value>
   </data>
-  <data name="&gt;&gt;deleteFolderToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;downloadFolderFromStorageToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
@@ -1606,11 +1609,11 @@
   <data name="&gt;&gt;downloadFolderFromDriveToolStripMenuItem.Name" xml:space="preserve">
     <value>downloadFolderFromDriveToolStripMenuItem</value>
   </data>
-  <data name="connectToolStripMenuItem.Text" xml:space="preserve">
-    <value>Connect</value>
+  <data name="pictureBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="&gt;&gt;driveStrip1.Name" xml:space="preserve">
-    <value>driveStrip1</value>
+  <data name="uploadFilesToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Upload files</value>
   </data>
   <data name="loadingImageProgressBar.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1618,7 +1621,7 @@
   <data name="downloadFromArchiveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
-  <data name="downloadFolderFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="downloadFolderFromStorageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
   <data name="currentDirectoryInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
@@ -1642,11 +1645,11 @@
   <data name="clearAuthToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
-  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>87</value>
+  <data name="&gt;&gt;tasksTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;deleteAccountToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 6</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>985, 439</value>
@@ -1666,8 +1669,8 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>997, 591</value>
   </data>
-  <data name="driveStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 25</value>
+  <data name="uploadFilesToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
   <data name="accountMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 270</value>
@@ -1675,17 +1678,14 @@
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;folderBrowserDialog1.Name" xml:space="preserve">
-    <value>folderBrowserDialog1</value>
+  <data name="&gt;&gt;toolStripSeparator10.Name" xml:space="preserve">
+    <value>toolStripSeparator10</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
-    <value>toolStripSeparator5</value>
+  <data name="refreshFilesToolStripButton.Text" xml:space="preserve">
+    <value>Refresh files</value>
   </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="newFolderToolStripMenuItem2.Text" xml:space="preserve">
-    <value>New folder</value>
   </data>
   <data name="logListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1720,26 +1720,23 @@
   <data name="panel1.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>317, 137</value>
   </data>
-  <data name="&gt;&gt;connectToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;logDataTimeColumnHeader.Name" xml:space="preserve">
+    <value>logDataTimeColumnHeader</value>
   </data>
   <data name="&gt;&gt;splitter1.Name" xml:space="preserve">
     <value>splitter1</value>
   </data>
-  <data name="taskTypeColumnHeader.Text" xml:space="preserve">
-    <value>Task</value>
-  </data>
-  <data name="disconnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+  <data name="newFolderToolStripMenuItem2.Text" xml:space="preserve">
+    <value>New folder</value>
   </data>
   <data name="logListView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 2</value>
   </data>
-  <data name="&gt;&gt;fileInfoPanel.Name" xml:space="preserve">
-    <value>fileInfoPanel</value>
+  <data name="&gt;&gt;multipleFileView1.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="helpToolStripButton.Text" xml:space="preserve">
-    <value>Help</value>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>420, 0</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>987, 442</value>
@@ -1747,26 +1744,26 @@
   <data name="&gt;&gt;loadingFileListProgressBar.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;imageViewer1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;clearAuthToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="uploadToolStripDropDownButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 22</value>
+  <data name="&gt;&gt;splitContainer2.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
     <value>toolStripSeparator2</value>
   </data>
-  <data name="&gt;&gt;mainTool.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="deleteFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
-  <data name="&gt;&gt;downloadFromArchiveToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tasksTabPage.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="logTabPage.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 23</value>
   </data>
   <data name="&gt;&gt;logTabPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1783,20 +1780,23 @@
   <data name="refreshFilesToolStripButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
+  <data name="&gt;&gt;fileInfoPanel.Type" xml:space="preserve">
+    <value>Oblqo.Controls.DriveFileControl, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="&gt;&gt;splitter1.Parent" xml:space="preserve">
     <value>splitContainer2.Panel2</value>
   </data>
-  <data name="&gt;&gt;fileInfoPanel.Type" xml:space="preserve">
-    <value>Oblqo.Controls.DriveFileControl, Oblqo, Version=0.4.9.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="disconnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
   </data>
-  <data name="taskColumnHeader.Text" xml:space="preserve">
-    <value>File/Folder</value>
+  <data name="&gt;&gt;fileSizeColumnHeader.Name" xml:space="preserve">
+    <value>fileSizeColumnHeader</value>
   </data>
   <data name="fileDateColumnHeader.Text" xml:space="preserve">
     <value>Date</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
-    <value>toolStripSeparator3</value>
+  <data name="&gt;&gt;splitContainer2.Name" xml:space="preserve">
+    <value>splitContainer2</value>
   </data>
   <data name="&gt;&gt;newFolderToolStripButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1810,7 +1810,7 @@
   <data name="tasksTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
   </data>
-  <data name="&gt;&gt;uploadFileToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;newFolderToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">

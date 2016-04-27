@@ -88,7 +88,7 @@ namespace Oblqo.Controls
             {
                 var task = (UploadFolderTask)newTask;
                 taskItem.Text = Common.GetFileOrDirectoryName(task.Path);
-                taskItem.SubItems.Add("Upload Folder").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("UploadFolder")).Name = "type";
                 taskItem.SubItems.Add("").Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -96,7 +96,7 @@ namespace Oblqo.Controls
             {
                 var task = (DownloadFileFromStorageTask)newTask;
                 taskItem.Text = task.File.Name;
-                taskItem.SubItems.Add("Download File").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("DownloadFileFromStorage")).Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.OriginalSize)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -104,7 +104,7 @@ namespace Oblqo.Controls
             {
                 var task = (DownloadFileFromDriveTask)newTask;
                 taskItem.Text = task.File.Name;
-                taskItem.SubItems.Add("Download File").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("DownloadFileFromDisk")).Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(task.File.OriginalSize)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -113,7 +113,7 @@ namespace Oblqo.Controls
                 var task = (UploadFileTask)newTask;
                 taskItem.Text = Path.GetFileName(task.FileName);
                 var fileInfo = new FileInfo(task.FileName);
-                taskItem.SubItems.Add("Upload File").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("UploadFile")).Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(fileInfo.Length)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -121,7 +121,7 @@ namespace Oblqo.Controls
             {
                 var task = (CreateFolderTask)newTask;
                 taskItem.Text = Path.GetFileName(task.FolderName);
-                taskItem.SubItems.Add("Create Folder").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("CreateFolder")).Name = "type";
                 taskItem.SubItems.Add("").Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -130,9 +130,9 @@ namespace Oblqo.Controls
                 var task = (DeleteFolderTaskBase)newTask;
                 taskItem.Text = Path.GetFileName(task.Folder.Name);
                 if (task is DeleteEmptyFolderTask)
-                    taskItem.SubItems.Add("Delete Empty Folder").Name = "type";
+                    taskItem.SubItems.Add(Util.GetString("DeleteEmptyFolder")).Name = "type";
                 else
-                    taskItem.SubItems.Add("Delete Folder").Name = "type";
+                    taskItem.SubItems.Add(Util.GetString("DeleteFolder")).Name = "type";
                 taskItem.SubItems.Add("").Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -140,7 +140,7 @@ namespace Oblqo.Controls
             {
                 var task = (DeleteFileTask)newTask;
                 taskItem.Text = Path.GetFileName(task.File.Name);
-                taskItem.SubItems.Add("Delete File").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("DeleteFile")).Name = "type";
                 taskItem.SubItems.Add("").Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -148,7 +148,7 @@ namespace Oblqo.Controls
             {
                 var task = (DownloadFolderTask)newTask;
                 taskItem.Text = Path.GetFileName(task.Folder.Name);
-                taskItem.SubItems.Add("Download Folder").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("DownloadFolder")).Name = "type";
                 taskItem.SubItems.Add("").Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -156,7 +156,7 @@ namespace Oblqo.Controls
             {
                 var task = (SynchronizeFileTask)newTask;
                 taskItem.Text = Path.GetFileName(task.SourceFile.Name);
-                taskItem.SubItems.Add("Sync File").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("SyncFile")).Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(task.SourceFile.Size)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }
@@ -164,7 +164,7 @@ namespace Oblqo.Controls
             {
                 var task = (SynchronizeDriveFileTask)newTask;
                 taskItem.Text = Path.GetFileName(task.File?.Name);
-                taskItem.SubItems.Add("Sync File on Drive").Name = "type";
+                taskItem.SubItems.Add(Util.GetString("SyncFileOnDrive")).Name = "type";
                 taskItem.SubItems.Add(Common.NumberOfBytesToString(0)).Name = "size";
                 taskItem.SubItems.Add("0").Name = "percent";
             }

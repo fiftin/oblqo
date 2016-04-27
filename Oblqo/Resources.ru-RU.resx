@@ -132,6 +132,15 @@
   <data name="CloseApp_Message" xml:space="preserve">
     <value>Вы действительно хотите выйти из Oblqo?</value>
   </data>
+  <data name="CreateFolder" xml:space="preserve">
+    <value>Создание папки</value>
+  </data>
+  <data name="DeleteEmptyFolder" xml:space="preserve">
+    <value>Удаление пуской папки</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>Удаление файла</value>
+  </data>
   <data name="DeleteFileFromArchiveAndDrives_Caption" xml:space="preserve">
     <value>Удаление файла(ов) из архива и с дисков</value>
   </data>
@@ -144,11 +153,23 @@
   <data name="DeleteFileFromArchive_Message" xml:space="preserve">
     <value>Вы точно хотите удалить эти файлы из архива?</value>
   </data>
+  <data name="DeleteFolder" xml:space="preserve">
+    <value>Удаление папки</value>
+  </data>
   <data name="DeleteFolder_Caption" xml:space="preserve">
     <value>Удаление папки</value>
   </data>
   <data name="DeleteFolder_Message" xml:space="preserve">
     <value>Вы точно хотите удалить эту папку?</value>
+  </data>
+  <data name="DownloadFileFromDisk" xml:space="preserve">
+    <value>Скачивание файла с диска</value>
+  </data>
+  <data name="DownloadFileFromStorage" xml:space="preserve">
+    <value>Скачиваение файла из архива</value>
+  </data>
+  <data name="DownloadFolder" xml:space="preserve">
+    <value>Скачиваение папки</value>
   </data>
   <data name="EmptyConnectionName_Message" xml:space="preserve">
     <value>Имя подключения не может быть пустым</value>
@@ -194,5 +215,17 @@
   </data>
   <data name="RestoreTasks_Message" xml:space="preserve">
     <value>У вас есть незавшенные задачи. Продолжить их выполнение?</value>
+  </data>
+  <data name="SyncFile" xml:space="preserve">
+    <value>Сих. файла</value>
+  </data>
+  <data name="SyncFileOnDrive" xml:space="preserve">
+    <value>Синх. файла с дисками</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Загрузка файла</value>
+  </data>
+  <data name="UploadFolder" xml:space="preserve">
+    <value>Удаление папки</value>
   </data>
 </root>

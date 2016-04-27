@@ -91,12 +91,12 @@ namespace Oblqo.Local
 
         public override bool IsFolder => file is DirectoryInfo;
 
+        public override string MimeType => MimeTypes.GetMimeTypeByExtension(file.Name);
+
         public override bool IsImage => MimeType.StartsWith("image/");
 
         public override bool IsRoot => file.FullName == ((LocalFile)Drive.RootFolder).file.FullName;
-
-        public override string MimeType => MimeTypes.GetMimeTypeByExtension(file.Name);
-
+        
         public override DateTime ModifiedDate => file.LastWriteTime;
 
         public override string Name => file.Name;

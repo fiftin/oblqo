@@ -46,6 +46,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -97,9 +100,6 @@
     <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b">
       <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Apis.Drive.v2">
       <HintPath>..\packages\Google.Apis.Drive.v2.1.10.0.2080\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Drive.v2.dll</HintPath>
     </Reference>
@@ -111,6 +111,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amazon\GlacierPseudoDrive.cs" />
+    <Compile Include="Amazon\GlacierPseudoFile.cs" />
     <Compile Include="Controls\FileListSorder.cs" />
     <Compile Include="Controls\ImageViewer.cs">
       <SubType>UserControl</SubType>
@@ -216,12 +218,6 @@
     <Compile Include="Tasks\AsyncTaskManager.cs" />
     <Compile Include="Tasks\AsyncTaskProgressEventArgs.cs" />
     <Compile Include="Tasks\AsyncTaskState.cs" />
-    <Compile Include="Forms\AuthenticationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AuthenticationForm.Designer.cs">
-      <DependentUpon>AuthenticationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core Classes\Common.cs" />
     <Compile Include="Forms\CreateDirectoryForm.cs">
       <SubType>Form</SubType>
@@ -235,6 +231,7 @@
     <Compile Include="Amazon\Glacier.cs" />
     <Compile Include="Tasks\DeleteFileFromArchiveTask.cs" />
     <Compile Include="Tasks\DeleteFileTaskBase.cs" />
+    <Compile Include="Tasks\DownloadInventoryTask.cs" />
     <Compile Include="Tasks\EmptyTask.cs" />
     <Compile Include="Tasks\ExceptionEventArgs.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
@@ -311,9 +308,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountForm.ru.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AuthenticationForm.resx">
-      <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DriveFileControl.resx">
       <DependentUpon>DriveFileControl.cs</DependentUpon>

@@ -122,7 +122,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAQwBBgEMAQYBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAARQBBgEUAQYBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -278,37 +278,37 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 206</value>
+    <value>248, 201</value>
   </data>
   <data name="btnNewConnection.Text" xml:space="preserve">
     <value>Создать новое подключение</value>
   </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 206</value>
+    <value>412, 201</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 206</value>
+    <value>8, 201</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 206</value>
+    <value>315, 201</value>
   </data>
   <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 206</value>
+    <value>317, 201</value>
   </data>
   <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 206</value>
+    <value>317, 201</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 206</value>
+    <value>317, 201</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 206</value>
+    <value>997, 201</value>
   </data>
   <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 319</value>
+    <value>985, 324</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 322</value>
+    <value>987, 327</value>
   </data>
   <data name="tasksTabPage.Text" xml:space="preserve">
     <value>Задачи</value>
@@ -316,24 +316,30 @@
   <data name="logDataTimeColumnHeader.Text" xml:space="preserve">
     <value>Время</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="logDataTimeColumnHeader.Width" type="System.Int32, mscorlib">
+    <value>204</value>
+  </data>
   <data name="logMessageColumnHeader.Text" xml:space="preserve">
     <value>Сообщение</value>
   </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 320</value>
+    <value>985, 324</value>
+  </data>
+  <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 24</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 323</value>
+    <value>987, 327</value>
   </data>
   <data name="logTabPage.Text" xml:space="preserve">
     <value>События</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 350</value>
+    <value>995, 355</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>206</value>
+    <value>201</value>
   </data>
   <data name="newAccountStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -588,7 +594,7 @@
     <value>117, 26</value>
   </data>
   <data name="imageViewer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 35</value>
+    <value>372, 8</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -845,5 +851,9 @@
         AAAAAP//AAAAAAAA//8AAAAAAAD//wAAAAAAAP//AAAAAAAA//8AAAAAAAD//wAAAAAAAP//AAAAAAAA
         //8AAAAAAAD//wAAAAAAAP//AAAAAAAA//8=
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

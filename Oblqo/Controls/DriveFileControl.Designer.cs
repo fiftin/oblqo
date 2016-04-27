@@ -69,7 +69,7 @@
             // filePropertiesTable
             // 
             this.filePropertiesTable.ColumnCount = 2;
-            this.filePropertiesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 139F));
+            this.filePropertiesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
             this.filePropertiesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.filePropertiesTable.Controls.Add(this.label1, 0, 0);
             this.filePropertiesTable.Controls.Add(this.fileSizeLabel, 1, 0);
@@ -92,7 +92,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 23);
+            this.label1.Size = new System.Drawing.Size(115, 23);
             this.label1.TabIndex = 0;
             this.label1.Text = "Размер файла:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -101,9 +101,9 @@
             // 
             this.fileSizeLabel.AutoSize = true;
             this.fileSizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileSizeLabel.Location = new System.Drawing.Point(142, 0);
+            this.fileSizeLabel.Location = new System.Drawing.Point(124, 0);
             this.fileSizeLabel.Name = "fileSizeLabel";
-            this.fileSizeLabel.Size = new System.Drawing.Size(152, 23);
+            this.fileSizeLabel.Size = new System.Drawing.Size(170, 23);
             this.fileSizeLabel.TabIndex = 1;
             this.fileSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -113,7 +113,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 23);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(133, 25);
+            this.label3.Size = new System.Drawing.Size(115, 25);
             this.label3.TabIndex = 2;
             this.label3.Text = "Разм. картинки:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -122,9 +122,9 @@
             // 
             this.widthAndHeightLabel.AutoSize = true;
             this.widthAndHeightLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.widthAndHeightLabel.Location = new System.Drawing.Point(142, 23);
+            this.widthAndHeightLabel.Location = new System.Drawing.Point(124, 23);
             this.widthAndHeightLabel.Name = "widthAndHeightLabel";
-            this.widthAndHeightLabel.Size = new System.Drawing.Size(152, 25);
+            this.widthAndHeightLabel.Size = new System.Drawing.Size(170, 25);
             this.widthAndHeightLabel.TabIndex = 3;
             this.widthAndHeightLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

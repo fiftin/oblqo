@@ -32,19 +32,23 @@
       </Directory>
       
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Oblqo" />
+        <Directory Id="INSTALLFOLDER" Name="Oblqo">
+          <Directory Id="ruFolder" Name="ru" />
+          <Directory Id="ruRUFolder" Name="ru-RU" />
+        </Directory>
 			</Directory>
     
     
 		</Directory>
-  
-	</Fragment>
+
+
+  </Fragment>
 
       
   <Fragment>
     
     <Icon Id="Icon.exe" SourceFile="$(var.Oblqo.TargetDir)\oblqo-o.ico" />
-   
+
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent">
         <File Source="$(var.Oblqo.TargetDir)\Oblqo.exe">
@@ -60,6 +64,19 @@
         
         </File>
       </Component>
+
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\ru\Oblqo.resources.dll" Name="ru_Oblqo.resources.dll">
+          <CopyFile Id="ru_resources" DestinationDirectory="ruFolder" DestinationName="Oblqo.resources.dll" />
+        </File>
+      </Component>
+      
+      <Component>
+        <File Source="$(var.Oblqo.TargetDir)\ru-RU\Oblqo.resources.dll" Name="ru_RU_Oblqo.resources.dll">
+          <CopyFile Id="ru_RU_resources" DestinationDirectory="ruRUFolder" DestinationName="Oblqo.resources.dll" />
+        </File>
+      </Component>
+      
       <Component>
         <File Source="$(var.Oblqo.TargetDir)\Zlib.Portable.dll" />
       </Component>

@@ -17,84 +17,35 @@ namespace Oblqo.Amazon
     {
         private XDocument document;
         private DriveFile rootFolder;
-        private AmazonGlacierClient client;
-        private string vault;
 
-        /// <summary>
-        /// Check job state each 10 mins.
-        /// </summary>
-        const int Timeout = 1000 * 60 * 10;
-
-        public GlacierPseudoDrive(Account account, string id, XDocument document,
-                                  string accessKeyId, string accessSecretKey,
-                                  RegionEndpoint region, string vault)
+        public GlacierPseudoDrive(Account account, string id, XDocument document)
             : base(account, id)
         {
             this.document = document;
             rootFolder = new GlacierPseudoFile(this, document.Root.Element("folder"));
-            client = new AmazonGlacierClient(accessKeyId, accessSecretKey, region);
-            this.vault = vault;
         }
 
-        public GlacierPseudoDrive(Account account, string id, XDocument document, string vault)
-            : base(account, id)
-        {
-            this.document = document;
-            rootFolder = new GlacierPseudoFile(this, document.Root.Element("folder"));
-            this.vault = vault;
-        }
-
-        public async Task<string> InitiateLoadingAsync(CancellationToken token)
-        {
-            var req = new InitiateJobRequest()
-            {
-                VaultName = vault,
-                JobParameters = new JobParameters()
-                {
-                    Type = "inventory-retrieval"
-                }
-            };
-            var res = await client.InitiateJobAsync(req);
-            return res.JobId;
-        }
 
         public async Task SaveAsync(Stream output)
         {
+            await SaveAsync(document, output);
+        }
+
+        public static async Task SaveAsync(XDocument document, Stream output)
+        {
             using (var memStrem = new MemoryStream())
             {
-                document.WriteTo(new System.Xml.XmlTextWriter(memStrem, Encoding.UTF8));
-                await memStrem.CopyToAsync(output);
+                using (var writer = new System.Xml.XmlTextWriter(memStrem, Encoding.UTF8))
+                {
+                    document.WriteTo(writer);
+                    writer.Flush();
+                    memStrem.Seek(0, SeekOrigin.Begin);
+                    await memStrem.CopyToAsync(output);
+                }
             }
         }
 
-        public async Task LoadAsync(string jobId, CancellationToken token)
-        {
-            var describeReq = new DescribeJobRequest(vault, jobId);
-            var describeResult = await client.DescribeJobAsync(describeReq, token);
-            var ok = false;
-            while (!ok) // while job incompleted
-            {
-                if (describeResult.Completed)
-                {
-                    ok = true;
-                }
-                else
-                {
-                    await Task.Delay(Timeout, token);
-                    describeResult = await client.DescribeJobAsync(describeReq, token);
-                }
-            }
-            var req = new GetJobOutputRequest(vault, jobId, null);
-            var result = await client.GetJobOutputAsync(req, token);
-            using (var output = new MemoryStream())
-            {
-                await Common.CopyStreamAsync(result.Body, output, null, result.ContentLength);
-                var reader = new StreamReader(output);
-                ReadFromJson(reader);
-            }
-        }
-
-        public void ReadFromJson(TextReader render)
+        public static void ReadFromJson(XDocument document, TextReader render)
         {
             document.Root.RemoveAll();
             var jsonReader = new Newtonsoft.Json.JsonTextReader(render);
@@ -102,14 +53,14 @@ namespace Oblqo.Amazon
             var archives = json["ArchiveList"].ToArray();
             foreach (var item in archives)
             {
-                var elem = AddFileElement(item.Value<string>("ArchiveDescription"));
+                var elem = AddFileElement(document, item.Value<string>("ArchiveDescription"));
                 elem.SetAttributeValue("id", item.Value<string>("ArchiveId"));
                 elem.SetAttributeValue("size", item.Value<string>("Size"));
                 elem.SetAttributeValue("creationDate", item.Value<string>("CreationDate"));
             }
         }
 
-        public XElement AddFileElement(string path)
+        public static XElement AddFileElement(XDocument document, string path)
         {
             var parts = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             var elem = document.Root;
@@ -172,7 +123,13 @@ namespace Oblqo.Amazon
 
         public override Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var folder = (GlacierPseudoFile)driveFolder;
+            var files = folder.Element.Elements("file").Select(x => new GlacierPseudoFile(this, x));
+            foreach (var f in files)
+            {
+                action(f);
+            }
+            return Task.FromResult(0);
         }
 
         public override Task<DriveFile> GetFileAsync(XElement xml, CancellationToken token)
@@ -180,14 +137,18 @@ namespace Oblqo.Amazon
             throw new NotImplementedException();
         }
 
-        public override Task<ICollection<DriveFile>> GetFilesAsync(DriveFile folder, CancellationToken token)
+        public override Task<ICollection<DriveFile>> GetFilesAsync(DriveFile driveFolder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var folder = (GlacierPseudoFile)driveFolder;
+            var files = (ICollection<DriveFile>)folder.Element.Elements("file").Select(x => new GlacierPseudoFile(this, x)).ToList();
+            return Task.FromResult(files);
         }
 
-        public override Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile folder, CancellationToken token)
+        public override Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile driveFolder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var folder = (GlacierPseudoFile)driveFolder;
+            var files = (ICollection<DriveFile>)folder.Element.Elements("folder").Select(x => new GlacierPseudoFile(this, x)).ToList();
+            return Task.FromResult(files);
         }
 
         public override Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)

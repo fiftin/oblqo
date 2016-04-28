@@ -31,6 +31,8 @@ namespace Oblqo.Amazon
             }
         }
 
+        internal XElement Element => element;
+
         public override bool HasChildren => !element.IsEmpty;
 
         public override string Id => element.Attribute("id").Value;

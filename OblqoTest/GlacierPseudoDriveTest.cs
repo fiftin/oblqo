@@ -39,6 +39,8 @@ namespace OblqoTest
             await drive.SaveAsync(mem);
             mem.Seek(0, System.IO.SeekOrigin.Begin);
             var xml = Encoding.UTF8.GetString(mem.GetBuffer());
+            //var expected = "﻿<?xml version=\"1.0\" encoding=\"utf - 8\"?><vault><folder name=\"my\"><folder name=\"photos\"><folder name=\"2015\"><folder name=\"city\"><file name=\"car.jpg\" id=\"dummy_archive_id_1\" size=\"1034\" creationDate=\"2015 - 10 - 10 4:43:33\" /></folder></folder><folder name=\"2014\"><folder name=\"home\"><file name=\"me.jpg\" id=\"dummy_archive_id_2\" size=\"323\" creationDate=\"2014 - 08 - 12 3:33:22\" /></folder></folder></folder></folder></vault>";
+            //Assert.AreEqual(expected, xml);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Oblqo.Tasks
 
         protected DownloadFolderTask()
         {
-
         }
 
         protected DownloadFolderTask(Account account, string accountName, int priority, AsyncTask[] parent,

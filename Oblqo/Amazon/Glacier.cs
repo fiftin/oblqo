@@ -38,6 +38,51 @@ namespace Oblqo.Amazon
             client = new AmazonGlacierClient(accessKeyId, accessSecretKey, region);
         }
 
+        public async Task<string> InitiateDownloadingInventoryAsync(CancellationToken token)
+        {
+            var req = new InitiateJobRequest()
+            {
+                VaultName = Vault,
+                JobParameters = new JobParameters()
+                {
+                    Type = "inventory-retrieval"
+                }
+            };
+            var res = await client.InitiateJobAsync(req);
+            return res.JobId;
+        }
+
+        public async Task<string> DownloadInventoryAsync(string jobId, CancellationToken token)
+        {
+            var describeReq = new DescribeJobRequest(Vault, jobId);
+            var describeResult = await client.DescribeJobAsync(describeReq, token);
+            var ok = false;
+            while (!ok) // while job incompleted
+            {
+                if (describeResult.Completed)
+                {
+                    ok = true;
+                }
+                else
+                {
+                    await Task.Delay(Timeout, token);
+                    describeResult = await client.DescribeJobAsync(describeReq, token);
+                }
+            }
+            var req = new GetJobOutputRequest(Vault, jobId, null);
+            var result = await client.GetJobOutputAsync(req, token);
+            using (var reader = new StreamReader(result.Body))
+            {
+                return await reader.ReadToEndAsync();
+            }
+            //using (var output = new MemoryStream())
+            //{
+            //    await Common.CopyStreamAsync(result.Body, output, null, result.ContentLength);
+            //    var reader = new StreamReader(output);
+            //    ReadFromJson(reader);
+            //}
+        }
+
         public async Task CreateVaultAsync(CancellationToken token)
         {
             var req = new CreateVaultRequest(Vault);

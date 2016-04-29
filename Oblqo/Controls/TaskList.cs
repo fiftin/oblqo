@@ -332,23 +332,6 @@ namespace Oblqo.Controls
         }
 
 
-        private void taskDetailsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (taskListView.SelectedItems.Count == 0)
-            {
-                return;
-            }
-            var item = taskListView.SelectedItems[0];
-            var task = (AsyncTask)item.Tag;
-            if (task.State == AsyncTaskState.Error)
-            {
-                using (var exceptionDlg = new ExceptionForm())
-                {
-                    exceptionDlg.Exception = task.Exception;
-                    exceptionDlg.ShowDialog();
-                }
-            }
-        }
 
         private void taskMenu_Opened(object sender, EventArgs e)
         {
@@ -411,7 +394,24 @@ namespace Oblqo.Controls
 
         public event EventHandler<ExceptionEventArgs> Error;
 
-        private void taskDetailsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        //private void taskDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    if (taskListView.SelectedItems.Count == 0)
+        //    {
+        //        return;
+        //    }
+        //    var item = taskListView.SelectedItems[0];
+        //    var task = (AsyncTask)item.Tag;
+        //    if (task.State == AsyncTaskState.Error)
+        //    {
+        //        using (var exceptionDlg = new ExceptionForm())
+        //        {
+        //            exceptionDlg.Exception = task.Exception;
+        //            exceptionDlg.ShowDialog();
+        //        }
+        //    }
+        //}
+        private void ShowDetails()
         {
             if (taskListView.SelectedItems.Count > 0)
             {
@@ -423,6 +423,16 @@ namespace Oblqo.Controls
                     dialog.ShowDialog();
                 }
             }
+        }
+
+        private void taskDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDetails();
+        }
+
+        private void taskListView_DoubleClick(object sender, EventArgs e)
+        {
+            ShowDetails();
         }
     }
 }

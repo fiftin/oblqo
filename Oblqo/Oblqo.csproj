@@ -113,6 +113,12 @@
   <ItemGroup>
     <Compile Include="Amazon\GlacierPseudoDrive.cs" />
     <Compile Include="Amazon\GlacierPseudoFile.cs" />
+    <Compile Include="Controls\ExceptionVIew.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ExceptionVIew.Designer.cs">
+      <DependentUpon>ExceptionVIew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FileListSorder.cs" />
     <Compile Include="Controls\ImageViewer.cs">
       <SubType>UserControl</SubType>
@@ -283,6 +289,12 @@
     <Compile Include="Core Classes\TransferProgress.cs" />
     <EmbeddedResource Include="Controls\DriveAccountControl.ru.resx">
       <DependentUpon>DriveAccountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ExceptionVIew.resx">
+      <DependentUpon>ExceptionVIew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ExceptionVIew.ru.resx">
+      <DependentUpon>ExceptionVIew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FIleList.ru.resx">
       <DependentUpon>FIleList.cs</DependentUpon>

@@ -34,12 +34,15 @@
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabXml = new System.Windows.Forms.TabPage();
             this.txtXml = new System.Windows.Forms.TextBox();
+            this.tabException = new System.Windows.Forms.TabPage();
+            this.exceptionVIew1 = new Oblqo.Controls.ExceptionVIew();
             this.txtTaskName = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabInfo.SuspendLayout();
             this.tabXml.SuspendLayout();
+            this.tabException.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +51,7 @@
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabInfo);
             this.tabControl1.Controls.Add(this.tabXml);
+            this.tabControl1.Controls.Add(this.tabException);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             // 
@@ -79,6 +83,19 @@
             this.txtXml.BackColor = System.Drawing.Color.White;
             this.txtXml.Name = "txtXml";
             this.txtXml.ReadOnly = true;
+            // 
+            // tabException
+            // 
+            resources.ApplyResources(this.tabException, "tabException");
+            this.tabException.Controls.Add(this.exceptionVIew1);
+            this.tabException.Name = "tabException";
+            this.tabException.UseVisualStyleBackColor = true;
+            // 
+            // exceptionVIew1
+            // 
+            resources.ApplyResources(this.exceptionVIew1, "exceptionVIew1");
+            this.exceptionVIew1.Exception = null;
+            this.exceptionVIew1.Name = "exceptionVIew1";
             // 
             // txtTaskName
             // 
@@ -114,6 +131,7 @@
             this.tabInfo.ResumeLayout(false);
             this.tabXml.ResumeLayout(false);
             this.tabXml.PerformLayout();
+            this.tabException.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -129,5 +147,7 @@
         private System.Windows.Forms.Label txtTaskName;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabException;
+        private Controls.ExceptionVIew exceptionVIew1;
     }
 }

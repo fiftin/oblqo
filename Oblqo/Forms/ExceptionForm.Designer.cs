@@ -29,74 +29,31 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExceptionForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.typeTextBox = new System.Windows.Forms.TextBox();
-            this.messageTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.callStackTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.exceptionVIew1 = new Oblqo.Controls.ExceptionVIew();
             this.SuspendLayout();
             // 
-            // label1
+            // exceptionVIew1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // typeTextBox
-            // 
-            resources.ApplyResources(this.typeTextBox, "typeTextBox");
-            this.typeTextBox.Name = "typeTextBox";
-            this.typeTextBox.ReadOnly = true;
-            // 
-            // messageTextBox
-            // 
-            resources.ApplyResources(this.messageTextBox, "messageTextBox");
-            this.messageTextBox.Name = "messageTextBox";
-            this.messageTextBox.ReadOnly = true;
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // callStackTextBox
-            // 
-            resources.ApplyResources(this.callStackTextBox, "callStackTextBox");
-            this.callStackTextBox.Name = "callStackTextBox";
-            this.callStackTextBox.ReadOnly = true;
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.exceptionVIew1, "exceptionVIew1");
+            this.exceptionVIew1.Exception = null;
+            this.exceptionVIew1.Name = "exceptionVIew1";
             // 
             // ExceptionForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.callStackTextBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.messageTextBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.typeTextBox);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.exceptionVIew1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ExceptionForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox typeTextBox;
-        private System.Windows.Forms.TextBox messageTextBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox callStackTextBox;
-        private System.Windows.Forms.Label label3;
+        private Controls.ExceptionVIew exceptionVIew1;
     }
 }

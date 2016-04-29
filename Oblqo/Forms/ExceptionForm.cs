@@ -12,7 +12,6 @@ namespace Oblqo
 {
     public partial class ExceptionForm : Form
     {
-        private Exception exception;
 
         public ExceptionForm()
         {
@@ -23,14 +22,11 @@ namespace Oblqo
         {
             get
             {
-                return exception;
+                return exceptionVIew1.Exception;
             }
             set
             {
-                exception = value;
-                messageTextBox.Text = value.Message;
-                typeTextBox.Text = value.GetType().Name;
-                callStackTextBox.Text = value.StackTrace;
+                exceptionVIew1.Exception = value;
             }
         }
     }

@@ -101,6 +101,7 @@
             this.taskListView.Name = "taskListView";
             this.taskListView.UseCompatibleStateImageBehavior = false;
             this.taskListView.View = System.Windows.Forms.View.Details;
+            this.taskListView.DoubleClick += new System.EventHandler(this.taskListView_DoubleClick);
             // 
             // taskColumnHeader
             // 
@@ -136,7 +137,7 @@
             // 
             resources.ApplyResources(this.taskDetailsToolStripMenuItem, "taskDetailsToolStripMenuItem");
             this.taskDetailsToolStripMenuItem.Name = "taskDetailsToolStripMenuItem";
-            this.taskDetailsToolStripMenuItem.Click += new System.EventHandler(this.taskDetailsToolStripMenuItem_Click_1);
+            this.taskDetailsToolStripMenuItem.Click += new System.EventHandler(this.taskDetailsToolStripMenuItem_Click);
             // 
             // TaskList
             // 

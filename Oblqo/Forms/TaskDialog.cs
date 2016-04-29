@@ -31,6 +31,11 @@ namespace Oblqo.Forms
                 txtTaskName.Text = Util.GetString(task.GetType().Name);
                 txtXml.Text = task.ToXml().ToString();
                 propertyGrid1.SelectedObject = task;
+                exceptionVIew1.Exception = task.Exception;
+                if (task.Exception == null)
+                {
+                    tabControl1.TabPages.Remove(tabException);
+                }
             }
         }
     }

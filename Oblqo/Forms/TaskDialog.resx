@@ -129,8 +129,15 @@
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="exceptionVIew1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
@@ -139,24 +146,35 @@
   <data name="propertyGrid1.Size" type="System.Drawing.Size, System.Drawing">
     <value>543, 297</value>
   </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>Close</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TaskDialog</value>
   </data>
-  <data name="&gt;&gt;txtXml.Parent" xml:space="preserve">
-    <value>tabXml</value>
+  <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="exceptionVIew1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 303</value>
   </data>
   <data name="&gt;&gt;tabInfo.Name" xml:space="preserve">
     <value>tabInfo</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="txtXml.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Both</value>
   </data>
-  <data name="&gt;&gt;tabXml.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;propertyGrid1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 303</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;txtTaskName.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="tabInfo.Text" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="&gt;&gt;txtTaskName.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -173,8 +191,12 @@
   <data name="&gt;&gt;txtXml.Name" xml:space="preserve">
     <value>txtXml</value>
   </data>
-  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 41</value>
+  <data name="&gt;&gt;exceptionVIew1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="tabInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -197,27 +219,41 @@
   <data name="&gt;&gt;tabInfo.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;propertyGrid1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 41</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="txtXml.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="tabException.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 24</value>
+  </data>
+  <data name="tabException.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;exceptionVIew1.Type" xml:space="preserve">
+    <value>Oblqo.Controls.ExceptionVIew, Oblqo, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>7, 15</value>
   </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="exceptionVIew1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtXml.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="txtXml.Size" type="System.Drawing.Size, System.Drawing">
     <value>543, 297</value>
   </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="tabInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;button1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -225,11 +261,17 @@
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;tabException.Name" xml:space="preserve">
+    <value>tabException</value>
+  </data>
   <data name="&gt;&gt;propertyGrid1.Parent" xml:space="preserve">
     <value>tabInfo</value>
   </data>
   <data name="button1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="txtXml.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 9pt</value>
@@ -237,11 +279,11 @@
   <data name="txtTaskName.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="txtTaskName.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabException.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="txtXml.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -249,14 +291,14 @@
   <data name="txtTaskName.Size" type="System.Drawing.Size, System.Drawing">
     <value>557, 38</value>
   </data>
+  <data name="&gt;&gt;tabException.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="propertyGrid1.HelpVisible" type="System.Boolean, mscorlib">
     <value>False</value>
-  </data>
-  <data name="&gt;&gt;txtXml.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;propertyGrid1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -264,11 +306,20 @@
   <data name="propertyGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="tabXml.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="&gt;&gt;button1.Name" xml:space="preserve">
     <value>button1</value>
   </data>
-  <data name="tabXml.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="&gt;&gt;txtXml.Parent" xml:space="preserve">
+    <value>tabXml</value>
+  </data>
+  <data name="exceptionVIew1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;tabInfo.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -276,17 +327,23 @@
   <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
     <value>tabControl1</value>
   </data>
-  <data name="&gt;&gt;tabXml.Name" xml:space="preserve">
-    <value>tabXml</value>
+  <data name="txtTaskName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;exceptionVIew1.Name" xml:space="preserve">
+    <value>exceptionVIew1</value>
   </data>
   <data name="&gt;&gt;txtTaskName.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="tabInfo.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>TaskDialog</value>
+  <data name="&gt;&gt;tabXml.Name" xml:space="preserve">
+    <value>tabXml</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -297,17 +354,26 @@
   <data name="$this.Text" xml:space="preserve">
     <value>View Task Details</value>
   </data>
+  <data name="tabXml.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;propertyGrid1.Name" xml:space="preserve">
     <value>propertyGrid1</value>
   </data>
-  <data name="tabXml.Size" type="System.Drawing.Size, System.Drawing">
-    <value>549, 303</value>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Error Details</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="propertyGrid1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;tabException.Parent" xml:space="preserve">
+    <value>tabControl1</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 372</value>
@@ -318,14 +384,17 @@
   <data name="propertyGrid1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="tabInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;tabPage1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabXml.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabXml.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="txtXml.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -339,26 +408,29 @@
   <data name="txtTaskName.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 12pt, style=Bold</value>
   </data>
-  <data name="tabInfo.Text" xml:space="preserve">
-    <value>Details</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tabXml.Text" xml:space="preserve">
     <value>XML</value>
   </data>
-  <data name="txtXml.WordWrap" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="tabXml.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 24</value>
   </data>
   <data name="txtTaskName.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="tabXml.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 24</value>
   </data>
-  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="tabXml.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 303</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>557, 331</value>
+  </data>
+  <data name="&gt;&gt;exceptionVIew1.Parent" xml:space="preserve">
+    <value>tabException</value>
   </data>
   <data name="txtTaskName.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>

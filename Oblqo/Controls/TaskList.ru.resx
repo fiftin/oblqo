@@ -121,12 +121,12 @@
   <data name="activeTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVLLLgVBED2EWEjYWrCzsGIh/gAJnyQ24gsk
-        SDy+QyIh1kSsbNgIK7FxPe71mOlup3pqTHenL3OSkzu3TlV19alGHm4QsFPkHDlLTlaxVihWgPIKeHsH
-        zkxF+S4vqC1pUg52FDCHpPuHu8wd0aIQYXGnx9Num/8hDyx/97WohowdJbKZnFKuA71OoimLVS0Wc+TO
-        UcKeioSboX6Z6MJTagNMELfFpEgMGgjcEJusAd2XJufzifFxirIqcfqvBjXsNPB9X+Vcl2wwIUHuuU0D
-        GdfNs8FD2oCPpM0VzAbw/NHk/F7Bm3jeCGkDu9DHxGPWiomCYjERdY1mMz41ZLGsxTXMjj4Siq9dJtzE
-        BTW9X9taFMKfyNFzRRG3OPqwFuXgX+VJZZI4fVcAX4+MHWXG7ge/MjosaxLasSqWAvgB4G8wVQTmR8MA
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFESURBVDhPjVJNLwRBEH2EOEi4OnBzcOIg/gESfpK4iF8g
+        QWLjd0gkxJmIkwsX4SQu1seuj57p9qq7xnR3ZpmXvOxsvarq6leNZrhhwM6QC+Q8OR1irWDWgOIKeHsH
+        zspA+S4uqK1oUhPsOFAeku4f7jN3TItixMXdPk+7rf/H7Fj+drSogoydJLKZnFJsAv1upinNuhaLOXLn
+        JOFARcLNUb/MdOEptSEmiNtiUiJGDQRuhE02gN5LnfP5xPgkRVmVOP1Xgwp2Fvi+DznXBRtMSZB7btNA
+        xnWLbPCQN+AjaXOFcgt4/qhzfq/gTTyvhbyBXRpg4jFrxUSBWc5EXWO5nZ4a06xqcYVyTx8JxdceE27S
+        gorer10tiuFP5OhNRQl3OPqoFjXBv8qTYJI4fWeAr0fGjhrGHgS/MjosaxLaiRDLAfwA3GAwUxbThCMA
         AAAASUVORK5CYII=
 </value>
   </data>
@@ -158,12 +158,12 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFHSURBVDhPdZLNSgNBEITLBJ8g6iEkqKdArr6YyAZFNHrT
-        h/CxFH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
+        d/C1FH8hBn/AayCHRM369dCDk9ndhqKG2qqentlRXqXUXklD+CAF2gBuua25fqWrD2lJoEzxJS3gC7dV
         i+6bhK/zYA48l3jbHvsvC99Iq7pQilvpx5p4DIVuNnY0fEv38BH8kGiP8Ah+jhoYhzthMczOPLLGcJ/A
         xBvuuHbonnImzeFtm8BuOIZttxd43wM9sOvrwVJ6M0+CbqWBwYzoexa0QuujTXMfqG/gY4edrVj30O5S
         j6PaAKNdWDxzP05ia6Z4jT5HN5zNH0kQCZx4wM48peET63gnRfTNpRncsQlaLM7jBwIT+Jjwe9QW0id8
-        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/ia9GenMt
-        p0UAAAAASUVORK5CYII=
+        mmqgILthjUMhjO2RJIZa+C8Pv3qtfJJxam7AaG3nvDCc+SNZC/qZC7c1l00CtjB3M3SqO0t/hm9GeVtF
+        oy8AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="cancelledTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">

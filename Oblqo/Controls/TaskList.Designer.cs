@@ -95,6 +95,7 @@
             this.taskTypeColumnHeader,
             this.sizeColumnHeader,
             this.PercentColumnHeader});
+            this.taskListView.ContextMenuStrip = this.taskMenu;
             this.taskListView.FullRowSelect = true;
             this.taskListView.HideSelection = false;
             this.taskListView.Name = "taskListView";

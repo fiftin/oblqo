@@ -15,7 +15,12 @@ namespace Oblqo.Tasks
     {
         private string jobId;
 
-        protected DownloadGlacierInventoryTask(Account account, string accountName, int priority, AsyncTask[] parent)
+        public DownloadGlacierInventoryTask()
+        {
+
+        }
+
+        public DownloadGlacierInventoryTask(Account account, string accountName, int priority, AsyncTask[] parent)
             : base(account, accountName, priority, parent)
         {
         }

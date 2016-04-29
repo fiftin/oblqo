@@ -117,118 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountForm_ChangeAccount" xml:space="preserve">
-    <value>Редактировать подключение</value>
+  <data name="tabInfo.Text" xml:space="preserve">
+    <value>Детали</value>
   </data>
-  <data name="AccountForm_CreateNewAccount" xml:space="preserve">
-    <value>Создать новое подключение</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
-  <data name="B" xml:space="preserve">
-    <value>{0}Б</value>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Закрыть</value>
   </data>
-  <data name="CloseApp_Caption" xml:space="preserve">
-    <value>Выход из программы</value>
-  </data>
-  <data name="CloseApp_Message" xml:space="preserve">
-    <value>Вы действительно хотите выйти из Oblqo?</value>
-  </data>
-  <data name="CreateFolderTask" xml:space="preserve">
-    <value>Создание папки</value>
-  </data>
-  <data name="DeleteEmptyFolderTask" xml:space="preserve">
-    <value>Удаление пуской папки</value>
-  </data>
-  <data name="DeleteFileFromArchiveAndDrives_Caption" xml:space="preserve">
-    <value>Удаление файла(ов) из архива и с дисков</value>
-  </data>
-  <data name="DeleteFileFromArchiveAndDrives_Message" xml:space="preserve">
-    <value>Вы точно хотите удалить эти файлы из архива и с дисков?</value>
-  </data>
-  <data name="DeleteFileFromArchive_Caption" xml:space="preserve">
-    <value>Удаление файла(ов) из архива</value>
-  </data>
-  <data name="DeleteFileFromArchive_Message" xml:space="preserve">
-    <value>Вы точно хотите удалить эти файлы из архива?</value>
-  </data>
-  <data name="DeleteFileTask" xml:space="preserve">
-    <value>Удаление файла</value>
-  </data>
-  <data name="DeleteFolderTask" xml:space="preserve">
-    <value>Удаление папки</value>
-  </data>
-  <data name="DeleteFolder_Caption" xml:space="preserve">
-    <value>Удаление папки</value>
-  </data>
-  <data name="DeleteFolder_Message" xml:space="preserve">
-    <value>Вы точно хотите удалить эту папку?</value>
-  </data>
-  <data name="DownloadFileFromDiskTask" xml:space="preserve">
-    <value>Скачивание файла с диска</value>
-  </data>
-  <data name="DownloadFileFromStorageTask" xml:space="preserve">
-    <value>Скачиваение файла из архива</value>
-  </data>
-  <data name="DownloadFolderTask" xml:space="preserve">
-    <value>Скачиваение папки</value>
-  </data>
-  <data name="DownloadGlacierInventoryTask" xml:space="preserve">
-    <value>Инвентаризация</value>
-  </data>
-  <data name="EmptyConnectionName_Message" xml:space="preserve">
-    <value>Имя подключения не может быть пустым</value>
-  </data>
-  <data name="ErrorMessageBoxCaption" xml:space="preserve">
-    <value>Ошибка</value>
-  </data>
-  <data name="FileListStatusBar_Filter" xml:space="preserve">
-    <value>Фильтр, например: .jpg</value>
-  </data>
-  <data name="FileListStatusBar_Status" xml:space="preserve">
-    <value>{0} файлов, {1} несинх.</value>
-  </data>
-  <data name="GB" xml:space="preserve">
-    <value>{0}ГБ</value>
-  </data>
-  <data name="GoogleDrive" xml:space="preserve">
-    <value>Google диск</value>
-  </data>
-  <data name="InvalidArchive_Message" xml:space="preserve">
-    <value>Некорректная конфигурация архива</value>
-  </data>
-  <data name="InvalidConnection_Caption" xml:space="preserve">
-    <value>Некорректная конфигурация</value>
-  </data>
-  <data name="KB" xml:space="preserve">
-    <value>{0}КБ</value>
-  </data>
-  <data name="Local" xml:space="preserve">
-    <value>Локальный</value>
-  </data>
-  <data name="LocalDrive" xml:space="preserve">
-    <value>Локальный диск</value>
-  </data>
-  <data name="MB" xml:space="preserve">
-    <value>{0}МБ</value>
-  </data>
-  <data name="Original" xml:space="preserve">
-    <value>Оригинал</value>
-  </data>
-  <data name="RestoreTasks_Caption" xml:space="preserve">
-    <value>Продолжение задач</value>
-  </data>
-  <data name="RestoreTasks_Message" xml:space="preserve">
-    <value>У вас есть незавшенные задачи. Продолжить их выполнение?</value>
-  </data>
-  <data name="SyncFile" xml:space="preserve">
-    <value>Сих. файла</value>
-  </data>
-  <data name="SyncFileOnDrive" xml:space="preserve">
-    <value>Синх. файла с дисками</value>
-  </data>
-  <data name="UploadFileTask" xml:space="preserve">
-    <value>Загрузка файла</value>
-  </data>
-  <data name="UploadFolderTask" xml:space="preserve">
-    <value>Удаление папки</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Просмотр деталей задачи</value>
   </data>
 </root>

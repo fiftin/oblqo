@@ -151,6 +151,10 @@ namespace Oblqo
             }
             return root;
         }
-        
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

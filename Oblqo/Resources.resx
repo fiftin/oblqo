@@ -132,14 +132,11 @@
   <data name="CloseApp_Message" xml:space="preserve">
     <value>You really want close Oblqo?</value>
   </data>
-  <data name="CreateFolder" xml:space="preserve">
+  <data name="CreateFolderTask" xml:space="preserve">
     <value>Create Folder</value>
   </data>
-  <data name="DeleteEmptyFolder" xml:space="preserve">
+  <data name="DeleteEmptyFolderTask" xml:space="preserve">
     <value>Delete Empty Folder</value>
-  </data>
-  <data name="DeleteFile" xml:space="preserve">
-    <value>Delete File</value>
   </data>
   <data name="DeleteFileFromArchiveAndDrives_Caption" xml:space="preserve">
     <value>Delete file(s) from Archive &amp; Drives</value>
@@ -153,7 +150,10 @@
   <data name="DeleteFileFromArchive_Message" xml:space="preserve">
     <value>Do you really want to Delete this file(s) from Archive?</value>
   </data>
-  <data name="DeleteFolder" xml:space="preserve">
+  <data name="DeleteFileTask" xml:space="preserve">
+    <value>Delete File</value>
+  </data>
+  <data name="DeleteFolderTask" xml:space="preserve">
     <value>Delete Folder</value>
   </data>
   <data name="DeleteFolder_Caption" xml:space="preserve">
@@ -162,14 +162,17 @@
   <data name="DeleteFolder_Message" xml:space="preserve">
     <value>Do you really want to Delete this filder?</value>
   </data>
-  <data name="DownloadFileFromDisk" xml:space="preserve">
+  <data name="DownloadFileFromDiskTask" xml:space="preserve">
     <value>Download File from Disk</value>
   </data>
-  <data name="DownloadFileFromStorage" xml:space="preserve">
+  <data name="DownloadFileFromStorageTask" xml:space="preserve">
     <value>Download File from Archive</value>
   </data>
-  <data name="DownloadFolder" xml:space="preserve">
+  <data name="DownloadFolderTask" xml:space="preserve">
     <value>Download Folder</value>
+  </data>
+  <data name="DownloadGlacierInventoryTask" xml:space="preserve">
+    <value>Download Inventory</value>
   </data>
   <data name="EmptyConnectionName_Message" xml:space="preserve">
     <value>Connection Name can't be empty</value>
@@ -210,16 +213,16 @@
   <data name="RestoreTasks_Message" xml:space="preserve">
     <value>You have uncompleted tasks. Do you want to continue this tasks?</value>
   </data>
-  <data name="SyncFile" xml:space="preserve">
-    <value>Sync File</value>
-  </data>
-  <data name="SyncFileOnDrive" xml:space="preserve">
+  <data name="SynchronizeDriveFileTask" xml:space="preserve">
     <value>Sync File on Drive</value>
   </data>
-  <data name="UploadFile" xml:space="preserve">
+  <data name="SynchronizeFileTask" xml:space="preserve">
+    <value>Sync File</value>
+  </data>
+  <data name="UploadFileTask" xml:space="preserve">
     <value>Upload File</value>
   </data>
-  <data name="UploadFolder" xml:space="preserve">
+  <data name="UploadFolderTask" xml:space="preserve">
     <value>Upload Folder</value>
   </data>
 </root>

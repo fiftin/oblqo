@@ -45,6 +45,11 @@ namespace Oblqo.Amazon
             }
         }
 
+        public void ReadFromJson(TextReader render)
+        {
+            ReadFromJson(document, render);
+        }
+
         public static void ReadFromJson(XDocument document, TextReader render)
         {
             document.Root.RemoveAll();

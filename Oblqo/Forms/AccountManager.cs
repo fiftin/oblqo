@@ -13,6 +13,7 @@ using Google.Apis.Auth.OAuth2;
 using Oblqo.Amazon;
 using Oblqo.Google;
 using Oblqo.Properties;
+using System.Xml.Linq;
 
 namespace Oblqo
 {
@@ -150,6 +151,20 @@ namespace Oblqo
             await storage.InitAsync(token);
             var account = new Account(storage);
             var accountCredPath = "accounts/" + info.AccountName + "/drive-credentials/";
+            var accountInventoryPath = "accounts/" + info.AccountName + "/glacier-inventory.xml";
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                if (store.FileExists(accountInventoryPath))
+                {
+                    using (var input = store.OpenFile(accountInventoryPath, FileMode.Open))
+                    {
+                        var reader = new StreamReader(input);
+                        var xml = await reader.ReadToEndAsync();
+                        var doc = XDocument.Parse(xml);
+                        var glacierDrive = new GlacierPseudoDrive(account, "inventory", doc);
+                    }
+                }
+            }
             foreach (var d in info.Drives)
             {
                 switch (d.DriveType)

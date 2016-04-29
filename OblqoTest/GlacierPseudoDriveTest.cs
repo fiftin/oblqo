@@ -17,7 +17,7 @@ namespace OblqoTest
         {
             var env = await TestEnvironment.CreateSimpleAsync();
             var doc = new XDocument(new XElement("vault"));
-            var drive = new GlacierPseudoDrive(env.Account, "dummy_id", doc, "test");
+            var drive = new GlacierPseudoDrive(env.Account, "dummy_id", doc);
             var json = "{" +
             "  ArchiveList: [" +
             "    {" +

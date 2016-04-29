@@ -133,8 +133,8 @@
   <data name="&gt;&gt;taskTypeColumnHeader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;queuedTasksStripButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="finishedTasksStripButton.Text" xml:space="preserve">
+    <value>Finished</value>
   </data>
   <data name="finishedTasksStripButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 20</value>
@@ -195,6 +195,9 @@
   <data name="&gt;&gt;taskListView.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;cancelTaskToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="sizeColumnHeader.Text" xml:space="preserve">
     <value>Size</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="PercentColumnHeader.Text" xml:space="preserve">
     <value>%</value>
+  </data>
+  <data name="&gt;&gt;finishedTasksStripButton.Name" xml:space="preserve">
+    <value>finishedTasksStripButton</value>
   </data>
   <data name="taskTypeColumnHeader.Text" xml:space="preserve">
     <value>Task</value>
@@ -237,9 +243,6 @@
   <data name="activeTasksStripButton.Text" xml:space="preserve">
     <value>Active</value>
   </data>
-  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 333</value>
-  </data>
   <data name="taskMenu.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt</value>
   </data>
@@ -259,6 +262,9 @@
         bADPH03O7xW8ieeNkDawC31MPGatmCgoFhNR12g241NDFstaXMPs6COh+Nplwk1cUNP7ta1FIfyJHD1X
         FHGLow9rUQ7+VZ5UJonTdwXw9cjYUWbsfvAro8OyJqEdq2IpgB/0ujBfBJtc5AAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="&gt;&gt;queuedTasksStripButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="finishedTasksStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -280,9 +286,6 @@
   </data>
   <data name="&gt;&gt;taskMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="finishedTasksStripButton.Text" xml:space="preserve">
-    <value>Finished</value>
   </data>
   <data name="cancelTaskToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
@@ -314,9 +317,6 @@
   <data name="taskDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;PercentColumnHeader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -338,8 +338,8 @@
   <data name="taskMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 48</value>
   </data>
-  <data name="&gt;&gt;finishedTasksStripButton.Name" xml:space="preserve">
-    <value>finishedTasksStripButton</value>
+  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 333</value>
   </data>
   <data name="&gt;&gt;taskTypeColumnHeader.Name" xml:space="preserve">
     <value>taskTypeColumnHeader</value>
@@ -365,8 +365,8 @@
         gg==
 </value>
   </data>
-  <data name="&gt;&gt;cancelTaskToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;taskDetailsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -377,16 +377,16 @@
   <data name="tasksToolStrip.Text" xml:space="preserve">
     <value>toolStrip1</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ru</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="taskMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>148, 26</value>
-  </metadata>
   <metadata name="tasksToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>ru</value>
+  </metadata>
+  <metadata name="taskMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>148, 26</value>
   </metadata>
 </root>

@@ -28,6 +28,7 @@ namespace Oblqo
             }
         }
 
+        [System.ComponentModel.Browsable(false)]
         public AsyncTask[] Parents
         {
             get
@@ -47,16 +48,36 @@ namespace Oblqo
                 }
             }
         }
+        public DateTime CreatedAt { get; protected set; } = DateTime.Now;
+        public DateTime StartedAt { get; protected set; }
+        public DateTime FinishedAt { get; protected set; }
 
+        [System.ComponentModel.Browsable(false)]
         public virtual bool Visible => true;
+
+        [System.ComponentModel.Browsable(false)]
         public string ID { get; private set; }
+
+        [System.ComponentModel.Browsable(false)]
         public Account Account { get; private set; }
+
+        [System.ComponentModel.Browsable(false)]
         public string AccountName { get; private set; }
+
+        [System.ComponentModel.Browsable(false)]
         public Object Tag { get; set; }
+
+        [System.ComponentModel.Browsable(false)]
         public AsyncTaskParentsMode ParentsMode { get; private set; }
+
+        [System.ComponentModel.Browsable(false)]
         public int Priority { get; private set; }
+
+        [System.ComponentModel.Browsable(false)]
         public Exception Exception { get; protected set; }
+
         public AsyncTaskState State { get; protected set; }
+
         public event EventHandler StateChanged;
         public event EventHandler<AsyncTaskProgressEventArgs> Progress;
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -138,6 +159,7 @@ namespace Oblqo
                 throw new InvalidOperationException("Can't start finished task");
             }
             State = AsyncTaskState.Running;
+            StartedAt = DateTime.Now;
             OnStateChanged();
             try
             {
@@ -156,6 +178,7 @@ namespace Oblqo
                 }
                 catch { }
             }
+            FinishedAt = DateTime.Now;
         }
 
         protected abstract Task OnStartAsync();
@@ -205,15 +228,31 @@ namespace Oblqo
             get { return cancellationTokenSource; }
         }
 
+        [System.ComponentModel.Browsable(false)]
         public bool IsAllParentTasksCompletedSuccessful
         {
-            get { return Parents.All(parent => parent.State == AsyncTaskState.Completed); }
+            get
+            {
+                if (Parents == null)
+                {
+                    return true;
+                }
+                return Parents.All(parent => parent.State == AsyncTaskState.Completed);
+            }
         }
 
+        [System.ComponentModel.Browsable(false)]
         public bool IsAllParentTasksFinished
         {
-            get { return Parents.All(parent => parent.State == AsyncTaskState.Completed 
-                || parent.State == AsyncTaskState.Cancelled || parent.State == AsyncTaskState.Error); }
+            get
+            {
+                if (Parents == null)
+                {
+                    return true;
+                }
+                return Parents.All(parent => parent.State == AsyncTaskState.Completed
+                || parent.State == AsyncTaskState.Cancelled || parent.State == AsyncTaskState.Error);
+            }
         }
 
     }

@@ -1042,5 +1042,15 @@ namespace Oblqo
         {
             fileListView.ShowMenu(false);
         }
+
+        private void downloadInventoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var node = treeView1.SelectedNode;
+            if (node == null)
+                return;
+            var nodeInfo = (NodeInfo)node.Tag;
+            taskManager.Add(new DownloadGlacierInventoryTask(accounts[nodeInfo.AccountName], nodeInfo.AccountName, 0, new AsyncTask[0]));
+
+        }
     }
 }

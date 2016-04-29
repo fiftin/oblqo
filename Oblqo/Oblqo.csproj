@@ -205,6 +205,12 @@
       <DependentUpon>FileListStatusBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Core Classes\IsolatedConfigurationStorage.cs" />
+    <Compile Include="Forms\TaskDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TaskDialog.Designer.cs">
+      <DependentUpon>TaskDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Google\IsolatedDataStore.cs" />
     <Compile Include="Local\LocalDrive.cs" />
     <Compile Include="Local\LocalFile.cs" />
@@ -231,7 +237,7 @@
     <Compile Include="Amazon\Glacier.cs" />
     <Compile Include="Tasks\DeleteFileFromArchiveTask.cs" />
     <Compile Include="Tasks\DeleteFileTaskBase.cs" />
-    <Compile Include="Tasks\DownloadInventoryTask.cs" />
+    <Compile Include="Tasks\DownloadGlacierInventoryTask.cs" />
     <Compile Include="Tasks\EmptyTask.cs" />
     <Compile Include="Tasks\ExceptionEventArgs.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
@@ -344,6 +350,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.ru-RU.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TaskDialog.resx">
+      <DependentUpon>TaskDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TaskDialog.ru.resx">
+      <DependentUpon>TaskDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

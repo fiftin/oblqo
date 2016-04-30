@@ -7,6 +7,7 @@ namespace Oblqo.Amazon
 {
     public class GlacierPseudoFile : DriveFile
     {
+
         private XElement element;
 
         public GlacierPseudoFile(GlacierPseudoDrive drive, XElement element)
@@ -19,6 +20,10 @@ namespace Oblqo.Amazon
         {
             get
             {
+                if (element.Attribute("creationDate") == null)
+                {
+                    return DateTime.MinValue;
+                }
                 return DateTime.Parse(element.Attribute("creationDate").Value, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
@@ -35,7 +40,7 @@ namespace Oblqo.Amazon
 
         public override bool HasChildren => !element.IsEmpty;
 
-        public override string Id => element.Attribute("id").Value;
+        public override string Id => element.Attribute("id")?.Value;
 
         public override int ImageHeight => OriginalImageHeight;
 
@@ -49,9 +54,17 @@ namespace Oblqo.Amazon
 
         public override bool IsImage => MimeType.StartsWith("image/");
 
-        public override string Name => element.Attribute("name").Value;
+        public override string Name => element.Attribute("name")?.Value;
 
         public override long Size => OriginalSize;
+
+        public override string StorageFileId
+        {
+            get
+            {
+                return Id;
+            }
+        }
 
         public override int OriginalImageHeight
         {
@@ -83,6 +96,10 @@ namespace Oblqo.Amazon
         {
             get
             {
+                if (element.Attribute("size") == null)
+                {
+                    return 0;
+                }
                 return int.Parse(element.Attribute("size").Value);
             }
 

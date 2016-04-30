@@ -18,11 +18,13 @@ namespace Oblqo.Amazon
         private XDocument document;
         private DriveFile rootFolder;
 
+        public override bool IsIgnored => true;
+
         public GlacierPseudoDrive(Account account, string id, XDocument document)
             : base(account, id)
         {
             this.document = document;
-            rootFolder = new GlacierPseudoFile(this, document.Root.Element("folder"));
+            rootFolder = new GlacierPseudoFile(this, document.Root);
         }
 
 
@@ -158,12 +160,12 @@ namespace Oblqo.Amazon
 
         public override Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            throw new BadImageFormatException();
         }
 
         public override Task<Stream> ReadFileAsync(DriveFile file, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<Stream>(new MemoryStream(new byte[0]));
         }
 
         public override Task<DriveFile> UploadFileAsync(Stream fileStream, string fileName, DriveFile destFolder, string storageFileId, CancellationToken token)

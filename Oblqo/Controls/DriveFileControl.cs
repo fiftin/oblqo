@@ -99,6 +99,7 @@ namespace Oblqo.Controls
                                 widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
                         }));
                     }
+                    catch (BadImageFormatException) { }
                     catch (OperationCanceledException) { }
                     catch (System.IO.FileNotFoundException) { }
                 }

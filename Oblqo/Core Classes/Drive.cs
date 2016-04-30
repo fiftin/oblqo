@@ -13,6 +13,8 @@ namespace Oblqo
     /// </summary>
     public abstract class Drive
     {
+        public virtual bool IsIgnored => false;
+
         public abstract DriveFile RootFolder { get; }
 
         public Size ImageMaxSize { get; set; }
@@ -88,7 +90,7 @@ namespace Oblqo
             }
             return true;
         }
-        
+
         public async Task<Stream> ScaleImageAsync(Image image, ImageFormat type, CancellationToken token)
         {
             var output = new MemoryStream();
@@ -105,7 +107,14 @@ namespace Oblqo
         {
             using (var stream = await ReadFileAsync(file, token))
             {
-                return await Task.Run(() => Image.FromStream(stream));
+                try
+                {
+                    return await Task.Run(() => Image.FromStream(stream));
+                }
+                catch(Exception)
+                {
+                    throw new BadImageFormatException();
+                }
             }
         }
         

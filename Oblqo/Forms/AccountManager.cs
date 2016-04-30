@@ -160,7 +160,7 @@ namespace Oblqo
                     {
                         var reader = new StreamReader(input);
                         var xml = await reader.ReadToEndAsync();
-                        var doc = XDocument.Parse(xml);
+                        var doc = XDocument.Load(new XmlTextReader(new StringReader(xml)));
                         var glacierDrive = new GlacierPseudoDrive(account, "inventory", doc);
                         account.Drives.Add(glacierDrive);
                     }

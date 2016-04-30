@@ -20,12 +20,9 @@ namespace Oblqo
         public abstract long Size { get; }
         public abstract DateTime ModifiedDate { get; }
         public abstract DateTime CreatedDate { get; }
-
         public abstract int OriginalImageWidth { get; set; }
         public abstract int OriginalImageHeight { get; set; }
-
         public abstract long OriginalSize { get; set; }
-
         public abstract int ImageWidth { get; }
         public abstract int ImageHeight { get; }
         public abstract bool IsRoot { get; }
@@ -59,7 +56,6 @@ namespace Oblqo
             return ret;
         }
 
-
         public async Task<Stream> ReadAsync(CancellationToken token)
         {
             return await Drive.ReadFileAsync(this, token);
@@ -68,25 +64,6 @@ namespace Oblqo
         public abstract Task WriteAsync(byte[] bytes, CancellationToken token);
         public abstract string GetAttribute(string name);
         public abstract Task SetAttributeAsync(string name, string value, CancellationToken token);
-
-        /// <summary>
-        /// Scale image to required size.
-        /// </summary>
-  //      public async Task ScaleImageAsync(CancellationToken token)
-		//{
-		//	ImageFormat type;
-		//	if (!Drive.TryGetImageType (Name, out type)) {
-		//		return;
-		//	}
-  //          using (var stream = await Drive.ScaleImageAsync(await ReadAsync(token), type, token))
-  //          {
-  //              using (var memStream = new MemoryStream())
-  //              {
-  //                  await stream.CopyToAsync(memStream);
-  //                  await WriteAsync(memStream.ToArray(), token);
-  //              }
-  //          }
-  //      }
 
         /// <summary>
         /// Generate unique ID for new source.
@@ -135,7 +112,7 @@ namespace Oblqo
 
         }
 
-        public string StorageFileId
+        public virtual string StorageFileId
         {
             get
             {

@@ -162,6 +162,7 @@ namespace Oblqo
                         var xml = await reader.ReadToEndAsync();
                         var doc = XDocument.Parse(xml);
                         var glacierDrive = new GlacierPseudoDrive(account, "inventory", doc);
+                        account.Drives.Add(glacierDrive);
                     }
                 }
             }

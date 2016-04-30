@@ -97,7 +97,7 @@ namespace Oblqo.Amazon
         {
             get
             {
-                return document.Root.Attribute("name").Value;
+                return "Glacier";
             }
         }
 
@@ -145,15 +145,15 @@ namespace Oblqo.Amazon
         public override Task<ICollection<DriveFile>> GetFilesAsync(DriveFile driveFolder, CancellationToken token)
         {
             var folder = (GlacierPseudoFile)driveFolder;
-            var files = (ICollection<DriveFile>)folder.Element.Elements("file").Select(x => new GlacierPseudoFile(this, x)).ToList();
-            return Task.FromResult(files);
+            var files = folder.Element.Elements("file").Select(x => new GlacierPseudoFile(this, x)).Cast<DriveFile>().ToList();
+            return Task.FromResult<ICollection<DriveFile>>(files);
         }
 
         public override Task<ICollection<DriveFile>> GetSubfoldersAsync(DriveFile driveFolder, CancellationToken token)
         {
             var folder = (GlacierPseudoFile)driveFolder;
-            var files = (ICollection<DriveFile>)folder.Element.Elements("folder").Select(x => new GlacierPseudoFile(this, x)).ToList();
-            return Task.FromResult(files);
+            var files = folder.Element.Elements("folder").Select(x => new GlacierPseudoFile(this, x)).Cast<DriveFile>().ToList();
+            return Task.FromResult<ICollection<DriveFile>>(files);
         }
 
         public override Task<Image> GetThumbnailAsync(DriveFile file, CancellationToken token)

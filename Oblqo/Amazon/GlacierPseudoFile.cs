@@ -19,7 +19,7 @@ namespace Oblqo.Amazon
         {
             get
             {
-                return DateTime.Parse(element.Attribute("creationDate").Value);
+                return DateTime.Parse(element.Attribute("creationDate").Value, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
 
@@ -45,11 +45,11 @@ namespace Oblqo.Amazon
 
         public override bool IsRoot => element.Document.Root == element;
 
-        public override string MimeType => MimeTypes.GetMimeTypeByExtension(element.Attribute("fileName").Value);
+        public override string MimeType => MimeTypes.GetMimeTypeByExtension(Name);
 
         public override bool IsImage => MimeType.StartsWith("image/");
 
-        public override string Name => element.Attribute("fileName").Value;
+        public override string Name => element.Attribute("name").Value;
 
         public override long Size => OriginalSize;
 
@@ -94,12 +94,12 @@ namespace Oblqo.Amazon
         
         public override string GetAttribute(string name)
         {
-            throw new NotSupportedException();
+            return null;
         }
 
         public override Task SetAttributeAsync(string name, string value, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public override Task WriteAsync(byte[] bytes, CancellationToken token)

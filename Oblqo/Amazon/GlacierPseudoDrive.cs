@@ -19,6 +19,7 @@ namespace Oblqo.Amazon
         private DriveFile rootFolder;
 
         public override bool IsIgnored => true;
+        public override bool IsLantinOnlySupport => true;
 
         public GlacierPseudoDrive(Account account, string id, XDocument document)
             : base(account, id)
@@ -110,22 +111,22 @@ namespace Oblqo.Amazon
 
         public override Task DeleteFileAsync(DriveFile driveFile, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public override Task DeleteFolderAsync(DriveFile driveFolder, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public override Task DownloadFileAsync(DriveFile driveFile, Stream output, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public override Task DownloadFileAsync(DriveFile driveFile, string destFolder, ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public override Task EnumerateFilesRecursive(DriveFile driveFolder, Action<DriveFile> action, CancellationToken token)

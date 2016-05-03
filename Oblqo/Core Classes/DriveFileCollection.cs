@@ -159,6 +159,11 @@ namespace Oblqo
             return files.GetEnumerator();
         }
 
+        public IEnumerable<DriveFile> GetBrowsable()
+        {
+            return files.Where(x => !x.Drive.IsIgnored);
+        }
+
         public bool Remove(DriveFile item)
         {
             return files.Remove(item);
@@ -166,7 +171,7 @@ namespace Oblqo
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return files.GetEnumerator();
+            return GetEnumerator();
         }
 
         public int IndexOf(DriveFile item)
@@ -186,7 +191,7 @@ namespace Oblqo
 
         public async Task<Stream> ReadFileAsync(CancellationToken token)
         {
-            return await files.First().ReadFileAsync(token);
+            return await files.First(x => !x.Drive.IsIgnored).ReadFileAsync(token);
         }
     }
 }

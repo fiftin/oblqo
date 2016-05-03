@@ -25,6 +25,7 @@ namespace Oblqo
 
         public string Id { get; }
         public abstract string ShortName { get; }
+        public virtual bool IsLantinOnlySupport => false;
 
         /// <summary>
         /// Name format of property for storage file ID.

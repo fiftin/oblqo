@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using UnidecodeSharpFork;
 
 namespace Oblqo
 {
@@ -227,7 +228,7 @@ namespace Oblqo
             DriveFileCollection collection;
             if (file.StorageFileId == null)
             {
-                if (!TryFindFileByName(file.Name, fileCollections.Values, out collection))
+                if (!TryFindFileByName(file.Name, file.Drive.IsLantinOnlySupport, fileCollections.Values, out collection))
                 {
                     collection = new DriveFileCollection();
                     fileCollections.Add(file.StorageFileId ?? Guid.NewGuid().ToString(), collection);
@@ -241,10 +242,23 @@ namespace Oblqo
             collection.Add(file);
         }
 
-        private static bool TryFindFileByName(string fileName, IEnumerable<DriveFileCollection> fileCollections, 
+        private static string GetFileName(DriveFile file, bool isLantinOnlySupport)
+        {
+            if (file == null)
+            {
+                return null;
+            }
+            if (isLantinOnlySupport)
+            {
+                return file.Name.Unidecode();
+            }
+            return file.Name;
+        }
+
+        private static bool TryFindFileByName(string fileName, bool isLantinOnlySupport, IEnumerable<DriveFileCollection> fileCollections, 
             out DriveFileCollection collection)
         {
-            foreach (var item in fileCollections.Where(item => (item.FirstOrDefault()?.Name) == fileName))
+            foreach (var item in fileCollections.Where(item => GetFileName(item.FirstOrDefault(), isLantinOnlySupport) == fileName))
             {
                 collection = item;
                 return true;

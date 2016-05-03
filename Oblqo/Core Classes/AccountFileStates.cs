@@ -10,10 +10,12 @@ namespace Oblqo
     {
         New = 1,
         Deleted = 2,
-        UnsyncronizedWithDrive = 4,
+        UnsyncronizedWithAllDrives = 4,
         UnsyncronizedWithStorage = 8,
         SyncronizedWithDrive = 16,
         SyncronizedWithStorage = 32,
-        Error = 64
+        Error = 64,
+        PlacedOnlyStorage = 128,
+        PlacedOnlyDrive = 256
     }
 }

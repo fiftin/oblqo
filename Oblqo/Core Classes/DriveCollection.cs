@@ -30,6 +30,11 @@ namespace Oblqo
             }
         }
 
+        public IEnumerable<Drive> GetBrowsable()
+        {
+            return drives.Where(x => !x.IsIgnored);
+        }
+
         public int Count => drives.Count;
 
         public Size ImageMaxSize
@@ -101,7 +106,7 @@ namespace Oblqo
         public async Task DownloadFileAsync(DriveFileCollection driveFile, string destFolder, 
             ActionIfFileExists actionIfFileExists, CancellationToken token)
         {
-            var file = driveFile.First();
+            var file = driveFile.First(x => !x.Drive.IsIgnored);
             await file.Drive.DownloadFileAsync(file, destFolder, actionIfFileExists, token);
         }
 
@@ -203,6 +208,14 @@ namespace Oblqo
                 }
             }
             return null;
+        }
+
+        public Drive InventoryDrive
+        {
+            get
+            {
+                return drives.SingleOrDefault(x => x is Amazon.GlacierPseudoDrive);
+            }
         }
     }
 }

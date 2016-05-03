@@ -45,6 +45,7 @@ namespace Oblqo.Controls
 
             fileNameLabel.Text = DriveFile.Name;
             fileSizeLabel.Text = Common.NumberOfBytesToString(DriveFile.Size);
+            lblID.Text = DriveFile.StorageFileId;
 
             label3.Visible = false;
             widthAndHeightLabel.Visible = false;
@@ -93,15 +94,24 @@ namespace Oblqo.Controls
                             widthAndHeightLabel.Text = string.Format("{0} x {1}", DriveFile.ImageWidth, DriveFile.ImageHeight);
                             pictureBox1.BackgroundImage = image;
                             Picture = image;
-                            pictureBox1.Image = null;
-                            ImageLoaded?.Invoke(this, new EventArgs());
+                            Invoke(new MethodInvoker(() =>
+                            {
+                                ImageLoaded?.Invoke(this, new EventArgs());
+                            }));
                             if (widthAndHeightLabel.Text == "0 x 0")
                                 widthAndHeightLabel.Text = string.Format("{0} x {1}", image.Width, image.Height);
                         }));
                     }
-                    catch (BadImageFormatException) { }
-                    catch (OperationCanceledException) { }
                     catch (System.IO.FileNotFoundException) { }
+                    catch (OperationCanceledException) { }
+                    catch (BadImageFormatException)
+                    {
+                        pictureBox1.BackgroundImage = Resources.no_image;
+                        Invoke(new MethodInvoker(() =>
+                        {
+                            ImageLoaded?.Invoke(this, new EventArgs());
+                        }));
+                    }
                 }
                 catch (Exception ex)
                 {

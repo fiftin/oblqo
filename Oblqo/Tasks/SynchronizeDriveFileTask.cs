@@ -37,7 +37,7 @@ namespace Oblqo.Tasks
         protected override async Task OnStartAsync()
         {
             var tasks = (from drive in Account.Drives
-                         where File.GetDriveFile(drive) == null
+                         where !drive.IsIgnored && File.GetDriveFile(drive) == null
                          select UploadFileAsync(drive)
                          ).ToList();
             var files = await Task.WhenAll(tasks);

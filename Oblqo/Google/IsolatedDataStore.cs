@@ -67,7 +67,7 @@ namespace Oblqo
             {
                 await Task.Run(() =>
                 {
-                    using (var stream = store.OpenFile(path, System.IO.FileMode.OpenOrCreate))
+                    using (var stream = store.OpenFile(path, System.IO.FileMode.Create))
                     {
                         System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
                         ser.Serialize(stream, value);

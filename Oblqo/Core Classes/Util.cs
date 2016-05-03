@@ -22,11 +22,43 @@ namespace Oblqo
         public static AccountFileStates GetFileState(AccountFile file)
         {
             AccountFileStates ret = 0;
-            var isDrivesSyncronized = file.Account.Drives.Select(x => file.GetDriveFile(x)).All(x => x != null);
-            if (!isDrivesSyncronized)
+
+            var nDrives = file.Account.Drives.Count;
+            var nDrivesSyncronized =
+                file.Account.Drives.Select(x => file.GetDriveFile(x)).Count(x => x != null);
+
+            DriveFile inventoryFile;
+            if (file.Account.Drives.InventoryDrive == null)
             {
-                ret |= AccountFileStates.UnsyncronizedWithDrive;
+                inventoryFile = null;
             }
+            else
+            {
+                nDrives--;
+                inventoryFile = file.GetDriveFile(file.Account.Drives.InventoryDrive);
+                if (inventoryFile != null)
+                {
+                    nDrivesSyncronized--;
+                }
+            }
+            
+            if (nDrivesSyncronized != nDrives)
+            {
+                ret |= AccountFileStates.UnsyncronizedWithAllDrives;
+            }
+
+            if (file.Account.Drives.InventoryDrive != null)
+            {
+                if (inventoryFile == null)
+                {
+                    ret |= AccountFileStates.PlacedOnlyDrive;
+                }
+                else if (nDrivesSyncronized == 0)
+                {
+                    ret |= AccountFileStates.PlacedOnlyStorage;
+                }
+            }
+
             if (file.StorageFileId == null)
             {
                 ret |= AccountFileStates.UnsyncronizedWithStorage;

@@ -569,7 +569,7 @@ namespace Oblqo
                 ShowFileInfoPanel();
                 var info = (NodeInfo)fileListView.SelectedItems[0].Tag;
                 driveStrip1.File = info.File;
-                imageViewer1.File = info.File;
+                // imageViewer1.File = info.File;
             }
             else
             {

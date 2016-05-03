@@ -151,21 +151,7 @@ namespace Oblqo
             await storage.InitAsync(token);
             var account = new Account(storage);
             var accountCredPath = "accounts/" + info.AccountName + "/drive-credentials/";
-            var accountInventoryPath = "accounts/" + info.AccountName + "/glacier-inventory.xml";
-            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-            {
-                if (store.FileExists(accountInventoryPath))
-                {
-                    using (var input = store.OpenFile(accountInventoryPath, FileMode.Open))
-                    {
-                        var reader = new StreamReader(input);
-                        var xml = await reader.ReadToEndAsync();
-                        var doc = XDocument.Load(new XmlTextReader(new StringReader(xml)));
-                        var glacierDrive = new GlacierPseudoDrive(account, "inventory", doc);
-                        account.Drives.Add(glacierDrive);
-                    }
-                }
-            }
+
             foreach (var d in info.Drives)
             {
                 switch (d.DriveType)
@@ -193,6 +179,22 @@ namespace Oblqo
                         break;
                     default:
                         throw new NotSupportedException("Drive with this type is not supported");
+                }
+            }
+
+            var accountInventoryPath = "accounts/" + info.AccountName + "/glacier-inventory.xml";
+            using (var store = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                if (store.FileExists(accountInventoryPath))
+                {
+                    using (var input = store.OpenFile(accountInventoryPath, FileMode.Open))
+                    {
+                        var reader = new StreamReader(input);
+                        var xml = await reader.ReadToEndAsync();
+                        var doc = XDocument.Load(new XmlTextReader(new StringReader(xml)));
+                        var glacierDrive = new GlacierPseudoDrive(account, "inventory", doc);
+                        account.Drives.Add(glacierDrive);
+                    }
                 }
             }
             return account;

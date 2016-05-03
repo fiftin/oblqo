@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Oblqo.Tasks
 {
+    /// <summary>
+    /// Synchronize file with storage.
+    /// </summary>
     [AccountFileStateChange(AccountFileStates.SyncronizedWithStorage, "SourceFile")]
     public class SynchronizeFileTask : AsyncTask
     {
@@ -30,6 +33,8 @@ namespace Oblqo.Tasks
                 return;
             }
             StorageFile storageFile;
+
+            // Read content from drive file (it can be only one!)
             using (var inStream = await SourceFile.DriveFiles.ReadFileAsync(CancellationTokenSource.Token))
             {
                 Stream stream;
@@ -61,8 +66,6 @@ namespace Oblqo.Tasks
                 //await SourceFile.DriveFile.ScaleImageAsync(CancellationTokenSource.Token);
             //}
         }
-
-
 
         public override async Task LoadAsync(Account account, string id, System.Xml.Linq.XElement xml, CancellationToken token)
         {

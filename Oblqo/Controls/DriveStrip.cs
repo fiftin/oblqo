@@ -80,10 +80,6 @@ namespace Oblqo.Controls
             // Adds tabs for new drives
             foreach (var f in file.DriveFiles)
             {
-                if (f.Drive.IsIgnored)
-                {
-                    continue;
-                }
                 if (toolStrip1.Items.Find(f.Drive.Id, false).SingleOrDefault() != null)
                 {
                     continue; // tab already exists

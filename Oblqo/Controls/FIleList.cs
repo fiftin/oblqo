@@ -177,7 +177,9 @@ namespace Oblqo.Controls
             CreateFolder();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in fileListView.SelectedItems)
@@ -398,6 +400,7 @@ namespace Oblqo.Controls
 
         private void OnFileLoaded()
         {
+            fileListView.Sort();
             FileLoaded?.Invoke(this, new EventArgs());
         }
 
@@ -415,9 +418,9 @@ namespace Oblqo.Controls
             }
             if ((newFileState & AccountFileStates.New) != 0)
             {
-                fileItem.ForeColor = Color.Green;
+                fileItem.ForeColor = Color.Blue;
             }
-            if ((newFileState & AccountFileStates.UnsyncronizedWithDrive) != 0)
+            if ((newFileState & AccountFileStates.UnsyncronizedWithAllDrives) != 0)
             {
                 fileItem.ForeColor = Color.Red;
             }
@@ -436,6 +439,17 @@ namespace Oblqo.Controls
             if ((newFileState & AccountFileStates.Error) != 0)
             {
                 fileItem.BackColor = Color.Red;
+                fileItem.ForeColor = Color.White;
+            }
+            
+            if ((newFileState & AccountFileStates.PlacedOnlyDrive) != 0)
+            {
+                fileItem.BackColor = Color.LightGreen;
+            }
+
+            if ((newFileState & AccountFileStates.PlacedOnlyStorage) != 0)
+            {
+                fileItem.ForeColor = Color.Green;
             }
         }
 

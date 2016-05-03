@@ -31,15 +31,15 @@ namespace Oblqo.Controls
             int ret = 0;
             if (info1 != null && info2 != null)
             {
-                switch (column.Text)
+                switch (column.DisplayIndex)
                 {
-                    case "Name":
+                    case 0:
                         ret = info1.File.Name.CompareTo(info2.File.Name);
                         break;
-                    case "Date":
+                    case 1:
                         ret = info1.File.ModifiedDate.CompareTo(info2.File.ModifiedDate);
                         break;
-                    case "Size":
+                    case 2:
                         ret = info1.File.Size.CompareTo(info2.File.Size);
                         break;
                 }

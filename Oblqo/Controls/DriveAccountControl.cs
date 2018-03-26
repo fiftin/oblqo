@@ -24,20 +24,23 @@ namespace Oblqo
 
             foreach (var driveType in Enum.GetValues(typeof(DriveType)))
             {
-                driveKindComboBox.Items.Add(new ResourcesWrapper(driveType));
+                driveKindComboBox.Items.Add(driveType);
             }
-            driveKindComboBox.SelectedIndex = 0;
         }
 
         public DriveType DriveType
         {
             get
             {
-                return (DriveType)((ResourcesWrapper)driveKindComboBox.SelectedItem).OriginalObject;
+                if (driveKindComboBox.SelectedIndex == -1)
+                {
+                    return DriveType.LocalDrive;
+                }
+                return (DriveType)driveKindComboBox.SelectedItem;
             }
             set
             {
-                foreach (var item in driveKindComboBox.Items.Cast<ResourcesWrapper>().Where(item => (DriveType)item.OriginalObject == value))
+                foreach (var item in driveKindComboBox.Items.Cast<DriveType>().Where(item => ((DriveType)item) == value))
                 {
                     driveKindComboBox.SelectedItem = item;
                 }
@@ -82,15 +85,5 @@ namespace Oblqo
         }
 
         public event EventHandler DriveTypeChanged;
-
-        private void btnAuth_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClearAuth_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

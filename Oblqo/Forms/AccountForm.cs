@@ -20,17 +20,22 @@ namespace Oblqo
             }
         }
 
-        public AccountForm(bool newAccount)
+        public AccountForm(bool newAccount, bool canCancel = true)
         {
             InitializeComponent();
+
+            cancelButton.Enabled = canCancel;
+
             Text = newAccount ? Util.GetString("AccountForm_CreateNewAccount") : Util.GetString("AccountForm_ChangeAccount");
             foreach (var region in RegionEndpoint.EnumerableAllRegions)
+            {
                 regionComboBox.Items.Add(new RegionInfo
                 {
                     SystemName = region.SystemName,
                     DisplayName = region.DisplayName
                 });
-
+            }
+            
             regionComboBox.SelectedIndex = 0;
 
             if (newAccount)
@@ -39,7 +44,7 @@ namespace Oblqo
                 driveTabControl.TabPages.Remove(addDriveTabPage);
                 driveTabControl.TabPages.Add(addDriveTabPage);
             }
-
+            
         }
 
         public void AddDrives(IEnumerable<DriveInfo> d)
@@ -111,19 +116,6 @@ namespace Oblqo
             set { glacierVaultTextBox.Text = value; }
         }
         
-        private void AccountForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void driveKindComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
 
         private void AccountForm_FormClosing(object sender, FormClosingEventArgs e)
         {

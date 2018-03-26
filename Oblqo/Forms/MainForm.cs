@@ -47,6 +47,7 @@ namespace Oblqo
                 OnError(ex);
             }
 
+
             fileListView.TaskManager = taskManager;
             taskListView.TaskManager = taskManager;
 
@@ -54,7 +55,13 @@ namespace Oblqo
             taskManager.Exception += xxx_Exception;
             InitUI();
             splitContainer2.SplitterWidth = 7;
-            btnNewConnection.Visible = accountManager.Accounts.Count() == 0;
+            btnNewConnection.Visible = !accountManager.Accounts.Any();
+
+
+            if (!accountManager.Accounts.Any())
+            {
+                ShowNewAccountDialog();
+            }
         }
 
         void xxx_Exception(object sender, ExceptionEventArgs e)
@@ -169,7 +176,7 @@ namespace Oblqo
             }
         }
 
-        private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = false)
+        private void UpdateNode(TreeNode node, bool extendNodeAfterUpdate = false, bool updateList = true)
         {
             var token = new CancellationToken();
             var info = (NodeInfo)node.Tag;
@@ -234,11 +241,19 @@ namespace Oblqo
                 newNode.Nodes.Add("", "", "");
         }
 
-        private void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void ShowNewAccountDialog()
         {
-            using (var accountForm = new AccountForm(true))
+            using (var accountForm = new AccountForm(true, accountManager.Accounts.Any()))
             {
-                if (accountForm.ShowDialog() != DialogResult.OK) return;
+                if (accountForm.ShowDialog() != DialogResult.OK)
+                {
+                    if (!accountManager.Accounts.Any())
+                    {
+                        Close();
+                    }
+                    return;
+                }
                 btnNewConnection.Visible = false;
                 var info = new AccountInfo
                 {
@@ -257,6 +272,11 @@ namespace Oblqo
                 accountManager.Save();
                 DisconnectAccount(node);
             }
+        }
+
+        private void addNewAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowNewAccountDialog();
         }
 
         private void taskManager_TaskStateChanged(object sender, AsyncTaskEventArgs e)

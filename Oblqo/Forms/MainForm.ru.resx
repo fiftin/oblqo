@@ -117,12 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 27</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainer1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="splitContainer2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
   <data name="smallImageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        IwAAAk1TRnQBSQFMAgEBHAEAAUQBBgFEAQYBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IwAAAk1TRnQBSQFMAgEBHAEAAUwBBgFMAQYBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -276,46 +287,150 @@
         Af8BwAEfAfwBPwH8AT8C/wHgAT8B/AE/AfwBPws=
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 0</value>
+  </data>
+  <data name="treeView1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 186</value>
+    <value>247, 486</value>
+  </data>
+  <data name="splitContainer2.Panel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 0</value>
+  </data>
+  <data name="btnNewConnection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 77</value>
+  </data>
+  <data name="btnNewConnection.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="btnNewConnection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>348, 58</value>
   </data>
   <data name="btnNewConnection.Text" xml:space="preserve">
     <value>Создать новое подключение</value>
   </data>
+  <data name="currentDirectoryInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>382, 24</value>
+  </data>
+  <data name="currentDirectoryInfoPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="currentDirectoryInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>705, 25</value>
+  </data>
+  <data name="fileListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
   <data name="fileListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 186</value>
+    <value>601, 486</value>
+  </data>
+  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>601, 0</value>
+  </data>
+  <data name="splitter1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
   </data>
   <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>8, 186</value>
+    <value>10, 486</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>611, 0</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="panel1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>408, 155</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 186</value>
+    <value>408, 486</value>
+  </data>
+  <data name="splitContainer2.Panel2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 3, 0</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 186</value>
+    <value>1282, 486</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainer2.SplitterWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="tasksTabPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="tasksTabPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="tasksTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 2, 3, 1</value>
   </data>
   <data name="tasksTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 342</value>
+    <value>1271, 116</value>
   </data>
   <data name="tasksTabPage.Text" xml:space="preserve">
     <value>Задачи</value>
   </data>
   <data name="logTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 23</value>
+    <value>4, 26</value>
+  </data>
+  <data name="logTabPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="logTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 2, 3, 1</value>
   </data>
   <data name="logTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>987, 343</value>
+    <value>1271, 395</value>
   </data>
   <data name="logTabPage.Text" xml:space="preserve">
     <value>События</value>
   </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>995, 370</value>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 0</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1279, 146</value>
+  </data>
+  <data name="splitContainer1.Panel2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 1</value>
+  </data>
+  <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 643</value>
+  </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>186</value>
+    <value>486</value>
+  </data>
+  <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="fileInfoPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="fileInfoPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 3, 0</value>
+  </data>
+  <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 486</value>
+  </data>
+  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>405, 486</value>
+  </data>
+  <data name="multipleFileView1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 486</value>
+  </data>
+  <data name="taskListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1268, 113</value>
   </data>
   <data name="logDataTimeColumnHeader.Text" xml:space="preserve">
     <value>Время</value>
@@ -326,20 +441,29 @@
   <data name="logMessageColumnHeader.Text" xml:space="preserve">
     <value>Сообщение</value>
   </data>
+  <data name="logListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
   <data name="logListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 340</value>
+    <value>1268, 392</value>
+  </data>
+  <data name="mainTool.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 1, 0</value>
+  </data>
+  <data name="mainTool.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 27</value>
   </data>
   <data name="newAccountStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACaSURBVDhPtdNBCoJQEIDhh4RdJbqGbYNOEdIFWrly4cqt
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACaSURBVDhPtdNBCoJQEIDhh4RdJbqGbYNOEdIFWrly4cqt
         1Co8TbfoFBJkC/sHnIc95MkQ/fBBTG9mp4u0whYbJDKwVuGNHqUMrHUYRk8ZWNNlZc58YIfjRHhg+l+G
         rwqEC0vO8D0w9yjmDl+DuUcxNXwpTrjgOgoXdC5vcshOtPCAuZ8PvKDL8ttcCz1wk4G1NQ7YQ77Mf+Tc
         B0Q4VfNl3C/DAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newAccountStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
+    <value>185, 24</value>
   </data>
   <data name="newAccountStripButton.Text" xml:space="preserve">
     <value>Новое подключение</value>
@@ -347,7 +471,7 @@
   <data name="uploadToolStripDropDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD0SURBVDhPtdIxagJBFMbxEUUjGiVFLqClnUGENGpnoTew
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAD0SURBVDhPtdIxagJBFMbxEUUjGiVFLqClnUGENGpnoTew
         VA8i9nZqoWUaGwvBAyjYmCZdKguLEBsJCCoImv9bV5hdhtUE/ODHLrw383aYVfeOHwVU8AIfriZoP5P4
         wMl2xBBxGBNCD9/oYorLYl0HxpQgU0yLdAuE4cgj3mBa4LZHE1FYecAMpmYvYwSgUjjA1ORli2eoBHZw
         N/ygjT6k2V1f4wnW3bagF2VDuf8s0ihCzq73NOD4L15RQx0ZlCEbyaQcpC61KmRjz8hE/VhyhDxuzgSf
@@ -355,19 +479,19 @@
 </value>
   </data>
   <data name="uploadToolStripDropDownButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 22</value>
+    <value>123, 24</value>
   </data>
   <data name="uploadToolStripDropDownButton.Text" xml:space="preserve">
     <value>Загрузить</value>
   </data>
   <data name="uploadFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 22</value>
+    <value>217, 26</value>
   </data>
   <data name="uploadFolderToolStripMenuItem.Text" xml:space="preserve">
     <value>Загрузить папку</value>
   </data>
   <data name="uploadFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 22</value>
+    <value>217, 26</value>
   </data>
   <data name="uploadFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Загрузить файлы</value>
@@ -375,14 +499,14 @@
   <data name="newFolderToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVDhPvdLBCgFBHMfxdcNNSXFw4eYiXkEewIly5Q28
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAC9SURBVDhPvdLBCgFBHMfxdcNNSXFw4eYiXkEewIly5Q28
         C1fyNnuh8BBy4sAF3982OzGZmpX86tPU1O+/s7Mb/SotTDA1xigiKHWc8XAsEZQu3LLECIpvwBELxxwD
         5GDjG+BzQRk2WQdIDTZ/HXDCBhXYhA5QuYkGMl+iymsMccPbCTr4VEqlTx5hZfZm6COJPskOd7hl2UID
         ri97ckABSfTfV6Hbdem4emeterLKbZSQOT3s8VU5Td6sJIqeOoN4X5JLcEgAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="newFolderToolStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 22</value>
+    <value>131, 24</value>
   </data>
   <data name="newFolderToolStripButton.Text" xml:space="preserve">
     <value>Новая папка</value>
@@ -390,7 +514,7 @@
   <data name="refreshFilesToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEeSURBVDhPxdI/LwRRFIbxQYSsEBGK3QaNQiEaolPJ9jq9
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAEeSURBVDhPxdI/LwRRFIbxQYSsEBGK3QaNQiEaolPJ9jq9
         j7DNJptoRDQShc3GlxBKjZKGQjQ6Hc2qRMR/z5Pcm8ydISrxJr9k58zZM3funeyvUsU8elDDLPrwayrY
         wQvesIwOPvGIs3C9ilIGcAyb9Q4H7Odq+sAeSlmHN226Qh2+QnHACb59nUvYcIsJCyHFAb7KFJKMIDa0
         LeTi9TUacF/s2UASdzoOaFrIZQzD8CFd2HOIJP1wad48whIuMI6YUdzDngMLxTjVmy7zOfx2ZTEr8GSs
@@ -399,7 +523,7 @@
 </value>
   </data>
   <data name="refreshFilesToolStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>230, 24</value>
   </data>
   <data name="refreshFilesToolStripButton.Text" xml:space="preserve">
     <value>Обновить список файлов</value>
@@ -407,7 +531,7 @@
   <data name="aboutStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -420,7 +544,7 @@
 </value>
   </data>
   <data name="aboutStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 22</value>
+    <value>111, 24</value>
   </data>
   <data name="aboutStripButton.Text" xml:space="preserve">
     <value>О программе</value>
@@ -428,7 +552,7 @@
   <data name="helpToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -441,166 +565,193 @@
 </value>
   </data>
   <data name="helpToolStripButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 22</value>
+    <value>75, 24</value>
   </data>
   <data name="helpToolStripButton.Text" xml:space="preserve">
     <value>Справка</value>
   </data>
+  <data name="accountMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 292</value>
+  </data>
   <data name="connectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="connectToolStripMenuItem.Text" xml:space="preserve">
     <value>Подключиться</value>
   </data>
   <data name="disconnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="disconnectToolStripMenuItem.Text" xml:space="preserve">
     <value>Отключиться</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 6</value>
+    <value>257, 6</value>
   </data>
   <data name="changeAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="changeAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Ред. подключение</value>
   </data>
   <data name="deleteAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="deleteAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Удалить подключение</value>
   </data>
   <data name="cloneAccountToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="cloneAccountToolStripMenuItem.Text" xml:space="preserve">
     <value>Дублировать подключение</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 6</value>
+    <value>257, 6</value>
   </data>
   <data name="newFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="newFolderToolStripMenuItem2.Text" xml:space="preserve">
     <value>Новая папка</value>
   </data>
   <data name="uploadFolderToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="uploadFolderToolStripMenuItem3.Text" xml:space="preserve">
     <value>Загрузить папку</value>
   </data>
   <data name="uploadFilesToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="uploadFilesToolStripMenuItem2.Text" xml:space="preserve">
     <value>Загрузить файлы</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 6</value>
+    <value>257, 6</value>
   </data>
   <data name="downloadFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="downloadFromDriveToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать с диска</value>
   </data>
   <data name="downloadFromArchiveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="downloadFromArchiveToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать из архива</value>
   </data>
   <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 6</value>
+    <value>257, 6</value>
   </data>
   <data name="clearAuthToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="clearAuthToolStripMenuItem.Text" xml:space="preserve">
     <value>Отменить авторизацию</value>
   </data>
   <data name="downloadInventoryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="downloadInventoryToolStripMenuItem.Text" xml:space="preserve">
     <value>Инвенторизация архива</value>
   </data>
-  <data name="accountMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>236, 314</value>
+  <data name="loadingFileListProgressBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>382, 423</value>
+  </data>
+  <data name="loadingFileListProgressBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="loadingFileListProgressBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>513, 24</value>
+  </data>
+  <data name="loadingImageProgressBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>903, 423</value>
+  </data>
+  <data name="loadingImageProgressBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="loadingImageProgressBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>298, 24</value>
   </data>
   <data name="folderMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 148</value>
+    <value>213, 148</value>
   </data>
   <data name="downloadFolderFromDriveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="downloadFolderFromDriveToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать с диска</value>
   </data>
   <data name="downloadFolderFromStorageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="downloadFolderFromStorageToolStripMenuItem.Text" xml:space="preserve">
     <value>Скачать из архива</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 6</value>
+    <value>209, 6</value>
   </data>
   <data name="newFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="newFolderToolStripMenuItem.Text" xml:space="preserve">
     <value>Новая папка</value>
   </data>
   <data name="uploadFolderToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="uploadFolderToolStripMenuItem2.Text" xml:space="preserve">
     <value>Загрузить папку</value>
   </data>
   <data name="uploadFilesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="uploadFilesToolStripMenuItem1.Text" xml:space="preserve">
     <value>Загрузить файлы</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 6</value>
+    <value>209, 6</value>
   </data>
   <data name="deleteFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="deleteFolderToolStripMenuItem.Text" xml:space="preserve">
     <value>Удалить</value>
   </data>
   <data name="logMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 26</value>
+    <value>125, 26</value>
   </data>
   <data name="showDescriptionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
+    <value>124, 22</value>
   </data>
   <data name="showDescriptionToolStripMenuItem.Text" xml:space="preserve">
     <value>Детали</value>
   </data>
   <data name="imageViewer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 38</value>
+    <value>478, 43</value>
   </data>
-  <data name="fileInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 186</value>
+  <data name="imageViewer1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
   </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 186</value>
+  <data name="imageViewer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>386, 340</value>
   </data>
-  <data name="multipleFileView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 186</value>
+  <data name="driveStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>903, 408</value>
   </data>
-  <data name="taskListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 339</value>
+  <data name="driveStrip1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="driveStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 28</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>9, 17</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 670</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -15,3 +15,4 @@ OblqoSetup/bin/
 OblqoSetup/obj/
 *.suo
 *~
+.vs/

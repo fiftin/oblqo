@@ -41,7 +41,6 @@ namespace Oblqo
             {
                 DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName);
                 DeleteAllFilesInDirectory(store, "accounts/" + account.AccountName + "/tasks");
-                store.DeleteDirectory("accounts/" + account.AccountName);
             }
         }
 

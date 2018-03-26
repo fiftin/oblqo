@@ -164,6 +164,7 @@ namespace Oblqo.Google
 
             var service = await((GoogleDrive)Drive).GetServiceAsync(token);
             await service.Files.Update(new File { Properties = props }, File.Id).ExecuteAsync(token);
+            await Task.Delay(1000, token);
         }
 
         public override async Task WriteAsync(byte[] bytes, CancellationToken token)

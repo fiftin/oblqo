@@ -22,7 +22,7 @@ namespace Oblqo
             driveAccountControl1.DriveImageResolution = drive.DriveImageMaxSize;
             Controls.Add(driveAccountControl1);
             this.PerformLayout();
-            Text = Util.GetString(driveAccountControl1.DriveType.ToString());
+            Text = driveAccountControl1.DriveType.ToString(); // Util.GetString(driveAccountControl1.DriveType.ToString());
             DriveId = string.IsNullOrEmpty(drive.DriveId) ? Guid.NewGuid().ToString() : drive.DriveId;
         }
 
@@ -31,7 +31,7 @@ namespace Oblqo
             InitializeComponent();
             Controls.Add(driveAccountControl1);
             this.PerformLayout();
-            Text = Util.GetString(driveAccountControl1.DriveType.ToString());
+            Text = driveAccountControl1.DriveType.ToString(); //Util.GetString(driveAccountControl1.DriveType.ToString());
             DriveId = Guid.NewGuid().ToString();
         }
 
@@ -50,7 +50,7 @@ namespace Oblqo
 
         private void driveAccountControl1_DriveTypeChanged(object sender, EventArgs e)
         {
-            Text = Util.GetString(driveAccountControl1.DriveType.ToString());
+            Text = driveAccountControl1.DriveType.ToString(); // Util.GetString(driveAccountControl1.DriveType.ToString());
         }
 
         public string DriveId { get; }

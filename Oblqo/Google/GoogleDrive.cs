@@ -121,9 +121,22 @@ namespace Oblqo.Google
 
             if (!ImageMaxSize.IsEmpty && TryGetImageType(fileName, out imageType))
             {
-                var image = await Task.Run(() => Image.FromStream(stream));
-                scaled = await ScaleImageAsync(image, imageType, token);
-            } else
+                using (var image = await Task.Run(() => Image.FromStream(stream)))
+                {
+                    scaled = await ScaleImageAsync(image, imageType, token);
+                }
+
+                if (scaled == null)
+                {
+                    scaled = stream;
+                }
+
+                if (scaled.CanSeek)
+                {
+                    scaled.Position = 0;
+                }
+            }
+            else
             {
                 scaled = stream;
             }
